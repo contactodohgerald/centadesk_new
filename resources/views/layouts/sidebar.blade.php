@@ -166,37 +166,18 @@
                 </li>
             </ul>
         </div>
-        <div class="left_section">
-            <h6 class="left_title">SUBSCRIPTIONS</h6>
-            <ul>
-                <li class="menu--item">
-                    <a href="instructor_profile_view.html" class="menu--link user_img">
-                        <img src="images/left-imgs/img-1.jpg" alt="">
-                        Rock Smith
-                        <div class="alrt_dot"></div>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="instructor_profile_view.html" class="menu--link user_img">
-                        <img src="images/left-imgs/img-2.jpg" alt="">
-                        Jassica William
-                    </a>
-                    <div class="alrt_dot"></div>
-                </li>
-                <li class="menu--item">
-                    <a href="all_instructor.html" class="menu--link" title="Browse Instructors">
-                        <i class='uil uil-plus-circle menu--icon'></i>
-                        <span class="menu--label">Browse Instructors</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
         <div class="left_section pt-2">
             <ul>
                 <li class="menu--item">
                     <a href="setting.html" class="menu--link" title="Setting">
                         <i class='uil uil-cog menu--icon'></i>
                         <span class="menu--label">Setting</span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="javascript:void(0)" onclick="bringOutModalMain('.logout')" class="menu--link" title="Sign Out">
+                        <i class='uil uil-sign-out-alt menu--icon'></i>
+                        <span class="menu--label">Sign Out</span>
                     </a>
                 </li>
                 <li class="menu--item">

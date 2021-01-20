@@ -16,42 +16,46 @@
 
 </script>
 
-<!-- Modal -->
-<div class="modal fade logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" >
-            <div class="modal-header" style="background-color: #800080 !important;">
-                <h5  class="modal-title" style="color:white !important; ">Log Out</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+
+
+<!-- The Modal -->
+<div class="modal logout" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #333 !important;">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Sign Out</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body" >
+
+            <!-- Modal body -->
+            <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4 class="text-center">Are You Sure You Want To Logout?</h4>
-                            </div>
-                        </div>
+                        <h3 class="text-center">Are You Sure You Want To Sign Out?</h3>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                <a class="btn guoBtn" href="{{ route('logout') }}"
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                <a class="btn btn-primary" href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
+                    Sign Out
                 </a>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
             </div>
+
         </div>
     </div>
 </div>
+
 
 
 </body>

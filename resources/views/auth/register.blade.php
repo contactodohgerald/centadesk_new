@@ -111,16 +111,17 @@
                                 <button class="login-btn" type="submit">Instructor Sign Up Now</button>
                             </form>
                         </div>
-                     {{--   <div class="tab-pane fade" id="student-signup-tab" role="tabpanel" aria-labelledby="student-tab">
+                        <div class="tab-pane fade" id="student-signup-tab" role="tabpanel" aria-labelledby="student-tab">
                             <p>Sign Up and Start Learning!</p>
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
 
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
-                                        <input class="prompt srch_explore @error('first_name') is-invalid @enderror" type="text" name="first_name" value="{{ old('first_name') }}" id="first_name" required maxlength="64" placeholder="First Name">
-                                        <i class="uil uil-info-circle icon icon2"></i>
-                                        @error('first_name')
+                                        <input class="prompt srch_explore @error('referred_id') is-invalid @enderror" type="text" name="referred_id" value="{{ isset($_GET['ref']) ? $_GET['ref'] : old('referred_id') }}" id="referred_id" required maxlength="64" placeholder="Referrer Id">
+                                        <i class="uil uil-airplay icon icon2"></i>
+
+                                        @error('referred_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -130,9 +131,21 @@
 
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
-                                        <input class="prompt srch_explore @error('second_name') is-invalid @enderror" type="text" name="second_name" value="{{ old('second_name') }}" id="second_name" required maxlength="64" placeholder="Second Name">
+                                        <input class="prompt srch_explore @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') }}" id="name" required maxlength="64" placeholder="First Name">
                                         <i class="uil uil-info-circle icon icon2"></i>
-                                        @error('second_name')
+                                        @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="ui search focus mt-15">
+                                    <div class="ui left icon input swdh95">
+                                        <input class="prompt srch_explore @error('last_name') is-invalid @enderror" type="text" name="last_name" value="{{ old('last_name') }}" id="last_name" required maxlength="64" placeholder="Last Name">
+                                        <i class="uil uil-info-circle icon icon2"></i>
+                                        @error('last_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -164,6 +177,7 @@
                                     </div>
                                 </div>
 
+
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore" type="password" name="password_confirmation" id="password_confirmation" required  placeholder="Confirm Password">
@@ -171,10 +185,11 @@
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="user_type" value="teacher">
-                                <button class="login-btn" type="submit">Student Sign Up Now</button>
+                                <input type="hidden" name="user_type" value="student">
+
+                                <button class="login-btn" type="submit">Instructor Sign Up Now</button>
                             </form>
-                        </div>--}}
+                        </div>
                     </div>
                     <p class="mb-0 mt-30">Already have an account? <a href="{{route('login')}}">Log In</a></p>
                 </div>

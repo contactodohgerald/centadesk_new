@@ -129,6 +129,7 @@
                 </a>
                 <div class="menu dropdown_account">
                     <div class="channel_my">
+
                         <div class="profile_link">
                             <img src="{{asset('dashboard/images/hd_dp.jpg')}}" alt="">
                             <div class="pd_content">
