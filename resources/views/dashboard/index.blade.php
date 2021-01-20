@@ -13,18 +13,18 @@
 	<!-- Body Start -->
 	<div class="wrapper">
 		<div class="sa4d25">
-			<div class="container-fluid">			
+			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xl-9 col-lg-8">
 						<div class="section3125">
-							<h4 class="item_title">Live Streams</h4>
+							<h4 class="item_title">Live Streams {{ auth()->user() }} </h4>
 							<a href="live_streams.html" class="see150">See all</a>
 							<div class="la5lo1">
 								<div class="owl-carousel live_stream owl-theme">
 									<div class="item">
 										<div class="stream_1">
 											<a href="live_output.html" class="stream_bg">
-												<img src="images/left-imgs/img-1.jpg" alt="">
+												<img src="{{asset('dashboard/images/left-imgs/img-1.jpg')}}" alt="">
 												<h4>John Doe</h4>
 												<p>live<span></span></p>
 											</a>
@@ -33,7 +33,7 @@
 									<div class="item">
 										<div class="stream_1">
 											<a href="live_output.html" class="stream_bg">
-												<img src="images/left-imgs/img-2.jpg" alt="">
+												<img src="{{asset('dashboard/images/left-imgs/img-2.jpg')}}" alt="">
 												<h4>Jassica</h4>
 												<p>live<span></span></p>
 											</a>
@@ -42,7 +42,7 @@
 									<div class="item">
 										<div class="stream_1">
 											<a href="live_output.html" class="stream_bg">
-												<img src="images/left-imgs/img-9.jpg" alt="">
+												<img src="{{asset('dashboard/images/left-imgs/img-9.jpg')}}" alt="">
 												<h4>Edututs+</h4>
 												<p>live<span></span></p>
 											</a>
@@ -51,7 +51,7 @@
 									<div class="item">
 										<div class="stream_1">
 											<a href="live_output.html" class="stream_bg">
-												<img src="images/left-imgs/img-3.jpg" alt="">
+												<img src="{{asset('dashboard/images/left-imgs/img-3.jpg')}}" alt="">
 												<h4>Joginder Singh</h4>
 												<p>live<span></span></p>
 											</a>
@@ -60,7 +60,7 @@
 									<div class="item">
 										<div class="stream_1">
 											<a href="live_output.html" class="stream_bg">
-												<img src="images/left-imgs/img-4.jpg" alt="">
+												<img src="{{asset('dashboard/images/left-imgs/img-4.jpg')}}" alt="">
 												<h4>Zoena</h4>
 												<p>live<span></span></p>
 											</a>
@@ -69,7 +69,7 @@
 									<div class="item">
 										<div class="stream_1">
 											<a href="live_output.html" class="stream_bg">
-												<img src="images/left-imgs/img-5.jpg" alt="">
+												<img src="{{asset('dashboard/images/left-imgs/img-5.jpg')}}" alt="">
 												<h4>Albert Dua</h4>
 												<p>live<span></span></p>
 											</a>
@@ -78,7 +78,7 @@
 									<div class="item">
 										<div class="stream_1">
 											<a href="live_output.html" class="stream_bg">
-												<img src="images/left-imgs/img-6.jpg" alt="">
+												<img src="{{asset('dashboard/images/left-imgs/img-6.jpg')}}" alt="">
 												<h4>Ridhima</h4>
 												<p>live<span></span></p>
 											</a>
@@ -87,7 +87,7 @@
 									<div class="item">
 										<div class="stream_1">
 											<a href="live_output.html" class="stream_bg">
-												<img src="images/left-imgs/img-7.jpg" alt="">
+												<img src="{{asset('dashboard/images/left-imgs/img-7.jpg')}}')}}" alt="">
 												<h4>Amritpal</h4>
 												<p>live<span></span></p>
 											</a>
@@ -96,7 +96,7 @@
 									<div class="item">
 										<div class="stream_1">
 											<a href="live_output.html" class="stream_bg">
-												<img src="images/left-imgs/img-8.jpg" alt="">
+												<img src="{{asset('dashboard/images/left-imgs/img-8.jpg')}}" alt="">
 												<h4>Jimmy</h4>
 												<p>live<span></span></p>
 											</a>
@@ -113,7 +113,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<a href="course_detail_view.html" class="fcrse_img">
-												<img src="images/courses/img-1.jpg" alt="">
+												<img src="{{asset('dashboard/images/courses/img-1.jpg')}}" alt="">
 												<div class="course-overlay">
 													<div class="badge_seller">Bestseller</div>
 													<div class="crse_reviews">
@@ -133,7 +133,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																										
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">109k views</span>
@@ -152,7 +152,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<a href="course_detail_view.html" class="fcrse_img">
-												<img src="images/courses/img-2.jpg" alt="">
+												<img src="{{asset('dashboard/images/courses/img-2.jpg')}}" alt="">
 												<div class="course-overlay">
 													<div class="badge_seller">Bestseller</div>
 													<div class="crse_reviews">
@@ -172,7 +172,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																										
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">5M views</span>
@@ -191,7 +191,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<a href="course_detail_view.html" class="fcrse_img">
-												<img src="images/courses/img-3.jpg" alt="">
+												<img src="{{asset('dashboard/images/courses/img-3.jpg')}}" alt="">
 												<div class="course-overlay">
 													<div class="badge_seller">Bestseller</div>
 													<div class="crse_reviews">
@@ -211,7 +211,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																											
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">1M views</span>
@@ -230,7 +230,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<a href="course_detail_view.html" class="fcrse_img">
-												<img src="images/courses/img-4.jpg" alt="">
+												<img src="{{asset('dashboard/images/courses/img-4.jpg')}}" alt="">
 												<div class="course-overlay">
 													<div class="badge_seller">Bestseller</div>
 													<div class="crse_reviews">
@@ -250,7 +250,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																										
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">153k views</span>
@@ -269,7 +269,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<a href="course_detail_view.html" class="fcrse_img">
-												<img src="images/courses/img-5.jpg" alt="">
+												<img src="{{asset('dashboard/images/courses/img-5.jpg')}}" alt="">
 												<div class="course-overlay">
 													<div class="badge_seller">Bestseller</div>
 													<div class="crse_reviews">
@@ -289,7 +289,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																										
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">53k views</span>
@@ -308,7 +308,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<a href="course_detail_view.html" class="fcrse_img">
-												<img src="images/courses/img-6.jpg" alt="">
+												<img src="images/courses/img-6.jpg')}}" alt="">
 												<div class="course-overlay">
 													<div class="badge_seller">Bestseller</div>
 													<div class="crse_reviews">
@@ -328,7 +328,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																										
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">253k views</span>
@@ -347,7 +347,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<a href="course_detail_view.html" class="fcrse_img">
-												<img src="images/courses/img-7.jpg" alt="">
+												<img src="images/courses/img-7.jpg')}}" alt="">
 												<div class="course-overlay">
 													<div class="badge_seller">Bestseller</div>
 													<div class="crse_reviews">
@@ -367,7 +367,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																											
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">109k views</span>
@@ -406,7 +406,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																											
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">196k views</span>
@@ -449,7 +449,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																											
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">15 views</span>
@@ -484,7 +484,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																										
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">5 views</span>
@@ -519,7 +519,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																										
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">25 views</span>
@@ -557,7 +557,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																										
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">15 views</span>
@@ -595,7 +595,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																											
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">45 views</span>
@@ -630,7 +630,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																											
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">20 Views</span>
@@ -643,7 +643,7 @@
 													<div class="prce142">$3</div>
 													<button class="shrt-cart-btn" title="cart"><i class="uil uil-shopping-cart-alt"></i></button>
 												</div>
-											</div>											
+											</div>
 										</div>
 									</div>
 									<div class="item">
@@ -668,7 +668,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																										
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">200 Views</span>
@@ -703,7 +703,7 @@
 														<span><i class="uil uil-heart"></i>Save</span>
 														<span><i class='uil uil-ban'></i>Not Interested</span>
 														<span><i class="uil uil-windsock"></i>Report</span>
-													 </div>																										
+													 </div>
 												</div>
 												<div class="vdtodt">
 													<span class="vdt14">11 Views</span>
@@ -778,7 +778,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<div class="tutor_img">
-												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-1.jpg" alt=""></a>												
+												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-1.jpg" alt=""></a>
 											</div>
 											<div class="tutor_content_dt">
 												<div class="tutor150">
@@ -804,7 +804,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<div class="tutor_img">
-												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-2.jpg" alt=""></a>											
+												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-2.jpg" alt=""></a>
 											</div>
 											<div class="tutor_content_dt">
 												<div class="tutor150">
@@ -830,7 +830,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<div class="tutor_img">
-												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-3.jpg" alt=""></a>												
+												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-3.jpg" alt=""></a>
 											</div>
 											<div class="tutor_content_dt">
 												<div class="tutor150">
@@ -856,7 +856,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<div class="tutor_img">
-												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-4.jpg" alt=""></a>											
+												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-4.jpg" alt=""></a>
 											</div>
 											<div class="tutor_content_dt">
 												<div class="tutor150">
@@ -878,11 +878,11 @@
 												</div>
 											</div>
 										</div>
-									</div>									
+									</div>
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<div class="tutor_img">
-												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-5.jpg" alt=""></a>												
+												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-5.jpg" alt=""></a>
 											</div>
 											<div class="tutor_content_dt">
 												<div class="tutor150">
@@ -908,7 +908,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<div class="tutor_img">
-												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-7.jpg" alt=""></a>												
+												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-7.jpg" alt=""></a>
 											</div>
 											<div class="tutor_content_dt">
 												<div class="tutor150">
@@ -934,7 +934,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<div class="tutor_img">
-												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-8.jpg" alt=""></a>												
+												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-8.jpg" alt=""></a>
 											</div>
 											<div class="tutor_content_dt">
 												<div class="tutor150">
@@ -960,7 +960,7 @@
 									<div class="item">
 										<div class="fcrse_1 mb-20">
 											<div class="tutor_img">
-												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-6.jpg" alt=""></a>												
+												<a href="instructor_profile_view.html"><img src="images/left-imgs/img-6.jpg" alt=""></a>
 											</div>
 											<div class="tutor_content_dt">
 												<div class="tutor150">
@@ -985,13 +985,13 @@
 									</div>
 								</div>
 							</div>
-						</div>	
+						</div>
 					</div>
 					<div class="col-xl-3 col-lg-4">
 						<div class="right_side">
 							<div class="fcrse_2 mb-30">
 								<div class="tutor_img">
-									<a href="my_instructor_profile_view.html"><img src="images/left-imgs/img-10.jpg" alt=""></a>												
+									<a href="my_instructor_profile_view.html"><img src="images/left-imgs/img-10.jpg" alt=""></a>
 								</div>
 								<div class="tutor_content_dt">
 									<div class="tutor150">
@@ -1012,7 +1012,7 @@
 										<span class="vdt15">12 Courses</span>
 									</div>
 									<a href="my_instructor_profile_view.html" class="prfle12link">Go To Profile</a>
-								</div> 
+								</div>
 							</div>
 							<div class="fcrse_3">
 								<div class="cater_ttle">
@@ -1066,10 +1066,10 @@
 											</div>
 											<div class="st_group">
 												<div class="stud_img">
-													<img src="images/left-imgs/img-4.jpg" alt="">												
+													<img src="images/left-imgs/img-4.jpg" alt="">
 												</div>
 												<h4>Jassica William</h4>
-											</div>											
+											</div>
 										</div>
 									</div>
 									<div class="item">
@@ -1079,10 +1079,10 @@
 											</div>
 											<div class="st_group">
 												<div class="stud_img">
-													<img src="images/left-imgs/img-1.jpg" alt="">												
+													<img src="images/left-imgs/img-1.jpg" alt="">
 												</div>
 												<h4>Rock Smith</h4>
-											</div>											
+											</div>
 										</div>
 									</div>
 									<div class="item">
@@ -1092,10 +1092,10 @@
 											</div>
 											<div class="st_group">
 												<div class="stud_img">
-													<img src="images/left-imgs/img-7.jpg" alt="">												
+													<img src="images/left-imgs/img-7.jpg" alt="">
 												</div>
 												<h4>Luoci Marchant</h4>
-											</div>											
+											</div>
 										</div>
 									</div>
 									<div class="item">
@@ -1105,10 +1105,10 @@
 											</div>
 											<div class="st_group">
 												<div class="stud_img">
-													<img src="images/left-imgs/img-6.jpg" alt="">												
+													<img src="images/left-imgs/img-6.jpg" alt="">
 												</div>
 												<h4>Poonam Sharma</h4>
-											</div>											
+											</div>
 										</div>
 									</div>
 									<div class="item">
@@ -1118,10 +1118,10 @@
 											</div>
 											<div class="st_group">
 												<div class="stud_img">
-													<img src="images/left-imgs/img-3.jpg" alt="">												
+													<img src="images/left-imgs/img-3.jpg" alt="">
 												</div>
 												<h4>Davinder Singh</h4>
-											</div>											
+											</div>
 										</div>
 									</div>
 								</div>
