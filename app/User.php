@@ -2,14 +2,18 @@
 
 namespace App;
 
+use App\Model\AppSettings;
+use App\Model\CurrencyRatesModel;
+use App\Traits\Generics;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Generics;
 
     //
     use SoftDeletes;
@@ -51,4 +55,64 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getSingleUser($condition){
+
+        $users = User::where($condition)->first();
+
+        return $users;
+
+    }
+
+    function getBalanceForView(){
+
+        if(Auth::check()) {
+            $userObject = Auth::user();
+            $amountDetails = $this->calculateExchangeRate($userObject, $userObject->balance, 'sending_to_view');
+            return $amountDetails;
+        }
+
+
+    }
+
+    function getAmountForView($amount){
+        if(Auth::check()){
+            $userObject = Auth::user();
+        }else{
+            $appSettings = new AppSettings();
+            $appSettings = $appSettings->getSingleModel();
+            $appSettings->prefered_currency = 50;
+            $userObject = $appSettings;
+        }
+        $amountDetails = $this->calculateExchangeRate($userObject, $amount, 'sending_to_view');
+        return $amountDetails;
+
+    }
+
+    //calculate the user balance
+    function calculateUserBalance(){
+        $user_details = Auth::user();
+        $user_balance = $user_details->balance;
+        $user_unique_id = $user_details->unique_id;
+
+        $condition = [
+            ['user_unique_id', $user_unique_id],
+            ['action_type', 'withdrawal'],
+            ['status', 'pending'],
+        ];
+
+        $get_withdrawal_amount = $this->getAllTransactionAmount($condition);
+
+        //add the withdrawal amount where the type = withdrawal and the status = pending to the user balance
+
+        $total = $user_balance + $get_withdrawal_amount;
+
+        $user_new_balance = $this->getAmountForView($total);
+
+        return $user_new_balance['data']['amount'];
+    }
+
+    public function currency_details(){
+        return $this->belongsTo('App\Model\CurrencyRatesModel', 'preferred_currency');
+    }
 }
