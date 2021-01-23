@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
-use App\Http\Controllers\Controller;
+use App\Model\CurrencyRatesModel;
+use App\Model\TransactionModel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -99,6 +101,70 @@ trait Generics{
         }
 
         return $random;
+
+    }
+
+    //get the currency exchange rate
+    public function calculateExchangeRate($userObject, $amount_sent_in = 0, $type_of_action = 'sending_to_view'){
+
+        //base currency is EUR
+        //$type_of_action = ('sending_to_view', 'sending_to_db')
+
+        $choosen_currency_id = $userObject->preferred_currency;
+
+        //select the currency
+        $currency_details = CurrencyRatesModel::find($choosen_currency_id);
+        $rate = $currency_details->rate_of_conversion;
+
+        //$type_of_action = ('sending_to_view', 'sending_to_db')
+        if($type_of_action === 'sending_to_view'){
+            //die($amount_sent_in);
+            //1EUR = $rate for choosen currency
+            //$amount_sent_in EUR = ?
+            $amount = $amount_sent_in * $rate;
+            //$amount = round($amount);
+        }
+
+        if($type_of_action === 'sending_to_db'){
+            //1EUR = $rate for choosen currency
+            //? EUR   =  $amount_sent_in;
+            $amount = $amount_sent_in / $rate;
+            //$amount = round($amount);
+        }
+
+        return [
+            'error_code'=>0,
+            'error'=>'',
+            'data'=>[
+                'amount'=>$amount,
+                'currency'=>$currency_details->second_currency,
+                'currency_id'=>$currency_details->id
+            ]
+        ];
+
+    }
+
+    function getAmountForView($amount_sent_in = 0){
+
+        $userObject = Auth::user();
+        $amountDetails = $this->calculateExchangeRate($userObject, $amount_sent_in, $type_of_action = 'sending_to_view');
+        return $amountDetails;
+
+    }
+
+    function getAmountForDatabase($amount_sent_in = 0){
+
+        $userObject = Auth::user();
+        $amountDetails = $this->calculateExchangeRate($userObject, $amount_sent_in, $type_of_action = 'sending_to_db');
+        return $amountDetails;
+
+    }
+
+    function getAllTransactionAmount($condition){
+
+        $transactionModel = TransactionModel::where($condition)->sum('amount');
+
+        return $transactionModel;
 
     }
 
