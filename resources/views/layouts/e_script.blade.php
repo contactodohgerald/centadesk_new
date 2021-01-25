@@ -5,8 +5,13 @@
 <script src="{{asset('dashboard/vendor/semantic/semantic.min.js')}}"></script>
 <script src="{{asset('dashboard/js/custom.js')}}"></script>
 <script src="{{asset('dashboard/js/night-mode.js')}}"></script>
-
+{{-- <script src="{{asset('dashboard/js/jquery-steps.min.js')}}"></script> --}}
 <script type="text/javascript">
+    $('#add-course-tab').steps({
+      onFinish: function () {
+        alert('Wizard Completed');
+      }
+    });
 
     function bringOutModalMain(value) {
         //$(value).removeClass('hidden');

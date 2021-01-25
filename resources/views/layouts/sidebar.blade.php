@@ -8,6 +8,17 @@
                         <span class="menu--label">Home</span>
                     </a>
                 </li>
+                <li class="menu--item menu--item__has_sub_menu">
+                    <label class="menu--link" title="Categories">
+                        <i class='uil uil-layers menu--icon'></i>
+                        <span class="menu--label">Course</span>
+                    </label>
+                    <ul class="sub_menu">
+                        <li class="sub_menu--item">
+                            <a href="create-course" class="sub_menu--link">Create</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="menu--item">
                     <a href="live_streams.html" class="menu--link" title="Live Streams">
                         <i class='uil uil-kayak menu--icon'></i>
