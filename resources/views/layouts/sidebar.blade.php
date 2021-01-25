@@ -58,6 +58,20 @@ $user_type = auth()->user()->user_type;
                     </ul>
                 </li>
                 <li class="menu--item  menu--item__has_sub_menu">
+                    <label class="menu--link" title="Users">
+                        <i class='uil uil-user menu--icon'></i>
+                        <span class="menu--label">Users</span>
+                    </label>
+                    <ul class="sub_menu">
+                        <li class="sub_menu--item">
+                            <a href="{{route('all_students')}}" class="sub_menu--link">Students</a>
+                        </li>
+                        <li class="sub_menu--item">
+                            <a href="certification_start_form.html" class="sub_menu--link">Teachers / Instructors</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu--item  menu--item__has_sub_menu">
                     <label class="menu--link" title="Tests">
                         <i class='uil uil-clipboard-alt menu--icon'></i>
                         <span class="menu--label">Tests</span>
