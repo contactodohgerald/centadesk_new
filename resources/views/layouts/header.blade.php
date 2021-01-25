@@ -154,7 +154,7 @@
                     </div>
                     <a href="instructor_dashboard.html" class="item channel_item">Cursus dashboard</a>
                     <a href="membership.html" class="item channel_item">Paid Memberships</a>
-                    <a href="setting.html" class="item channel_item">Setting</a>
+                    <a href="{{route('main_settings_page')}}" class="item channel_item">Setting</a>
                     <a href="help.html" class="item channel_item">Help</a>
                     <a href="feedback.html" class="item channel_item">Send Feedback</a>
                     <a class="item channel_item" href="javascript:void(0)" onclick="bringOutModalMain('.logout')">Sign Out</a>

@@ -1,3 +1,6 @@
+@php
+$user_type = auth()->user()->user_type;
+@endphp
 <nav class="vertical_nav">
     <div class="left_section menu_left" id="js-menu" >
         <div class="left_section">
@@ -40,41 +43,28 @@
                         <li class="sub_menu--item">
                             <a href="#" class="sub_menu--link">Development</a>
                         </li>
+
+                    </ul>
+                </li>
+                <li class="menu--item  menu--item__has_sub_menu">
+                    <label class="menu--link" title="Wallet">
+                        <i class='uil uil-wallet menu--icon'></i>
+                        <span class="menu--label">Wallet</span>
+                    </label>
+                    <ul class="sub_menu">
                         <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Business</a>
+                            <a href="{{route('my_balance')}}" class="sub_menu--link">My Wallet</a>
                         </li>
+                    </ul>
+                </li>
+                <li class="menu--item  menu--item__has_sub_menu">
+                    <label class="menu--link" title="Wallet">
+                        <i class='uil uil-money-withdraw menu--icon'></i>
+                        <span class="menu--label">Withdrawal</span>
+                    </label>
+                    <ul class="sub_menu">
                         <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Finance & Accounting</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#.html" class="sub_menu--link">IT & Software</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Office Productivity</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Personal Development</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Design</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Marketing</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Lifestyle</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Photography</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Health & Fitness</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Music</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Teaching & Academics</a>
+                            <a href="{{route('withdrawals')}}" class="sub_menu--link">Funds Withdrawal</a>
                         </li>
                     </ul>
                 </li>
@@ -179,12 +169,29 @@
         </div>
         <div class="left_section pt-2">
             <ul>
-                <li class="menu--item">
-                    <a href="setting.html" class="menu--link" title="Setting">
-                        <i class='uil uil-cog menu--icon'></i>
-                        <span class="menu--label">Setting</span>
-                    </a>
-                </li>
+                @if($user_type === 'admin' || $user_type === 'super_admin')
+                    <li class="menu--item  menu--item__has_sub_menu">
+                        <label class="menu--link" title="Setting">
+                            <i class='uil uil-cog menu--icon'></i>
+                            <span class="menu--label">Setting</span>
+                        </label>
+                        <ul class="sub_menu">
+                            <li class="sub_menu--item">
+                                <a href="{{route('main_settings_page')}}" class="sub_menu--link">Main Setting</a>
+                            </li>
+                            <li class="sub_menu--item">
+                                <a href="{{route('app_settings_page')}}" class="sub_menu--link">App Setting</a>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="menu--item">
+                        <a href="{{route('main_settings_page')}}" class="menu--link" title="Setting">
+                            <i class='uil uil-cog menu--icon'></i>
+                            <span class="menu--label">Setting</span>
+                        </a>
+                    </li>
+                @endif
                 <li class="menu--item">
                     <a href="javascript:void(0)" onclick="bringOutModalMain('.logout')" class="menu--link" title="Sign Out">
                         <i class='uil uil-sign-out-alt menu--icon'></i>

@@ -26,6 +26,9 @@
     <link href="{{asset('dashboard/css/instructor-responsive.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/css/night-mode.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/css/jquery-steps.css')}}" rel="stylesheet">
+    <link href="{{asset('dashboard/css/datepicker.min.css')}}" rel="stylesheet">
+    <link href="{{asset('dashboard/css/instructor-dashboard.css')}}" rel="stylesheet">
+    <link href="{{asset('dashboard/css/instructor-responsive.css')}}" rel="stylesheet">
 
     <!-- Vendor Stylesheets -->
     <link href="{{asset('dashboard/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
