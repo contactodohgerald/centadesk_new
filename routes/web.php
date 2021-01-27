@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -16,13 +17,14 @@ use App\Http\Controllers\Auth\VerificationController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/show-csrf', 'HomeController@showToken');
 Route::get('/create-course', 'courseController@index');
 Route::get('/clear-cache', 'HomeController@clear_cache');
 

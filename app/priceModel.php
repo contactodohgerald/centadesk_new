@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
-class course_model extends Model
+class priceModel extends Model
 {
     use Notifiable;
     use SoftDeletes;
-
-    protected $table = 'course_tb';
+    //
+    protected $table = 'price_tb';
     protected $primaryKey = 'unique_id';
     /**
      * Indicates if the model should be timestamped.
@@ -25,5 +25,5 @@ class course_model extends Model
      *
      * @var array
      */
-    protected $fillable = ['unique_id', 'category_id', 'name', 'description', 'cover_image', 'intro_video', 'pricing',];
+    protected $fillable = ['unique_id', 'title', 'amount'];
 }

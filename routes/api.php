@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+Route::group(['middleware' => 'api'], function ($router) {
+
+    // Route::get('/user', function (Request $request) {
+    //     return  $request->all();
+    // });
+
+    Route::post('/create-price', 'priceController@create');
+    Route::post('/create-category', 'CourseCategoryModelController@create');
+});

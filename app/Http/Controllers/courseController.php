@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Validator;
 
 class courseController extends Controller
 {
+
+     function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -71,14 +75,14 @@ class courseController extends Controller
      */
     public function create(Request $request)
     {
-        return $request->user(null);
+        // return $request->user(null);
         //
         try {
             if (!$request->isMethod('POST')) {
                 throw new Exception('This is not a valid request.');
             }
             $validator = Validator::make($request->all(), [
-                'category' => 'required|string|max:15',
+                'category' => 'required|string|max:15|unique:course_category_tb',
                 'name' => 'required|string|max:15',
                 'description' => 'required|min:5',
                 // 'username' => 'required|string|max:15|unique:profile_tb',
