@@ -11,6 +11,7 @@ use App\Http\Controllers\Complain\ComplainHandleController;
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/create-course', 'courseController@index');
+Route::get('/clear-cache', 'HomeController@clear_cache');
+
+
+Route::post('/create-course', 'courseController@create');
 
 /*Auth::routes(['verify' => true]);
 

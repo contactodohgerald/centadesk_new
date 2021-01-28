@@ -17,7 +17,7 @@
 				<div class="row">
 					<div class="col-xl-9 col-lg-8">
 						<div class="section3125">
-							<h4 class="item_title">Live Streams {{ auth()->user() }} </h4>
+							<h4 class="item_title">Live Streams </h4>
 							<a href="live_streams.html" class="see150">See all</a>
 							<div class="la5lo1">
 								<div class="owl-carousel live_stream owl-theme">
