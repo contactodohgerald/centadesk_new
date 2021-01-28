@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 trait Generics{
 
+    function createObject($array){
+        return json_decode(json_encode($array));
+    }
+
     public function random_string ( $type = 'alnum', $len = 60 )
     {
         switch ( $type )
