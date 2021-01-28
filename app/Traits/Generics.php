@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 trait Generics{
 
-    public function random_string ( $type = 'alnum', $len = 60 )
+    public function random_string ( $type = 'alnum', $len = 20 )
     {
         switch ( $type )
         {
