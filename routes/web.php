@@ -6,6 +6,8 @@ use App\Http\Controllers\CurrencyRate\CurrencyRateController;
 use App\Http\Controllers\AppSettings\AppSettingsController;
 use App\Http\Controllers\Wallet\TransactionController;
 use App\Http\Controllers\Wallet\WithdrawalController;
+use App\Http\Controllers\Complain\ComplainController;
+use App\Http\Controllers\Complain\ComplainHandleController;
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -57,7 +59,18 @@ Route::group(['middleware'=>'web'], function(){
 Route::group(['middleware'=>'web'], function(){
     //users
     Route::get('/all_students', [AdminController::class, 'showAllStudents'])->name('all_students');
+    Route::get('/all_instructor', [AdminController::class, 'showAllInstructor'])->name('all_instructor');
 
+});
+
+Route::group(['middleware'=>'web'], function(){
+    //users
+    Route::get('/complain_page', [ComplainController::class, 'complainPage'])->name('complain_page');
+    Route::post('/create_complain', [ComplainController::class, 'createComplain'])->name('create_complain');
+
+    Route::get('/complain_list', [ComplainHandleController::class, 'complainListForAdmin'])->name('complain_list');
+    Route::post('/activate_account', [ComplainHandleController::class, 'activateUserAccount'])->name('activate_account');
+    Route::post('/ignore_request', [ComplainHandleController::class, 'ignoreAccountActivateRequest'])->name('ignore_request');
 });
 
 Route::group(['middleware'=>'web'], function(){
@@ -65,6 +78,7 @@ Route::group(['middleware'=>'web'], function(){
     Route::get('/my_balance', [TransactionController::class, 'myTransaction'])->name('my_balance');
     Route::post('/top_up', [TransactionController::class, 'topUpWallet'])->name('top_up');
     Route::get('/confirm_top_up', [TransactionController::class, 'confirmUserPayments'])->name('confirm_top_up');
+    Route::get('/transaction_history/{unique_id}', [TransactionController::class, 'showTopUpTransaction'])->name('transaction_history');
 
     //withdrawals
     Route::get('/withdrawals', [WithdrawalController::class, 'myWithdrawals'])->name('withdrawals');

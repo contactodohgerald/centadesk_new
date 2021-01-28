@@ -60,7 +60,7 @@
 									<a class="nav-link" id="pills-my-purchases-tab" data-toggle="pill" href="#pills-my-purchases" role="tab" aria-controls="pills-my-purchases" aria-selected="false"><i class="uil uil-download-alt"></i>Pending Transaction</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" id="pills-upcoming-courses-tab" data-toggle="pill" href="#pills-upcoming-courses" role="tab" aria-controls="pills-upcoming-courses" aria-selected="false"><i class="uil uil-upload-alt"></i>Successful Transaction</a>
+									<a class="nav-link" id="pills-upcoming-courses-tab" data-toggle="pill" href="#pills-upcoming-courses" role="tab" aria-controls="pills-upcoming-courses" aria-selected="false"><i class="uil uil-upload-alt"></i>Confirmed Transaction</a>
 								</li>
 							</ul>
 							<div class="tab-content" id="pills-tabContent">
@@ -70,6 +70,10 @@
 											<thead class="thead-s">
 											<tr>
 												<th class="text-center" scope="col">S / N</th>
+												@if(auth()->user()->user_type === 'admin')
+													<th class="text-center" scope="col">Full Name</th>
+													<th class="text-center" scope="col">Email</th>
+												@endif
 												<th class="text-center" scope="col">Amount</th>
 												<th class="text-center" scope="col">Action Type</th>
 												<th class="text-center" scope="col">Reference</th>
@@ -79,7 +83,43 @@
 											</tr>
 											</thead>
 											<tbody>
-
+											@if(count($transaction) > 0)
+												@php $count = 1; @endphp
+												@foreach($transaction  as $k => $each_transaction)
+													<tr>
+														<td class="text-center" scope="col">{{$count}}</td>
+														@if(auth()->user()->user_type === 'admin')
+															<td class="text-center cell-ta">{{$userDetails->name}} {{$userDetails->last_name}}</td>
+															<td class="text-center cell-ta">{{$userDetails->email}}</td>
+														@endif
+														<td class="text-center cell-ta">{{auth()->user()->getAmountForView($each_transaction->amount)['data']['amount']}} ({{auth()->user()->getAmountForView($each_transaction->amount)['data']['currency'] }})</td>
+														<td class="text-center cell-ta">{{$each_transaction->action_type}}</td>
+														<td class="text-center cell-ta">{{$each_transaction->reference}}</td>
+														@php if($each_transaction->status === 'confirmed'){
+																$status = 'Confirmed';
+																$labelColor = 'success';
+															}else if($each_transaction->status === 'pending'){
+																$status = 'Pending';
+																$labelColor = 'warning';
+															}else if($each_transaction->status === 'processing'){
+																$status = 'Processing';
+																$labelColor = 'warning';
+															}else if($each_transaction->status === 'failed'){
+																$status = 'Failed';
+																$labelColor = 'danger';
+															}
+														@endphp
+														<td class="text-center">
+															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+														</td>
+														<td class="text-center cell-ta">{{$each_transaction->created_at}}</td>
+														<td class="text-center">
+															<a target="_blank" href="{{route('transaction_history', $each_transaction->unique_id)}}" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
+														</td>
+													</tr>
+													@php $count++ @endphp
+												@endforeach
+											@endif
 											</tbody>
 										</table>
 									</div>
@@ -90,6 +130,10 @@
 											<thead class="thead-s">
 											<tr>
 												<th class="text-center" scope="col">S / N</th>
+												@if(auth()->user()->user_type === 'admin')
+													<th class="text-center" scope="col">Full Name</th>
+													<th class="text-center" scope="col">Email</th>
+												@endif
 												<th class="text-center" scope="col">Amount</th>
 												<th class="text-center" scope="col">Action Type</th>
 												<th class="text-center" scope="col">Reference</th>
@@ -99,7 +143,43 @@
 											</tr>
 											</thead>
 											<tbody>
-
+											@if(count($pending_transaction) > 0)
+												@php $count = 1; @endphp
+												@foreach($pending_transaction  as $k => $each_pending_transaction)
+													<tr>
+														<td class="text-center" scope="col">{{$count}}</td>
+														@if(auth()->user()->user_type === 'admin')
+															<td class="text-center cell-ta">{{$userDetails->name}} {{$userDetails->last_name}}</td>
+															<td class="text-center cell-ta">{{$userDetails->email}}</td>
+														@endif
+														<td class="text-center cell-ta">{{auth()->user()->getAmountForView($each_pending_transaction->amount)['data']['amount']}} ({{auth()->user()->getAmountForView($each_pending_transaction->amount)['data']['currency'] }})</td>
+														<td class="text-center cell-ta">{{$each_pending_transaction->action_type}}</td>
+														<td class="text-center cell-ta">{{$each_pending_transaction->reference}}</td>
+														@php if($each_pending_transaction->status === 'confirmed'){
+																$status = 'Confirmed';
+																$labelColor = 'info';
+															}else if($each_pending_transaction->status === 'pending'){
+																$status = 'Pending';
+																$labelColor = 'warning';
+															}else if($each_pending_transaction->status === 'processing'){
+																$status = 'Processing';
+																$labelColor = 'warning';
+															}else if($each_pending_transaction->status === 'failed'){
+																$status = 'Failed';
+																$labelColor = 'danger';
+															}
+														@endphp
+														<td class="text-center">
+															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+														</td>
+														<td class="text-center cell-ta">{{$each_pending_transaction->created_at}}</td>
+														<td class="text-center">
+															<a target="_blank" href="{{route('transaction_history', $each_pending_transaction->unique_id)}}" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
+														</td>
+													</tr>
+													@php $count++ @endphp
+												@endforeach
+											@endif
 											</tbody>
 										</table>
 									</div>
@@ -110,6 +190,10 @@
 											<thead class="thead-s">
 											<tr>
 												<th class="text-center" scope="col">S / N</th>
+												@if(auth()->user()->user_type === 'admin')
+													<th class="text-center" scope="col">Full Name</th>
+													<th class="text-center" scope="col">Email</th>
+												@endif
 												<th class="text-center" scope="col">Amount</th>
 												<th class="text-center" scope="col">Action Type</th>
 												<th class="text-center" scope="col">Reference</th>
@@ -119,7 +203,43 @@
 											</tr>
 											</thead>
 											<tbody>
-
+											@if(count($successful_transaction) > 0)
+												@php $count = 1; @endphp
+												@foreach($successful_transaction  as $k => $each_successful_transaction)
+													<tr>
+														<td class="text-center" scope="col">{{$count}}</td>
+														@if(auth()->user()->user_type === 'admin')
+															<td class="text-center cell-ta">{{$userDetails->name}} {{$userDetails->last_name}}</td>
+															<td class="text-center cell-ta">{{$userDetails->email}}</td>
+														@endif
+														<td class="text-center cell-ta">{{auth()->user()->getAmountForView($each_successful_transaction->amount)['data']['amount']}} ({{auth()->user()->getAmountForView($each_successful_transaction->amount)['data']['currency'] }})</td>
+														<td class="text-center cell-ta">{{$each_transaction->action_type}}</td>
+														<td class="text-center cell-ta">{{$each_transaction->reference}}</td>
+														@php if($each_successful_transaction->status === 'confirmed'){
+																$status = 'Confirmed';
+																$labelColor = 'success';
+															}else if($each_successful_transaction->status === 'pending'){
+																$status = 'Pending';
+																$labelColor = 'warning';
+															}else if($each_successful_transaction->status === 'processing'){
+																$status = 'Processing';
+																$labelColor = 'warning';
+															}else if($each_successful_transaction->status === 'failed'){
+																$status = 'Failed';
+																$labelColor = 'danger';
+															}
+														@endphp
+														<td class="text-center">
+															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+														</td>
+														<td class="text-center cell-ta">{{$each_successful_transaction->created_at}}</td>
+														<td class="text-center">
+															<a target="_blank" href="{{route('transaction_history', $each_successful_transaction->unique_id)}}" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
+														</td>
+													</tr>
+													@php $count++ @endphp
+												@endforeach
+											@endif
 											</tbody>
 										</table>
 									</div>

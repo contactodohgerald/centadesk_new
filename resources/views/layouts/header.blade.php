@@ -134,12 +134,12 @@
                             <img src="{{asset('dashboard/images/hd_dp.jpg')}}" alt="">
                             <div class="pd_content">
                                 <div class="rhte85">
-                                    <h6>Joginder Singh</h6>
+                                    <h6>{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
                                     <div class="mef78" title="Verify">
                                         <i class='uil uil-check-circle'></i>
                                     </div>
                                 </div>
-                                <span>gambol943@gmail.com</span>
+                                <span>{{auth()->user()->email}}</span>
                             </div>
                         </div>
                         <a href="my_instructor_profile_view.html" class="dp_link_12">View Instructor Profile</a>

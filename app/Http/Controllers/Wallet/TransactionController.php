@@ -28,8 +28,63 @@ class TransactionController extends Controller
 
         $userDetails = Auth::user();
 
-        return view('dashboard.my_wallet', ['userDetails'=>$userDetails]);
+        if ($userDetails === 'admin'){
 
+            $condition = [
+                ['action_type', 'top_up'],
+            ];
+            $transaction = $this->transactionModel->getAllTransaction($condition);
+
+            $conditions = [
+                ['action_type', 'top_up'],
+                ['status', 'pending'],
+            ];
+            $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
+
+            $conditionss = [
+                ['action_type', 'top_up'],
+                ['status', 'confirmed'],
+            ];
+            $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
+        }else{
+            $condition = [
+                ['user_unique_id', $userDetails->unique_id],
+                ['action_type', 'top_up'],
+            ];
+            $transaction = $this->transactionModel->getAllTransaction($condition);
+
+            $conditions = [
+                ['user_unique_id', $userDetails->unique_id],
+                ['action_type', 'top_up'],
+                ['status', 'pending'],
+            ];
+            $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
+
+            $conditionss = [
+                ['user_unique_id', $userDetails->unique_id],
+                ['action_type', 'top_up'],
+                ['status', 'confirmed'],
+            ];
+            $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
+        }
+
+        $data = ['transaction'=>$transaction, 'pending_transaction'=>$pending_transaction, 'successful_transaction'=>$successful_transaction, 'userDetails'=>$userDetails];
+
+        return view('dashboard.my_wallet', $data);
+
+    }
+
+    public function showTopUpTransaction($unique_id){
+
+        $userDetails = Auth::user();
+
+        $condition = [
+            ['unique_id', $unique_id]
+        ];
+
+        $transactions = $this->transactionModel->getSingleTransaction($condition);
+
+        return view('dashboard.transaction_history', ['userDetails'=>$userDetails, 'transactions'=>$transactions]);
     }
 
     protected function Validator($request){
@@ -59,7 +114,9 @@ class TransactionController extends Controller
             $request = $user_details;
             $request->unique_id = $unique_id;
             $request->user_unique_id = $user_unique_id;
+            $request->type_of_user = $user_details->user_type;
             $request->currency = $user_preferred_currency;
+            $request->reference = $unique_id;
             $request->amount = $this->getAmountForDatabase($inputed_amount)['data']['amount'];
             $request->description = 'Wallet Top Up';
             $request->action_type = 'top_up';
@@ -134,7 +191,7 @@ class TransactionController extends Controller
 
                 //update the PayForBookByUser table
                 $transactionModel->flw_ref = $decoded_response['data']['flw_ref'];
-                $transactionModel->status = 'successful';
+                $transactionModel->status = 'confirmed';
                 $transactionModel->account_token = $decoded_response['data']['account']['account_token'];
                 $transactionModel->consumer_id = $decoded_response['data']['meta']['consumer_id'];
                 $transactionModel->consumer_mac = $decoded_response['data']['meta']['consumer_mac'];

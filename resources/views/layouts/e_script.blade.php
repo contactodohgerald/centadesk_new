@@ -39,6 +39,11 @@
         }
     }
 
+    function addUniqueIdToInputField(a){
+        let txt = $(a).attr('item_id');
+        $('.delete_id').val(txt);
+    }
+
 </script>
 
 
