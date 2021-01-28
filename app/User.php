@@ -64,6 +64,14 @@ class User extends Authenticatable
 
     }
 
+    public function getAllUsers($condition, $id = 'id', $desc = 'desc'){
+
+        $users = User::orderBy($id, $desc)->where($condition)->get();
+
+        return $users;
+
+    }
+
     function getBalanceForView(){
 
         if(Auth::check()) {

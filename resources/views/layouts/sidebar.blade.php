@@ -1,5 +1,12 @@
 @php
 $user_type = auth()->user()->user_type;
+
+ $condition = [
+    ['status', 'pending'],
+    ['ignore_status', 'no'],
+ ];
+$complain = new \App\Model\AccountResolve();
+$complains = $complain->getAllOfComplain($condition);
 @endphp
 <nav class="vertical_nav">
     <div class="left_section menu_left" id="js-menu" >
@@ -78,7 +85,7 @@ $user_type = auth()->user()->user_type;
                             <a href="{{route('all_students')}}" class="sub_menu--link">Students</a>
                         </li>
                         <li class="sub_menu--item">
-                            <a href="certification_start_form.html" class="sub_menu--link">Teachers / Instructors</a>
+                            <a href="{{route('all_instructor')}}" class="sub_menu--link">Teachers / Instructors</a>
                         </li>
                     </ul>
                 </li>
@@ -183,11 +190,17 @@ $user_type = auth()->user()->user_type;
         </div>
         <div class="left_section pt-2">
             <ul>
+                <li class="menu--item">
+                    <a href="{{route('complain_list')}}" class="menu--link" title="Complains">
+                        <i class='uil uil-auto-flash menu--icon'></i>
+                        <span class="menu--label">Complains <span class="noti_count">{{$complains->count()}}</span></span>
+                    </a>
+                </li>
                 @if($user_type === 'admin' || $user_type === 'super_admin')
                     <li class="menu--item  menu--item__has_sub_menu">
                         <label class="menu--link" title="Setting">
                             <i class='uil uil-cog menu--icon'></i>
-                            <span class="menu--label">Setting</span>
+                            <span class="menu--label">Setting </span>
                         </label>
                         <ul class="sub_menu">
                             <li class="sub_menu--item">

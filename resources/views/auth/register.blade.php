@@ -187,7 +187,7 @@
 
                                 <input type="hidden" name="user_type" value="student">
 
-                                <button class="login-btn" type="submit">Instructor Sign Up Now</button>
+                                <button class="login-btn" type="submit">Student Sign Up Now</button>
                             </form>
                         </div>
                     </div>
