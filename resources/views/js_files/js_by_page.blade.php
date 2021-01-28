@@ -3,7 +3,7 @@
 @php $currentPageName = Request::segment(1); @endphp
 @if(in_array($currentPageName, $dataTablePages))
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.10.22/mdash/js_2/jquery.dataTables.min.js" ></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" ></script>
     <script>
         $(document).ready( function () {
             $('#myTable').DataTable();
