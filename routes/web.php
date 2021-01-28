@@ -10,7 +10,6 @@ use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\Auth\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
