@@ -13,6 +13,7 @@ class priceModel extends Model
     //
     protected $table = 'price_tb';
     protected $primaryKey = 'unique_id';
+    protected $keyType = 'unique_id';
     /**
      * Indicates if the model should be timestamped.
      *

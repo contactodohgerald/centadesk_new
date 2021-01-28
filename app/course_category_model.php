@@ -14,6 +14,7 @@ class course_category_model extends Model
 
     protected $table = 'course_category_tb';
     protected $primaryKey = 'unique_id';
+    protected $keyType = 'unique_id';
     /**
      * Indicates if the model should be timestamped.
      *

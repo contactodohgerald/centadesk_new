@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use App\course_category_model;
+use App\priceModel;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class courseController extends Controller
 {
 
-     function __construct() {
+    function __construct()
+    {
         $this->middleware('auth');
     }
     /**
@@ -19,54 +23,20 @@ class courseController extends Controller
      */
     public function index()
     {
-        //
         // return csrf_token();
-        return view('dashboard.create-course');
+
+        $all_category = course_category_model::all();
+        $all_price = priceModel::all();
+        $user = auth()->user();
+        $view = [
+            'category' => $all_category,
+            'pricing' => $all_price,
+            'user'=> $user,
+        ];
+        // return $view;
+        return view('dashboard.create-course', $view);
     }
 
-    // public function createNewGame(Request $request){
-    //     $data = $request->all();
-
-    //     $day = $data['total_number_days_before_draw'];
-
-    //     $now = Carbon::now();
-
-    //     $date = $now->addDays($day)->isoFormat('MMM D, YYYY h:mm:ss');
-
-    //     try{
-    //         $this->Validator($request);//validate fields
-
-    //         $unique_id = $this->createUniqueId('lotto_settings', 'unique_id');
-
-    //         $currencyRate = new CurrencyRatesModel;
-    //         $convertedPrice = $currencyRate->getAmountForDatabase($data['lowest_stack_amount']);
-
-    //         $newGames = new LottoSettings;
-    //         $newGames->unique_id = $unique_id;
-    //         $newGames->title_of_game = $data['title_of_game'];
-    //         $newGames->type_of_game = $data['type_of_game'];
-    //         $newGames->total_numbers = $data['total_numbers'];
-    //         $newGames->total_numbers_to_select = $data['total_numbers_to_select'];
-    //         $newGames->total_numbers_for_result = $data['total_numbers_for_result'];
-    //         $newGames->total_number_days_before_draw = $date;
-    //         $newGames->total_numbers_of_days_for_draw_in_number = $day;
-    //         $newGames->lowest_stack_amount = $convertedPrice['data']['amount'];
-    //         $newGames->percentage_win = $data['percentage_win'];
-    //         $newGames->number_of_correct_games_for_a_win = $data['number_of_correct_correct_games'];
-
-    //         if ($newGames->save()){
-    //             return redirect('/create_game')->with('success_message', 'Game Was Created Successfully');
-    //         }else{
-    //             return redirect('/create_game')->with('error_message', 'An Error occurred, Please try Again Later');
-    //         }
-
-    //     }catch (Exception $exception){
-
-    //         $errorsArray = $exception->getMessage();
-    //         return  redirect('create_game')->with('error_message', $errorsArray);
-
-    //     }
-    // }
 
     /**
      * Show the form for creating a new resource.
