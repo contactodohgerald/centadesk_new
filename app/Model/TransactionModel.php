@@ -13,6 +13,10 @@ class TransactionModel extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public function users(){
+        return $this->belongsTo('App\User', 'user_unique_id');
+    }
+
     function getSingleTransaction($condition){
 
         $transactionModel = TransactionModel::where($condition)->first();
@@ -42,7 +46,7 @@ class TransactionModel extends Model
         $transaction->description = $requestObject->description;
         $transaction->action_type = $requestObject->action_type;
         $transaction->status = $requestObject->status;
-        $transaction->reference = $requestObject->reference ?? '';
+        $transaction->reference = $requestObject->unique_id ?? '';
         $transaction->country = $requestObject->country ?? '';
         $transaction->currency = $requestObject->currency ?? '';
         $transaction->customer = $requestObject->customer ?? '';

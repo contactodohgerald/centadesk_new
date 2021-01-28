@@ -1,4 +1,8 @@
-﻿@php $pageTitle = 'Funds Withdrawals Area'; @endphp
+﻿@php
+	$pageTitle = 'Funds Withdrawals Area';
+	$users = auth()->user();
+	$user_type = $users->user_type;
+@endphp
 @include('layouts.head')
 
 <body>
@@ -18,6 +22,7 @@
 					<div class="col-lg-12">
 						<h2 class="st_title"><i class="uil uil-money-withdraw"></i>Funds Withdrawals</h2>
 					</div>
+					@if($user_type !== 'admin')
 					<div class="col-md-12">
 						<div class="card_dash1">
 							<div class="row">
@@ -65,6 +70,7 @@
 							</div>
 						</div>
 					</div>
+					@endif
 				</div>
 				<div class="row">
 					<div class="col-md-12">
@@ -91,13 +97,57 @@
 												<th class="text-center" scope="col">Bank Name</th>
 												<th class="text-center" scope="col">Account Number</th>
 												<th class="text-center" scope="col">Account Name</th>
+												@if($user_type === 'admin')
+												<th class="text-center" scope="col">Email</th>
+												@endif
+												<th class="text-center" scope="col">Action Type</th>
+												<th class="text-center" scope="col">Reference</th>
 												<th class="text-center" scope="col">Status</th>
 												<th class="text-center" scope="col">Withdrawal Date</th>
 												<th class="text-center" scope="col">Action</th>
 											</tr>
 											</thead>
 											<tbody>
-
+												@if(count($transaction) > 0)
+												@php $count = 1; @endphp
+												@foreach($transaction  as $k => $each_transaction)
+													<tr>
+														<td class="text-center" scope="col">{{$count}}</td>
+														<td class="text-center cell-ta">{{$users->getAmountForView($each_transaction->amount)['data']['amount']}} ({{$users->getAmountForView($each_transaction->amount)['data']['currency'] }})</td>
+														<td class="text-center cell-ta">Bank</td>
+														<td class="text-center cell-ta">Number</td>
+														<td class="text-center cell-ta">Name</td>
+														@if($user_type === 'admin')
+															<td class="text-center cell-ta">{{$each_transaction->users->email}}</td>
+														@endif
+														<td class="text-center cell-ta">{{$each_transaction->action_type}}</td>
+														<td class="text-center cell-ta">{{$each_transaction->reference}}</td>
+														@php if($each_transaction->status === 'confirmed'){
+																$status = 'Confirmed';
+																$labelColor = 'success';
+															}else if($each_transaction->status === 'pending'){
+																$status = 'Pending';
+																$labelColor = 'warning';
+															}else if($each_transaction->status === 'processing'){
+																$status = 'Processing';
+																$labelColor = 'warning';
+															}else if($each_transaction->status === 'failed'){
+																$status = 'Failed';
+																$labelColor = 'danger';
+															}
+														@endphp
+														<td class="text-center">
+															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+														</td>
+														<td class="text-center cell-ta">{{$each_transaction->created_at}}</td>
+														<td class="text-center">
+															<a href="#" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
+															<a href="#" title="Delete" class="gray-s"><i class="uil uil-trash-alt"></i></a>
+														</td>
+													</tr>
+													@php $count++ @endphp
+												@endforeach
+											@endif
 											</tbody>
 										</table>
 									</div>
@@ -112,13 +162,57 @@
 												<th class="text-center" scope="col">Bank Name</th>
 												<th class="text-center" scope="col">Account Number</th>
 												<th class="text-center" scope="col">Account Name</th>
+												@if($user_type === 'admin')
+													<th class="text-center" scope="col">Email</th>
+												@endif
+												<th class="text-center" scope="col">Action Type</th>
+												<th class="text-center" scope="col">Reference</th>
 												<th class="text-center" scope="col">Status</th>
 												<th class="text-center" scope="col">Withdrawal Date</th>
 												<th class="text-center" scope="col">Action</th>
 											</tr>
 											</thead>
 											<tbody>
-
+											@if(count($pending_transaction) > 0)
+												@php $count = 1; @endphp
+												@foreach($pending_transaction  as $k => $each_pending_transaction)
+													<tr>
+														<td class="text-center" scope="col">{{$count}}</td>
+														<td class="text-center cell-ta">{{$users->getAmountForView($each_pending_transaction->amount)['data']['amount']}} ({{$users->getAmountForView($each_pending_transaction->amount)['data']['currency'] }})</td>
+														<td class="text-center cell-ta">Bank</td>
+														<td class="text-center cell-ta">Number</td>
+														<td class="text-center cell-ta">Name</td>
+														@if($user_type === 'admin')
+															<td class="text-center cell-ta">{{$each_pending_transaction->users->email}}</td>
+														@endif
+														<td class="text-center cell-ta">{{$each_pending_transaction->action_type}}</td>
+														<td class="text-center cell-ta">{{$each_pending_transaction->reference}}</td>
+														@php if($each_pending_transaction->status === 'confirmed'){
+																$status = 'Confirmed';
+																$labelColor = 'success';
+															}else if($each_pending_transaction->status === 'pending'){
+																$status = 'Pending';
+																$labelColor = 'warning';
+															}else if($each_pending_transaction->status === 'processing'){
+																$status = 'Processing';
+																$labelColor = 'warning';
+															}else if($each_pending_transaction->status === 'failed'){
+																$status = 'Failed';
+																$labelColor = 'danger';
+															}
+														@endphp
+														<td class="text-center">
+															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+														</td>
+														<td class="text-center cell-ta">{{$each_pending_transaction->created_at}}</td>
+														<td class="text-center">
+															<a href="#" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
+															<a href="#" title="Delete" class="gray-s"><i class="uil uil-trash-alt"></i></a>
+														</td>
+													</tr>
+													@php $count++ @endphp
+												@endforeach
+											@endif
 											</tbody>
 										</table>
 									</div>
@@ -133,13 +227,57 @@
 												<th class="text-center" scope="col">Bank Name</th>
 												<th class="text-center" scope="col">Account Number</th>
 												<th class="text-center" scope="col">Account Name</th>
+												@if($user_type === 'admin')
+													<th class="text-center" scope="col">Email</th>
+												@endif
+												<th class="text-center" scope="col">Action Type</th>
+												<th class="text-center" scope="col">Reference</th>
 												<th class="text-center" scope="col">Status</th>
 												<th class="text-center" scope="col">Withdrawal Date</th>
 												<th class="text-center" scope="col">Action</th>
 											</tr>
 											</thead>
 											<tbody>
-
+											@if(count($successful_transaction) > 0)
+												@php $count = 1; @endphp
+												@foreach($successful_transaction  as $k => $each_successful_transaction)
+													<tr>
+														<td class="text-center" scope="col">{{$count}}</td>
+														<td class="text-center cell-ta">{{$users->getAmountForView($each_successful_transaction->amount)['data']['amount']}} ({{$users->getAmountForView($each_successful_transaction->amount)['data']['currency'] }})</td>
+														<td class="text-center cell-ta">Bank</td>
+														<td class="text-center cell-ta">Number</td>
+														<td class="text-center cell-ta">Name</td>
+														@if($user_type === 'admin')
+															<td class="text-center cell-ta">{{$each_successful_transaction->users->email}}</td>
+														@endif
+														<td class="text-center cell-ta">{{$each_successful_transaction->action_type}}</td>
+														<td class="text-center cell-ta">{{$each_successful_transaction->reference}}</td>
+														@php if($each_successful_transaction->status === 'confirmed'){
+																$status = 'Confirmed';
+																$labelColor = 'success';
+															}else if($each_successful_transaction->status === 'pending'){
+																$status = 'Pending';
+																$labelColor = 'warning';
+															}else if($each_successful_transaction->status === 'processing'){
+																$status = 'Processing';
+																$labelColor = 'warning';
+															}else if($each_successful_transaction->status === 'failed'){
+																$status = 'Failed';
+																$labelColor = 'danger';
+															}
+														@endphp
+														<td class="text-center">
+															<button class="btn btn-{{$labelColor}}">{{$status}}</button>
+														</td>
+														<td class="text-center cell-ta">{{$each_successful_transaction->created_at}}</td>
+														<td class="text-center">
+															<a href="#" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
+															<a href="#" title="Delete" class="gray-s"><i class="uil uil-trash-alt"></i></a>
+														</td>
+													</tr>
+													@php $count++ @endphp
+												@endforeach
+											@endif
 											</tbody>
 										</table>
 									</div>

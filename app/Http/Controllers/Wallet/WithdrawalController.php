@@ -24,7 +24,61 @@ class WithdrawalController extends Controller
 
     public function myWithdrawals(){
 
-        return view('dashboard.withdrawals');
+        $userDetails = Auth::user();
+
+        if ($userDetails === 'admin'){
+
+            $condition = [
+                ['action_type', 'withdrawal'],
+            ];
+            $transaction = $this->transactionModel->getAllTransaction($condition);
+
+            $conditions = [
+                ['action_type', 'withdrawal'],
+                ['status', 'pending'],
+            ];
+            $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
+
+            $conditionss = [
+                ['action_type', 'withdrawal'],
+                ['status', 'confirmed'],
+            ];
+            $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
+        }else{
+            $condition = [
+                ['user_unique_id', $userDetails->unique_id],
+                ['action_type', 'withdrawal'],
+            ];
+            $transaction = $this->transactionModel->getAllTransaction($condition);
+
+            $conditions = [
+                ['user_unique_id', $userDetails->unique_id],
+                ['action_type', 'withdrawal'],
+                ['status', 'pending'],
+            ];
+            $pending_transaction = $this->transactionModel->getAllTransaction($conditions);
+
+            $conditionss = [
+                ['user_unique_id', $userDetails->unique_id],
+                ['action_type', 'withdrawal'],
+                ['status', 'confirmed'],
+            ];
+            $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
+        }
+
+        foreach ($transaction as $each_transaction){
+            $each_transaction->users;
+        }
+        foreach ($pending_transaction as $each_pending_transaction){
+            $each_pending_transaction->users;
+        }
+        foreach ($successful_transaction as $each_successful_transaction){
+            $each_successful_transaction->users;
+        }
+
+        $data = ['transaction'=>$transaction, 'pending_transaction'=>$pending_transaction, 'successful_transaction'=>$successful_transaction, 'userDetails'=>$userDetails];
+
+        return view('dashboard.withdrawals', $data);
 
     }
 
