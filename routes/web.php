@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Roles\AddRolesController;
+use App\Http\Controllers\Roles\RolesController;
+use App\Http\Controllers\Roles\UserTypeController;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Verifications\VerifyBankController;
 use App\Http\Controllers\CurrencyRate\CurrencyRateController;
@@ -24,13 +28,14 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/show-csrf', 'HomeController@showToken');
 Route::get('/create-course', 'courseController@index');
 Route::get('/clear-cache', 'HomeController@clear_cache');
 
@@ -100,3 +105,18 @@ Route::group(['middleware'=>'web'], function(){
     Route::post('/add-bank', [VerifyBankController::class, 'addBank'])->name('add-bank');
 
 });
+
+//Route::group(['middleware'=>'web'], function(){
+    //bank verification
+    //add roles area
+    Route::get('/add_roles', [RolesController::class, 'create'])->name('add_roles');
+    Route::get('/view_all_roles', [RolesController::class, 'index'])->name('view_all_roles');
+    Route::post('/store_role', [RolesController::class, 'store'])->name('store_role');
+    Route::get('/add_role_for_user/{userTypeId}', [AddRolesController::class, 'index'])->name('add_role_for_user');
+    Route::post('/store_role_for_user/{userTypeId}', [AddRolesController::class, 'store'])->name('store_role_for_user');
+    //add user type
+    Route::get('/add_user_type', [UserTypeController::class, 'create'])->name('add_user_type');
+    Route::get('/all_user_type', [UserTypeController::class, 'index'])->name('all_user_type');
+    Route::post('/store_user_type', [UserTypeController::class, 'store'])->name('store_user_type');
+
+//});

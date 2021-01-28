@@ -1,7 +1,7 @@
 <footer class="footer mt-30">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-6">
+        {{-- <div class="row"> --}}
+            {{-- <div class="col-lg-3 col-md-3 col-sm-6">
                 <div class="item_f1">
                     <a href="about_us.html">About</a>
                     <a href="our_blog.html">Blog</a>
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-12">
                 <div class="footer_bottm">
                     <div class="row">
@@ -166,6 +166,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        {{-- </div> --}}
     </div>
 </footer>

@@ -4,6 +4,9 @@ namespace App;
 
 use App\Model\AppSettings;
 use App\Model\CurrencyRatesModel;
+use App\Model\Previledges;
+use App\Model\RolesModel;
+use App\Model\UserTypesModel;
 use App\Traits\Generics;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -123,4 +126,35 @@ class User extends Authenticatable
     public function currency_details(){
         return $this->belongsTo('App\Model\CurrencyRatesModel', 'preferred_currency');
     }
+
+    function returnLink(){
+
+        if(env('APP_ENV', 'production')){
+            return 'storage/public/img/';
+        }else{
+            return 'storage/img/';
+        }
+
+    }
+
+    function privilegeChecker($role){
+
+        if(Auth::check()){
+            $userDetails = Auth::user();
+            $userType = $userDetails->type_of_user;
+            $typOfUserDetails = UserTypesModel::where('type_of_user', $userType)->first();
+            $roleDetails = RolesModel::where('role', $role)->first();
+            if($typOfUserDetails === null || $roleDetails === null){
+                return false;
+            }
+            //get the previledges
+            $priviledgesDetails = Previledges::where('role_id', $roleDetails->unique_id)->where('type_of_user_id', $typOfUserDetails->unique_id)->first();
+            if($priviledgesDetails !== null){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
