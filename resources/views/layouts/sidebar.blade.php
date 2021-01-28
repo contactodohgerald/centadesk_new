@@ -219,6 +219,23 @@ $complains = $complain->getAllOfComplain($condition);
                         </a>
                     </li>
                 @endif
+
+                @if(auth()->user()->privilegeChecker('view_roles'))
+                <li class="menu--item  menu--item__has_sub_menu">
+                    <label class="menu--link" title="Setting">
+                        <i class='uil uil-cog menu--icon'></i>
+                        <span class="menu--label">Roles Management </span>
+                    </label>
+                    <ul class="sub_menu">
+
+                        <li class="sub_menu--item"><a href="{{route('add_roles')}}"><span class="mini-sub-pro">Add New Roles</span></a></li>
+                        <li class="sub_menu--item"><a href="{{route('add_user_type')}}"><span class="mini-sub-pro">Add User type</span></a></li>
+                        <li class="sub_menu--item"><a href="{{route('view_all_roles')}}"><span class="mini-sub-pro">View Roles</span></a></li>
+                        <li class="sub_menu--item"><a href="{{route('all_user_type')}}"><span class="mini-sub-pro">View User Types</span></a></li>
+                    </ul>
+                </li>
+                @endif
+
                 <li class="menu--item">
                     <a href="javascript:void(0)" onclick="bringOutModalMain('.logout')" class="menu--link" title="Sign Out">
                         <i class='uil uil-sign-out-alt menu--icon'></i>
