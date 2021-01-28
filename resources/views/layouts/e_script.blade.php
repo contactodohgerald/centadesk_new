@@ -9,7 +9,7 @@
 <script src="{{asset('dashboard/js/custom.js')}}"></script>
 <script src="{{asset('dashboard/js/night-mode.js')}}"></script>
 
-{{-- <script src="{{asset('dashboard/js/jquery-steps.min.js')}}"></script> --}}
+<script src="{{asset('dashboard/js/jquery-steps.min.js')}}"></script>
 
 <script src="{{asset('dashboard/js/datepicker.min.js')}}"></script>
 <script src="{{asset('dashboard/js/datepicker.en.js')}}"></script>
@@ -45,6 +45,11 @@
                 $(selected[i]).css({'display':'block'});
             }
         }
+    }
+
+    function addUniqueIdToInputField(a){
+        let txt = $(a).attr('item_id');
+        $('.delete_id').val(txt);
     }
 
 </script>

@@ -4,18 +4,15 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
-use App\course_category_model;
-use App\priceModel;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\course_category_model;
+use App\Traits\Generics;
+use App\Traits\appFunction;
 
-class courseController extends Controller
+class CourseCategoryModelController extends Controller
 {
-
-    function __construct()
-    {
-        $this->middleware('auth');
-    }
+    use Generics;
+    use appFunction;
     /**
      * Display a listing of the resource.
      *
@@ -23,20 +20,8 @@ class courseController extends Controller
      */
     public function index()
     {
-        // return csrf_token();
-
-        $all_category = course_category_model::all();
-        $all_price = priceModel::all();
-        $user = auth()->user();
-        $view = [
-            'category' => $all_category,
-            'pricing' => $all_price,
-            'user'=> $user,
-        ];
-        // return $view;
-        return view('dashboard.create-course', $view);
+        //
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -45,33 +30,36 @@ class courseController extends Controller
      */
     public function create(Request $request)
     {
-        // return $request->user(null);
-        //
         try {
             if (!$request->isMethod('POST')) {
                 throw new Exception('This is not a valid request.');
             }
             $validator = Validator::make($request->all(), [
-                'category' => 'required|string|max:15|unique:course_category_tb',
                 'name' => 'required|string|max:15',
-                'description' => 'required|min:5',
-                // 'username' => 'required|string|max:15|unique:profile_tb',
-                // 'gender' => 'required|string|max:10',
+                'description' => 'required|min:5'
             ]);
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors(), 'status' => false]);
             }
-            $title = $request->input('title');
-            $category = $request->input('category');
+            $unique_id = $this->createUniqueId('price_tb', 'unique_id');
             $name = $request->input('name');
             $description = $request->input('description');
+
+            $course_category = course_category_model::create([
+                'unique_id' => $unique_id,
+                'name' => $name,
+                'description' => $description,
+            ]);
+
+            if (!$course_category->unique_id) {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            } else {
+                return response()->json(['message' => $this->successMsg('Category')['msg'], 'status' => true]);
+            }
         } catch (Exception $e) {
 
-            $error = $e->getMessage();
-            $error = [
-                'errors' => $error,
-            ];
-            return response()->json(["message" => $error, 'status' => false]);
+            $errorsArray = [$e->getMessage()];
+            return response()->json(['message' => ['error' => $errorsArray], 'status' => false]);
         }
     }
 
@@ -89,10 +77,10 @@ class courseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\course_category_model  $course_category_model
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(course_category_model $course_category_model)
     {
         //
     }
@@ -100,10 +88,10 @@ class courseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\course_category_model  $course_category_model
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(course_category_model $course_category_model)
     {
         //
     }
@@ -112,10 +100,10 @@ class courseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\course_category_model  $course_category_model
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, course_category_model $course_category_model)
     {
         //
     }
@@ -123,10 +111,10 @@ class courseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\course_category_model  $course_category_model
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(course_category_model $course_category_model)
     {
         //
     }
