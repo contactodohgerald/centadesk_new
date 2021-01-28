@@ -14,7 +14,8 @@ trait Generics{
         return json_decode(json_encode($array));
     }
 
-    public function random_string ( $type = 'alnum', $len = 60 )
+    public function random_string ( $type = 'alnum', $len = 20 )
+
     {
         switch ( $type )
         {
