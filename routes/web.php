@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Verifications\VerifyBankController;
 use App\Http\Controllers\CurrencyRate\CurrencyRateController;
@@ -24,13 +25,14 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/show-csrf', 'HomeController@showToken');
 Route::get('/create-course', 'courseController@index');
 Route::get('/clear-cache', 'HomeController@clear_cache');
 

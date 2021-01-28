@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\priceModel;
 use Exception;
 use Illuminate\Http\Request;
-use App\course_category_model;
-use App\priceModel;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\Generics;
+use App\Traits\appFunction;
 
-class courseController extends Controller
+class priceController extends Controller
 {
+    use Generics;
+    use appFunction;
 
-    function __construct()
-    {
-        $this->middleware('auth');
-    }
+
+    // function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -23,20 +26,8 @@ class courseController extends Controller
      */
     public function index()
     {
-        // return csrf_token();
-
-        $all_category = course_category_model::all();
-        $all_price = priceModel::all();
-        $user = auth()->user();
-        $view = [
-            'category' => $all_category,
-            'pricing' => $all_price,
-            'user'=> $user,
-        ];
-        // return $view;
-        return view('dashboard.create-course', $view);
+        //
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -45,33 +36,37 @@ class courseController extends Controller
      */
     public function create(Request $request)
     {
-        // return $request->user(null);
-        //
+        // return $request['title'];
         try {
             if (!$request->isMethod('POST')) {
                 throw new Exception('This is not a valid request.');
             }
             $validator = Validator::make($request->all(), [
-                'category' => 'required|string|max:15|unique:course_category_tb',
-                'name' => 'required|string|max:15',
-                'description' => 'required|min:5',
-                // 'username' => 'required|string|max:15|unique:profile_tb',
-                // 'gender' => 'required|string|max:10',
+                'title' => 'required|string|max:15',
+                'amount' => 'required|max:9',
             ]);
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors(), 'status' => false]);
+                return response()->json(['message' => $validator->errors(), 'status' => false]);
             }
-            $title = $request->input('title');
-            $category = $request->input('category');
-            $name = $request->input('name');
-            $description = $request->input('description');
+            $unique_id = $this->createUniqueId('price_tb', 'unique_id');
+            $title = $request['title'];
+            $amount = $request['amount'];
+
+            $pricing = priceModel::create([
+                'unique_id' => $unique_id,
+                'title' => $title,
+                'amount' => $amount,
+            ]);
+
+            if (!$pricing->unique_id) {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            } else {
+                return response()->json(['message' => $this->successMsg('Pricing')['msg'], 'status' => true]);
+            }
         } catch (Exception $e) {
 
-            $error = $e->getMessage();
-            $error = [
-                'errors' => $error,
-            ];
-            return response()->json(["message" => $error, 'status' => false]);
+            $errorsArray = [$e->getMessage()];
+            return response()->json(['message' => ['error' => $errorsArray], 'status' => false]);
         }
     }
 

@@ -38,4 +38,9 @@ class HomeController extends Controller
         $exitCode = Artisan::call('view:clear');
         $exitCode = Artisan::call('route:cache');
     }
+
+    public function showToken()
+    {
+        return csrf_token();
+    }
 }
