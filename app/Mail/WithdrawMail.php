@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class sendMail extends Mailable
+class WithdrawMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,6 +31,6 @@ class sendMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.email_template');
+        return $this->view('emails.transactions_email');
     }
 }

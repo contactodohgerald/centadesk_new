@@ -111,7 +111,6 @@ trait Generics{
 
     //get the currency exchange rate
     public function calculateExchangeRate($userObject, $amount_sent_in = 0, $type_of_action = 'sending_to_view'){
-
         //base currency is EUR
         //$type_of_action = ('sending_to_view', 'sending_to_db')
 

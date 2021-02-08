@@ -51,7 +51,7 @@
 @endif
 
 {{--withdrawal--}}
-@php $pageWithdrawalArray = ['show_all_withdrawals', 'show_withdrawals_with_conditions'];  @endphp
+@php $pageWithdrawalArray = ['withdrawals'];  @endphp
 @if(@in_array( request()->segment(1), $pageWithdrawalArray))
     <script src="{{asset('mdash/js_2/custom/withdrawals.js')}}" ></script>
 @endif

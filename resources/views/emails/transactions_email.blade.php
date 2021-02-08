@@ -173,12 +173,6 @@
             <![endif]-->
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
 
-                <!-- start copy -->
-                <tr>
-                    <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Merriweather', serif;">
-                        <h2 style="margin: 0;">Hello From {{$details['site_name']}}</h2>
-                    </td>
-                </tr>
                 <tr>
                     <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Merriweather', serif; font-size: 16px; line-height: 24px;">
                         <p style="margin: 0;">{{$details['message']}}</p>

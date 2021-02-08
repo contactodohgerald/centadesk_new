@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Wallet\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     Route::post('/create-price', 'priceController@create');
     Route::post('/create-category', 'CourseCategoryModelController@create');
+
+    Route::post('/handle_transfers', [TransactionController::class, 'handleTransfers'])->name('handle_transfers');
+    Route::post('/confirm_withdrawal_payment', [TransactionController::class, 'markWithdrawalsAsPaid'])->name('confirm_withdrawal_payment');
 });

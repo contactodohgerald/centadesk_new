@@ -7,6 +7,7 @@ use App\Model\AppSettings;
 use App\Model\CurrencyRatesModel;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AppSettingsController extends Controller
@@ -21,9 +22,11 @@ class AppSettingsController extends Controller
 
     public function mainSettings(){
 
+        $user = Auth::user();
+
         $currencyRatesModel = $this->currencyRatesModel->getAllCurrency();
 
-        return view('dashboard.setting', ['currencyRatesModel'=>$currencyRatesModel]);
+        return view('dashboard.setting', ['currencyRatesModel'=>$currencyRatesModel, 'user'=>$user]);
 
     }
 
