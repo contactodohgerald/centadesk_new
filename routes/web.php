@@ -27,6 +27,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/show-csrf', 'HomeController@showToken');
 Route::get('/create-course', 'courseController@index');
 Route::get('/clear-cache', 'HomeController@clear_cache');
+Route::get('/view-courses', 'courseController@show');
+Route::get('/edit-course/{id}', 'courseController@update_page');
 
 
 Route::post('/create-course', 'courseController@create');

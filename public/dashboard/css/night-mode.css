@@ -2330,3 +2330,15 @@ Night Mood
     color: #fff !important;
     background: #cc2622;
 }
+
+.night-mode .btn_add {
+    border: 1px solid #242424;
+    background: #333;
+    color: #fff !important;
+}
+
+.night-mode .btn_add:hover {
+    border: 1px solid #242424;
+    background: #242424;
+    color: #fff !important;
+}

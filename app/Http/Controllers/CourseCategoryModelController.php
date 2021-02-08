@@ -35,7 +35,7 @@ class CourseCategoryModelController extends Controller
                 throw new Exception('This is not a valid request.');
             }
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:15',
+                'name' => 'required|string|max:30',
                 'description' => 'required|min:5'
             ]);
             if ($validator->fails()) {

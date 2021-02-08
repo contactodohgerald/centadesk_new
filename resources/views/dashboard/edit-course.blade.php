@@ -1,4 +1,7 @@
-@php $pageTitle = 'Create Course'; @endphp
+@php $pageTitle = 'Edit Course';
+$url = explode('++',$course->course_urls);
+// print_r($url);die();
+@endphp
 @include('layouts.head')
 
 <body>
@@ -16,7 +19,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="st_title"><i class="uil uil-analysis"></i> Create New Course</h2>
+                        <h2 class="st_title"><i class="uil uil-analysis"></i> Edit Course</h2>
                     </div>
                 </div>
                 <div class="row" id="errorHold"></div>
@@ -65,7 +68,7 @@
                                                                 <div class="ui search focus mt-30 lbel25">
                                                                     <label>Title*</label>
                                                                     <div class="ui left icon input swdh19">
-                                                                        <input class="prompt srch_explore" type="text" placeholder="Enter your course title" name="title" value="">
+                                                                        <input class="prompt srch_explore" type="text" placeholder="Enter your course title" name="title" value="{{ $course->name }}">
                                                                         <div class="badge_num">15</div>
                                                                         <div class="err_title error_displayer"></div>
                                                                     </div>
@@ -87,7 +90,7 @@
                                                                 <div class="ui search focus mt-30 lbel25">
                                                                     <label>Very Short Caption*</label>
                                                                     <div class="ui left icon input swdh19">
-                                                                        <input class="prompt srch_explore" type="text" placeholder="Summarize in a sentence" name="caption">
+                                                                        <input class="prompt srch_explore" type="text" placeholder="Summarize in a sentence" value="{{ $course->short_caption }}" name="caption">
                                                                         <div class="badge_num2">15</div>
                                                                     </div>
                                                                 </div>
@@ -117,7 +120,11 @@
                                                                 <select name="pricing" class="ui hj145 dropdown cntry152 prompt srch_explore">
                                                                     <option value="">-- Select Pricing For Course --</option>
                                                                     @foreach ($pricing as $e)
-                                                                    <option value="{{ $e->unique_id }}">{{ $e->title }}</option>
+                                                                    <option @if ($e->unique_id == $course->pricing)
+                                                                        selected="selected"
+                                                                        @else @endif value="{{ $e->unique_id }}">
+                                                                        {{ $e->title }}
+                                                                    </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -147,7 +154,9 @@
                                                                             <div class="textarea_dt">
                                                                                 <div class="ui form swdh339">
                                                                                     <div class="field">
-                                                                                        <textarea rows="5" name="description" id="course_desc" placeholder="Insert your course part description"></textarea>
+                                                                                        <textarea rows="5" name="description" id="course_desc" placeholder="Insert your course part description">
+                                                                                        {{ $course->description }}
+                                                                                        </textarea>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -173,7 +182,7 @@
                                                             <div class="view_all_dt">
                                                                 <div class="view_img_left">
                                                                     <div class="view__img">
-                                                                        <img src="images/courses/add_img.jpg" alt="">
+                                                                        <img src="{{ asset('/storage/app/public/course-img/'.$course->cover_image) }}" alt="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="view_img_right">
@@ -228,19 +237,21 @@
                                                                     <div class="caption__check mt-30">
                                                                         <div class="crse_content">
                                                                             <form class="download_urls">
+                                                                                @foreach ($url as $e)
+                                                                                <div id="" class="ui-accordion ui-widget ui-helper-reset">
+                                                                                    <a href="javascript:void(0)" class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                                                                                        <div class="section-header-left">
+                                                                                            <span class="section-title-wrapper">
 
-                                                                            <div id="" class="ui-accordion ui-widget ui-helper-reset">
-                                                                                <a href="javascript:void(0)" class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                                                                                    <div class="section-header-left">
-                                                                                        <span class="section-title-wrapper">
+                                                                                                <div class="ui left icon input swdh19">
+                                                                                                    <input class="prompt srch_explore" type="text" placeholder="Enter course url" name="url" value="{{ $e }}">
+                                                                                                </div>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </a>
+                                                                                </div>
+                                                                                @endforeach
 
-                                                                                            <div class="ui left icon input swdh19">
-                                                                                                <input class="prompt srch_explore" type="text" placeholder="Enter course url" name="url" value="">
-                                                                                            </div>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </a>
-                                                                            </div>
                                                                             </form>
                                                                             <!-- <div id="" class="ui-accordion ui-widget ui-helper-reset">
                                                                                 <a href="javascript:void(0)" class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
@@ -285,18 +296,18 @@
         @include('layouts.e_script')
 
         <script>
-            $(document).ready(function () {
+            $(document).ready(function() {
 
-            tinymce.init({
-                selector: 'textarea#course_desc',
-                plugins: ['link preview anchor'],
-                height: 400,
-            });
+                tinymce.init({
+                    selector: 'textarea#course_desc',
+                    plugins: ['link preview anchor'],
+                    height: 400,
+                });
 
-            $('.btn_add').click(function(e) {
-                e.preventDefault();
-                // console.log('man');return;
-                let new_url = `<div id="" class="ui-accordion ui-widget ui-helper-reset">
+                $('.btn_add').click(function(e) {
+                    e.preventDefault();
+                    // console.log('man');return;
+                    let new_url = `<div id="" class="ui-accordion ui-widget ui-helper-reset">
                                     <a href="javascript:void(0)" class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
                                         <div class="section-header-left">
                                             <span class="section-title-wrapper">
@@ -308,55 +319,55 @@
                                         </div>
                                     </a>
                                 </div>`;
-                $(new_url).appendTo('.download_urls');
-            });
-
-
-            $('.create_course_btn').click(async function(e) {
-                e.preventDefault();
-                let data = [];
-                // basic info
-                let basic_info = $('.basic_info').serializeArray();
-                // console.log(basic_info); return;
-                basic_info.forEach(e => {
-                    data.push(e);
-                });
-                // tiny mce description
-                let desc = tinymce.get("course_desc").getContent();
-                data.push({
-                    name: "desc",
-                    value: desc
-                });
-                // file upload
-                let cover_img = $('#cover_img').prop('files')[0];
-                data.push({
-                    name: "cover_img",
-                    value: cover_img
+                    $(new_url).appendTo('.download_urls');
                 });
 
-                let cover_video = $('#cover_video').val();
-                data.push({
-                    name: "cover_video",
-                    value: cover_video
-                });
-                // download urls
-                let url_array = [];
-                let url = $('.download_urls').serializeArray();
-                url.forEach(e => {
-                    url_array.push(e.value);
-                });
-                let url_joined = url_array.join('++',url_array);
-                data.push({
-                    name: "url",
-                    value: url_joined
-                });
 
-                // append to form data object
-                let form_data = set_form_data(data);
-                let returned = await ajaxRequest('create-course', form_data);
+                $('.create_course_btn').click(async function(e) {
+                    e.preventDefault();
+                    let data = [];
+                    // basic info
+                    let basic_info = $('.basic_info').serializeArray();
+                    // console.log(basic_info); return;
+                    basic_info.forEach(e => {
+                        data.push(e);
+                    });
+                    // tiny mce description
+                    let desc = tinymce.get("course_desc").getContent();
+                    data.push({
+                        name: "desc",
+                        value: desc
+                    });
+                    // file upload
+                    let cover_img = $('#cover_img').prop('files')[0];
+                    data.push({
+                        name: "cover_img",
+                        value: cover_img
+                    });
+
+                    let cover_video = $('#cover_video').val();
+                    data.push({
+                        name: "cover_video",
+                        value: cover_video
+                    });
+                    // download urls
+                    let url_array = [];
+                    let url = $('.download_urls').serializeArray();
+                    url.forEach(e => {
+                        url_array.push(e.value);
+                    });
+                    let url_joined = url_array.join('++', url_array);
+                    data.push({
+                        name: "url",
+                        value: url_joined
+                    });
+
+                    // append to form data object
+                    let form_data = set_form_data(data);
+                    let returned = await ajaxRequest('create-course', form_data);
                     console.log(returned);
-                // return;
-                validator(returned, 'create-course');
-            });
+                    // return;
+                    validator(returned, 'create-course');
+                });
             });
         </script>
