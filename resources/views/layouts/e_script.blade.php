@@ -1,4 +1,7 @@
 @include('basic_urls')
+
+@include('js_files.js_by_page')
+
 @php $users = auth()->user(); @endphp
 
 
@@ -146,6 +149,20 @@
                 }
             }
         }
+
+
+    function addUniqueIdToInputField(a){
+        let txt = $(a).attr('item_id');
+        $('.delete_id').val(txt);
+    }
+
+    function checkAll() {
+        if($(".mainCheckBox").is(':checked')){
+            $(".smallCheckBox").prop('checked', true);
+        }else{
+            $(".smallCheckBox").prop('checked', false);
+        }
+    }
     });
 </script>
 

@@ -1,5 +1,12 @@
 @php
 $user_type = auth()->user()->user_type;
+
+ $condition = [
+    ['status', 'pending'],
+    ['ignore_status', 'no'],
+ ];
+$complain = new \App\Model\AccountResolve();
+$complains = $complain->getAllOfComplain($condition);
 @endphp
 <nav class="vertical_nav">
     <div class="left_section menu_left" id="js-menu" >
@@ -68,6 +75,20 @@ $user_type = auth()->user()->user_type;
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
                             <a href="{{route('withdrawals')}}" class="sub_menu--link">Funds Withdrawal</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu--item  menu--item__has_sub_menu">
+                    <label class="menu--link" title="Users">
+                        <i class='uil uil-user menu--icon'></i>
+                        <span class="menu--label">Users</span>
+                    </label>
+                    <ul class="sub_menu">
+                        <li class="sub_menu--item">
+                            <a href="{{route('all_students')}}" class="sub_menu--link">Students</a>
+                        </li>
+                        <li class="sub_menu--item">
+                            <a href="{{route('all_instructor')}}" class="sub_menu--link">Teachers / Instructors</a>
                         </li>
                     </ul>
                 </li>
@@ -172,33 +193,51 @@ $user_type = auth()->user()->user_type;
         </div>
         <div class="left_section pt-2">
             <ul>
-                @if($user_type === 'admin' || $user_type === 'super_admin')
-                    <li class="menu--item  menu--item__has_sub_menu">
-                        <label class="menu--link" title="Setting">
-                            <i class='uil uil-cog menu--icon'></i>
-                            <span class="menu--label">Setting</span>
-                        </label>
-                        <ul class="sub_menu">
-                            <li class="sub_menu--item">
-                                <a href="{{route('main_settings_page')}}" class="sub_menu--link">Main Setting</a>
-                            </li>
-                            <li class="sub_menu--item">
-                                <a href="{{route('app_settings_page')}}" class="sub_menu--link">App Setting</a>
-                            </li>
-                        </ul>
-                    </li>
-                @else
-                    <li class="menu--item">
-                        <a href="{{route('main_settings_page')}}" class="menu--link" title="Setting">
-                            <i class='uil uil-cog menu--icon'></i>
-                            <span class="menu--label">Setting</span>
-                        </a>
-                    </li>
+                @if(auth()->user()->privilegeChecker('view_restricted_roles'))
+                <li class="menu--item">
+                    <a href="{{route('complain_list')}}" class="menu--link" title="Complains">
+                        <i class='uil uil-auto-flash menu--icon'></i>
+                        <span class="menu--label">Complains <span class="noti_count">{{$complains->count()}}</span></span>
+                    </a>
+                </li>
                 @endif
+                <li class="menu--item  menu--item__has_sub_menu">
+                    <label class="menu--link" title="Setting">
+                        <i class='uil uil-cog menu--icon'></i>
+                        <span class="menu--label">Setting </span>
+                    </label>
+                    <ul class="sub_menu">
+                        <li class="sub_menu--item">
+                            <a href="{{route('main_settings_page')}}" class="sub_menu--link">Main Setting</a>
+                        </li>
+                        @if(auth()->user()->privilegeChecker('view_restricted_roles'))
+                        <li class="sub_menu--item">
+                            <a href="{{route('app_settings_page')}}" class="sub_menu--link">App Setting</a>
+                        </li>
+                        @endif
+                    </ul>
+                </li>
+
+                @if(auth()->user()->privilegeChecker('view_roles'))
+                <li class="menu--item  menu--item__has_sub_menu">
+                    <label class="menu--link" title="Setting">
+                        <i class='uil uil-cog menu--icon'></i>
+                        <span class="menu--label">Roles Management </span>
+                    </label>
+                    <ul class="sub_menu">
+
+                        <li class="sub_menu--item"><a href="{{route('add_roles')}}"><span class="mini-sub-pro">Add New Roles</span></a></li>
+                        <li class="sub_menu--item"><a href="{{route('add_user_type')}}"><span class="mini-sub-pro">Add User type</span></a></li>
+                        <li class="sub_menu--item"><a href="{{route('view_all_roles')}}"><span class="mini-sub-pro">View Roles</span></a></li>
+                        <li class="sub_menu--item"><a href="{{route('all_user_type')}}"><span class="mini-sub-pro">View User Types</span></a></li>
+                    </ul>
+                </li>
+                @endif
+
                 <li class="menu--item">
                     <a href="javascript:void(0)" onclick="bringOutModalMain('.logout')" class="menu--link" title="Sign Out">
                         <i class='uil uil-sign-out-alt menu--icon'></i>
-                        <span class="menu--label">Sign Out</span>
+                        <span class="menu--label">Sign Out </span>
                     </a>
                 </li>
                 <li class="menu--item">

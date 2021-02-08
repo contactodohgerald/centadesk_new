@@ -26,6 +26,7 @@ class VerifyBankController extends Controller
 
     public function verifyBank(Request $request)
     {
+        return $request;
         $bank_code = $request->bank_user;
         $account_number = $request->account_number_user;
         $response = $this->nubanVerify($account_number, $bank_code);

@@ -10,7 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 trait Generics{
 
-    public function random_string ( $type = 'alnum', $len = 60 )
+    function createObject($array){
+        return json_decode(json_encode($array));
+    }
+
+    public function random_string ( $type = 'alnum', $len = 20 )
+
     {
         switch ( $type )
         {
@@ -106,7 +111,6 @@ trait Generics{
 
     //get the currency exchange rate
     public function calculateExchangeRate($userObject, $amount_sent_in = 0, $type_of_action = 'sending_to_view'){
-
         //base currency is EUR
         //$type_of_action = ('sending_to_view', 'sending_to_db')
 
