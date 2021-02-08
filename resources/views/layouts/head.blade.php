@@ -37,5 +37,6 @@
     <link href="{{asset('dashboard/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/vendor/semantic/semantic.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/custom/custom-app.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 </head>

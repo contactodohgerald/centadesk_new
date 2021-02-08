@@ -27,6 +27,9 @@ $complains = $complain->getAllOfComplain($condition);
                         <li class="sub_menu--item">
                             <a href="create-course" class="sub_menu--link">Create</a>
                         </li>
+                        <li class="sub_menu--item">
+                            <a href="view-courses" class="sub_menu--link">View All</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="menu--item">

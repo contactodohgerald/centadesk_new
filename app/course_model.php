@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\course_category_model;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class course_model extends Model
 {
@@ -26,5 +27,16 @@ class course_model extends Model
      *
      * @var array
      */
-    protected $fillable = ['unique_id', 'category_id', 'name', 'description', 'cover_image', 'intro_video', 'pricing',];
+    protected $fillable = ['unique_id', 'category_id','user_id', 'name', 'description', 'cover_image', 'intro_video', 'pricing','short_caption','course_urls','status','ratings','views','like','shares'];
+
+
+    /**
+     * Get the category asssociated with a particular course.
+     *
+     * @return void
+     */
+    public function category()
+    {
+        return $this->hasOne('App\course_category_model','unique_id','category_id');
+    }
 }

@@ -4,3 +4,10 @@ body {
 .view_img_right {
     margin-left: 0px;
 }
+
+div.view_img_right .srch_explore{
+    border-radius: 20px;
+}
+.hidden{
+    display: none;
+}

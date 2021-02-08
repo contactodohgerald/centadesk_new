@@ -15,12 +15,12 @@ class AddColumnsToCourseTable extends Migration
     {
         Schema::table('course_tb', function (Blueprint $table) {
             //
-            $table->string('shares')->after('pricing');
-            $table->string('like')->after('pricing');
-            $table->string('views')->after('pricing');
-            $table->string('ratings')->after('pricing');
-            $table->text('course_urls')->after('pricing');
-            $table->string('short_caption')->after('pricing');
+            $table->string('shares')->default(0)->after('pricing');
+            $table->string('like')->default(0)->after('pricing');
+            $table->string('views')->default(0)->after('pricing');
+            $table->string('ratings')->default(0)->after('pricing');
+            $table->text('course_urls')->nullable(true)->after('pricing');
+            $table->string('short_caption')->nullable(true)->after('pricing');
         });
     }
 
