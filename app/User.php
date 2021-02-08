@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, Generics;
 
@@ -141,7 +141,7 @@ class User extends Authenticatable
 
         if(Auth::check()){
             $userDetails = Auth::user();
-            $userType = $userDetails->type_of_user;
+            $userType = $userDetails->user_type;
             $typOfUserDetails = UserTypesModel::where('type_of_user', $userType)->first();
             $roleDetails = RolesModel::where('role', $role)->first();
             if($typOfUserDetails === null || $roleDetails === null){
@@ -155,6 +155,10 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    function getOneModel($userId){
+        return User::find($userId);
     }
 
 }

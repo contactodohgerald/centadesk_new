@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCurrencyColumnToTransactionModelsTable extends Migration
+class AddBankDetailsToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AddCurrencyColumnToTransactionModelsTable extends Migration
      */
     public function up()
     {
-        Schema::table('transaction_models', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
-            $table->string('currency')->nullable();
+            $table->string('currency_name')->nullable();
+            $table->string('account_number')->nullable();
+            $table->string('bank')->nullable();
+            $table->string('bank_code')->nullable();
         });
     }
 
@@ -26,7 +29,7 @@ class AddCurrencyColumnToTransactionModelsTable extends Migration
      */
     public function down()
     {
-        Schema::table('transaction_models', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

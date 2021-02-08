@@ -3,6 +3,7 @@
 use App\Http\Controllers\Roles\AddRolesController;
 use App\Http\Controllers\Roles\RolesController;
 use App\Http\Controllers\Roles\UserTypeController;
+use App\Http\Controllers\Users\UserController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Verifications\VerifyBankController;
@@ -28,9 +29,9 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+ Route::get('/', function () {
+    return view('welcome');
+ });
 
 Auth::routes();
 
@@ -42,7 +43,7 @@ Route::get('/clear-cache', 'HomeController@clear_cache');
 
 Route::post('/create-course', 'courseController@create');
 
-/*Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true]);
 
 //verify email address
 Route::get('/email/verify', [VerificationController::class, 'showNotice'])->middleware(['auth'])->name('verification.notice');//verification.notice
@@ -51,7 +52,7 @@ Route::get('/email/verify', [VerificationController::class, 'showNotice'])->midd
 //email verification handler
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class,'verifyEmailHandler'])->middleware(['auth', 'signed'])->name('verification.verify');
 //resend verification link
-Route::post('/email/verification-notification', [VerificationController::class, 'sendVerificationEmailNotification'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');*/
+Route::post('/email/verification-notification', [VerificationController::class, 'sendVerificationEmailNotification'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::group(['middleware'=>'web'], function(){
     //system settings
@@ -89,12 +90,16 @@ Route::group(['middleware'=>'web'], function(){
     Route::get('/my_balance', [TransactionController::class, 'myTransaction'])->name('my_balance');
     Route::post('/top_up', [TransactionController::class, 'topUpWallet'])->name('top_up');
     Route::get('/confirm_top_up', [TransactionController::class, 'confirmUserPayments'])->name('confirm_top_up');
+    Route::post('/transactions_by_date', [TransactionController::class, 'showTransactionByDate'])->name('transactions_by_date');
     Route::get('/transaction_history/{unique_id}', [TransactionController::class, 'showTopUpTransaction'])->name('transaction_history');
 
     //withdrawals
     Route::get('/withdrawals', [WithdrawalController::class, 'myWithdrawals'])->name('withdrawals');
-    //request withdrwawal
+    //request withdrawals
     Route::post('/make_withdrawal', [WithdrawalController::class, 'storeWithdrawal'])->name('make_withdrawal');
+    //show withdrawals by date
+    Route::post('/withdrawals_by_date', [WithdrawalController::class, 'showWithdrawalsByDate'])->name('withdrawals_by_date');
+
 
 });
 
@@ -103,6 +108,13 @@ Route::group(['middleware'=>'web'], function(){
     Route::get('/verifications/bank', [VerifyBankController::class, 'index'])->name('account_validation');
     Route::post('/verify-bank', [VerifyBankController::class, 'verifyBank'])->name('verify-bank');
     Route::post('/add-bank', [VerifyBankController::class, 'addBank'])->name('add-bank');
+
+});
+
+Route::group(['middleware'=>'web'], function(){
+    //users details update
+    Route::post('/update_bank_account', [UserController::class, 'bankAccountUpdate'])->name('update_bank_account');
+    Route::post('/update_wallet_address', [UserController::class, 'walletAddressUpdate'])->name('update_wallet_address');
 
 });
 

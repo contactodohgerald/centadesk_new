@@ -17,14 +17,14 @@ $( document ).ready(function() {
         var bank = $('#banks_user').val();
         // Nice Select JS
 
-
         var accountNumber = $('#account_number_user').val();
-        if(bank == ""){
+
+        if(bank === ""){
             errorDisplay("Please choose your bank");
             return;
         }
 
-        if(accountNumber == ""){
+        if(accountNumber === ""){
             errorDisplay("Please enter account number");
             return;
         }

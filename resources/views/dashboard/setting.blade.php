@@ -202,6 +202,9 @@
 																	<select class="form-control" name="preferred_currency" id="preferred_currency">
 																		<option value="">Please Select</option>
 																		@foreach($currencyRatesModel as $eachCurrencyRatesModel)
+																			@if($eachCurrencyRatesModel->currency_name == null || $eachCurrencyRatesModel->currency_name === '')
+																				@break
+																			@endif
 																			<option {{($eachCurrencyRatesModel->id == auth()->user()->preferred_currency)?'selected':''}} value="{{$eachCurrencyRatesModel->id}}">{{$eachCurrencyRatesModel->currency_name}} ({{$eachCurrencyRatesModel->country_name}})</option>
 																		@endforeach
 																	</select>
@@ -218,58 +221,55 @@
 							</div>
 							<div class="tab-pane fade" id="pills-bank-account" role="tabpanel" aria-labelledby="pills-bank-account-tab">
 								<div class="account_setting">
-									<div class="basic_profile">
-										<form method="POST" action="{{ route('login') }}">
-											@csrf
+									<form action="{{route('update_bank_account' )}}" method="POST">
+										@csrf
+										<div class="basic_profile">
+											<div class="basic_ptitle">
+												<h4>Bank Account Update</h4>
+											</div>
 											<div class="basic_form">
-												<div class="nstting_content">
-													<div class="row">
-														<div class="col-lg-6">
-															<div class="ui search focus mt-30">
-																<label for="banks_user">Select Bank</label>
-																<div class="ui left icon input swdh11 swdh19">
-																	<select class="form-control" name="banks_user" id="banks_user">
-																		<option value="">Select your bank</option>
-																	</select>
+												<div class="row">
+													<div class="col-lg-8">
+														<div class="row">
+															<div class="col-lg-12">
+																<div class="ui search focus mt-30">
+																	<label for="bank_bank">Bank Name</label>
+																	<div class="ui left icon input swdh11 swdh19">
+																		<input class="prompt srch_explore" type="text" name="bank_bank" id="bank_bank" required placeholder="Enter Bank Name" value="{{$user->bank}}">
+																		<i class="uil uil-money-insert icon icon2"></i>
+																	</div>
+																</div>
+															</div>
+															<div class="col-lg-6">
+																<div class="ui search focus mt-30">
+																	<label for="bank_account_name">Bank Account Name</label>
+																	<div class="ui left icon input swdh11 swdh19">
+																		<input class="prompt srch_explore" type="text" name="bank_account_name" id="bank_account_name" required placeholder="Enter Bank Account Name" value="{{$user->bank_account_name}}">
+																		<i class="uil uil-money-bill icon icon2"></i>
+																	</div>
+																</div>
+															</div>
+															<div class="col-lg-6">
+																<div class="ui search focus mt-30">
+																	<label for="bank_account">Bank Account Number</label>
+																	<div class="ui left icon input swdh11 swdh19">
+																		<input class="prompt srch_explore" type="number" name="bank_account" id="bank_account" required placeholder="Enter Bank Number" value="{{$user->account_number}}">
+																		<i class="uil uil-money-withdraw icon icon2"></i>
+																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
-													<div class="row">
-														<div class="col-lg-6">
-															<div class="ui search focus mt-30">
-																<label for="account_number_user">Account Number</label>
-																<div class="ui left icon input swdh11 swdh19">
-																	<input class="prompt srch_explore" type="number" name="account_number_user" id="account_number_user" required placeholder="Enter Account Number">
-																	<i class="uil uil-money-withdraw icon icon2"></i>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<input type="hidden" name="bank_code" id="bank_code"/>
-													<input type="hidden" name="bank" id="bank"/>
-													<input type="hidden" name="account_name" id="account_name"/>
-													<input type="hidden" name="account_number" id="account_number"/>
-
-													<button class="save_btn" type="submit" id="add_bank">Verify Bank Account</button>
-													<button class="save_btn" type="submit" id="save">Save and Continue</button>
-
-													<div id="msgSubmit" class="h3 text-center hidden"></div>
-													<div class="clearfix"></div>
-												</div>
-												<div class="col-md-12 col-sm-12 col-xs-12 text-center">
-													<div class="clear"></div>
-
 												</div>
 											</div>
-										</form>
-									</div>
+										</div>
+										<button class="save_btn" type="submit">Save Changes</button>
+									</form>
 								</div>
 							</div>
 							<div class="tab-pane fade" id="pills-bitcoin-wallet" role="tabpanel" aria-labelledby="pills-bitcoin-wallet-tab">
 								<div class="account_setting">
-									<form action="{{route('update_user_currency' )}}" method="POST">
+									<form action="{{route('update_wallet_address' )}}" method="POST">
 										@csrf
 										<div class="basic_profile">
 											<div class="basic_form">
@@ -279,7 +279,7 @@
 															<div class="ui search focus mt-30">
 																<label for="bit_coin_wallet">BitCoin Wallet</label>
 																<div class="ui left icon input swdh11 swdh19">
-																	<input class="prompt srch_explore" type="text" name="bit_coin_wallet" id="bit_coin_wallet" required placeholder="Enter BitCoin Wallet">
+																	<input class="prompt srch_explore" type="text" name="bit_coin_wallet" id="bit_coin_wallet" required placeholder="Enter BitCoin Wallet" value="{{$user->wallet_address}}">
 																	<i class="uil uil-bitcoin icon icon2"></i>
 																</div>
 															</div>

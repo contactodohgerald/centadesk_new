@@ -30,30 +30,7 @@ class RequestHandler {
         });
     }
 
-    postRequest(url, params){
 
-        return new Promise(function (resolve, reject) {
-//alert($('meta[name="csrf-token"]').attr('content'))
-            $.ajaxSetup({
-                headers:{
-                    'Source': "api",
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.post(url, params, function (data, status, jqXHR) {
-                if(status === 'success'){
-                    resolve(data)
-                }else{
-                    reject(status)
-                }
-            }).fail(function(error) {//statusText: "Method Not Allowed"
-                reject('A Network Error was encountered, message: ``'+error.statusText+'`` was returned. Please contact system administrator.')
-            })
-
-
-        })
-    }
 
     displayNetWorkError(message) {
         returnFunctions.showSuccessToaster(message, 'warning');

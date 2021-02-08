@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,9 +43,8 @@ class VerificationController extends Controller
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 
-    /*function showNotice(){
-        $data = $this->createArrayForView();
-        return view('auth.verify-email', $data);
+    function showNotice(){
+        return view('auth.verify-email');
     }
 
     function sendVerificationEmailNotification(Request $request){
@@ -61,5 +61,5 @@ class VerificationController extends Controller
 
         return redirect('/home');
 
-    }*/
+    }
 }
