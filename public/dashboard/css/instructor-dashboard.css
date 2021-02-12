@@ -11,11 +11,11 @@ Table Of Content
 =============================================================*/
 
 
-/* ================================================================================== 
+/* ==================================================================================
 Fonts
 ===================================================================================== */
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap');
-/* ================================================================================== 
+/* @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap'); */
+/* ==================================================================================
 Reset Css
 ===================================================================================== */
 
@@ -28,8 +28,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -40,7 +40,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -181,7 +181,7 @@ h1 {
 	font-size: 3em;
 	/* 3x body copy size = 48px */
 	line-height: 1.05;
-	/* keep to a multiple of the 20px line height 
+	/* keep to a multiple of the 20px line height
 	and something more appropriate for display headings */
 }
 h2 {
@@ -273,7 +273,7 @@ html {
 
 body {
 	margin: 0;
-	font-family: "Roboto", sans-serif;
+	/* font-family: "Roboto", sans-serif; */
 	font-size: 0.875rem;
 	line-height: 1.42857143;
 	color: #333;
@@ -362,7 +362,7 @@ input[type=text] {
 .left_footer a {
     font-size: 13px;
     font-weight: 500;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
     text-align: left;
     line-height: 24px;
     padding: 0 3px;
@@ -380,7 +380,7 @@ input[type=text] {
 .left_footer_content p {
     font-size: 12px;
     font-weight: 400;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
     color: #afafaf;
     text-align: left;
     line-height: 24px;
@@ -442,7 +442,7 @@ i.icon1 {
     padding-right: 1em!important;
 	font-size: 13px;
     font-weight: 400;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
 }
 
 .header_right {
@@ -484,7 +484,7 @@ i.icon1 {
     line-height: 1.5;
     border-radius: 100%;
     font-weight: 500;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
 }
 
 .opts_account img {
@@ -498,7 +498,7 @@ i.icon1 {
 .upload_btn {
     font-size: 14px;
     font-weight: 500;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
     color: #fff;
     background: #ed2a26;
     padding: 9px 15px;
@@ -520,7 +520,7 @@ i.icon1 {
     padding: 20px 17px 10px;
     font-size: 12px;
     font-weight: 500;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
     color: #afafaf;
     text-align: left;
 	margin-bottom: 0;
@@ -804,7 +804,7 @@ i.icon1 {
 	-moz-transform: scale(1.1);
 	-ms-transform: scale(1.1);
 	-o-transform: scale(1.1);
-	transform: scale(1.1); 	
+	transform: scale(1.1);
 }
 
 .lng_btn .ui.dropdown .menu>.item {
@@ -1018,10 +1018,10 @@ i.icon1 {
 }
 
 @keyframes sk-bouncedelay {
-  0%, 80%, 100% { 
+  0%, 80%, 100% {
     -webkit-transform: scale(0);
     transform: scale(0);
-  } 40% { 
+  } 40% {
     -webkit-transform: scale(1.0);
     transform: scale(1.0);
   }
@@ -1077,7 +1077,7 @@ i.icon1 {
     margin-top: 0 !important;
     margin-bottom: 8px !important;
     font-weight: 500;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
     color: #333;
 }
 
@@ -1387,7 +1387,7 @@ i.icon1 {
     left: 0;
     right: 0;
     bottom: 0;
-	
+
 }
 
 .course-overlay:hover {
@@ -1436,7 +1436,7 @@ i.icon1 {
 	background: #ed2a26 !important;
 	border: 1px solid #ed2a26 !important;
 	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.07);
-}	
+}
 
 .courses_performance .owl-nav .owl-next:hover {
 	color: #fff !important;
@@ -1545,7 +1545,7 @@ i.icon1 {
 	background: #ed2a26 !important;
 	border: 1px solid #ed2a26 !important;
 	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.07);
-}	
+}
 
 .edututs_news .owl-nav .owl-next:hover {
 	color: #fff !important;
@@ -1563,7 +1563,7 @@ i.icon1 {
     color: #686f7a;
     text-align: left;
 	margin-bottom: 0;
-    margin-top: 15px;	
+    margin-top: 15px;
 }
 
 .crsedt8145 {
@@ -1667,7 +1667,7 @@ i.icon1 {
     margin-bottom: 0;
 }
 
-.submit-course span {  
+.submit-course span {
     margin-left: 10px;
 }
 
@@ -1902,7 +1902,7 @@ table {
 .lbel25 label {
     font-size: 14px;
     font-weight: 500;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
     margin-bottom: 10px !important;
     color: #333;
     text-align: left;
@@ -2135,7 +2135,7 @@ table {
 	font-family: 'Roboto', sans-serif;
     font-weight: 400;
 	color: #686f7a;
-	padding-top: 30px;	
+	padding-top: 30px;
 	border-radius: 0 !important;
 	margin-left: -1px;
 }
@@ -2261,7 +2261,7 @@ table {
 	font-weight: 500;
 	color: #b2b2b2;
 	font-size: 14px;
-	font-family: 'Roboto', sans-serif;
+	/* font-family: 'Roboto', sans-serif; */
 	margin-top: 20px;
 	-webkit-transition: all 0.3s;
 	transition: all 0.3s;
@@ -2360,7 +2360,7 @@ table {
 #add-course-tab > .step-content .step-tab-gallery .custom-file {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-	border: 0;	
+	border: 0;
 	padding: 0;
 	font-family: 'Roboto', sans-serif;
 	color: #333;
@@ -2444,7 +2444,7 @@ table {
     display: -ms-flexbox;
     display: flex;
     font-size: 18px;
-	font-family: 'Roboto', sans-serif;
+	/* font-family: 'Roboto', sans-serif; */
 	font-weight: 500;
     margin-bottom: 0;
     text-transform: capitalize;
@@ -2643,7 +2643,7 @@ table {
 .part_input .custom-file {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-	border: 0;	
+	border: 0;
 	padding: 0;
 	font-family: 'Roboto', sans-serif;
 	color: #333;
@@ -3421,7 +3421,7 @@ i.icon8 {
 }
 
 ._rate003 {
-	
+
 }
 
 ._rate004 {

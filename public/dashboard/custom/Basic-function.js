@@ -152,7 +152,7 @@ function return_element_key_in_array(array, val_exist) {
 
 }
 
-function validator(returned,page_redirect) {
+function validator(returned, page_redirect) {
     $("#errorHold").empty();
     if (returned.status == true) {
         let errorHold = `<div class="col-12 text-center"><div class="alert alert-success">${returned.message}</div></div>`;
@@ -175,5 +175,26 @@ function validator(returned,page_redirect) {
             }
         }
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+function youtube_regex(url) {
+    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        return false;
+    }
+}
+
+function display_img_thumbnail(input, element_id) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#' + element_id).attr('src', e.target.result);
+        }
+        // convert to base64 string
+        reader.readAsDataURL(input.files[0]);
     }
 }

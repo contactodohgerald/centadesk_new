@@ -172,8 +172,9 @@
                                                         <div class="col-lg-12">
                                                             <div class="view_all_dt">
                                                                 <div class="view_img_left">
-                                                                    <div class="view__img">
-                                                                        <img src="images/courses/add_img.jpg" alt="">
+                                                                    <div id="" class="view__img ">
+                                                                        <img id="thumbnail_cover_img" src="{{ asset('dashboard/images/courses/add_img.jpg') }}"  alt="your image" />
+																		{{-- <img src="images/courses/add_img.jpg" alt=""> --}}
                                                                     </div>
                                                                 </div>
                                                                 <div class="view_img_right">
@@ -191,8 +192,11 @@
                                                             </div>
                                                             <div class="view_all_dt">
                                                                 <div class="view_img_left">
-                                                                    <div class="view__img">
-                                                                        <img src="images/courses/add_video.jpg" alt="">
+                                                                    <div class="view__img ytube_video">
+                                                                        <img src="{{ asset('dashboard/images/courses/add_video.jpg') }}"  alt="your image" />
+                                                                        {{-- <iframe src="https://www.youtube.com/embed/pH56PsJuvXw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --}}
+                                                                        {{-- https://youtu.be/zFI-n366qws
+                                                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/zFI-n366qws" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --}}
                                                                     </div>
                                                                 </div>
                                                                 <div class="view_img_right">
@@ -286,16 +290,37 @@
 
         <script>
             $(document).ready(function () {
+                // initialize tinymce text editor
+                tinymce.init({
+                    selector: 'textarea#course_desc',
+                    plugins: ['link preview anchor'],
+                    height: 400,
+                });
 
-            tinymce.init({
-                selector: 'textarea#course_desc',
-                plugins: ['link preview anchor'],
-                height: 400,
-            });
+                // create image thumbnail on select
+                $('#cover_img').change(function (e) {
+                    e.preventDefault();
+                    let cover_img = $('#cover_img').prop('files')[0];
+                    display_img_thumbnail(this,'thumbnail_cover_img');
+                });
 
+                // create youtube iframe when url is inputted
+                $('#cover_video').focusout(function (e) {
+                    e.preventDefault();
+                    let url = $(this).val();
+                    let valid_url = youtube_regex(url);
+                    if(valid_url !== false){
+                        $('.ytube_video > *').remove();
+                        let youtube_iframe = `<iframe width="100%"" src="https://www.youtube.com/embed/${valid_url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+
+                        $(youtube_iframe).appendTo('.ytube_video');
+                    }
+                    // console.log(valid_url)
+                });
+
+                // create new inputs for download urls
             $('.btn_add').click(function(e) {
                 e.preventDefault();
-                // console.log('man');return;
                 let new_url = `<div id="" class="ui-accordion ui-widget ui-helper-reset">
                                     <a href="javascript:void(0)" class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
                                         <div class="section-header-left">
@@ -311,7 +336,7 @@
                 $(new_url).appendTo('.download_urls');
             });
 
-
+            // process form for creating course
             $('.create_course_btn').click(async function(e) {
                 e.preventDefault();
                 let data = [];
@@ -354,7 +379,7 @@
                 // append to form data object
                 let form_data = set_form_data(data);
                 let returned = await ajaxRequest('create-course', form_data);
-                    console.log(returned);
+                    // console.log(returned);
                 // return;
                 validator(returned, 'create-course');
             });
