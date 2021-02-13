@@ -1,4 +1,7 @@
-@php $pageTitle = 'Home Area'; @endphp
+@php
+    $pageTitle = 'Create Course';
+    $Course = 'active';
+@endphp
 @include('layouts.head')
 
 <body>

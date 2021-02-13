@@ -1,6 +1,6 @@
-@php $pageTitle = 'View Courses';
-// $i=1;
-
+@php
+	$pageTitle = 'View Courses';
+	$Course = 'active';
 @endphp
 @include('layouts.head')
 
@@ -34,6 +34,16 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
+						<br>
+						<h4 class="text-danger">
+							@if(auth()->user()->privilegeChecker('view_restricted_roles'))
+								<div class="pull-right">
+									<a class="btn btn-danger" onclick="activateCoursesStatus(this)" href="javascript:;">Confirm Courses Status</a>
+								</div>
+							@endif
+						</h4>
+					</div>
+					<div class="col-md-12">
 						<div class="my_courses_tabs">
 							<ul class="nav nav-pills my_crse_nav" id="pills-tab" role="tablist">
 								<li class="nav-item">
@@ -59,11 +69,20 @@
 											<thead class="thead-s">
 												<tr>
 													<th class="text-center" scope="col">Item No.</th>
-													<th>Title</th>
+													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
+													<th class="text-center">
+														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
+													</th>
+													@endif
+													<th class="text-center" scope="col">Title</th>
 													<th class="text-center" scope="col">Publish Date</th>
 													<th class="text-center" scope="col">Like</th>
 													<th class="text-center" scope="col">Views</th>
 													<th class="text-center" scope="col">Category</th>
+													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
+													<th class="text-center" scope="col">User's Name</th>
+													<th class="text-center" scope="col">User's Email</th>
+													@endif
 													<th class="text-center" scope="col">Status</th>
 													<th class="text-center" scope="col">Action</th>
 												</tr>
@@ -73,11 +92,20 @@
                                                 @foreach ($courses as $e)
 												<tr>
 													<td class="text-center">{{ $loop->iteration }}</td>
-													<td>{{ $e->name }}</td>
+													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
+													<td class="text-center sorting_1">
+														<input type="checkbox" class="smallCheckBox" value="{{$e->unique_id}}">
+													</td>
+													@endif
+													<td class="text-center">{{ $e->name }}</td>
 													<td class="text-center">{{ $e->created_at }}</td>
 													<td class="text-center">{{ $e->views }}</td>
-													<td class="text-center">{{ $e->like }}</td>
+													<td class="text-center">{{ $e->likes }}</td>
 													<td class="text-center"><a href="#">{{ $e->category->name }}</a></td>
+													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
+													<td class="text-center">{{ $e->user->name }} {{ $e->user->last_name }}</td>
+													<td class="text-center">{{ $e->user->email }}</td>
+													@endif
 													<td class="text-center text-capitalize"><b class="course_active">{{ $e->status }}</b></td>
 													<td class="text-center">
 														<a href="/edit-course/{{ $e->unique_id }}" title="Edit" class="cursor-pointer gray-s"><i class="uil uil-edit-alt"></i></a>

@@ -5,7 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BankCodesModel extends Model
+class Like extends Model
 {
     //
     use SoftDeletes;
@@ -13,11 +13,11 @@ class BankCodesModel extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    function getAllBankCodes($condition, $oderBy = 'bank_name'){
+    function getAllLikes($condition, $id = 'id', $desc = 'desc'){
 
-        $banks = BankCodesModel::where($condition)->orderBy($oderBy)->get();
+        $likes = Like::where($condition)->orderBy($id, $desc)->get();
 
-        return $banks;
+        return $likes;
 
     }
 }

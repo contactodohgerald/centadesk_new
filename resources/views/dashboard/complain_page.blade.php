@@ -1,4 +1,6 @@
-﻿@php $pageTitle = 'Complain Page Area'; @endphp
+﻿@php
+	$pageTitle = 'Complain Page Area';
+@endphp
 		<!DOCTYPE html>
 <html lang="en">
 

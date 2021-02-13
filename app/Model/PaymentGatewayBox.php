@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\BankCodesModel;
+use App\Model\BankCodesModel;
 use App\Traits\Generics;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -34,104 +34,6 @@ class PaymentGatewayBox extends Model
 
     }
 
-    public STATIC function recreateGatewayMangerField_2($each_payment_gateway){
-
-        $exploded_gateway_manager = explode(',', $each_payment_gateway['gateway_manager']);
-
-        $exploded_gateway_manager_array = [];
-        $keys = ['public_key', 'secret_key', 'encryption_key'];
-        for($i = 0; $i < count($exploded_gateway_manager); $i++){
-
-            $exploded_gateway_manager_array[$keys[$i]] = $exploded_gateway_manager[$i];
-
-        }
-
-        return $exploded_gateway_manager_array;
-
-    }
-
-    //get all the bank details for paystack
-    public STATIC function getBankDetailsPayStack($school_id = 0){
-
-        $available_country_code = ['NGN', 'USD', 'GHS'];
-
-        $country_bank_codes_array = [];
-
-        //loop trhrough the country codes and get the bank codes
-        foreach($available_country_code as $k => $each_country_code){
-
-            //get the bank details from flutter wave
-            $url = 'https://api.paystack.co/bank?perPage=50&page=1&currency='.$each_country_code;
-
-            $headers = array(
-                'Content-Type: application/json'
-            );
-            // Open connection
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            //$body = '{}';
-
-            //curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-            //curl_setopt($ch, CURLOPT_POSTFIELDS,$body);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            // Timeout in seconds
-            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-            // Execute post
-            $result = curl_exec($ch);
-
-            if ($result === FALSE) {
-                return [
-                    'error_code'=>1,
-                    'error'=>'Curl failed: ' . curl_error($ch),
-                    'data'=>[]
-                ];
-            }
-
-            // Close connection
-            curl_close($ch);
-
-            $results = json_decode($result);
-
-            if(count($results->data) > 0){
-                $country_bank_codes_array[$each_country_code] = $results->data;
-            }
-
-
-        }
-
-        return [
-            'error_code'=>0,
-            'error'=>'',
-            'data'=>$country_bank_codes_array
-        ];
-
-    }
-
-    public STATIC function getBankDetailsFlutterWave(){
-
-        $flutterWaveBankCodes = BankCodesModel::where('type_of_gateway', 'flutterwave')->get();
-
-        if(count($flutterWaveBankCodes) == 0){
-            return [
-                'error_code'=>1,
-                'error'=>'Bank Codes not available',
-                'data'=>[]
-            ];
-        }
-
-        return [
-            'error_code'=>0,
-            'error'=>'',
-            'data'=>['flutterWaveBankCodes'=>$flutterWaveBankCodes]
-        ];
-
-    }
-
     public STATIC function getFlutterWaveBankDetailsForDatabase($school_id = 0){
 
         $available_country_code = ['NG', 'GH', 'KE', 'UG', 'ZA', 'TZ'];
@@ -142,7 +44,7 @@ class PaymentGatewayBox extends Model
 
         $country_bank_codes_array = [];
 
-        //loop trhrough the country codes and get the bank codes
+        //loop through the country codes and get the bank codes
         foreach($available_country_code as $k => $each_country_code){
 
             //get the bank details from flutter wave
