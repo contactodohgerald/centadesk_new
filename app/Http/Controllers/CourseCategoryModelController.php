@@ -13,6 +13,14 @@ class CourseCategoryModelController extends Controller
 {
     use Generics;
     use appFunction;
+
+    function __construct(course_category_model $category_model)
+    {
+        $this->middleware('auth');
+        $this->category_model = $category_model;
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,45 +29,52 @@ class CourseCategoryModelController extends Controller
     public function index()
     {
         //
+        return view('dashboard.create_category');
+    }
+
+    public function viewCoursesCategories(){
+
+        $categories = $this->category_model->getAllCategories();
+
+        return view('dashboard.view-category', ['categories'=>$categories]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
+        $data = $request->all();
+
         try {
-            if (!$request->isMethod('POST')) {
-                throw new Exception('This is not a valid request.');
-            }
+
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:30',
                 'description' => 'required|min:5'
             ]);
+
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors(), 'status' => false]);
+                return redirect('/create_category')->with('error_message', $validator->errors());
             }
-            $unique_id = $this->createUniqueId('price_tb', 'unique_id');
-            $name = $request->input('name');
-            $description = $request->input('description');
 
-            $course_category = course_category_model::create([
-                'unique_id' => $unique_id,
-                'name' => $name,
-                'description' => $description,
-            ]);
+            $course_category_tb = new course_category_model();
 
-            if (!$course_category->unique_id) {
-                throw new Exception($this->errorMsgs(14)['msg']);
+            $unique_id = $this->createUniqueId('course_category_tb', 'unique_id');
+            $course_category_tb->unique_id  = $unique_id;
+            $course_category_tb->name  = $data['name'];
+            $course_category_tb->description  = $data['description'];
+
+            if ($course_category_tb->save()) {
+                return redirect('/create_category')->with('success_message', 'Course Category was created Successfully');
             } else {
-                return response()->json(['message' => $this->successMsg('Category')['msg'], 'status' => true]);
+                return redirect('/create_category')->with('error_message', 'An error occurred, please try again later');
             }
         } catch (Exception $e) {
-
             $errorsArray = [$e->getMessage()];
-            return response()->json(['message' => ['error' => $errorsArray], 'status' => false]);
+            return redirect('/create_category')->with('error_message', $errorsArray);
         }
     }
 
@@ -80,9 +95,18 @@ class CourseCategoryModelController extends Controller
      * @param  \App\course_category_model  $course_category_model
      * @return \Illuminate\Http\Response
      */
-    public function show(course_category_model $course_category_model)
+    public function show($course_category_model)
     {
         //
+
+        $condition = [
+            ['unique_id', $course_category_model]
+        ];
+
+        $course_category = $this->category_model->getSingleCategories($condition);
+
+
+        return view('dashboard.edit_category', ['course_category'=>$course_category]);
     }
 
     /**
@@ -103,9 +127,40 @@ class CourseCategoryModelController extends Controller
      * @param  \App\course_category_model  $course_category_model
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, course_category_model $course_category_model)
+    public function update(Request $request, $course_category_model)
     {
         //
+        $data = $request->all();
+
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:30',
+                'description' => 'required|min:5'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->with('error_message', $validator->errors());
+            }
+
+            $condition = [
+                ['unique_id', $course_category_model]
+            ];
+
+            $course_category_tb = $this->category_model->getSingleCategories($condition);
+
+            $course_category_tb->name  = $data['name'];
+            $course_category_tb->description  = $data['description'];
+
+            if ($course_category_tb->save()) {
+                return redirect('/view_category')->with('success_message', 'Course Category was updated Successfully');
+            } else {
+                return redirect()->back()->with('error_message', 'An error occurred, please try again later');
+            }
+        } catch (Exception $e) {
+            $errorsArray = [$e->getMessage()];
+            return redirect()->back()->with('error_message', $errorsArray);
+        }
     }
 
     /**

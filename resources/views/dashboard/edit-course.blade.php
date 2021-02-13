@@ -1,5 +1,7 @@
-@php $pageTitle = 'Edit Course';
-$url = explode('++',$course->course_urls);
+@php
+    $pageTitle = 'Edit Course';
+    $Course = 'active';
+    $url = explode('++',$course->course_urls);
 // print_r($url);die();
 @endphp
 @include('layouts.head')

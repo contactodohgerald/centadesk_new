@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Like;
 use Exception;
 use Illuminate\Http\Request;
 use App\course_category_model;
@@ -17,9 +18,11 @@ class courseController extends Controller
     use Generics;
     use appFunction;
 
-    function __construct()
+    function __construct(Like $like, course_model $course_model)
     {
-        $this->middleware('auth');
+        $this->middleware('auth',  ['except' => ['activateCoursesStatus']]);
+        $this->like = $like;
+        $this->course_model = $course_model;
     }
     /**
      * Display a listing of the resource.
@@ -68,12 +71,13 @@ class courseController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
         $user = $request->user();
-        // return $user;
+         //return $user;
 
         try {
             if (!$request->isMethod('POST')) {
@@ -121,7 +125,8 @@ class courseController extends Controller
                 'description' => $description,
                 'course_urls' => $url,
                 'cover_image' => $img_name,
-                'intro_video' => $cover_video
+                'intro_video' => $cover_video,
+                'views' => 0,
             ]);
 
             if (!$new_course->unique_id) {
@@ -162,14 +167,41 @@ class courseController extends Controller
     public function show()
     {
         $user = auth()->user();
-        $courses = course_model::where('user_id',$user['unique_id'])
-                ->orderBy('id','desc')
-                ->get();
+
+        if ($user->user_type === 'admin' || $user->user_type === 'super_admin'){
+
+            $condition = [
+                ['deleted_at', null]
+            ];
+            $courses = $this->course_model->getAllCourse($condition);
+
+        }else{
+
+            $condition = [
+                ['user_id', $user->unique_id]
+            ];
+            $courses = $this->course_model->getAllCourse($condition);
+
+        }
+
+        foreach ($courses as $each_courses){
+
+            $condition = [
+                ['course_unique_id', $each_courses->unique_id]
+            ];
+
+            $likesCount = $this->like->getAllLikes($condition);
+
+            $each_courses->likes = $likesCount->count();
+
+            $each_courses->user;
+        }
+
         $view = [
             'courses' => $courses,
             'user' => $user,
         ];
-        // return $view;
+
         return view('dashboard.view-courses',$view);
     }
 
@@ -179,9 +211,30 @@ class courseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function showCourses($id)
     {
         //
+        $condition = [
+            ['unique_id', $id]
+        ];
+        $course = $this->course_model->getSingleCourse($condition);
+
+        $course->views += 1;
+        $course->save();
+
+        $condition = [
+            ['course_unique_id', $course->unique_id]
+        ];
+
+        $likesCount = $this->like->getAllLikes($condition);
+
+        $course->likes = $likesCount->count();
+
+        $course->user;
+
+        $course->price;
+
+        return view('dashboard.view_course', ['course'=>$course]);
     }
 
     /**
@@ -277,5 +330,44 @@ class courseController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    function handleValidations(array $data){
+
+        $validator = Validator::make($data, [
+            'dataArray' => 'required|string'
+        ]);
+
+        return $validator;
+
+    }
+
+    public function activateCoursesStatus(Request $request)
+    {
+        try{
+
+            $validation = $this->handleValidations($request->all());
+            if($validation->fails()){
+                return response()->json(['error_code'=>1, 'error_message'=>$validation->messages()]);
+            }
+
+            $dataArray = explode('|', $request->dataArray);
+
+            foreach($dataArray as $eachDataArray){
+
+                //update the course status to confirmed
+                $course = $this->course_model->selectSingleCourse($eachDataArray);
+                $course->status = 'confirmed';
+                $course->save();
+            }
+            return response()->json(['error_code'=>0, 'success_statement'=>'Selected Courses has been confirmed successfully']);
+
+        }catch (Exception $exception){
+
+            $error = $exception->getMessage();
+            return response()->json(['error_code'=>1, 'error_message'=>['general_error'=>[$error]]]);
+
+        }
+
     }
 }

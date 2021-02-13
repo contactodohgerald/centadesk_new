@@ -94,7 +94,3 @@ async function confirmGalleryDelete(a) {
         }
     }
 }
-
-function bringOutModalMain(selected) {
-    $(selected).modal('show');
-}

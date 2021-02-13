@@ -1,3 +1,128 @@
+<script>
+    let baseUrl = 'http://127.0.0.1:8000/';
+
+    const successDisplay = (message) => swal(message, 'successful', 'success');
+    const errorDisplay = (message) => swal(message, 'Failed', 'error');
+
+    function postRequest(url, params){
+
+        return new Promise(function (resolve, reject) {
+//alert($('meta[name="csrf-token"]').attr('content'))
+            $.ajaxSetup({
+                headers:{
+                    'Source': "api",
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.post(url, params, function (data, status, jqXHR) {
+                if(status === 'success'){
+                    resolve(data)
+                }else{
+                    reject(status)
+                }
+            }).fail(function(error) {//statusText: "Method Not Allowed"
+                reject('A Network Error was encountered, message: ``'+error.statusText+'`` was returned. Please contact system administrator.')
+            })
+
+
+        })
+    }
+
+    function handleTheErrorStatement(error_statement, showField = 'off', useClassForFieldFocus = 'no', useModal = 'no') {
+
+        $(".error_carrier").text('');
+
+        var counter = 0; let theKey = '';
+        let errorStatementLenght = Object.keys(error_statement).length;
+        for(var i in error_statement){
+            if(counter == 0){ theKey = i; }
+
+            if(typeof error_statement[i] === 'string'){
+                if(error_statement[i].indexOf(':') != -1){
+                    error_statement[i] = error_statement[i].split(':');
+                }
+            }
+
+            var txt = ''; let incomingErrorArray = [];
+            for(var j in error_statement[i]){
+
+                incomingErrorArray.push(error_statement[i][j]);
+
+                txt += "<p style='font-size:12px' class='f-size error_carrier t-color'><span >*</span> "+error_statement[i][j]+"</p>";
+            }
+
+            if(i === 'general_error'){
+                if(useModal === 'yes'){
+                    //callErrorModal(txt);
+                    $(".errorAreaHolder p").removeClass('t-color');
+                }else{
+                    //returnFunctions.showSuccessToaster(txt, 'warning');
+                    errorDisplay(txt);
+                    $(".error_carrier").removeClass('t-color');
+                }
+
+            }else{
+                $('.err_'+i).html(txt).removeClass('hidden');
+
+                if(parseFloat(counter) == parseFloat(errorStatementLenght - 1)){
+                    if(showField === 'on'){
+                        scrollIntoDomView(theKey, useClassForFieldFocus);
+                        //returnFunctions.showSuccessToaster('Some validation errors occurred.', 'warning');
+                    }
+
+                }
+                counter++;
+            }
+
+        }
+
+    }
+
+    function scrollIntoDomView(selectedElement, useClassForFieldFocus = 'yes'){
+        let prefix = '';
+        let offset = '';
+        if(useClassForFieldFocus === 'no'){
+            offset = $("#"+selectedElement).offset(); // Contains .top and .left
+            prefix = '#';
+        }else{
+            offset = $("."+selectedElement).offset(); // Contains .top and .left
+            prefix = '.';
+        }
+
+        //Subtract 20 from top and left:
+
+        offset.left -= 200;
+        offset.top -= 200;
+        //Now animate the scroll-top and scroll-left CSS properties of <body> and <html>:
+
+        $('html, body').animate({
+            scrollTop: offset.top,
+            scrollLeft: offset.left
+        });
+        $(prefix+selectedElement).focus();
+
+    }
+
+    function bringOutModalMain(value) {
+        $(value).modal('show');
+    }
+
+    function addUniqueIdToInputField(a){
+        let txt = $(a).attr('item_id');
+        $('.delete_id').val(txt);
+    }
+
+    function checkAll() {
+        if($(".mainCheckBox").is(':checked')){
+            $(".smallCheckBox").prop('checked', true);
+        }else{
+            $(".smallCheckBox").prop('checked', false);
+        }
+    }
+
+</script>
+
 <!--datatables-->
 @php $dataTablePages = ['wallet', 'get_top_up_with_conditions', 'view_all_roles', 'all_user_type', 'add_role_for_user', 'confirmed_wallet', 'charge', 'show_all_withdrawals', 'show_all_confirmed_withdrawals', 'show_withdrawals_with_conditions', 'all_users', 'all_admin', 'all_super_admin', 'view_gallery_events', 'view_all_news', 'view_fags', 'getAccountDetails', 'view_investments', 'view_due_investments', 'view_investment_history', 'view_investments', 'investment_referral', 'view_due_investments']; @endphp
 @php $currentPageName = Request::segment(1); @endphp
@@ -18,12 +143,6 @@
     <script src="{{asset('mdash/js_2/custom/roles_js.js')}}" ></script>
 @endif
 
-<!--gallery pages-->
-@php $galleryPages = ['create_gallery_view', 'view_gallery_events', 'view_single_gallery', 'edit_gallery_page']; @endphp
-@php $currentPageName = Request::segment(1); @endphp
-@if(in_array($currentPageName, $galleryPages))
-    <script src="{{asset('mdash/js_2/custom/gallery.js')}}" ></script>
-@endif
 
 {{--errors--}}
 @php $pageErrorArray = ['show_top_up_transactions', 'main_settings_page', 'settings_page', 'editProfile', 'wallet', 'investments_settings', 'create_gallery_view', 'compose', 'add_funds', 'login_authenticator', 'show_all_withdrawals', 'create_news_view', 'create_faqs_page', 'create_investment_interface'];  @endphp
@@ -44,63 +163,18 @@
     <script src="{{asset('mdash/js_2/custom/profile.js')}}" ></script>
 @endif
 
-{{--wallet--}}
-@php $pageWalletArray = ['wallet', 'get_top_up_with_conditions'];  @endphp
-@if(@in_array( request()->segment(1), $pageWalletArray))
-    <script src="{{asset('mdash/js_2/custom/wallet.js')}}" ></script>
-@endif
-
-{{--withdrawal--}}
-@php $pageWithdrawalArray = ['withdrawals'];  @endphp
-@if(@in_array( request()->segment(1), $pageWithdrawalArray))
-    <script src="{{asset('mdash/js_2/custom/withdrawals.js')}}" ></script>
-@endif
-
-{{--pages that need the country drop down--}}
-@php $pageCountryArray = ['edit_centers','editProfile', 'create_center_page', 'edit_center_page'];  @endphp
-@if(@in_array( request()->segment(1), $pageCountryArray))
-    <script src="{{asset('mdash/js_2/custom/country.js')}}" ></script>
-    <script>
-        let selCountry = $("#countryHolder").val();
-        var count = getCountries(selCountry);
-        $('#country').html(count);
-    </script>
-@endif
-
-<!--faqs pages-->
-@php $faqsPages = ['create_faqs_page', 'view_fags']; @endphp
+{{--withdrawal, wallet--}}
+@php $pageWithdrawalArray = ['withdrawals', 'my_balance'];  @endphp
 @php $currentPageName = Request::segment(1); @endphp
-@if(in_array($currentPageName, $faqsPages))
-    <script src="{{asset('mdash/js_2/custom/faqs.js')}}" ></script>
+@if(in_array($currentPageName, $pageWithdrawalArray))
+    @include('js_by_page.withdrawal_js')
 @endif
 
-<!--news pages-->
-@php $newsPages = ['view_all_news']; @endphp
+{{--courses,--}}
+@php $pageWithdrawalArray = ['view-courses', 'view_course'];  @endphp
 @php $currentPageName = Request::segment(1); @endphp
-@if(in_array($currentPageName, $newsPages))
-    <script src="{{asset('mdash/js_2/custom/news.js')}}" ></script>
-@endif
-
-<!--bank-->
-@php $dataBankPages = ['main_settings_page']; @endphp
-@php $currentPageName = Request::segment(1); @endphp
-@if(in_array($currentPageName, $dataBankPages))
-    <script src="{{asset('mdash/js_2/banks.js')}}"></script>
-    <script src="{{asset('mdash/js_2/custom/bank.js')}}"></script>
-@endif
-
-<!--testimonies-->
-@php $dataTestimonyPages = ['view_testimonies']; @endphp
-@php $currentPageName = Request::segment(1); @endphp
-@if(in_array($currentPageName, $dataTestimonyPages))
-    <script src="{{asset('mdash/js_2/custom/testimony.js')}}"></script>
-@endif
-
-<!--investments-->
-@php $dataTestimonyPages = ['investments_settings', 'view_investments', 'view_investment_plan', 'create_investment_interface', 'edit_investment_settings_page', 'view_due_investments']; @endphp
-@php $currentPageName = Request::segment(1); @endphp
-@if(in_array($currentPageName, $dataTestimonyPages))
-    <script src="{{asset('mdash/js_2/custom/investment_settings.js')}}"></script>
+@if(in_array($currentPageName, $pageWithdrawalArray))
+    @include('js_by_page.course_js')
 @endif
 
 <style>

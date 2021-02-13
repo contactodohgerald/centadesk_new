@@ -1,5 +1,6 @@
 ﻿@php
 	$pageTitle = 'Funds Withdrawals Area';
+	$Withdrawal = 'active';
 	$users = auth()->user();
 	$user_type = $users->user_type;
 @endphp
@@ -196,7 +197,11 @@
 													</tr>
 													@php $count++ @endphp
 												@endforeach
-											@endif
+												@else
+													<tr>
+														<td colspan="8" class="text-center ">No Records Found</td>
+													</tr>
+												@endif
 											</tbody>
 										</table>
 									</div>

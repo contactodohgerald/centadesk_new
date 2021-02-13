@@ -1,4 +1,8 @@
-﻿@php $pageTitle = 'Home Area'; @endphp
+﻿
+@php
+	$pageTitle = 'Home Area';
+	$home = 'active';
+@endphp
 @include('layouts.head')
 
 <body>

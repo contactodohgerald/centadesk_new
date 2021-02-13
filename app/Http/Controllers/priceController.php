@@ -14,6 +14,11 @@ class priceController extends Controller
     use Generics;
     use appFunction;
 
+    function __construct(priceModel $priceModel)
+    {
+        $this->middleware('auth');
+        $this->priceModel = $priceModel;
+    }
 
     // function __construct()
     // {
@@ -27,6 +32,9 @@ class priceController extends Controller
     public function index()
     {
         //
+        $priceModel = $this->priceModel->getAllPricing();
+
+        return view('dashboard.view-prices', ['priceModel'=>$priceModel]);
     }
 
     /**
@@ -34,40 +42,11 @@ class priceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        // return $request['title'];
-        try {
-            if (!$request->isMethod('POST')) {
-                throw new Exception('This is not a valid request.');
-            }
-            $validator = Validator::make($request->all(), [
-                'title' => 'required|string|max:15',
-                'amount' => 'required|max:9',
-            ]);
-            if ($validator->fails()) {
-                return response()->json(['message' => $validator->errors(), 'status' => false]);
-            }
-            $unique_id = $this->createUniqueId('price_tb', 'unique_id');
-            $title = $request['title'];
-            $amount = $request['amount'];
 
-            $pricing = priceModel::create([
-                'unique_id' => $unique_id,
-                'title' => $title,
-                'amount' => $amount,
-            ]);
+        return view('dashboard.create_price');
 
-            if (!$pricing->unique_id) {
-                throw new Exception($this->errorMsgs(14)['msg']);
-            } else {
-                return response()->json(['message' => $this->successMsg('Pricing')['msg'], 'status' => true]);
-            }
-        } catch (Exception $e) {
-
-            $errorsArray = [$e->getMessage()];
-            return response()->json(['message' => ['error' => $errorsArray], 'status' => false]);
-        }
     }
 
     /**
@@ -78,7 +57,35 @@ class priceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'title' => 'required|string|max:20',
+                'amount' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/create_price')->with('error_message', $validator->errors());
+            }
+
+            $pricing = new priceModel();
+            $unique_id = $this->createUniqueId('price_tb', 'unique_id');
+            $pricing->unique_id = $unique_id;
+            $pricing->title = $data['title'];
+            $pricing->amount = $this->getAmountForDatabase($data['amount'])['data']['amount'];
+
+            if ($pricing->save()) {
+                return redirect('/create_price')->with('success_message', 'Course Price was created Successfully');
+            } else {
+                return redirect('/create_price')->with('error_message', 'An error occurred, please try again later');
+            }
+        } catch (Exception $e) {
+
+            $errorsArray = [$e->getMessage()];
+            return redirect('/create_price')->with('error_message', $errorsArray);
+        }
     }
 
     /**

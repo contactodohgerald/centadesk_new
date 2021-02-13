@@ -1,8 +1,74 @@
 @include('basic_urls')
 
+@php $users = auth()->user(); @endphp
+
+<script src="{{asset('dashboard/js/vertical-responsive-menu.min.js')}}"></script>
+<script src="{{asset('dashboard/js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{asset('dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('dashboard/vendor/OwlCarousel/owl.carousel.js')}}"></script>
+<script src="{{asset('dashboard/vendor/semantic/semantic.min.js')}}"></script>
+<script src="{{asset('dashboard/js/custom.js')}}"></script>
+<script src="{{asset('dashboard/js/night-mode.js')}}"></script>
+
+<script src="{{asset('dashboard/js/jquery-steps.min.js')}}"></script>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script src="{{asset('dashboard/js/datepicker.min.js')}}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="{{asset('dashboard/custom/custom-tinymce.js')}}"></script>
+<script src="{{asset('dashboard/custom/Basic-function.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<!-- <script src="{{asset('dashboard/custom/validatorClass.js')}}"></script> -->
+<!-- <script src="{{asset('dashboard/custom/error-validator.js')}}"></script> -->
+
 @include('js_files.js_by_page')
 
-@php $users = auth()->user(); @endphp
+<script type="text/javascript">
+        function closeErrorCarrierBox(a) {
+            // console.log('yh')
+            $(a).addClass('hidden');
+        }
+
+    $(document).ready(function() {
+        showErrors();
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "show",
+            "hideMethod": "fadeOut"
+        }
+        $('#add-course-tab').steps({
+            onFinish: function() {
+                alert('Wizard Completed');
+            }
+        });
+
+
+        function showErrors() {
+            var selected = $(".invalid-feedback");
+            for (let i = 0; i < selected.length; i++) {
+                if ($(selected[i]).find('strong').text() !== '') {
+                    $(selected[i]).css({
+                        'display': 'block'
+                    });
+                }
+            }
+        }
+    });
+</script>
 
 
 <!-- The Modal -->
@@ -54,8 +120,8 @@
             </div>
 
             <form action="{{route('top_up' )}}" method="POST">
-                @csrf
-                <!-- Modal body -->
+            @csrf
+            <!-- Modal body -->
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
@@ -76,95 +142,6 @@
         </div>
     </div>
 </div>
-
-<script src="{{asset('dashboard/js/vertical-responsive-menu.min.js')}}"></script>
-<script src="{{asset('dashboard/js/jquery-3.3.1.min.js')}}"></script>
-<script src="{{asset('dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('dashboard/vendor/OwlCarousel/owl.carousel.js')}}"></script>
-<script src="{{asset('dashboard/vendor/semantic/semantic.min.js')}}"></script>
-<script src="{{asset('dashboard/js/custom.js')}}"></script>
-<script src="{{asset('dashboard/js/night-mode.js')}}"></script>
-
-<script src="{{asset('dashboard/js/jquery-steps.min.js')}}"></script>
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
-<script src="{{asset('dashboard/js/datepicker.min.js')}}"></script>
-<script src="{{asset('dashboard/js/datepicker.en.js')}}"></script>
-<script src="{{asset('dashboard/js/banks/banks.js')}}"></script>
-<script src="{{asset('dashboard/js/banks/custom.js')}}"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-<script src="{{asset('dashboard/main/account_verifications/acount_verifications.js')}}"></script>
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<script src="{{asset('dashboard/custom/custom-tinymce.js')}}"></script>
-<script src="{{asset('dashboard/custom/Basic-function.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
-<!-- <script src="{{asset('dashboard/custom/validatorClass.js')}}"></script> -->
-<!-- <script src="{{asset('dashboard/custom/error-validator.js')}}"></script> -->
-
-<script type="text/javascript">
-        function closeErrorCarrierBox(a) {
-            // console.log('yh')
-            $(a).addClass('hidden');
-        }
-
-    $(document).ready(function() {
-        showErrors();
-
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "show",
-            "hideMethod": "fadeOut"
-        }
-        $('#add-course-tab').steps({
-            onFinish: function() {
-                alert('Wizard Completed');
-            }
-        });
-
-        function bringOutModalMain(value) {
-            //$(value).removeClass('hidden');
-            $(value).modal('show');
-        }
-
-        function showErrors() {
-            var selected = $(".invalid-feedback");
-            for (let i = 0; i < selected.length; i++) {
-                if ($(selected[i]).find('strong').text() !== '') {
-                    $(selected[i]).css({
-                        'display': 'block'
-                    });
-                }
-            }
-        }
-
-
-    function addUniqueIdToInputField(a){
-        let txt = $(a).attr('item_id');
-        $('.delete_id').val(txt);
-    }
-
-    function checkAll() {
-        if($(".mainCheckBox").is(':checked')){
-            $(".smallCheckBox").prop('checked', true);
-        }else{
-            $(".smallCheckBox").prop('checked', false);
-        }
-    }
-    });
-</script>
 
 
 
