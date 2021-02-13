@@ -13,24 +13,76 @@ $complains = $complain->getAllOfComplain($condition);
         <div class="left_section">
             <ul>
                 <li class="menu--item">
-                    <a href="index.html" class="menu--link active" title="Home">
+                    <a href="{{route('home')}}" class="menu--link <?php print @$home;?>" title="Home">
                         <i class='uil uil-home-alt menu--icon'></i>
                         <span class="menu--label">Home</span>
                     </a>
                 </li>
-                <li class="menu--item menu--item__has_sub_menu">
-                    <label class="menu--link" title="Categories">
-                        <i class='uil uil-layers menu--icon'></i>
-                        <span class="menu--label">Course</span>
+                <li class="menu--item  menu--item__has_sub_menu">
+                    <label class="menu--link <?php print @$profile;?>" title="Profile">
+                        <i class='uil uil-user-circle menu--icon'></i>
+                        <span class="menu--label">Profile</span>
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
-                            <a href="create-course" class="sub_menu--link">Create</a>
+                            <a href="#" class="sub_menu--link">View Profile</a>
                         </li>
                         <li class="sub_menu--item">
-                            <a href="view-courses" class="sub_menu--link">View All</a>
+                            <a href="#" class="sub_menu--link">Edit Profile</a>
                         </li>
                     </ul>
+                </li>
+                @if(auth()->user()->privilegeChecker('view_restricted_roles'))
+                <li class="menu--item menu--item__has_sub_menu">
+                    <label class="menu--link <?php print @$Price;?>" title="Price">
+                        <i class='uil uil-money-bill menu--icon'></i>
+                        <span class="menu--label">Course Price</span>
+                    </label>
+                    <ul class="sub_menu">
+                        <li class="sub_menu--item">
+                            <a href="{{route('create_price')}}" class="sub_menu--link">Create Price</a>
+                        </li>
+                        <li class="sub_menu--item">
+                            <a href="{{route('view_price')}}" class="sub_menu--link">View Prices</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu--item menu--item__has_sub_menu">
+                    <label class="menu--link <?php print @$Categories;?>" title="Categories">
+                        <i class='uil uil-layers menu--icon'></i>
+                        <span class="menu--label">Course Categories</span>
+                    </label>
+                    <ul class="sub_menu">
+                        <li class="sub_menu--item">
+                            <a href="{{route('create_category')}}" class="sub_menu--link">Create Categories</a>
+                        </li>
+                        <li class="sub_menu--item">
+                            <a href="{{route('view_category')}}" class="sub_menu--link">View Categories</a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+                @if(auth()->user()->privilegeChecker('view_add_courses'))
+                <li class="menu--item menu--item__has_sub_menu">
+                    <label class="menu--link <?php print @$Course;?>" title="Categories">
+                        <i class='uil uil-plus-circle menu--icon'></i>
+                        <span class="menu--label">Courses</span>
+                    </label>
+                    <ul class="sub_menu">
+                        <li class="sub_menu--item">
+                            <a href="{{route('create-course')}}" class="sub_menu--link">Create Course</a>
+                        </li>
+                        <li class="sub_menu--item">
+                            <a href="{{route('view-courses')}}" class="sub_menu--link">View All Course</a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+                <li class="menu--item">
+                    <a href="{{route('saved-course')}}" class="menu--link <?php print @$saveCourse;?>" title="Saved Courses">
+                        <i class="uil uil-heart-alt menu--icon"></i>
+                        <span class="menu--label">Saved Courses</span>
+                    </a>
                 </li>
                 <li class="menu--item">
                     <a href="live_streams.html" class="menu--link" title="Live Streams">
@@ -44,20 +96,8 @@ $complains = $complain->getAllOfComplain($condition);
                         <span class="menu--label">Explore</span>
                     </a>
                 </li>
-                <li class="menu--item menu--item__has_sub_menu">
-                    <label class="menu--link" title="Categories">
-                        <i class='uil uil-layers menu--icon'></i>
-                        <span class="menu--label">Categories</span>
-                    </label>
-                    <ul class="sub_menu">
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Development</a>
-                        </li>
-
-                    </ul>
-                </li>
                 <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link" title="Wallet">
+                    <label class="menu--link <?php print @$Wallet;?>" title="Wallet">
                         <i class='uil uil-wallet menu--icon'></i>
                         <span class="menu--label">Wallet</span>
                     </label>
@@ -68,7 +108,7 @@ $complains = $complain->getAllOfComplain($condition);
                     </ul>
                 </li>
                 <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link" title="Wallet">
+                    <label class="menu--link <?php print @$Withdrawal;?>" title="Wallet">
                         <i class='uil uil-money-withdraw menu--icon'></i>
                         <span class="menu--label">Withdrawal</span>
                     </label>
@@ -78,8 +118,9 @@ $complains = $complain->getAllOfComplain($condition);
                         </li>
                     </ul>
                 </li>
+                @if(auth()->user()->privilegeChecker('view_restricted_roles'))
                 <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link" title="Users">
+                    <label class="menu--link <?php print @$Users;?>" title="Users">
                         <i class='uil uil-user menu--icon'></i>
                         <span class="menu--label">Users</span>
                     </label>
@@ -92,6 +133,7 @@ $complains = $complain->getAllOfComplain($condition);
                         </li>
                     </ul>
                 </li>
+                @endif
                 <li class="menu--item  menu--item__has_sub_menu">
                     <label class="menu--link" title="Tests">
                         <i class='uil uil-clipboard-alt menu--icon'></i>
@@ -114,12 +156,6 @@ $complains = $complain->getAllOfComplain($condition);
                             <a href="http://www.gambolthemes.net/html-items/edututs+/Instructor_Dashboard/my_certificates.html" class="sub_menu--link">My Certification</a>
                         </li>
                     </ul>
-                </li>
-                <li class="menu--item">
-                    <a href="saved_courses.html" class="menu--link" title="Saved Courses">
-                        <i class="uil uil-heart-alt menu--icon"></i>
-                        <span class="menu--label">Saved Courses</span>
-                    </a>
                 </li>
                 <li class="menu--item  menu--item__has_sub_menu">
                     <label class="menu--link" title="Pages">
@@ -195,14 +231,14 @@ $complains = $complain->getAllOfComplain($condition);
             <ul>
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
                 <li class="menu--item">
-                    <a href="{{route('complain_list')}}" class="menu--link" title="Complains">
+                    <a href="{{route('complain_list')}}" class="menu--link <?php print @$Complain;?>" title="Complains">
                         <i class='uil uil-auto-flash menu--icon'></i>
                         <span class="menu--label">Complains <span class="noti_count">{{$complains->count()}}</span></span>
                     </a>
                 </li>
                 @endif
                 <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link" title="Setting">
+                    <label class="menu--link <?php print @$Setting;?>" title="Setting">
                         <i class='uil uil-cog menu--icon'></i>
                         <span class="menu--label">Setting </span>
                     </label>

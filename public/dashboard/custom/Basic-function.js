@@ -75,7 +75,7 @@ function ajaxRequest(url, data) {
 }
 
 
-function postRequest(url, params) {
+/*function postRequest(url, params) {
     setLoader();
     return new Promise(function (resolve, reject) {
 
@@ -91,7 +91,7 @@ function postRequest(url, params) {
         })
 
     })
-}
+}*/
 function throwSweetalert(returned, page_redirect, allow_redirect) {
     if (returned.error == 1) {
         // swal('Sorry',returned.msg,'error');

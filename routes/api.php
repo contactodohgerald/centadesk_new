@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\courseController;
+use App\Http\Controllers\SaveCourse\SaveCourseController;
 use App\Http\Controllers\Wallet\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +32,9 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     Route::post('/handle_transfers', [TransactionController::class, 'handleTransfers'])->name('handle_transfers');
     Route::post('/confirm_withdrawal_payment', [TransactionController::class, 'markWithdrawalsAsPaid'])->name('confirm_withdrawal_payment');
+
+    Route::post('/activateCoursesStatus', [courseController::class, 'activateCoursesStatus'])->name('activateCoursesStatus');
+
+
+    Route::post('/saveCourse', [SaveCourseController::class, 'saveCourse'])->name('saveCourse');
 });

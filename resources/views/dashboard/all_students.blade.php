@@ -1,4 +1,7 @@
-﻿@php $pageTitle = 'All Students Area'; @endphp
+﻿@php
+	$pageTitle = 'All Students Area';
+	$Users = 'active';
+@endphp
 @include('layouts.head')
 
 <body>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AppSettings;
 
 use App\Http\Controllers\Controller;
 use App\Model\AppSettings;
+use App\Model\BankCodesModel;
 use App\Model\CurrencyRatesModel;
 use Exception;
 use Illuminate\Http\Request;
@@ -13,11 +14,12 @@ use Illuminate\Support\Facades\Validator;
 class AppSettingsController extends Controller
 {
     //
-    function __construct(AppSettings $appSettings, CurrencyRatesModel $currencyRatesModel)
+    function __construct(AppSettings $appSettings, CurrencyRatesModel $currencyRatesModel, BankCodesModel $bankCodesModel)
     {
         $this->middleware('auth');
         $this->appSettings = $appSettings;
         $this->currencyRatesModel = $currencyRatesModel;
+        $this->bankCodesModel = $bankCodesModel;
     }
 
     public function mainSettings(){
@@ -26,7 +28,16 @@ class AppSettingsController extends Controller
 
         $currencyRatesModel = $this->currencyRatesModel->getAllCurrency();
 
-        return view('dashboard.setting', ['currencyRatesModel'=>$currencyRatesModel, 'user'=>$user]);
+        $condition = [
+            ['type_of_gateway', 'flutterwave'],
+            ['is_deleted', 'no']
+        ];
+
+        $bankCodesModel = $this->bankCodesModel->getAllBankCodes($condition);
+
+        $data = ['currencyRatesModel'=>$currencyRatesModel, 'user'=>$user, 'bankCodesModel'=>$bankCodesModel];
+
+        return view('dashboard.setting', $data);
 
     }
 

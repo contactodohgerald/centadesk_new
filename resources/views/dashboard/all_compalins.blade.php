@@ -1,4 +1,7 @@
-﻿@php $pageTitle = 'All Complains Area'; @endphp
+﻿@php
+	$pageTitle = 'All Complains Area';
+	$Complain = 'active';
+@endphp
 @include('layouts.head')
 
 <body>

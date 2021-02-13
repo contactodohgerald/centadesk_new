@@ -1,4 +1,7 @@
-﻿@php $pageTitle = 'Settings Area'; @endphp
+﻿@php
+	$pageTitle = 'Settings Area';
+	$Setting = 'active';
+@endphp
 @include('layouts.head')
 
 <body>
@@ -196,20 +199,18 @@
 												<div class="nstting_content">
 													<div class="row">
 														<div class="col-lg-6">
-															<div class="ui search focus mt-30">
+															<div class="ui search focus mt-30 lbel25">
 																<label for="preferred_currency">Select Preferred Currency</label>
-																<div class="ui left icon input swdh11 swdh19">
-																	<select class="form-control" name="preferred_currency" id="preferred_currency">
-																		<option value="">Please Select</option>
-																		@foreach($currencyRatesModel as $eachCurrencyRatesModel)
-																			@if($eachCurrencyRatesModel->currency_name == null || $eachCurrencyRatesModel->currency_name === '')
-																				@break
-																			@endif
-																			<option {{($eachCurrencyRatesModel->id == auth()->user()->preferred_currency)?'selected':''}} value="{{$eachCurrencyRatesModel->id}}">{{$eachCurrencyRatesModel->currency_name}} ({{$eachCurrencyRatesModel->country_name}})</option>
-																		@endforeach
-																	</select>
-																</div>
 															</div>
+															<select name="preferred_currency" id="preferred_currency" class="ui hj145 dropdown cntry152 prompt srch_explore">
+																<option value="">Please Select</option>
+																@foreach($currencyRatesModel as $eachCurrencyRatesModel)
+																	@if($eachCurrencyRatesModel->currency_name == null || $eachCurrencyRatesModel->currency_name === '')
+																		@break
+																	@endif
+																	<option {{($eachCurrencyRatesModel->id == auth()->user()->preferred_currency)?'selected':''}} value="{{$eachCurrencyRatesModel->id}}">{{$eachCurrencyRatesModel->currency_name}} ({{$eachCurrencyRatesModel->country_name}})</option>
+																@endforeach
+															</select>
 														</div>
 													</div>
 												</div>
@@ -232,19 +233,21 @@
 													<div class="col-lg-8">
 														<div class="row">
 															<div class="col-lg-12">
-																<div class="ui search focus mt-30">
-																	<label for="bank_bank">Bank Name</label>
-																	<div class="ui left icon input swdh11 swdh19">
-																		<input class="prompt srch_explore" type="text" name="bank_bank" id="bank_bank" required placeholder="Enter Bank Name" value="{{$user->bank}}">
-																		<i class="uil uil-money-insert icon icon2"></i>
-																	</div>
+																<div class="ui search focus mt-30 lbel25">
+																	<label for="bank_code">Select Bank</label>
 																</div>
+																<select name="bank_code" id="bank_code" class="ui hj145 dropdown cntry152 prompt srch_explore">
+																	<option value="">Select</option>
+																	@foreach($bankCodesModel as $eachBankCodesModel)
+																		<option {{($eachBankCodesModel->bank_codes == auth()->user()->bank_code)?'selected':''}} value="{{$eachBankCodesModel->bank_codes}}">{{$eachBankCodesModel->bank_name}} ({{$eachBankCodesModel->country}})</option>
+																	@endforeach
+																</select>
 															</div>
 															<div class="col-lg-6">
 																<div class="ui search focus mt-30">
-																	<label for="bank_account_name">Bank Account Name</label>
+																	<label for="account_name">Bank Account Name</label>
 																	<div class="ui left icon input swdh11 swdh19">
-																		<input class="prompt srch_explore" type="text" name="bank_account_name" id="bank_account_name" required placeholder="Enter Bank Account Name" value="{{$user->bank_account_name}}">
+																		<input class="prompt srch_explore" type="text" name="account_name" id="account_name" required placeholder="Enter Bank Account Name" value="{{$user->account_name}}">
 																		<i class="uil uil-money-bill icon icon2"></i>
 																	</div>
 																</div>

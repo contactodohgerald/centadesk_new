@@ -1,4 +1,8 @@
-@php $pageTitle = 'Create Course'; @endphp
+@php
+    $users = auth()->user();
+    $pageTitle = 'Create Course';
+    $Course = 'active';
+@endphp
 @include('layouts.head')
 
 <body>
@@ -101,7 +105,7 @@
                                                                     <h4><i class="uil uil-dollar-sign-alt"></i>Pricing</h4>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-2 col-md-3 col-sm-6">
+                                                         {{--   <div class="col-lg-2 col-md-3 col-sm-6">
                                                                 <div class="mt-30 lbel25">
                                                                     <label>Preferred Currency</label>
                                                                 </div>
@@ -109,7 +113,7 @@
                                                                     <option value="">USD</option>
                                                                     <option value="6">INR</option>
                                                                 </select>
-                                                            </div>
+                                                            </div>--}}
                                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                                 <div class="mt-30 lbel25">
                                                                     <label>Select*</label>
@@ -117,7 +121,7 @@
                                                                 <select name="pricing" class="ui hj145 dropdown cntry152 prompt srch_explore">
                                                                     <option value="">-- Select Pricing For Course --</option>
                                                                     @foreach ($pricing as $e)
-                                                                    <option value="{{ $e->unique_id }}">{{ $e->title }}</option>
+                                                                    <option value="{{ $e->unique_id }}">{{number_format($users->getAmountForView($e->amount )['data']['amount'])}} ({{$users->getAmountForView($e->amount)['data']['currency'] }})</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>

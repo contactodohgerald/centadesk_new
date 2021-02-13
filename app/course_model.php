@@ -39,4 +39,32 @@ class course_model extends Model
     {
         return $this->hasOne('App\course_category_model','unique_id','category_id');
     }
+
+    public function user(){
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function price(){
+        return $this->belongsTo('App\priceModel', 'pricing');
+    }
+
+    public function getAllCourse($condition, $id = 'id', $desc = 'desc'){
+
+        $course = course_model::where($condition)->orderBy($id, $desc)->get();
+
+        return $course;
+
+    }
+
+    public function getSingleCourse($condition){
+
+        $course = course_model::where($condition)->first();
+
+        return $course;
+
+    }
+
+    function selectSingleCourse($id){
+        return course_model::find($id);
+    }
 }

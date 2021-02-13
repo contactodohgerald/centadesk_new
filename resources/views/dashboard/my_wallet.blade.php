@@ -1,4 +1,7 @@
-﻿@php $pageTitle = 'Wallet Area'; @endphp
+﻿@php
+	$pageTitle = 'Wallet Area';
+	$Wallet = 'active';
+@endphp
 @include('layouts.head')
 
 <body>

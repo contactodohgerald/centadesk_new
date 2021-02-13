@@ -7,10 +7,12 @@ function checkAll() {
 }
 
 //show a modal
+/*
 function bringOutModalMain(value) {
     //$(value).removeClass('hidden');
     $(value).modal('show');
 }
+*/
 
 //remove a selected field
 function removeRewardField(a, selected){

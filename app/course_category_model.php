@@ -28,4 +28,20 @@ class course_category_model extends Model
      * @var array
      */
     protected $fillable = ['unique_id', 'name', 'description'];
+
+    function getAllCategories($desc = 'desc', $id = 'id'){
+
+        $categories = course_category_model::orderBy($id, $desc)->get();
+
+        return $categories;
+
+    }
+
+    function getSingleCategories($condition){
+
+        $categories = course_category_model::where($condition)->first();
+
+        return $categories;
+
+    }
 }
