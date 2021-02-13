@@ -10,12 +10,10 @@ use App\Http\Controllers\courseController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\CourseCategoryModelController;
-use App\Http\Controllers\courseController;
 use App\Http\Controllers\priceController;
 use App\Http\Controllers\Roles\AddRolesController;
 
 use App\Http\Controllers\Roles\RolesController;
-use App\Http\Controllers\Roles\AddRolesController;
 use App\Http\Controllers\Roles\UserTypeController;
 use App\Http\Controllers\Auth\VerificationController;
 
@@ -27,12 +25,7 @@ use App\Http\Controllers\Wallet\WithdrawalController;
 use App\Http\Controllers\SaveCourse\SaveCourseController;
 
 use App\Http\Controllers\Complain\ComplainController;
-use App\Http\Controllers\Wallet\WithdrawalController;
-use App\Http\Controllers\Wallet\TransactionController;
-use App\Http\Controllers\AppSettings\AppSettingsController;
 use App\Http\Controllers\Complain\ComplainHandleController;
-use App\Http\Controllers\Verifications\VerifyBankController;
-use App\Http\Controllers\CurrencyRate\CurrencyRateController;
 
 /*
 |--------------------------------------------------------------------------
