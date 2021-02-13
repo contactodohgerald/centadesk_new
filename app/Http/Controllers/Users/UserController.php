@@ -19,8 +19,8 @@ class UserController extends Controller
     protected function Validator($request){
 
         $this->validator = Validator::make($request->all(), [
-            'bank_bank' => 'required',
-            'bank_account_name' => 'required',
+            'account_name' => 'required',
+            'bank_code' => 'required',
             'bank_account' => 'required',
         ]);
 
@@ -35,8 +35,8 @@ class UserController extends Controller
 
             $user = Auth::user();
 
-            $user->bank = $data['bank_bank'];
-            $user->bank_account_name = $data['bank_account_name'];
+            $user->account_name = $data['account_name'];
+            $user->bank_code = $data['bank_code'];
             $user->account_number = $data['bank_account'];
 
             if ($user->save()){

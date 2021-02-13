@@ -23,7 +23,7 @@ async function assignRoles(a, option) {
             }
 
             let userTypeId = $('#typeOfUserIdHolder').val();
-            let postData = await theRequestHandler.postRequest(RequestHandler.BaseUrl+"store_role_for_user/"+userTypeId, {role_id:dataArray, option:option});
+            let postData = await postRequest(baseUrl+"store_role_for_user/"+userTypeId, {role_id:dataArray, option:option});
 
             if(postData.status == true){
                 $(a).html(mainText).attr({'disabled':false});

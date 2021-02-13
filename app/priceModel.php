@@ -27,4 +27,20 @@ class priceModel extends Model
      * @var array
      */
     protected $fillable = ['unique_id', 'title', 'amount'];
+
+    function getAllPricing($desc = 'desc', $id = 'id'){
+
+        $pricing = priceModel::orderBy($id, $desc)->get();
+
+        return $pricing;
+
+    }
+
+    function getSinglePricing($condition){
+
+        $pricing = priceModel::where($condition)->first();
+
+        return $pricing;
+
+    }
 }

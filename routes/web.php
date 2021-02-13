@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CourseCategoryModelController;
+use App\Http\Controllers\courseController;
+use App\Http\Controllers\priceController;
 use App\Http\Controllers\Roles\AddRolesController;
 use App\Http\Controllers\Roles\RolesController;
 use App\Http\Controllers\Roles\UserTypeController;
@@ -11,6 +14,7 @@ use App\Http\Controllers\CurrencyRate\CurrencyRateController;
 use App\Http\Controllers\AppSettings\AppSettingsController;
 use App\Http\Controllers\Wallet\TransactionController;
 use App\Http\Controllers\Wallet\WithdrawalController;
+use App\Http\Controllers\SaveCourse\SaveCourseController;
 use App\Http\Controllers\Complain\ComplainController;
 use App\Http\Controllers\Complain\ComplainHandleController;
 use App\Http\Controllers\Admin\AdminController;
@@ -37,10 +41,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/show-csrf', 'HomeController@showToken');
-Route::get('/create-course', 'courseController@index');
 Route::get('/clear-cache', 'HomeController@clear_cache');
-Route::get('/view-courses', 'courseController@show');
-Route::get('/edit-course/{id}', 'courseController@update_page');
 
 
 Route::post('/create-course', 'courseController@create');
@@ -57,6 +58,33 @@ Route::get('/email/verify/{id}/{hash}', [VerificationController::class,'verifyEm
 Route::post('/email/verification-notification', [VerificationController::class, 'sendVerificationEmailNotification'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::group(['middleware'=>'web'], function(){
+    //create Course Category
+    Route::get('/create_category', [CourseCategoryModelController::class, 'index'])->name('create_category');
+    Route::get('/view_category', [CourseCategoryModelController::class, 'viewCoursesCategories'])->name('view_category');
+    Route::post('/add_category', [CourseCategoryModelController::class, 'create'])->name('add_category');
+    Route::get('/edit_category/{unique_id}', [CourseCategoryModelController::class, 'show'])->name('edit_category');
+    Route::post('/update_category/{unique_id}', [CourseCategoryModelController::class, 'update'])->name('update_category');
+
+});
+
+Route::group(['middleware'=>'web'], function(){
+    // Course
+    Route::get('/create-course',  [courseController::class, 'index'])->name('create-course');
+    Route::get('/view-courses',  [courseController::class, 'show'])->name('view-courses');
+    Route::get('/view_course/{unique_id}', [courseController::class, 'showCourses'])->name('view_course');
+    Route::get('/edit-course/{id}', [courseController::class, 'update_page'])->name('edit-course');
+
+});
+
+Route::group(['middleware'=>'web'], function(){
+    //create Price For Course
+    Route::get('/create_price', [priceController::class, 'create'])->name('create_price');
+    Route::post('/store_price', [priceController::class, 'store'])->name('store_price');
+    Route::get('/view_price', [priceController::class, 'index'])->name('view_price');
+
+});
+
+Route::group(['middleware'=>'web'], function(){
     //system settings
     Route::get('/main_settings_page', [AppSettingsController::class, 'mainSettings'])->name('main_settings_page');
     Route::get('/app_settings_page', [AppSettingsController::class, 'appSettings'])->name('app_settings_page');
@@ -67,6 +95,12 @@ Route::group(['middleware'=>'web'], function(){
 Route::group(['middleware'=>'web'], function(){
     //update currency
     Route::post('/update_user_currency', [CurrencyRateController::class, 'updateUserPreferredCurrency'])->name('update_user_currency');
+
+});
+
+Route::group(['middleware'=>'web'], function(){
+    //saved courses
+    Route::get('/saved-course', [SaveCourseController::class, 'getAllSavedCourse'])->name('saved-course');
 
 });
 

@@ -1,4 +1,7 @@
-﻿@php $pageTitle = 'App Settings Area'; @endphp
+﻿@php
+	$pageTitle = 'App Settings Area';
+	$Setting = 'active';
+@endphp
 @include('layouts.head')
 
 <body>

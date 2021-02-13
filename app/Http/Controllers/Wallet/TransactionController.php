@@ -341,6 +341,7 @@ class TransactionController extends Controller
             if(count($bulk_data) > 0){
 
                 $flutter_wave_details = PaymentGatewayBox::getFlutterWaveDetails();
+
                 if($flutter_wave_details['error_code'] == 1){
                     throw new Exception($flutter_wave_details['error']);
                     return;
@@ -348,11 +349,12 @@ class TransactionController extends Controller
                 $secKey = $flutter_wave_details['data']['gate_way_manager_fields']['secret_key'];
 
                 $payment_data = [
-                    "title"=>env('APP_NAME').'Payment',
+                    "title"=>env('APP_NAME').' Payment',
                     "bulk_data"=>$bulk_data,
                 ];
 
                 $response = $this->commencePayment($payment_data, $secKey);
+
                 if($response['error_code'] == 1){
                     throw new Exception($response['error']);
                     return;
