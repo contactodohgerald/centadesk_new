@@ -66,3 +66,24 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .my_courses_tabs .nav-link{
     font-family: 'Poppins', sans-serif !important;
 }
+.nav-link{
+    font-family: 'Poppins', sans-serif !important;
+}
+.account_setting h4{
+    font-family: 'Poppins', sans-serif !important;
+}
+.account_setting p{
+    font-family: 'Poppins', sans-serif !important;
+}
+.help-block{
+    font-family: 'Poppins', sans-serif !important;
+}
+button, input, optgroup, select, textarea{
+    font-family: 'Poppins', sans-serif !important;
+}
+.fotb_left p{
+    font-family: 'Poppins', sans-serif !important;
+}
+.cursor-pointer{
+    cursor: pointer;
+}

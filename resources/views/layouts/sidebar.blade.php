@@ -25,10 +25,10 @@ $complains = $complain->getAllOfComplain($condition);
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
-                            <a href="create-course" class="sub_menu--link">Create</a>
+                            <a href="/create-course" class="sub_menu--link">Create</a>
                         </li>
                         <li class="sub_menu--item">
-                            <a href="view-courses" class="sub_menu--link">View All</a>
+                            <a href="/view-courses" class="sub_menu--link">View All</a>
                         </li>
                     </ul>
                 </li>

@@ -1,7 +1,9 @@
 <?php
+namespace App\Http\Controllers\Course;
 
-namespace App\Http\Controllers;
+// namespace App\Http\Controllers\Course;
 
+use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use App\course_category_model;
@@ -40,7 +42,7 @@ class courseController extends Controller
         return view('dashboard.create-course', $view);
     }
     /**
-     * Display page for updating course.
+     *  Show the form for updating course.
      *
      * @return \Illuminate\Http\Response
      */
@@ -174,17 +176,6 @@ class courseController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -201,7 +192,7 @@ class courseController extends Controller
                 throw new Exception('This is not a valid request.');
             }
             $validator = Validator::make($request->all(), [
-                'title' => 'required|string|max:40|unique:course_tb,name',
+                'title' => 'required|string|max:40|',
                 'category' => 'required|string',
                 'caption' => 'required|string|max:100',
                 'pricing' => 'required|string',
@@ -209,9 +200,23 @@ class courseController extends Controller
                 'url' => 'required',
                 'cover_video' => 'required|string',
             ]);
+            // return 'msg';
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors(), 'status' => false]);
             }
+
+            $title = $request->input('title');
+            $category = $request->input('category');
+            $caption = $request->input('caption');
+            $pricing = $request->input('pricing');
+            $description = $request->input('desc');
+            $url = $request->input('url');
+            $cover_img = $request->file('cover_img');
+            $cover_video = $request->input('cover_video');
+            $user_id = $user['unique_id'];
+
+            $course = course_model::find($id);
+
             if($request->file('cover_img')){
                 $validator = Validator::make($request->all(), [
                     'cover_img' => 'required|file|image|mimes:jpeg,png,gif|max:4048',
@@ -223,37 +228,23 @@ class courseController extends Controller
                 $upload_img = $cover_img->storeAs(
                     'public/course-img', $img_name
                 );
+                $course->cover_image = $img_name;
             }
 
-            $unique_id = $this->input('unique_id');
-            $title = $request->input('title');
-            $category = $request->input('category');
-            $caption = $request->input('caption');
-            $pricing = $request->input('pricing');
-            $description = $request->input('desc');
-            $url = $request->input('url');
-            $cover_img = $request->file('cover_img');
-            $cover_video = $request->input('cover_video');
-            $user_id = $user['unique_id'];
+            $course->name = $title;
+            $course->category_id = $category;
+            $course->short_caption = $caption;
+            $course->pricing = $pricing;
+            $course->description = $description;
+            $course->course_urls = $url;
+            $course->intro_video = $cover_video;
+            $updated = $course->save();
 
 
-            $new_course = course_model::create([
-                'unique_id' => $unique_id,
-                'name' => $title,
-                'category_id' => $category,
-                'user_id' => $user_id,
-                'short_caption' => $caption,
-                'pricing' => $pricing,
-                'description' => $description,
-                'course_urls' => $url,
-                'cover_image' => $img_name,
-                'intro_video' => $cover_video
-            ]);
-
-            if (!$new_course->unique_id) {
+            if (!$updated) {
                 throw new Exception('Database Error!');
             } else {
-                $error = 'Course Created!';
+                $error = 'Course Updated!';
                 return response()->json(["message" => $error, 'status' => true]);
             }
 

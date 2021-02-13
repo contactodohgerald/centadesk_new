@@ -79,9 +79,12 @@ $url = explode('++',$course->course_urls);
                                                                     <label>Category*</label>
                                                                 </div>
                                                                 <select name="category" class="ui hj145 dropdown cntry152 prompt srch_explore">
+
                                                                     <option value="">Select</option>
                                                                     @foreach ($category as $e)
-                                                                    <option value="{{ $e->unique_id }}">{{ $e->name }}</option>
+                                                                    <option @if ($e->unique_id == $course->category_id)
+                                                                        selected="selected"
+                                                                        @else @endif value="{{ $e->unique_id }}">{{ $e->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -182,7 +185,7 @@ $url = explode('++',$course->course_urls);
                                                             <div class="view_all_dt">
                                                                 <div class="view_img_left">
                                                                     <div class="view__img">
-                                                                        <img src="/storage/course-img/{{ $course->cover_image}} " alt="">
+                                                                        <img id="thumbnail_cover_img" src="/storage/course-img/{{ $course->cover_image}} " alt="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="view_img_right">
@@ -200,17 +203,15 @@ $url = explode('++',$course->course_urls);
                                                             </div>
                                                             <div class="view_all_dt">
                                                                 <div class="view_img_left">
-                                                                    <div class="view__img">
-                                                                        <img src="images/courses/add_video.jpg" alt="">
+                                                                    <div class="view__img ytube_video">
+                                                                        <iframe width="100%" src="https://www.youtube.com/embed/{{ $course->intro_video }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                                                     </div>
                                                                 </div>
                                                                 <div class="view_img_right">
                                                                     <h4>Promotional Video</h4>
                                                                     <p>Students who watch a well-made promo video are 5X more likely to enroll in your course. We've seen that statistic go up to 10X for exceptionally awesome videos. Put effort into making yours awesome!</p>
                                                                     <div class="ui left icon input swdh19">
-                                                                        <input class="prompt srch_explore" type="text" placeholder="Summarize in a sentence" id="cover_video">
-                                                                        {{-- <label class="custom-file-label" for="inputGroupFile04">Youtube Url</label> --}}
-                                                                        {{-- <div class="badge_num2">Youtube Url</div> --}}
+                                                                        <input class="prompt srch_explore" type="text" value="https://www.youtube.com/embed/{{ $course->intro_video }}" placeholder="Youtube Url to intro video" id="cover_video">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -280,7 +281,7 @@ $url = explode('++',$course->course_urls);
                                     <div class="step-footer step-tab-pager">
                                         <button data-direction="prev" class="btn btn-default steps_btn">PREVIOUS</button>
                                         <button data-direction="next" class="btn btn-default steps_btn">Next</button>
-                                        <button data-direction="finish" class="btn btn-default steps_btn create_course_btn">Submit for Review</button>
+                                        <button data-direction="finish" class="btn btn-default steps_btn edit_course_btn">Submit for Review</button>
                                     </div>
                                 </div>
                             </div>
@@ -303,6 +304,26 @@ $url = explode('++',$course->course_urls);
                     plugins: ['link preview anchor'],
                     height: 400,
                 });
+                // create image thumbnail on select
+                $('#cover_img').change(function (e) {
+                    e.preventDefault();
+                    let cover_img = $('#cover_img').prop('files')[0];
+                    display_img_thumbnail(this,'thumbnail_cover_img');
+                });
+
+                // create youtube iframe when url is inputted
+                $('#cover_video').focusout(function (e) {
+                    e.preventDefault();
+                    let url = $(this).val();
+                    let valid_url = youtube_regex(url);
+                    if(valid_url !== false){
+                        $('.ytube_video > *').remove();
+                        let youtube_iframe = `<iframe width="100%"" src="https://www.youtube.com/embed/${valid_url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+
+                        $(youtube_iframe).appendTo('.ytube_video');
+                    }
+                    // console.log(valid_url)
+                });
 
                 $('.btn_add').click(function(e) {
                     e.preventDefault();
@@ -323,8 +344,9 @@ $url = explode('++',$course->course_urls);
                 });
 
 
-                $('.create_course_btn').click(async function(e) {
+                $('.edit_course_btn').click(async function(e) {
                     e.preventDefault();
+                    // console.log({{ Request::segment(2) }});return;
                     let data = [];
                     // basic info
                     let basic_info = $('.basic_info').serializeArray();
@@ -346,9 +368,10 @@ $url = explode('++',$course->course_urls);
                     });
 
                     let cover_video = $('#cover_video').val();
+                    let valid_url = youtube_regex(cover_video);
                     data.push({
                         name: "cover_video",
-                        value: cover_video
+                        value: valid_url
                     });
                     // download urls
                     let url_array = [];
@@ -364,10 +387,10 @@ $url = explode('++',$course->course_urls);
 
                     // append to form data object
                     let form_data = set_form_data(data);
-                    let returned = await ajaxRequest('create-course', form_data);
+                    let returned = await ajaxRequest('/edit-course/{{ Request::segment(2) }}', form_data);
                     console.log(returned);
                     // return;
-                    validator(returned, 'create-course');
+                    validator(returned, '/edit-course/{{ Request::segment(2) }}');
                 });
             });
         </script>

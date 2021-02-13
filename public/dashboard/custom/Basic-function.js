@@ -198,3 +198,18 @@ function display_img_thumbnail(input, element_id) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+
+function append_id(name,append_to,modal,this_){
+    /*
+    name=>form_field name
+    append_to => name of input_field
+    modal => selector of modal
+    */
+
+    let input_id = $(this_).attr('id');
+    let input_field = `<input type="hidden" value="${input_id}" name="${name}">`;
+    $(input_field).appendTo(append_to);
+    console.log(input_id);
+    $(modal).modal('toggle');
+}

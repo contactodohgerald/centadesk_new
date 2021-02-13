@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\courseController;
+use App\Http\Controllers\Course\courseController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Roles\RolesController;
@@ -46,9 +46,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/create-course',[courseController::class,'index']);
     Route::get('/view-courses', [courseController::class,'show']);
     Route::get('/edit-course/{id}', [courseController::class,'update_page']);
+    Route::post('/create-course', [courseController::class,'create']);
+    Route::post('/edit-course/{id}', [courseController::class,'update']);
 });
 
-Route::post('/create-course', 'courseController@create');
+
+Route::group(['middleware' => 'web'], function () {
+    // user routes
+    Route::post('/personal-details',[UserController::class,'update_user_details']);
+});
+
 
 Auth::routes(['verify' => true]);
 
