@@ -258,7 +258,7 @@ class courseController extends Controller
                 'category' => 'required|string',
                 'caption' => 'required|string|max:100',
                 'pricing' => 'required|string',
-                'desc' => 'required',
+                'desc' => 'required|min:50',
                 'url' => 'required',
                 'cover_video' => 'required|string',
             ]);
@@ -272,9 +272,13 @@ class courseController extends Controller
                 if ($validator->fails()) {
                     return response()->json(['errors' => $validator->errors(), 'status' => false]);
                 }
+                $img_name = $this->gen_file_name($user,$title,$cover_img);
+                $upload_img = $cover_img->storeAs(
+                    'public/course-img', $img_name
+                );
             }
 
-            $unique_id = $this->createUniqueId('price_tb', 'unique_id');
+            $unique_id = $this->input('unique_id');
             $title = $request->input('title');
             $category = $request->input('category');
             $caption = $request->input('caption');
@@ -285,12 +289,6 @@ class courseController extends Controller
             $cover_video = $request->input('cover_video');
             $user_id = $user['unique_id'];
 
-            // generate file name
-            $img_name = $this->gen_file_name($user,$title,$cover_img);
-            $upload_img = $cover_img->storeAs(
-                'public/course-img', $img_name
-            );
-            // return [$caption];
 
             $new_course = course_model::create([
                 'unique_id' => $unique_id,

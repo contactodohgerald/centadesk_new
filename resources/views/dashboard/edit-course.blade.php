@@ -184,7 +184,7 @@
                                                             <div class="view_all_dt">
                                                                 <div class="view_img_left">
                                                                     <div class="view__img">
-                                                                        <img src="{{ asset('/storage/app/public/course-img/'.$course->cover_image) }}" alt="">
+                                                                        <img src="/storage/course-img/{{ $course->cover_image}} " alt="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="view_img_right">

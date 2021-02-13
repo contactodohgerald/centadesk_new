@@ -109,7 +109,7 @@
 													<td class="text-center text-capitalize"><b class="course_active">{{ $e->status }}</b></td>
 													<td class="text-center">
 														<a href="{{route('view_course', $e->unique_id )}}" title="View" class="gray-s"><i class="uil uil-video"></i></a>
-														<a href="#" title="Edit" class="gray-s"><i class="uil uil-edit-alt"></i></a>
+														<a href="/edit-course/{{ $e->unique_id }}" title="Edit" class="gray-s"><i class="uil uil-edit-alt"></i></a>
 														<a href="#" title="Delete" class="gray-s"><i class="uil uil-trash-alt"></i></a>
 													</td>
                                                 </tr>
