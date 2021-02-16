@@ -50,17 +50,22 @@ Route::get('/clear-cache', 'HomeController@clear_cache');
 
 Route::group(['middleware' => 'web'], function () {
     // courses
+
     Route::get('/create-course',[courseController::class,'index']);
     Route::get('/view-courses', [courseController::class,'show']);
     Route::get('/edit-course/{id}', [courseController::class,'update_page']);
     Route::post('/create-course', [courseController::class,'create']);
     Route::post('/edit-course/{id}', [courseController::class,'update']);
+    Route::post('/delete-course/{id}', [courseController::class,'soft_delete']);
+
 });
 
 
 Route::group(['middleware' => 'web'], function () {
     // user routes
+    Route::get('/teacher/profile',[UserController::class,'show_teacher_profile']);
     Route::post('/personal-details',[UserController::class,'update_user_details']);
+    Route::post('/profile/photo',[UserController::class,'upload_cover_photo']);
 });
 
 

@@ -84,6 +84,58 @@ button, input, optgroup, select, textarea{
 .fotb_left p{
     font-family: 'Poppins', sans-serif !important;
 }
+.prfledt1 h2{
+    font-family: 'Poppins', sans-serif !important;
+}
+.prfledt1 span{
+    font-family: 'Poppins', sans-serif !important;
+}
+._htg452 p{
+    font-family: 'Poppins', sans-serif !important;
+}
+.tab_crse .nav-link{
+    font-family: 'Poppins', sans-serif !important;
+}
+._htg452 h3{
+    font-family: 'Poppins', sans-serif !important;
+}
 .cursor-pointer{
     cursor: pointer;
 }
+.vdtodt .vdt14::after{
+    display: none;
+}
+
+/* file upload css */
+.img-span {
+    color: white;
+    background: #333 !important;
+    border-color: none;
+    font-weight: 500;
+    padding: 10px 30px;
+  }
+  .upload-img-form {
+    /* background-color: transparent !important;
+    width: 20%;
+    height: 53px;
+    margin-left: -135px;
+    position: absolute;
+    opacity: 0;
+    float: left;
+    cursor: pointer;
+    margin-top: -10px; */
+    background-color: transparent !important;
+    width: 35%;
+    height: 53px;
+    position: absolute;
+    opacity: 0;
+    float: left;
+    cursor: pointer;
+    margin-left: -165px;
+    margin-top: 5px;
+  }
+  /* file upload css */
+
+  .upload_img_btn{
+    margin-top: 10px;
+  }

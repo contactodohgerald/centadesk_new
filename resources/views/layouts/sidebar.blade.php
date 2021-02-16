@@ -18,8 +18,8 @@ $complains = $complain->getAllOfComplain($condition);
                         <span class="menu--label">Home</span>
                     </a>
                 </li>
-                <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link <?php print @$profile;?>" title="Profile">
+                {{-- <li class="menu--item  menu--item__has_sub_menu">
+                    <label class="menu--link <?php //print @$profile;?>" title="Profile">
                         <i class='uil uil-user-circle menu--icon'></i>
                         <span class="menu--label">Profile</span>
                     </label>
@@ -31,6 +31,12 @@ $complains = $complain->getAllOfComplain($condition);
                             <a href="#" class="sub_menu--link">Edit Profile</a>
                         </li>
                     </ul>
+                </li> --}}
+                <li class="menu--item">
+                    <a href="/teacher/profile" class="menu--link <?php print @$profile;?>" title="Profile">
+                        <i class='uil uil-user-circle menu--icon'></i>
+                        <span class="menu--label">Profile</span>
+                    </a>
                 </li>
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
                 <li class="menu--item menu--item__has_sub_menu">

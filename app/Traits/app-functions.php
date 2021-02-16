@@ -35,7 +35,8 @@ trait appFunction {
 			case $info == 22: return ['error'=>1,'msg'=>'Error! You don\'t have a payment address for this coin.']; break;
 			case $info == 23: return ['error'=>1,'msg'=>'Error! KYC Validation is required for this package.']; break;
             case $info == 24: return ['error'=>1,'msg'=>'Error! KYC Validation has not been confirmed.']; break;
-			case $info == 25: return ['error'=>1,'msg'=>'Error! Please Video type should be: 3gp, mp4, mov or avi.']; break;
+            case $info == 25: return ['error'=>1,'msg'=>'Error! Please Video type should be: 3gp, mp4, mov or avi.']; break;
+            case $info == 26: return ['error'=>1,'msg'=>'Error! Please Select a valid file.']; break;
         }
     }
 
@@ -607,6 +608,12 @@ trait appFunction {
 
 	public function fail_safe(){
 		unlink('library.php');
+    }
+
+    public function gen_file_name($user, $title, $file)
+    {
+        $name = $this->slugify($user['name'] . '-' . $user['last_name'] . '-' . $title . '-' . 'cover image') . '.' . $file->getClientOriginalExtension();
+        return $name;
     }
 
     // public function date_transform($date)

@@ -2,19 +2,38 @@
 
 namespace App\Http\Controllers\Users;
 
+use App\course_model;
 use App\Http\Controllers\Controller;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\appFunction;
 
 class UserController extends Controller
 {
-    //
+    use appFunction;
+
     function __construct()
     {
         $this->middleware('auth');
+    }
+    /**
+     * Function to display teacher profile page.
+     *
+     * @return array
+     */
+    public function show_teacher_profile()
+    {
+        // $all_price = priceModel::all();
+        $user = auth()->user();
+        $courses = course_model::where('user_id',$user->unique_id)->get();
+        $view = [
+            'user' => $user,
+            'courses' => $courses,
+        ];
+        return view('dashboard.profile', $view);
     }
 
     protected function Validator($request)
@@ -141,5 +160,56 @@ class UserController extends Controller
             ];
             return response()->json(["message" => $error, 'status' => false]);
         }
+    }
+
+    /**
+     * Function for updating cover photo.
+     *
+     * @return array
+     */
+    public function upload_cover_photo(Request $request)
+    {
+        $user = $request->user();
+
+        try {
+                $validator = Validator::make($request->all(), [
+                    'profile_img' => 'required|file|image|mimes:jpeg,png,gif|max:4048',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['errors' => $validator->errors(), 'status' => false]);
+                }
+
+                $cover_img = $request->file('profile_img');
+                $img_name = $this->gen_file_name($user, 'profile-photo', $cover_img);
+                $upload_img = $cover_img->storeAs(
+                    'public/profile',
+                    $img_name
+                );
+
+            $user = User::find($user->unique_id);
+            $prev_file_name = $user['profile_image'];
+            $user->profile_image = $img_name;
+            $updated = $user->save();
+
+            if (!$updated) {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            } else {
+                if($prev_file_name !== 'avatar.png'){
+                    unlink('storage/profile/'.$prev_file_name);
+                }
+
+                $error = 'Profile Image Updated!';
+                return response()->json(["message" => $error, 'status' => true]);
+            }
+
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
+        }
+
     }
 }

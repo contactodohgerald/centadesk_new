@@ -165,11 +165,11 @@ function validator(returned, page_redirect) {
         for (var key in returned.errors) {
             let error = returned.errors[key];
             if (error.length == 1) {
-                let errorHold = `<div class="col-4"><div class="alert alert-danger">${returned.errors[key]}</div></div>`;
+                let errorHold = `<div class="col-12 text-center"><div class="alert alert-danger">${returned.errors[key]}</div></div>`;
                 $("#errorHold").append(errorHold);
             } else if (error.length > 1) {
                 error.forEach(e => {
-                    let errorHold = `<div class="col-4"><div class="alert alert-danger">${e}</div></div>`;
+                    let errorHold = `<div class="col-4 text-center"><div class="alert alert-danger">${e}</div></div>`;
                     $("#errorHold").append(errorHold);
                 })
             }
@@ -211,5 +211,5 @@ function append_id(name,append_to,modal,this_){
     let input_field = `<input type="hidden" value="${input_id}" name="${name}">`;
     $(input_field).appendTo(append_to);
     console.log(input_id);
-    $(modal).modal('toggle');
+    // $(modal).modal('toggle');
 }

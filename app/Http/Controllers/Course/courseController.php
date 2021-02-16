@@ -1,18 +1,20 @@
 <?php
+
 namespace App\Http\Controllers\Course;
 
 // namespace App\Http\Controllers\Course;
 
-use App\Http\Controllers\Controller;
 use Exception;
-use Illuminate\Http\Request;
-use App\course_category_model;
+use App\Model\Like;
 use App\priceModel;
 use App\course_model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use App\Traits\appFunction;
 use App\Traits\Generics;
+use App\Traits\appFunction;
+use Illuminate\Http\Request;
+use App\course_category_model;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class courseController extends Controller
 {
@@ -54,7 +56,7 @@ class courseController extends Controller
         $all_category = course_category_model::all();
         $all_price = priceModel::all();
         $view = [
-            'course'=> $course,
+            'course' => $course,
             'category' => $all_category,
             'pricing' => $all_price,
         ];
@@ -62,11 +64,6 @@ class courseController extends Controller
         return view('dashboard.edit-course', $view);
     }
 
-    public function gen_file_name($user,$title,$file)
-    {
-        $name = $this->slugify($user['name'] . '-' . $user['last_name'] . '-' . $title. '-' .'cover image').'.'. $file->getClientOriginalExtension();
-        return $name;
-    }
 
 
     /**
@@ -78,7 +75,7 @@ class courseController extends Controller
     public function create(Request $request)
     {
         $user = $request->user();
-         //return $user;
+        //return $user;
 
         try {
             if (!$request->isMethod('POST')) {
@@ -110,9 +107,10 @@ class courseController extends Controller
             $user_id = $user['unique_id'];
 
             // generate file name
-            $img_name = $this->gen_file_name($user,$title,$cover_img);
+            $img_name = $this->gen_file_name($user, $title, $cover_img);
             $upload_img = $cover_img->storeAs(
-                'public/course-img', $img_name
+                'public/course-img',
+                $img_name
             );
             // return [$caption];
 
@@ -136,15 +134,13 @@ class courseController extends Controller
                 $error = 'Course Created!';
                 return response()->json(["message" => $error, 'status' => true]);
             }
-
-
         } catch (Exception $e) {
 
             $error = $e->getMessage();
             $error = [
-                'errors' => $error,
+                'errors' => [$error],
             ];
-            return response()->json(["message" => $error, 'status' => false]);
+            return response()->json(["errors" => $error, 'status' => false]);
         }
     }
 
@@ -169,23 +165,21 @@ class courseController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->user_type === 'admin' || $user->user_type === 'super_admin'){
+        if ($user->user_type === 'admin' || $user->user_type === 'super_admin') {
 
             $condition = [
                 ['deleted_at', null]
             ];
             $courses = $this->course_model->getAllCourse($condition);
-
-        }else{
+        } else {
 
             $condition = [
                 ['user_id', $user->unique_id]
             ];
             $courses = $this->course_model->getAllCourse($condition);
-
         }
 
-        foreach ($courses as $each_courses){
+        foreach ($courses as $each_courses) {
 
             $condition = [
                 ['course_unique_id', $each_courses->unique_id]
@@ -203,7 +197,7 @@ class courseController extends Controller
             'user' => $user,
         ];
 
-        return view('dashboard.view-courses',$view);
+        return view('dashboard.view-courses', $view);
     }
 
     /**
@@ -235,7 +229,7 @@ class courseController extends Controller
 
         $course->price;
 
-        return view('dashboard.view_course', ['course'=>$course]);
+        return view('dashboard.view_course', ['course' => $course]);
     }
 
     /**
@@ -280,16 +274,17 @@ class courseController extends Controller
 
             $course = course_model::find($id);
 
-            if($request->file('cover_img')){
+            if ($request->file('cover_img')) {
                 $validator = Validator::make($request->all(), [
                     'cover_img' => 'required|file|image|mimes:jpeg,png,gif|max:4048',
                 ]);
                 if ($validator->fails()) {
                     return response()->json(['errors' => $validator->errors(), 'status' => false]);
                 }
-                $img_name = $this->gen_file_name($user,$title,$cover_img);
+                $img_name = $this->gen_file_name($user, $title, $cover_img);
                 $upload_img = $cover_img->storeAs(
-                    'public/course-img', $img_name
+                    'public/course-img',
+                    $img_name
                 );
                 $course->cover_image = $img_name;
             }
@@ -310,15 +305,13 @@ class courseController extends Controller
                 $error = 'Course Updated!';
                 return response()->json(["message" => $error, 'status' => true]);
             }
-
-
         } catch (Exception $e) {
 
             $error = $e->getMessage();
             $error = [
-                'errors' => $error,
+                'errors' => [$error],
             ];
-            return response()->json(["message" => $error, 'status' => false]);
+            return response()->json(["errors" => $error, 'status' => false]);
         }
     }
 
@@ -333,42 +326,69 @@ class courseController extends Controller
         //
     }
 
-    function handleValidations(array $data){
+    function handleValidations(array $data)
+    {
 
         $validator = Validator::make($data, [
             'dataArray' => 'required|string'
         ]);
 
         return $validator;
-
     }
 
     public function activateCoursesStatus(Request $request)
     {
-        try{
+        try {
 
             $validation = $this->handleValidations($request->all());
-            if($validation->fails()){
-                return response()->json(['error_code'=>1, 'error_message'=>$validation->messages()]);
+            if ($validation->fails()) {
+                return response()->json(['error_code' => 1, 'error_message' => $validation->messages()]);
             }
 
             $dataArray = explode('|', $request->dataArray);
 
-            foreach($dataArray as $eachDataArray){
+            foreach ($dataArray as $eachDataArray) {
 
                 //update the course status to confirmed
                 $course = $this->course_model->selectSingleCourse($eachDataArray);
                 $course->status = 'confirmed';
                 $course->save();
             }
-            return response()->json(['error_code'=>0, 'success_statement'=>'Selected Courses has been confirmed successfully']);
-
-        }catch (Exception $exception){
+            return response()->json(['error_code' => 0, 'success_statement' => 'Selected Courses has been confirmed successfully']);
+        } catch (Exception $exception) {
 
             $error = $exception->getMessage();
-            return response()->json(['error_code'=>1, 'error_message'=>['general_error'=>[$error]]]);
-
+            return response()->json(['error_code' => 1, 'error_message' => ['general_error' => [$error]]]);
         }
+    }
+    /**
+     * Function to soft delete courses.
+     *
+     * @param Request $request
+     * @param string $id
+     * @return void
+     */
+    public function soft_delete(Request $request, $id)
+    {
+        try {
+            if (!$id) {
+                throw new Exception($this->errorMsgs(15)['msg']);
+            }
+            $deleted = course_model::find($id)->delete();
 
+            if (!$deleted) {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            } else {
+                $error = 'Course Deleted Successfully!';
+                return response()->json(["message" => $error, 'status' => true]);
+            }
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
+        }
     }
 }

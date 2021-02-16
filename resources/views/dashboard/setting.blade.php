@@ -70,8 +70,60 @@
 							<div class="tab-pane fade show active" id="pills-account" role="tabpanel" aria-labelledby="pills-account-tab">
                                 <div class="row" id="errorHold"></div>
 								<div class="account_setting">
-									<h4>Your Cursus Account</h4>
-                                    <p>This is your public presence on Cursus. You need a account to upload your paid courses, comment on courses, purchased by students, or earning.</p>
+									<h4>Your CentaDesk Account</h4>
+                                    <p>This is your public presence on CentaDesk. You need a account to upload your paid courses, <br> comment on courses, purchased by students, or earning.</p>
+                                        <div class="basic_profile">
+                                            <div class="basic_ptitle">
+                                                <h4>Profile Image</h4>
+                                                {{-- <p>Select a portrait image</p> --}}
+                                            </div>
+                                            <div class="basic_form">
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <div class="row">
+                                                            <div class="col-lg-3">
+                                                                <div style="width: 100%;" class="view_img_left">
+                                                                    <div class="view__img">
+                                                                        <img id="thumbnail_cover_img" src="/storage/profile/{{ $user->profile_image }}" width="150px" height="160px">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <form class="user_img_form">
+                                                                    @csrf
+                                                                    <span class="btn btn-default img-span">Choose Image</span>
+                                                                    <input type="file" id="user_profile_img" name="file" class="upload-img-form">
+                                                                    <button class="save_btn upload_img_btn" type="submit">Update Photo</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        {{-- <div class="row">
+
+
+                                                            <div class="col-lg-4">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon input swdh11 swdh19">
+                                                                        <input class="prompt srch_explore" type="text" name="first_name" value="{{ $user->name }}" placeholder="First name">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon input swdh11 swdh19">
+                                                                        <input class="prompt srch_explore" type="text" name="other_names" value="{{ $user->last_name }}" placeholder="Other names">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="divider-1"></div>
+                                                            </div>
+                                                        </div> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+								</div>
+								<div class="account_setting">
                                     <form class="update_profile_form">
                                         @csrf
                                         <div class="basic_profile">
@@ -1216,8 +1268,27 @@
                 // append to form data object
                 let form_data = set_form_data(update_profile);
                 let returned = await ajaxRequest('personal-details', form_data);
-                //     console.log(returned);return;
+                    // console.log(returned);return;
                 validator(returned, 'main_settings_page');
             });
+
+
+        $('.upload_img_btn').click(async function (e) {
+            e.preventDefault();
+            let data = [];
+            let user_img = $('#user_profile_img').prop('files')[0];
+            let user_img_form = $('.user_img_form').serializeArray();
+            let img_data = {name:"profile_img", value:user_img};
+
+            user_img_form.forEach(e => {
+                data.push(e);
+            });
+            data.push(img_data);
+            // console.log(data);return;
+            let form_data = set_form_data(data);
+            let returned = await ajaxRequest('profile/photo', form_data);
+            // console.log(returned);return;
+                validator(returned, 'main_settings_page');
+        });
     });
 </script>
