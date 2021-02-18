@@ -28,7 +28,7 @@
 								<div class="wtch125">
 									<span class="vdt14">{{count($saved_courses)}} Courses</span>
 								</div>
-								<a href="#" class="rmv-btn"><i class='uil uil-trash-alt'></i>Remove Saved Courses</a>
+								<a href="javascript:;" class="rmv-btn" onclick="deleteSavedCourse(this, 'all')"><i class='uil uil-trash-alt'></i>Remove Saved Courses</a>
 							</div>						
 						</div>							
 					</div>					
@@ -55,15 +55,17 @@
                                             </a>
                                             <div class="hs_content">
                                                 <div class="eps_dots eps_dots10 more_dropdown">
-                                                    <a href="#"><i class="uil uil-ellipsis-v"></i></a>
+                                                    <a href="javascript:;"><i class="uil uil-ellipsis-v"></i></a>
                                                     <div class="dropdown-content">
-                                                        <span><i class='uil uil-times'></i>Remove</span>															
+                                                        <span onclick="deleteSavedCourse(this, 'single')"><i class='uil uil-times'></i>Remove</span>															
                                                     </div>																											
                                                 </div>
                                                 <div class="vdtodt">
                                                     <span class="vdt14">{{$each_saved_courses->courses->views}} views</span>
                                                     <span class="vdt14">{{$each_saved_courses->courses->created_at->diffForHumans()}}</span>
                                                 </div>
+                                                <input type="hidden" class="saved_course_id" value="{{$each_saved_courses->unique_id}}">
+                                                <input type="hidden" class="user_unique_id" value="{{auth()->user()->unique_id}}">
                                                 <a href="{{route('view_course', $each_saved_courses->courses->unique_id )}}" class="crse14s title900">{{$each_saved_courses->courses->name}}</a>
                                                 <a href="{{route('view_course', $each_saved_courses->courses->unique_id )}}" class="crse-cate">{{$each_saved_courses->courses->short_caption}}</a>
                                                 <div class="auth1lnkprce">
@@ -76,7 +78,7 @@
                                         @endforeach
                                     @else
                                     <div class="fcrse_1 mt-30">
-                                        <div class="alert alert-success text-center">No Data Was Ruturned</div>
+                                        <div class="alert alert-success text-center">No Saved Courses, Browse through our list of Courses and add to your Saved Libary</div>
                                     </div>
                                     @endif
 								</div>									

@@ -35,9 +35,8 @@ class course_model extends Model
      *
      * @return void
      */
-    public function category()
-    {
-        return $this->hasOne('App\course_category_model','unique_id','category_id');
+    public function category(){
+        return $this->belongsTo('App\course_category_model', 'category_id');
     }
 
     public function user(){
