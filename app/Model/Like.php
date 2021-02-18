@@ -20,4 +20,12 @@ class Like extends Model
         return $likes;
 
     }
+
+    function getSingleLikes($condition){
+
+        $likes = Like::where($condition)->first();
+
+        return $likes;
+
+    }
 }

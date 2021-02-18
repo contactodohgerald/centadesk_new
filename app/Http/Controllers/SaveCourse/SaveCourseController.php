@@ -15,6 +15,7 @@ class SaveCourseController extends Controller
     use Generics;
     function __construct(SavedCourses $savedCourses)
     {
+        $this->middleware('auth',  ['except' => ['saveCourse', 'removeSavedCourse']]);
         $this->savedCourses = $savedCourses;
     }
 
@@ -99,6 +100,64 @@ class SaveCourseController extends Controller
             return response()->json(['error_code'=>1, 'error_message'=>['general_error'=>[$error]]]);
 
         }
+
+    }
+
+    function handleValidation(array $data){
+
+        $validator = Validator::make($data, [
+            'action' => 'required'
+        ]);
+        return $validator;
+
+    }
+
+    public function removeSavedCourse(Request $request){
+
+        try{
+
+            $validation = $this->handleValidation($request->all());
+            if($validation->fails()){
+                return response()->json(['error_code'=>1, 'error_message'=>$validation->messages()]);
+            }
+
+            if($request->action === "single"){
+
+                $condition = [
+                    ['unique_id', $request->saved_course_id],
+                ];
+
+                $savedCourse = $this->savedCourses->getSingleSaveCourse($condition);
+                if($savedCourse !== null){
+                    $savedCourse->delete();
+                }else{
+                    return response()->json(['error_code'=>1, 'error_message'=>'An Error occurred, try again later']);
+                }
+
+            }else{
+
+                $condition = [
+                    ['user_unique_id', $request->user_unique_id],
+                ];
+                $savedCourse = $this->savedCourses->getAllSaveCourse($condition);
+                if(count($savedCourse) > 0){
+                    foreach($savedCourse as $eachSavedCourse){
+                        $eachSavedCourse->delete();
+                    }
+                }else{
+                    return response()->json(['error_code'=>1, 'error_message'=>'An Error occurred, try again later']);
+                }
+
+            }
+            return response()->json(['error_code'=>0, 'success_statement'=>'Saved Course was Removed successfully']);
+
+        }catch (Exception $exception){
+
+            $error = $exception->getMessage();
+            return response()->json(['error_code'=>1, 'error_message'=>['general_error'=>[$error]]]);
+
+        }
+
 
     }
 }

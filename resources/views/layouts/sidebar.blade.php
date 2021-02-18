@@ -30,6 +30,11 @@ $complains = $complain->getAllOfComplain($condition);
                         <li class="sub_menu--item">
                             <a href="#" class="sub_menu--link">Edit Profile</a>
                         </li>
+                        @if(auth()->user()->privilegeChecker('view_add_courses'))
+                        <li class="sub_menu--item">
+                            <a href="{{route('upload_cac')}}" class="sub_menu--link">Upload CAC</a>
+                        </li>
+                        @endif
                     </ul>
                 </li>
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
@@ -79,6 +84,12 @@ $complains = $complain->getAllOfComplain($condition);
                 </li>
                 @endif
                 <li class="menu--item">
+                    <a href="{{route('explore')}}" class="menu--link <?php print @$explore;?>" title="Explore">
+                        <i class='uil uil-search menu--icon'></i>
+                        <span class="menu--label">Explore</span>
+                    </a>
+                </li>
+                <li class="menu--item">
                     <a href="{{route('saved-course')}}" class="menu--link <?php print @$saveCourse;?>" title="Saved Courses">
                         <i class="uil uil-heart-alt menu--icon"></i>
                         <span class="menu--label">Saved Courses</span>
@@ -88,12 +99,6 @@ $complains = $complain->getAllOfComplain($condition);
                     <a href="live_streams.html" class="menu--link" title="Live Streams">
                         <i class='uil uil-kayak menu--icon'></i>
                         <span class="menu--label">Live Streams</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="explore.html" class="menu--link" title="Explore">
-                        <i class='uil uil-search menu--icon'></i>
-                        <span class="menu--label">Explore</span>
                     </a>
                 </li>
                 <li class="menu--item  menu--item__has_sub_menu">

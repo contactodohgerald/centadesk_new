@@ -290,9 +290,9 @@
                     </div>
                 </div>
             </div>
-
-            @include('layouts.footer')
         </div>
+
+         @include('layouts.footer')
         <!-- Body End -->
 
         @include('layouts.e_script')
