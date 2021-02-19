@@ -99,6 +99,15 @@ button, input, optgroup, select, textarea{
 ._htg452 h3{
     font-family: 'Poppins', sans-serif !important;
 }
+._df7852{
+    font-family: 'Poppins', sans-serif !important;
+}
+.font-poppins{
+    font-family: 'Poppins', sans-serif !important;
+}
+.badge_seller{
+    font-family: 'Poppins', sans-serif !important;
+}
 .cursor-pointer{
     cursor: pointer;
 }
@@ -138,4 +147,7 @@ button, input, optgroup, select, textarea{
 
   .upload_img_btn{
     margin-top: 10px;
+  }
+  .round_img{
+      border-radius: 100% !important;
   }

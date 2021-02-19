@@ -121,7 +121,7 @@
 								</div>
 								<div class="tab-pane fade" id="nav-courses" role="tabpanel">
 									<div class="crse_content">
-										<h3>My courses (8)</h3>
+										<h3>My courses ({{ count($courses) }})</h3>
 										<div class="_14d25">
 											<div class="row">
                                                 @foreach ($courses as $e)

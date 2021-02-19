@@ -153,8 +153,10 @@ function return_element_key_in_array(array, val_exist) {
 }
 
 function validator(returned, page_redirect) {
+    loader_set();
     $("#errorHold").empty();
     if (returned.status == true) {
+        loader_rmv();
         let errorHold = `<div class="col-12 text-center"><div class="alert alert-success">${returned.message}</div></div>`;
         $("#errorHold").append(errorHold);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -162,6 +164,7 @@ function validator(returned, page_redirect) {
             window.location.href = page_redirect;
         }, 2000);
     } else {
+        loader_rmv();
         for (var key in returned.errors) {
             let error = returned.errors[key];
             if (error.length == 1) {

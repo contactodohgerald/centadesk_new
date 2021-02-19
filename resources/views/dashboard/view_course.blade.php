@@ -35,26 +35,26 @@
 										<input type="hidden" class="course_unique_id" value="{{$course->unique_id}}">
 										<input type="hidden" class="user_unique_id" value="{{auth()->user()->unique_id}}">
 										<div class="_215b10">
-											<a href="javascript:;" onclick="saveCourse(this)" class="_215b11" title="Save Course">
+											<a href="javascript:;" onclick="saveCourse(this)" class="_215b11 font-poppins" title="Save Course">
 												<span><i class="uil uil-heart"></i></span>Save
 											</a>
 										</div>
 									</div>
 									<div class="col-xl-8 col-lg-7 col-md-6">
-										<div class="_215b03">
+										<div class="_215b03 font-poppins">
 											<h2>{{$course->name}}</h2>
 											<span class="_215b04">{{$course->short_caption}}</span>
 										</div>
-										<div class="_215b05">
+										<div class="_215b05 font-poppins">
 											<div class="crse_reviews mr-2">
 												<i class="uil uil-star"></i>4.5
 											</div>
 											(81,665 ratings)
 										</div>
-										<div class="_215b05">
+										<div class="_215b05 font-poppins">
 											114,521 students enrolled
 										</div>
-										<div class="_215b05">
+										<div class="_215b05 font-poppins">
 											Last updated: {{$course->created_at->diffForHumans()}}
 										</div>
 										<div class="_215b06">
@@ -81,7 +81,7 @@
 								<div class="user_dt_left">
 									<div class="live_user_dt">
 										<div class="user_img5">
-											<a href="#"><img src="{{asset('dashboard/images/left-imgs/img-1.jpg')}}" alt=""></a>
+											<a href="#"><img src="/storage/profile/{{ $course->user->profile_image }}" alt=""></a>
 										</div>
 										<div class="user_cntnt">
 											<a href="#" class="_df7852">{{$course->user->name}} {{$course->user->last_name}}</a>
@@ -124,7 +124,8 @@
 								<div class="tab-content" id="nav-tabContent">
 									<div class="tab-pane fade show active" id="nav-about" role="tabpanel">
 										<div class="_htg451">
-											<div class="_htg452">
+                                            {!! $course->description !!}
+											{{-- <div class="_htg452">
 												<h3>Requirements</h3>
 												<ul>
 													<li><span class="_5f7g11">Have a computer with Internet</span></li>
@@ -223,7 +224,7 @@
 														</div>
 													</div>
 												</div>
-											</div>
+											</div> --}}
 										</div>
 									</div>
 									<div class="tab-pane fade" id="nav-courses" role="tabpanel">

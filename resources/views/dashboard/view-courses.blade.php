@@ -109,6 +109,7 @@
 													@endif
 													<td class="text-center text-capitalize"><b class="course_active">{{ $e->status }}</b></td>
 													<td class="text-center">
+                                                        <a href="/view_course/{{ $e->unique_id }}" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
 														<a href="/edit-course/{{ $e->unique_id }}" title="Edit" class="cursor-pointer gray-s"><i class="uil uil-edit-alt"></i></a>
 														<a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s delete_course_modal"><i class="uil uil-trash-alt"></i></a>
 													</td>

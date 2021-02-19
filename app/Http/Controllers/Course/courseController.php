@@ -129,7 +129,7 @@ class courseController extends Controller
             ]);
 
             if (!$new_course->unique_id) {
-                throw new Exception('Database Error!');
+                throw new Exception($this->errorMsgs(14)['msg']);
             } else {
                 $error = 'Course Created!';
                 return response()->json(["message" => $error, 'status' => true]);
@@ -300,7 +300,7 @@ class courseController extends Controller
 
 
             if (!$updated) {
-                throw new Exception('Database Error!');
+                throw new Exception($this->errorMsgs(14)['msg']);
             } else {
                 $error = 'Course Updated!';
                 return response()->json(["message" => $error, 'status' => true]);

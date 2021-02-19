@@ -13,6 +13,8 @@ class AppSettings extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    protected $hidden = ['account_xpub','unique_id'];
+
     public function getSingleAppSettings($condition){
 
         $appSettings = AppSettings::where($condition)->first();

@@ -20,7 +20,8 @@
 <script src="{{asset('dashboard/custom/Basic-function.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 <!-- <script src="{{asset('dashboard/custom/validatorClass.js')}}"></script> -->
-<!-- <script src="{{asset('dashboard/custom/error-validator.js')}}"></script> -->
+<script src="{{asset('dashboard/assets/loader.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 
 @include('js_files.js_by_page')
 

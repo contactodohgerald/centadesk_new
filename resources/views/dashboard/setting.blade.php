@@ -80,11 +80,11 @@
                                             <div class="basic_form">
                                                 <div class="row">
                                                     <div class="col-lg-8">
-                                                        <div class="row">
+                                                        <div class="row mt-30">
                                                             <div class="col-lg-3">
                                                                 <div style="width: 100%;" class="view_img_left">
                                                                     <div class="view__img">
-                                                                        <img id="thumbnail_cover_img" src="/storage/profile/{{ $user->profile_image }}" width="150px" height="160px">
+                                                                        <img id="thumbnail_cover_img" class="round_img" src="/storage/profile/{{ $user->profile_image }}" width="150px" height="160px">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -327,9 +327,9 @@
 													<div class="row">
 														<div class="col-lg-6">
 															<div class="ui search focus mt-30">
-																<label for="bit_coin_wallet">BitCoin Wallet</label>
+																<label for="bit_coin_wallet">Bitcoin Wallet Address</label>
 																<div class="ui left icon input swdh11 swdh19">
-																	<input class="prompt srch_explore" type="text" name="bit_coin_wallet" id="bit_coin_wallet" required placeholder="Enter BitCoin Wallet" value="{{$user->wallet_address}}">
+																	<input class="prompt srch_explore" type="text" name="bit_coin_wallet" id="bit_coin_wallet" required placeholder="Enter Address for recieving payment" value="{{$user->wallet_address}}">
 																	<i class="uil uil-bitcoin icon icon2"></i>
 																</div>
 															</div>
