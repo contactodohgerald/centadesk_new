@@ -1,8 +1,26 @@
 <script>
     let baseUrl = 'http://127.0.0.1:8000/';
+    let userUniqueId = "{{auth()->user()->unique_id }}";
 
     const successDisplay = (message) => swal(message, 'successful', 'success');
     const errorDisplay = (message) => swal(message, 'Failed', 'error');
+
+    async function subscribeTOTeacher(a, userId, teacherId){
+
+        $(a).text('Loading.....').attr({'disabled':true});
+        let postData = await postRequest(baseUrl+'api/subscribeTOTeacher', {userId:userId, teacherId:teacherId});
+        let {error_code, success_statement, error_message} = postData;
+        if(error_code == 0){
+            $(a).text('Subscribe').attr({'disabled':false});
+            successDisplay(success_statement);
+            setTimeout(function () {
+                location.reload();
+            }, 1500)
+        }else{
+            $(a).text('Subscribe').attr({'disabled':false});
+            errorDisplay(error_message);
+        }
+    }
 
     function postRequest(url, params){
 
@@ -27,6 +45,23 @@
 
 
         })
+    }
+
+    function getRequest(url) {
+
+        return new Promise(function (resolve, reject) {
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => resolve(data))
+                .then(err => reject(err));
+
+        });
+    }
+
+    function capitalizeFirstLetter(string)
+    {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     function handleTheErrorStatement(error_statement, showField = 'off', useClassForFieldFocus = 'no', useModal = 'no') {
@@ -171,7 +206,7 @@
 @endif
 
 {{--courses,--}}
-@php $pageWithdrawalArray = ['view-courses', 'view_course'];  @endphp
+@php $pageWithdrawalArray = ['view-courses', 'view_course', 'saved-course', 'explore'];  @endphp
 @php $currentPageName = Request::segment(1); @endphp
 @if(in_array($currentPageName, $pageWithdrawalArray))
     @include('js_by_page.course_js')

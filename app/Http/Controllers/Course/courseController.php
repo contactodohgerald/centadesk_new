@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Course;
 
 // namespace App\Http\Controllers\Course;
 
+use App\Model\Like;
+use App\Model\Review;
 use Exception;
 use App\Model\Like;
 use App\priceModel;
@@ -21,11 +23,13 @@ class courseController extends Controller
     use Generics;
     use appFunction;
 
-    function __construct(Like $like, course_model $course_model)
+    function __construct(Like $like, course_model $course_model, course_category_model $course_category_model, Review $review)
     {
         $this->middleware('auth',  ['except' => ['activateCoursesStatus']]);
         $this->like = $like;
         $this->course_model = $course_model;
+        $this->course_category_model = $course_category_model;
+        $this->review = $review;
     }
     /**
      * Display a listing of the resource.
@@ -161,8 +165,7 @@ class courseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
-    {
+    public function show() {
         $user = auth()->user();
 
         if ($user->user_type === 'admin' || $user->user_type === 'super_admin') {
@@ -182,7 +185,8 @@ class courseController extends Controller
         foreach ($courses as $each_courses) {
 
             $condition = [
-                ['course_unique_id', $each_courses->unique_id]
+                ['course_unique_id', $each_courses->unique_id],
+                ['like_type', 'like'],
             ];
 
             $likesCount = $this->like->getAllLikes($condition);
@@ -206,8 +210,7 @@ class courseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showCourses($id)
-    {
+    public function showCourses($id){
         //
         $condition = [
             ['unique_id', $id]
@@ -218,18 +221,36 @@ class courseController extends Controller
         $course->save();
 
         $condition = [
-            ['course_unique_id', $course->unique_id]
+            ['course_unique_id', $course->unique_id],
+            ['like_type', 'like']
         ];
-
         $likesCount = $this->like->getAllLikes($condition);
 
         $course->likes = $likesCount->count();
+
+        $conditions = [
+            ['course_unique_id', $course->unique_id],
+            ['like_type', 'dislike']
+        ];
+        $dislikesCount = $this->like->getAllLikes($conditions);
+
+        $course->dislikes = $dislikesCount->count();
 
         $course->user;
 
         $course->price;
 
-        return view('dashboard.view_course', ['course' => $course]);
+        $review_condition = [
+            ['course_unique_id', $course->unique_id]
+        ];
+
+        $reviews = $this->review->getAllReviews($review_condition);
+        $course->reviews = $reviews;
+        foreach ($reviews as $each_review){
+            $each_review->users;
+        }
+
+        return view('dashboard.view_course', ['course'=>$course]);
     }
 
     /**
@@ -390,5 +411,52 @@ class courseController extends Controller
             ];
             return response()->json(["errors" => $error, 'status' => false]);
         }
+    }
+
+    public function viewExplore(){
+
+        $condition = [
+            ['status', 'confirmed']
+        ];
+
+        $course = $this->course_model->getAllCourse($condition);
+
+        foreach ($course as $each_course){
+
+            $each_course->user;
+
+            $each_course->price;
+
+            $each_course->category;
+
+        }
+
+        return view('dashboard.explore', ['course'=>$course]);
+    }
+
+    public function exploreCategory($unique_id){
+
+        $conditions = [
+            ['unique_id', $unique_id]
+        ];
+        $course_category_model = $this->course_category_model->getSingleCategories($conditions);
+
+        $condition = [
+            ['status', 'confirmed'],
+            ['category_id', $unique_id]
+        ];
+        $course = $this->course_model->getAllCourse($condition);
+
+        foreach ($course as $each_course){
+
+            $each_course->user;
+
+            $each_course->price;
+
+            $each_course->category;
+
+        }
+
+        return view('dashboard.explore_categories', ['course'=>$course, 'course_category_model'=>$course_category_model]);
     }
 }

@@ -20,6 +20,13 @@ class SavedCourses extends Model
         return $saveCourse;
     }
 
+    function getSingleSaveCourse($condition){
+
+        $saveCourse = SavedCourses::where($condition)->first();
+
+        return $saveCourse;
+    }
+
     public function users(){
         return $this->belongsTo('App\User', 'user_unique_id');
     }

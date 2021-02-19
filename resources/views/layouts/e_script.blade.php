@@ -1,5 +1,7 @@
 @include('basic_urls')
 
+@include('modal')
+
 @php $users = auth()->user(); @endphp
 
 <script src="{{asset('dashboard/js/vertical-responsive-menu.min.js')}}"></script>
@@ -12,6 +14,7 @@
 
 <script src="{{asset('dashboard/js/jquery-steps.min.js')}}"></script>
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
 
 <script src="{{asset('dashboard/js/datepicker.min.js')}}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

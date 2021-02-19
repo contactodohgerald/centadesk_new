@@ -25,9 +25,9 @@
 								<li class="nav-item">
 									<a class="nav-link active" id="pills-account-tab" data-toggle="pill" href="#pills-account" role="tab" aria-selected="true">Profile</a>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="pills-preferred-currency-tab" data-toggle="pill" href="#pills-preferred-currency" role="tab" aria-selected="false"> Currency</a>
-								</li>
+<!--								<li class="nav-item">
+									<a class="nav-link" id="pills-preferred-currency-tab" data-toggle="pill" href="#pills-preferred-currency" role="tab" aria-selected="false">Preferred Currency</a>
+								</li>-->
 								<li class="nav-item">
 									<a class="nav-link" id="pills-bank-account-tab" data-toggle="pill" href="#pills-bank-account" role="tab" aria-selected="false">Bank Account</a>
 								</li>
@@ -237,7 +237,7 @@
 									<button class="save_btn update_profile_btn" type="submit">Save Changes</button>
 								</div>
 							</div>
-							<div class="tab-pane fade" id="pills-preferred-currency" role="tabpanel" aria-labelledby="pills-preferred-currency-tab">
+<!--							<div class="tab-pane fade" id="pills-preferred-currency" role="tabpanel" aria-labelledby="pills-preferred-currency-tab">
 								<div class="account_setting">
 									<form action="{{route('update_user_currency' )}}" method="POST">
 										@csrf
@@ -266,7 +266,7 @@
 										<button class="save_btn" type="submit">Save Changes</button>
 									</form>
 								</div>
-							</div>
+							</div>-->
 							<div class="tab-pane fade" id="pills-bank-account" role="tabpanel" aria-labelledby="pills-bank-account-tab">
 								<div class="account_setting">
 									<form action="{{route('update_bank_account' )}}" method="POST">

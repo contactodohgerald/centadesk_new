@@ -56,6 +56,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/create-course',[courseController::class,'index']);
     Route::get('/view-courses', [courseController::class,'show']);
+    Route::get('/explore', [courseController::class,'viewExplore'])->name('explore');
+    Route::get('/category-explore/{unique_id}', [courseController::class,'exploreCategory'])->name('category-explore');
     Route::get('/edit-course/{id}', [courseController::class,'update_page']);
     Route::post('/create-course', [courseController::class,'create']);
     Route::post('/edit-course/{id}', [courseController::class,'update']);
@@ -183,6 +185,8 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' => 'web'], function () {
     //users details update
+    Route::get('/upload_cac', [UserController::class, 'uploadUserCAC'])->name('upload_cac');
+    Route::post('/update_cac_file', [UserController::class, 'uploadCACFiles'])->name('update_cac_file');
     Route::post('/update_bank_account', [UserController::class, 'bankAccountUpdate'])->name('update_bank_account');
     Route::post('/update_wallet_address', [UserController::class, 'walletAddressUpdate'])->name('update_wallet_address');
 });
