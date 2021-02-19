@@ -4,6 +4,16 @@ $categories = new App\course_category_model;
 $categories_list = $categories->getAllCategories();
 
 @endphp
+    <!-- ajax loader -->
+    <div style="display: none;" id="the_load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>
+    <!-- ajax loader -->
+
 <header class="header clearfix">
     <button type="button" id="toggleMenu" class="toggle_menu">
         <i class='uil uil-bars'></i>
@@ -45,7 +55,7 @@ $categories_list = $categories->getAllCategories();
     <div class="header_right">
         <ul>
             <li>
-                <a href="create-course" class="upload_btn" title="Create New Course">Create New Course</a>
+                <a href="/create-course" class="upload_btn" title="Create New Course">Create New Course</a>
             </li>
             <li>
                 <a href="shopping_cart.html" class="option_links" title="cart"><i class='uil uil-shopping-cart-alt'></i><span class="noti_count">2</span></a>

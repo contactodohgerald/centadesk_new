@@ -19,20 +19,20 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h2 class="st_title"><i class='uil uil-cog'></i> Setting</h2>
+						<h2 class="st_title"><i class='uil uil-cog'></i> Account Settings</h2>
 						<div class="setting_tabs">
 							<ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
 								<li class="nav-item">
-									<a class="nav-link active" id="pills-account-tab" data-toggle="pill" href="#pills-account" role="tab" aria-selected="true">Account</a>
+									<a class="nav-link active" id="pills-account-tab" data-toggle="pill" href="#pills-account" role="tab" aria-selected="true">Profile</a>
 								</li>
 <!--								<li class="nav-item">
 									<a class="nav-link" id="pills-preferred-currency-tab" data-toggle="pill" href="#pills-preferred-currency" role="tab" aria-selected="false">Preferred Currency</a>
 								</li>-->
 								<li class="nav-item">
-									<a class="nav-link" id="pills-bank-account-tab" data-toggle="pill" href="#pills-bank-account" role="tab" aria-selected="false">Bank Account Update</a>
+									<a class="nav-link" id="pills-bank-account-tab" data-toggle="pill" href="#pills-bank-account" role="tab" aria-selected="false">Bank Account</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" id="pills-bitcoin-wallet-tab" data-toggle="pill" href="#pills-bitcoin-wallet" role="tab" aria-selected="false">Bitcoin Wallet Update</a>
+									<a class="nav-link" id="pills-bitcoin-wallet-tab" data-toggle="pill" href="#pills-bitcoin-wallet" role="tab" aria-selected="false">Bitcoin Wallet</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" id="pills-privacy-tab" data-toggle="pill" href="#pills-privacy" role="tab" aria-selected="false">Privacy</a>
@@ -65,129 +65,176 @@
 										<span aria-hidden="true">×</span>
 									</button>
 								</div>
-							@endif
+                            @endif
+
 							<div class="tab-pane fade show active" id="pills-account" role="tabpanel" aria-labelledby="pills-account-tab">
+                                <div class="row" id="errorHold"></div>
 								<div class="account_setting">
-									<h4>Your Cursus Account</h4>
-									<p>This is your public presence on Cursus. You need a account to upload your paid courses, comment on courses, purchased by students, or earning.</p>
-									<div class="basic_profile">
-										<div class="basic_ptitle">
-											<h4>Basic Profile</h4>
-											<p>Add information about yourself</p>
-										</div>
-										<div class="basic_form">
-											<div class="row">
-												<div class="col-lg-8">
-													<div class="row">
-														<div class="col-lg-6">
-															<div class="ui search focus mt-30">
-																<div class="ui left icon input swdh11 swdh19">
-																	<input class="prompt srch_explore" type="text" name="name" value="Joginder" id="id[name]" required="" maxlength="64" placeholder="First Name">
-																</div>
-															</div>
-														</div>
-														<div class="col-lg-6">
-															<div class="ui search focus mt-30">
-																<div class="ui left icon input swdh11 swdh19">
-																	<input class="prompt srch_explore" type="text" name="surname" value="Singh" id="id[surname]" required="" maxlength="64" placeholder="Last Name">
-																</div>
-															</div>
-														</div>
-														<div class="col-lg-12">
-															<div class="ui search focus mt-30">
-																<div class="ui left icon input swdh11 swdh19">
-																	<input class="prompt srch_explore" type="text" name="headline" value="I  am a Web Designer" id="id_headline" required="" maxlength="60" placeholder="Headline">
-																	<div class="form-control-counter" data-purpose="form-control-counter">36</div>
-																</div>
-																<div class="help-block">Add a professional headline like, "Engineer at Cursus" or "Architect."</div>
-															</div>
-														</div>
-														<div class="col-lg-12">
-															<div class="ui search focus mt-30">
-																<div class="ui form swdh30">
-																	<div class="field">
-																		<textarea rows="3" name="description" id="id_about" placeholder="Write a little description about you..."></textarea>
-																	</div>
-																</div>
-																<div class="help-block">Links and coupon codes are not permitted in this section.</div>
-															</div>
-														</div>
-														<div class="col-lg-12">
-															<div class="divider-1"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="basic_profile1">
-										<div class="basic_ptitle">
-											<h4>Profile Links</h4>
-										</div>
-										<div class="basic_form">
-											<div class="row">
-												<div class="col-lg-8">
-													<div class="row">
-														<div class="col-lg-12">
-															<div class="ui search focus mt-30">
-																<div class="ui left icon labeled input swdh11 swdh31">
-																	<div class="ui label lb12">
-																		https://
-																	</div>
-																	<input class="prompt srch_explore" type="text" name="site" value="gambolthemes.net" id="id_site" required="" maxlength="64"  placeholder="yoursite.com">
-																</div>
-															</div>
-														</div>
-														<div class="col-lg-12">
-															<div class="ui search focus mt-30">
-																<div class="ui left icon labeled input swdh11 swdh31">
-																	<div class="ui label lb12">
-																		http://facebook.com/
-																	</div>
-																	<input class="prompt srch_explore" type="text" name="facebooklink" id="id_facebook" required="" maxlength="64"  placeholder="Facebook Profile">
-																</div>
-																<div class="help-block">Add your Facebook username (e.g. johndoe).</div>
-															</div>
-														</div>
-														<div class="col-lg-12">
-															<div class="ui search focus mt-30">
-																<div class="ui left icon labeled input swdh11 swdh31">
-																	<div class="ui label lb12">
-																		http://twitter.com/
-																	</div>
-																	<input class="prompt srch_explore" type="text" name="twitterlink" id="id_twitter" required="" maxlength="64"  placeholder="Twitter Profile">
-																</div>
-																<div class="help-block">Add your Twitter username (e.g. johndoe).</div>
-															</div>
-														</div>
-														<div class="col-lg-12">
-															<div class="ui search focus mt-30">
-																<div class="ui left icon labeled input swdh11 swdh31">
-																	<div class="ui label lb12">
-																		http://www.linkedin.com/
-																	</div>
-																	<input class="prompt srch_explore" type="text" name="linkedinlink" id="id_linkedin" required="" maxlength="64"  placeholder="Linkedin Profile">
-																</div>
-																<div class="help-block">Input your LinkedIn resource id (e.g. in/johndoe).</div>
-															</div>
-														</div>
-														<div class="col-lg-12">
-															<div class="ui search focus mt-30">
-																<div class="ui left icon labeled input swdh11 swdh31">
-																	<div class="ui label lb12">
-																		http://www.youtube.com/
-																	</div>
-																	<input class="prompt srch_explore" type="text" name="youtubelink" id="id_youtube" required="" maxlength="64"  placeholder="Youtube Profile">
-																</div>
-																<div class="help-block">Input your Youtube username (e.g. johndoe).</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<button class="save_btn" type="submit">Save Changes</button>
+									<h4>Your CentaDesk Account</h4>
+                                    <p>This is your public presence on CentaDesk. You need a account to upload your paid courses, <br> comment on courses, purchased by students, or earning.</p>
+                                        <div class="basic_profile">
+                                            <div class="basic_ptitle">
+                                                <h4>Profile Image</h4>
+                                                {{-- <p>Select a portrait image</p> --}}
+                                            </div>
+                                            <div class="basic_form">
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <div class="row mt-30">
+                                                            <div class="col-lg-3">
+                                                                <div style="width: 100%;" class="view_img_left">
+                                                                    <div class="view__img">
+                                                                        <img id="thumbnail_cover_img" class="round_img" src="/storage/profile/{{ $user->profile_image }}" width="150px" height="160px">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <form class="user_img_form">
+                                                                    @csrf
+                                                                    <span class="btn btn-default img-span">Choose Image</span>
+                                                                    <input type="file" id="user_profile_img" name="file" class="upload-img-form">
+                                                                    <button class="save_btn upload_img_btn" type="submit">Update Photo</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        {{-- <div class="row">
+
+
+                                                            <div class="col-lg-4">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon input swdh11 swdh19">
+                                                                        <input class="prompt srch_explore" type="text" name="first_name" value="{{ $user->name }}" placeholder="First name">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon input swdh11 swdh19">
+                                                                        <input class="prompt srch_explore" type="text" name="other_names" value="{{ $user->last_name }}" placeholder="Other names">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="divider-1"></div>
+                                                            </div>
+                                                        </div> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+								</div>
+								<div class="account_setting">
+                                    <form class="update_profile_form">
+                                        @csrf
+                                        <div class="basic_profile">
+                                            <div class="basic_ptitle">
+                                                <h4>Personal Profile</h4>
+                                                <p>Tell us about yourself</p>
+                                            </div>
+                                            <div class="basic_form">
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon input swdh11 swdh19">
+                                                                        <input class="prompt srch_explore" type="text" name="first_name" value="{{ $user->name }}" placeholder="First name">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon input swdh11 swdh19">
+                                                                        <input class="prompt srch_explore" type="text" name="other_names" value="{{ $user->last_name }}" placeholder="Other names">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon input swdh11 swdh19">
+                                                                        <input class="prompt srch_explore" type="text" name="headline" value="{{ $user->professonal_heading }}" placeholder="Professional Headline">
+                                                                        <div class="form-control-counter" data-purpose="form-control-counter">15</div>
+                                                                    </div>
+                                                                    <div class="help-block">Add a professional headline like, "Engineer at Cursus" or "Architect."</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui form swdh30">
+                                                                        <div class="field">
+                                                                            <textarea rows="10" name="description" placeholder="Describe yourself in not less than 50 characters...">{{ $user->description }}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="help-block">Explain about yourself or your company here. Your accomplishments can be written here also.</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="divider-1"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="basic_profile1">
+                                            <div class="basic_ptitle">
+                                                <h4>Social Media Presence</h4>
+                                            </div>
+                                            <div class="basic_form">
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon labeled input swdh11 swdh31">
+                                                                        <div class="ui label lb12">
+                                                                            https://facebook.com/
+                                                                        </div>
+                                                                        <input class="prompt srch_explore" type="text" name="facebook" value="{{ $user->facebook }}" placeholder="Facebook Profile">
+                                                                    </div>
+                                                                    <div class="help-block">Enter your Facebook username (e.g. johndoe).</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon labeled input swdh11 swdh31">
+                                                                        <div class="ui label lb12">
+                                                                            https://twitter.com/
+                                                                        </div>
+                                                                        <input class="prompt srch_explore" type="text" name="twitter" value="{{ $user->twitter }}"  placeholder="Twitter Profile">
+                                                                    </div>
+                                                                    <div class="help-block">Enter your Twitter username (e.g. johndoe).</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon labeled input swdh11 swdh31">
+                                                                        <div class="ui label lb12">
+                                                                            https://www.linkedin.com/
+                                                                        </div>
+                                                                        <input class="prompt srch_explore" type="text" name="linkedin" value="{{ $user->linkedin }}" placeholder="Linkedin Profile">
+                                                                    </div>
+                                                                    <div class="help-block">Enter your LinkedIn Username.</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon labeled input swdh11 swdh31">
+                                                                        <div class="ui label lb12">
+                                                                            https://www.youtube.com/
+                                                                        </div>
+                                                                        <input class="prompt srch_explore" type="text" name="youtube" value="{{ $user->youtube }}" placeholder="Youtube Profile">
+                                                                    </div>
+                                                                    <div class="help-block">Enter your Youtube Username.</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+									<button class="save_btn update_profile_btn" type="submit">Save Changes</button>
 								</div>
 							</div>
 <!--							<div class="tab-pane fade" id="pills-preferred-currency" role="tabpanel" aria-labelledby="pills-preferred-currency-tab">
@@ -280,9 +327,9 @@
 													<div class="row">
 														<div class="col-lg-6">
 															<div class="ui search focus mt-30">
-																<label for="bit_coin_wallet">BitCoin Wallet</label>
+																<label for="bit_coin_wallet">Bitcoin Wallet Address</label>
 																<div class="ui left icon input swdh11 swdh19">
-																	<input class="prompt srch_explore" type="text" name="bit_coin_wallet" id="bit_coin_wallet" required placeholder="Enter BitCoin Wallet" value="{{$user->wallet_address}}">
+																	<input class="prompt srch_explore" type="text" name="bit_coin_wallet" id="bit_coin_wallet" required placeholder="Enter Address for recieving payment" value="{{$user->wallet_address}}">
 																	<i class="uil uil-bitcoin icon icon2"></i>
 																</div>
 															</div>
@@ -1207,3 +1254,41 @@
 	<!-- Body End -->
 
 @include('layouts.e_script')
+<script>
+    $(document).ready(function () {
+
+            // process form for creating course
+            $('.update_profile_btn').click(async function(e) {
+                e.preventDefault();
+                let data = [];
+                // basic info
+                let update_profile = $('.update_profile_form').serializeArray();
+                // console.log(update_profile); return;
+
+                // append to form data object
+                let form_data = set_form_data(update_profile);
+                let returned = await ajaxRequest('personal-details', form_data);
+                    // console.log(returned);return;
+                validator(returned, 'main_settings_page');
+            });
+
+
+        $('.upload_img_btn').click(async function (e) {
+            e.preventDefault();
+            let data = [];
+            let user_img = $('#user_profile_img').prop('files')[0];
+            let user_img_form = $('.user_img_form').serializeArray();
+            let img_data = {name:"profile_img", value:user_img};
+
+            user_img_form.forEach(e => {
+                data.push(e);
+            });
+            data.push(img_data);
+            // console.log(data);return;
+            let form_data = set_form_data(data);
+            let returned = await ajaxRequest('profile/photo', form_data);
+            // console.log(returned);return;
+                validator(returned, 'main_settings_page');
+        });
+    });
+</script>

@@ -39,4 +39,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/vendor/semantic/semantic.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/custom/custom-app.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/assets/loader.css')}}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('dashboard/assets/bootstrap-v4.5.0/css/bootstrap.min.css')}}"> --}}
+
 </head>

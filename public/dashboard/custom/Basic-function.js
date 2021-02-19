@@ -153,8 +153,10 @@ function return_element_key_in_array(array, val_exist) {
 }
 
 function validator(returned, page_redirect) {
+    loader_set();
     $("#errorHold").empty();
     if (returned.status == true) {
+        loader_rmv();
         let errorHold = `<div class="col-12 text-center"><div class="alert alert-success">${returned.message}</div></div>`;
         $("#errorHold").append(errorHold);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -162,14 +164,15 @@ function validator(returned, page_redirect) {
             window.location.href = page_redirect;
         }, 2000);
     } else {
+        loader_rmv();
         for (var key in returned.errors) {
             let error = returned.errors[key];
             if (error.length == 1) {
-                let errorHold = `<div class="col-4"><div class="alert alert-danger">${returned.errors[key]}</div></div>`;
+                let errorHold = `<div class="col-12 text-center"><div class="alert alert-danger">${returned.errors[key]}</div></div>`;
                 $("#errorHold").append(errorHold);
             } else if (error.length > 1) {
                 error.forEach(e => {
-                    let errorHold = `<div class="col-4"><div class="alert alert-danger">${e}</div></div>`;
+                    let errorHold = `<div class="col-4 text-center"><div class="alert alert-danger">${e}</div></div>`;
                     $("#errorHold").append(errorHold);
                 })
             }
@@ -197,4 +200,19 @@ function display_img_thumbnail(input, element_id) {
         // convert to base64 string
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+
+function append_id(name,append_to,modal,this_){
+    /*
+    name=>form_field name
+    append_to => name of input_field
+    modal => selector of modal
+    */
+
+    let input_id = $(this_).attr('id');
+    let input_field = `<input type="hidden" value="${input_id}" name="${name}">`;
+    $(input_field).appendTo(append_to);
+    console.log(input_id);
+    // $(modal).modal('toggle');
 }

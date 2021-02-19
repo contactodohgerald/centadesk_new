@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 trait Generics{
 
+
     function createObject($array){
         return json_decode(json_encode($array));
     }

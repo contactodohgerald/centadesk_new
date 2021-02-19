@@ -38,7 +38,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_name',
         'user_type',
         'referred_id',
-        'user_referral_id'
+        'user_referral_id',
+        'professonal_heading',
+        'description',
+        'facebook',
+        'twitter',
+        'linkedin',
+        'youtube'
     ];
 
     /**

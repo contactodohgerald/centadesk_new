@@ -70,10 +70,10 @@
 											</div>
 											({{count($course->reviews)}} ratings)
 										</div>
-										<div class="_215b05">
+										<div class="_215b05 font-poppins">
 											114,521 students enrolled
 										</div>
-										<div class="_215b05">
+										<div class="_215b05 font-poppins">
 											Last updated: {{$course->created_at->diffForHumans()}}
 										</div>
                                         <div class="_215b05">
@@ -106,7 +106,7 @@
 								<div class="user_dt_left">
 									<div class="live_user_dt">
 										<div class="user_img5">
-											<a href="#"><img src="{{asset('dashboard/images/left-imgs/img-1.jpg')}}" alt=""></a>
+											<a href="#"><img src="/storage/profile/{{ $course->user->profile_image }}" alt=""></a>
 										</div>
 										<div class="user_cntnt">
 											<a href="#" class="_df7852">{{ucfirst($course->user->name)}} {{ucfirst($course->user->last_name)}}</a>

@@ -23,40 +23,41 @@
 <script src="{{asset('dashboard/custom/Basic-function.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 <!-- <script src="{{asset('dashboard/custom/validatorClass.js')}}"></script> -->
-<!-- <script src="{{asset('dashboard/custom/error-validator.js')}}"></script> -->
+<script src="{{asset('dashboard/assets/loader.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 
 @include('js_files.js_by_page')
 
 <script type="text/javascript">
-        function closeErrorCarrierBox(a) {
-            // console.log('yh')
-            $(a).addClass('hidden');
-        }
+    function closeErrorCarrierBox(a) {
+        // console.log('yh')
+        $(a).addClass('hidden');
+    }
 
     $(document).ready(function() {
-        showErrors();
+        // showErrors();
 
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "show",
-            "hideMethod": "fadeOut"
-        }
+        // toastr.options = {
+        //     "closeButton": false,
+        //     "debug": false,
+        //     "newestOnTop": false,
+        //     "progressBar": false,
+        //     "positionClass": "toast-top-right",
+        //     "preventDuplicates": false,
+        //     "onclick": null,
+        //     "showDuration": "300",
+        //     "hideDuration": "1000",
+        //     "timeOut": "5000",
+        //     "extendedTimeOut": "1000",
+        //     "showEasing": "swing",
+        //     "hideEasing": "linear",
+        //     "showMethod": "show",
+        //     "hideMethod": "fadeOut"
+        // }
         $('#add-course-tab').steps({
-            onFinish: function() {
-                alert('Wizard Completed');
-            }
+            // onFinish: function() {
+            //     // alert('Wizard Completed');
+            // }
         });
 
 
@@ -78,13 +79,11 @@
 <div class="modal logout" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content" style="background-color: #333 !important;">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Sign Out</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="row">
@@ -93,20 +92,16 @@
                     </div>
                 </div>
             </div>
-
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-
                 <a class="btn btn-primary" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Sign Out
                 </a>
-
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
             </div>
-
         </div>
     </div>
 </div>
@@ -123,8 +118,8 @@
             </div>
 
             <form action="{{route('top_up' )}}" method="POST">
-            @csrf
-            <!-- Modal body -->
+                @csrf
+                <!-- Modal body -->
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
@@ -145,6 +140,7 @@
         </div>
     </div>
 </div>
+
 
 
 

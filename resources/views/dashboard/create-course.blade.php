@@ -198,18 +198,13 @@
                                                                 <div class="view_img_left">
                                                                     <div class="view__img ytube_video">
                                                                         <img src="{{ asset('dashboard/images/courses/add_video.jpg') }}"  alt="your image" />
-                                                                        {{-- <iframe src="https://www.youtube.com/embed/pH56PsJuvXw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --}}
-                                                                        {{-- https://youtu.be/zFI-n366qws
-                                                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/zFI-n366qws" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --}}
                                                                     </div>
                                                                 </div>
                                                                 <div class="view_img_right">
                                                                     <h4>Promotional Video</h4>
                                                                     <p>Students who watch a well-made promo video are 5X more likely to enroll in your course. We've seen that statistic go up to 10X for exceptionally awesome videos. Put effort into making yours awesome!</p>
                                                                     <div class="ui left icon input swdh19">
-                                                                        <input class="prompt srch_explore" type="text" placeholder="Summarize in a sentence" id="cover_video">
-                                                                        {{-- <label class="custom-file-label" for="inputGroupFile04">Youtube Url</label> --}}
-                                                                        {{-- <div class="badge_num2">Youtube Url</div> --}}
+                                                                        <input class="prompt srch_explore" type="text" placeholder="Youtube Url to intro video" id="cover_video">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -364,9 +359,10 @@
                 });
 
                 let cover_video = $('#cover_video').val();
+                let valid_url = youtube_regex(cover_video);
                 data.push({
                     name: "cover_video",
-                    value: cover_video
+                    value: valid_url
                 });
                 // download urls
                 let url_array = [];

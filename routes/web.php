@@ -1,31 +1,34 @@
 <?php
 
 
+use App\Subscription_model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\courseController;
+use App\Http\Controllers\priceController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\CourseCategoryModelController;
-use App\Http\Controllers\priceController;
-use App\Http\Controllers\Roles\AddRolesController;
-
 use App\Http\Controllers\Roles\RolesController;
+use App\Http\Controllers\Course\courseController;
+
+use App\Http\Controllers\Roles\AddRolesController;
 use App\Http\Controllers\Roles\UserTypeController;
 use App\Http\Controllers\Auth\VerificationController;
 
+use App\Http\Controllers\Complain\ComplainController;
+use App\Http\Controllers\Wallet\WithdrawalController;
+use App\Http\Controllers\Wallet\TransactionController;
+use App\Http\Controllers\CourseCategoryModelController;
+use App\Http\Controllers\SaveCourse\SaveCourseController;
+use App\Http\Controllers\AppSettings\AppSettingsController;
+
+use App\Http\Controllers\Complain\ComplainHandleController;
 use App\Http\Controllers\Verifications\VerifyBankController;
 use App\Http\Controllers\CurrencyRate\CurrencyRateController;
-use App\Http\Controllers\AppSettings\AppSettingsController;
-use App\Http\Controllers\Wallet\TransactionController;
-use App\Http\Controllers\Wallet\WithdrawalController;
-use App\Http\Controllers\SaveCourse\SaveCourseController;
-
-use App\Http\Controllers\Complain\ComplainController;
-use App\Http\Controllers\Complain\ComplainHandleController;
+use App\Http\Controllers\Subscriptions\SubscriptionController;
+use App\Http\Controllers\Cryptocurrency\cryptocurrencyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,14 +53,40 @@ Route::get('/clear-cache', 'HomeController@clear_cache');
 
 Route::group(['middleware' => 'web'], function () {
     // courses
-    Route::get('/create-course',[courseController::class,'index'])->name('create-course');
-    Route::get('/view-courses', [courseController::class,'show'])->name('view-courses');
+
+    Route::get('/create-course',[courseController::class,'index']);
+    Route::get('/view-courses', [courseController::class,'show']);
     Route::get('/explore', [courseController::class,'viewExplore'])->name('explore');
     Route::get('/category-explore/{unique_id}', [courseController::class,'exploreCategory'])->name('category-explore');
     Route::get('/edit-course/{id}', [courseController::class,'update_page']);
+    Route::post('/create-course', [courseController::class,'create']);
+    Route::post('/edit-course/{id}', [courseController::class,'update']);
+    Route::post('/delete-course/{id}', [courseController::class,'soft_delete']);
+
 });
 
-Route::post('/create-course', 'courseController@create');
+
+Route::group(['middleware' => 'web'], function () {
+    // user routes
+    Route::get('/teacher/profile',[UserController::class,'show_teacher_profile']);
+    Route::post('/personal-details',[UserController::class,'update_user_details']);
+    Route::post('/profile/photo',[UserController::class,'upload_cover_photo']);
+});
+
+
+Route::group(['middleware' => 'web'], function () {
+    // crypto currency
+    // Route::post('/user/wallet/update',[cryptocurrencyController::class,'update_wallet']);
+    Route::post('/generate_address',[cryptocurrencyController::class,'gen_payment_address']);
+});
+
+
+Route::group(['middleware' => 'web'], function () {
+    // Subscription
+    Route::post('/subscribe_to',[SubscriptionController::class,'subscribe_to']);
+    Route::post('/unsubscribe_from',[SubscriptionController::class,'unsubscribe_from']);
+});
+
 
 Auth::routes(['verify' => true]);
 
