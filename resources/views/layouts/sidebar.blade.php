@@ -101,11 +101,19 @@ $complains = $complain->getAllOfComplain($condition);
                         <span class="menu--label">Saved Courses</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="live_streams.html" class="menu--link" title="Live Streams">
+                <li class="menu--item menu--item__has_sub_menu">
+                    <label class="menu--link <?php print @$live_stream;?>" title="Live Stream">
                         <i class='uil uil-kayak menu--icon'></i>
                         <span class="menu--label">Live Streams</span>
-                    </a>
+                    </label>
+                    <ul class="sub_menu">
+                        <li class="sub_menu--item">
+                            <a href="/live_stream/create" class="sub_menu--link">Create</a>
+                        </li>
+                        <li class="sub_menu--item">
+                            <a href="/live_stream/all" class="sub_menu--link">View All</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="menu--item  menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$Wallet;?>" title="Wallet">

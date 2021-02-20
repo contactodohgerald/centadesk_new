@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\courseController;
+use App\Http\Controllers\Course\courseController;
 use App\Http\Controllers\Like\LikesController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\SaveCourse\SaveCourseController;

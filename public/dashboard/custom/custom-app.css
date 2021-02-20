@@ -108,6 +108,9 @@ button, input, optgroup, select, textarea{
 .badge_seller{
     font-family: 'Poppins', sans-serif !important;
 }
+.group-form label{
+    font-family: 'Poppins', sans-serif !important;
+}
 .cursor-pointer{
     cursor: pointer;
 }
@@ -151,3 +154,9 @@ button, input, optgroup, select, textarea{
   .round_img{
       border-radius: 100% !important;
   }
+  .clamp{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+ }
