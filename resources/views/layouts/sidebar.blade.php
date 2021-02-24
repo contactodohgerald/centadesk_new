@@ -153,6 +153,22 @@ $complains = $complain->getAllOfComplain($condition);
                     </ul>
                 </li>
                 @endif
+
+                <li class="menu--item">
+                    <a href="/ticket/create" class="menu--link <?php print @$ticket;?>" title="Ticket">
+                        <i class='uil uil-comment-alt-exclamation menu--icon'></i>
+                        <span class="menu--label">Ticket</span>
+                    </a>
+                </li>
+                @if(auth()->user()->privilegeChecker('view_restricted_roles'))
+                <li class="menu--item">
+                    <a href="/ticket/all" class="menu--link <?php print @$ticket;?>" title="Ticket">
+                        <i class='uil uil-comment-alt-exclamation menu--icon'></i>
+                        <span class="menu--label">Ticket</span>
+                    </a>
+                </li>
+                @endif
+
                 <li class="menu--item  menu--item__has_sub_menu">
                     <label class="menu--link" title="Tests">
                         <i class='uil uil-clipboard-alt menu--icon'></i>

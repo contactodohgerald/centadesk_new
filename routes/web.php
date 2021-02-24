@@ -30,6 +30,7 @@ use App\Http\Controllers\Verifications\VerifyBankController;
 use App\Http\Controllers\CurrencyRate\CurrencyRateController;
 use App\Http\Controllers\Subscriptions\SubscriptionController;
 use App\Http\Controllers\Cryptocurrency\cryptocurrencyController;
+use App\Http\Controllers\Ticket\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,17 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('/live/create',[live_stream_controller::class,'create']);
     Route::post('/live/edit',[live_stream_controller::class,'update']);
+
+});
+
+Route::group(['middleware' => 'web'], function () {
+    // Ticket
+    Route::get('/ticket/create',[TicketController::class,'create_ticket']);
+    Route::get('/ticket/reply/{id}',[TicketController::class,'reply_ticket']);
+    Route::get('/ticket/all',[TicketController::class,'view_all']);
+
+    Route::post('/ticket/create',[TicketController::class,'create']);
+    Route::post('/ticket/reply/{id}',[TicketController::class,'reply']);
 
 });
 

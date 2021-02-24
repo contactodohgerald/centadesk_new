@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
-<!-- Mirrored from gambolthemes.net/html-items/cursus_demo_f12/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 18 Aug 2020 17:38:47 GMT -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,8 +25,8 @@
     <link href="{{asset('dashboard/css/night-mode.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/css/jquery-steps.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/css/datepicker.min.css')}}" rel="stylesheet">
-    <link href="{{asset('dashboard/css/instructor-dashboard.css')}}" rel="stylesheet">
-    <link href="{{asset('dashboard/css/instructor-responsive.css')}}" rel="stylesheet">
+    {{-- <link href="{{asset('dashboard/css/instructor-dashboard.css')}}" rel="stylesheet"> --}}
+    {{-- <link href="{{asset('dashboard/css/instructor-responsive.css')}}" rel="stylesheet"> --}}
 
     <!-- Vendor Stylesheets -->
     <link href="{{asset('dashboard/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">

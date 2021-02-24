@@ -58,6 +58,11 @@ $live = 'active';
                                                             @else @endif value="pending">
                                                             Pending
                                                         </option>
+                                                        <option @if ($live_stream->status == "done")
+                                                            selected="selected"
+                                                            @else @endif value="done">
+                                                            Done
+                                                        </option>
                                                     </select>
                                                 </div>
                                                 <div class="group-form">

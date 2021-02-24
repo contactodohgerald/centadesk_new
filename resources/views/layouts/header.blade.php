@@ -133,17 +133,17 @@ $categories_list = $categories->getAllCategories();
             </li>
             <li class="ui dropdown">
                 <a href="#" class="opts_account" title="Account">
-                    <img src="{{asset('dashboard/images/hd_dp.jpg')}}" alt="">
+                    <img src="/storage/profile/{{ $user->profile_image }}" alt="">
                 </a>
                 <div class="menu dropdown_account">
                     <div class="channel_my">
 
                         <div class="profile_link">
-                            <img src="{{asset('dashboard/images/hd_dp.jpg')}}" alt="">
+                            <img src="/storage/profile/{{ $user->profile_image }}" alt="">
                             <div class="pd_content">
                                 <div class="rhte85">
                                     <h6>{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
-                                    <div class="mef78" title="Verify">
+                                    <div class="mef78" title="Verified">
                                         <i class='uil uil-check-circle'></i>
                                     </div>
                                 </div>

@@ -115,7 +115,7 @@ class live_stream_controller extends Controller
                 throw new Exception('This is not a valid request.');
             }
             $validator = Validator::make($request->all(), [
-                'title' => 'required|string|max:35|unique:live_streams_tb,title',
+                'title' => 'required|string|max:38|unique:live_streams_tb,title',
                 'meeting_url' => 'required|string',
                 'status' => 'required|string',
                 'date_to_start' => 'required',
@@ -174,7 +174,7 @@ class live_stream_controller extends Controller
                 throw new Exception('This is not a valid request.');
             }
             $validator = Validator::make($request->all(), [
-                'title' => 'required|string|max:35',
+                'title' => 'required|string|max:38',
                 'meeting_url' => 'required|string',
                 'status' => 'required|string',
                 'date_to_start' => 'required',

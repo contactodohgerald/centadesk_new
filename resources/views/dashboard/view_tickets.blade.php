@@ -20,30 +20,8 @@
 					<div class="col-lg-12">
 						<h2 class="st_title"><i class="uil uil-book-alt"></i>All Live Streams</h2>
 					</div>
-					<div class="col-md-12">
-						<div class="card_dash1">
-							<div class="card_dash_left1">
-								<i class="uil uil-book-alt"></i>
-								<h1 class="text-capitalize">Another live stream coming up?</h1>
-							</div>
-							<div class="card_dash_right1">
-								<button class="create_btn_dash" onclick="window.location.href = '/live_stream/create';">Pair Live Stream</button>
-							</div>
-						</div>
-					</div>
 				</div>
                 <div class="row" id="errorHold"></div>
-				<div class="row">
-					<div class="col-md-12">
-						<br>
-						<h4 class="text-danger">
-							@if(auth()->user()->privilegeChecker('view_restricted_roles'))
-								{{-- <div class="pull-right">
-									<a class="btn btn-danger" onclick="activateCoursesStatus(this)" href="javascript:;">Confirm Courses Status</a>
-								</div> --}}
-							@endif
-						</h4>
-					</div>
 					<div class="col-md-12">
 						<div class="my_courses_tabs">
 							<ul class="nav nav-pills my_crse_nav" id="pills-tab" role="tablist">
@@ -58,51 +36,21 @@
 											<thead class="thead-s">
 												<tr>
 													<th class="text-center" scope="col">Item No.</th>
-													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
-													{{-- <th class="text-center">
-														<input onclick="checkAll()" type="checkbox" class="mainCheckBox" />
-													</th> --}}
-													@endif
 													<th class="text-center" scope="col">Title</th>
-													<th class="text-center" scope="col">Date Scheduled For</th>
-													<th class="text-center" scope="col">Time Scheduled</th>
-													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
-													<th class="text-center" scope="col">User's Name</th>
-													<th class="text-center" scope="col">User's Email</th>
-													@endif
-													<th class="text-center" scope="col">Status</th>
+													<th class="text-center" scope="col">User</th>
+													{{-- <th class="text-center" scope="col">Status</th> --}}
 													<th class="text-center" scope="col">Action</th>
 												</tr>
 											</thead>
 											<tbody>
-                                                @if (!$live_streams->isEmpty())
-                                                @foreach ($live_streams as $e)
+                                                @if (!$tickets->isEmpty())
+                                                @foreach ($tickets as $e)
 												<tr>
 													<td class="text-center">{{ $loop->iteration }}</td>
-													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
-													{{-- <td class="text-center sorting_1">
-														<input type="checkbox" class="smallCheckBox" value="{{$e->unique_id}}">
-													</td> --}}
-													@endif
 													<td class="text-center text-capitalize">{{ $e->title }}</td>
-													<td class="text-center">{{ $e->date_to_start }}</td>
-													<td class="text-center">{{ $e->time_to_start }}</td>
-													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
 													<td class="text-center">{{ $e->user->name }} {{ $e->user->last_name }}</td>
-													<td class="text-center">{{ $e->user->email }}</td>
-                                                    @endif
-                                                    @if ($e->status == 'live')
-													<td class="text-center text-capitalize"><b class="text-success">{{ $e->status }}</b></td>
-                                                    @endif
-                                                    @if ($e->status == 'pending')
-													<td class="text-center text-capitalize"><b class="text-warning">{{ $e->status }}</b></td>
-                                                    @endif
-                                                    @if ($e->status == 'done')
-													<td class="text-center text-capitalize"><b class="text-danger">{{ $e->status }}</b></td>
-                                                    @endif
 													<td class="text-center">
-                                                        <a href="{{ $e->meeting_url }}" title="Visit Stream Link" class="gray-s"><i class="uil uil-adjust"></i></a>
-														<a href="/live_stream/edit/{{ $e->unique_id }}" title="Edit" class="cursor-pointer gray-s"><i class="uil uil-edit-alt"></i></a>
+                                                        <a href="/ticket/reply/{{ $e->unique_id}}" title="Reply Ticket" class="gray-s"><i class="uil uil-adjust"></i></a>
 														<a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s delete_course_modal"><i class="uil uil-trash-alt"></i></a>
 													</td>
                                                 </tr>
