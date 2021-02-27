@@ -13,11 +13,13 @@ class DropCacfilesFromUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->dropColumn('passport_cac');
-            $table->dropColumn('file_cac');
-        });
+        if (!Schema::hasColumn('users', 'passport_cac')){
+            Schema::table('users', function (Blueprint $table) {
+                //
+                $table->dropColumn('passport_cac');
+                $table->dropColumn('file_cac');
+            });
+        }
     }
 
     /**
