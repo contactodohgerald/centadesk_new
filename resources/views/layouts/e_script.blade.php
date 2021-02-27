@@ -25,6 +25,7 @@
 <!-- <script src="{{asset('dashboard/custom/validatorClass.js')}}"></script> -->
 <script src="{{asset('dashboard/assets/loader.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<script src="{{asset('toast/jquery.toast.js')}}"></script>
 
 @include('js_files.js_by_page')
 
@@ -141,8 +142,35 @@
     </div>
 </div>
 
+<!-- The Modal -->
+<div class="modal notification-access-modal" id="notification-access-modal">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #333 !important;">
 
-
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Allow Push Notification</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 offset-5">
+                        <img src="{{asset('dashboard/images/logo.svg')}}" alt="">
+                    </div>
+                    <div class="col-md-12 center">
+                        <h4>{{env('APP_NAME')}} would want to send you push notification, so that you could always keep track of your notifications.</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" onclick="updateUserWebFCMKey(this, '{{auth()->user()->unique_id}}')">Grant Permission</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 

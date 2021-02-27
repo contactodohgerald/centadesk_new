@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SaveCourse;
 
 use App\Http\Controllers\Controller;
+use App\Model\Review;
 use App\Model\SavedCourses;
 use App\Traits\Generics;
 use Exception;
@@ -13,10 +14,11 @@ class SaveCourseController extends Controller
 {
     //
     use Generics;
-    function __construct(SavedCourses $savedCourses)
+    function __construct(SavedCourses $savedCourses, Review $review)
     {
         $this->middleware('auth',  ['except' => ['saveCourse', 'removeSavedCourse']]);
         $this->savedCourses = $savedCourses;
+        $this->review = $review;
     }
 
     function getAllSavedCourse(){
@@ -36,6 +38,13 @@ class SaveCourseController extends Controller
             $each_saved_courses->courses->price;
 
             $each_saved_courses->users;
+
+            $conditions = [
+                ['course_unique_id', $each_saved_courses->book_unique_id ]
+            ];
+            $reviews = $this->review->getAllReviews($conditions);
+            $each_saved_courses->reviews = $reviews;
+            $each_saved_courses->count_review = $this->calculateRatings($reviews);
 
         }
 
@@ -74,7 +83,7 @@ class SaveCourseController extends Controller
 
             if (count($savedCourse) > 0){
 
-                return response()->json(['error_code'=>1, 'error_message'=>'This Course has already been save']);
+                return response()->json(['error_code'=>1, 'error_message'=>'Course saved! already ']);
 
             }else{
 

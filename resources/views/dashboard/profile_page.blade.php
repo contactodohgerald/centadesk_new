@@ -1,5 +1,5 @@
 @php
-	$pageTitle = 'Profile';
+	$pageTitle = 'Profile Page';
 	$profile = 'active';
 @endphp
 @include('layouts.head')
@@ -80,10 +80,12 @@
 											<li><a href="https://www.youtube.com/{{ $user->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
 										</ul>
 									</div>
-<!--									<ul class="_bty149">
-										<li><button class="subscribe-btn btn500">Subscribe</button></li>
+									<ul class="_bty149">
+                                        <li>
+                                            <button class="subscribe-btn btn500" onclick="subscribeTOTeacher(this, '{{auth()->user()->unique_id}}', '{{$user->unique_id}}')">Subscribe</button>
+                                        </li>
 										<li><button class="msg125 btn500">Message</button></li>
-									</ul>-->
+									</ul>
 								</div>
 							</div>
 						</div>
@@ -248,7 +250,7 @@
                                             <div class="row">
                                                 @if(count($user->subscribe) > 0)
                                                     @foreach($user->subscribe  as $each_subscribe)
-                                                        @if($each_subscribe->users->unique_id == auth()->user()->unique_id)
+                                                        @if($user->unique_id === auth()->user()->unique_id)
                                                             @continue
                                                         @endif
                                                      <div class="col-lg-3 col-md-4">
@@ -258,19 +260,21 @@
                                                         </div>
                                                         <div class="tutor_content_dt">
                                                             <div class="tutor150">
-                                                                <a href="{{route('view_profile', $each_subscribe->users->unique_id )}}" class="tutor_name">{{$each_subscribe->users->name}} {{$each_subscribe->users->last_name}}</a>
+                                                                <a href="{{route('view_profile', $each_subscribe->users->unique_id )}}" class="tutor_name">{{ucfirst($each_subscribe->users->name)}} {{ucfirst($each_subscribe->users->last_name)}}</a>
                                                                 <div class="mef78" title="Verify">
                                                                     <i class="uil uil-check-circle"></i>
                                                                 </div>
                                                             </div>
-                                                            <div class="tutor_cate">{{$each_subscribe->users->professonal_heading}}</div>
-                                                            <ul class="tutor_social_links">
-                                                                <button class="sbbc145" onclick="subscribeTOTeacher(this, '{{auth()->user()->unique_id}}', '{{$each_subscribe->users->unique_id}}')">Subscribe</button>
-                                                            </ul>
-                                                            <div class="tut1250">
-                                                                <span class="vdt15">100K Students</span>
-                                                                <span class="vdt15">{{$each_subscribe->count_course}} Courses</span>
-                                                            </div>
+                                                            @if($each_subscribe->users->user_type === 'teacher' || $each_subscribe->users->user_type === 'super_admin')
+                                                                <div class="tutor_cate">{{$each_subscribe->users->professonal_heading}}</div>
+                                                                <ul class="tutor_social_links">
+                                                                    <li> <button class="sbbc145" onclick="subscribeTOTeacher(this, '{{auth()->user()->unique_id}}', '{{$each_subscribe->users->unique_id}}')">Subscribe</button></li>
+                                                                </ul>
+                                                                <div class="tut1250">
+                                                                    <span class="vdt15">100K Students</span>
+                                                                    <span class="vdt15">{{$each_subscribe->course_count}} Courses</span>
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>

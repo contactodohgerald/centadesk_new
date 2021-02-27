@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Users;
 
 use App\course_model;
 use App\Http\Controllers\Controller;
+use App\Model\AppSettings;
+use App\Model\KycVerification;
+use App\Model\Subscribe;
+use App\Traits\Generics;
+use App\Traits\SendMail;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -13,27 +18,58 @@ use App\Traits\appFunction;
 
 class UserController extends Controller
 {
-    use appFunction;
+    use appFunction, SendMail, Generics;
 
-    function __construct()
-    {
+    function __construct(KycVerification $kycVerification, AppSettings $appSettings, course_model $course_model, Subscribe $subscribe){
         $this->middleware('auth');
+        $this->kycVerification = $kycVerification;
+        $this->appSettings = $appSettings;
+        $this->course_model = $course_model;
+        $this->subscribe = $subscribe;
     }
     /**
      * Function to display teacher profile page.
      *
      * @return array
      */
-    public function show_teacher_profile()
+    public function profile()
     {
-        // $all_price = priceModel::all();
-        $user = auth()->user();
-        $courses = course_model::where('user_id',$user->unique_id)->get();
-        $view = [
-            'user' => $user,
-            'courses' => $courses,
+        $user = Auth::user();
+
+        $condition = [
+            ['user_id', $user->unique_id]
         ];
-        return view('dashboard.profile', $view);
+        $course_model = $this->course_model->getAllCourse($condition);
+        $user->courses = $course_model;
+
+        foreach ($user->courses as $each_course){
+
+            $each_course->user;
+
+            $each_course->price;
+
+            $each_course->category;
+
+        }
+
+        $conditions = [
+            ['teacher_unique_id',  $user->unique_id]
+        ];
+        $subscribe = $this->subscribe->getAllSubscribers($conditions);
+        $user->subscribe = $subscribe;
+
+        foreach ($user->subscribe as $each_subscribe){
+
+            $each_subscribe->users;
+
+            $conditions = [
+                ['user_id',  $each_subscribe->users->unique_id]
+            ];
+            $course_model = $this->course_model->getAllCourse($conditions);
+            $each_subscribe->count_course = count($course_model);
+        }
+
+        return view('dashboard.profile', ['user'=>$user]);
     }
 
     protected function Validator($request)
@@ -232,67 +268,106 @@ class UserController extends Controller
         try{
             $this->Validators($request);//validate fields
 
-            if ($user->cac_verification_status === 'no'){
+            $condition = [
+                ['user_unique_id', $user->unique_id],
+            ];
 
-                if ($request->hasFile('cac_passport')) {
-                    $file = $request->file('cac_passport');
-                    $cac_passport = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-                    $file->storeAs('public/cac_passport', $cac_passport);
-                }
+            $kycVerification = $this->kycVerification->getAllKycVerification($condition);
 
-                if ($request->hasFile('cac_files')) {
-                    $files = $request->file('cac_files');
-                    $cac_files = md5($files->getClientOriginalName() . time()) . "." . $files->getClientOriginalExtension();
-                    $files->storeAs('public/cac_files', $cac_files);
-                }
+            if (count($kycVerification) > 0){
 
-                $user->passport_cac = $cac_passport;
-                $user->file_cac = $cac_files;
-                $user->cac_verification_status = 'yes';
-                if ($user->save()){
-                    return redirect('/upload_cac')->with('success_message', 'CAC Upload was made successfully');
-                }else{
-                    return redirect('/upload_cac')->with('error_message', 'An Error occurred, Please try Again Later');
+
+                foreach ($kycVerification as $each_kycVerification){
+
+                    //code for remove old file
+                    if ($each_kycVerification->passport_cac !== null) {
+                        if(file_exists(storage_path('app/public/cac_passport/') . $user->passport_cac)){
+                            $file_old = storage_path('app/public/cac_passport/') . $user->passport_cac;
+                            unlink($file_old);
+                        }
+                    }
+                    if ($request->hasFile('cac_passport')) {
+                        $file = $request->file('cac_passport');
+                        $cac_passport = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+                        $file->storeAs('public/cac_passport', $cac_passport);
+                    }
+
+                    if ($each_kycVerification->file_cac !== null) {
+                        if(file_exists(storage_path('app/public/cac_files/') . $user->file_cac)){
+                            $file_olds = storage_path('app/public/cac_files/') . $user->file_cac;
+                            unlink($file_olds);
+                        }
+                    }
+                    if ($request->hasFile('cac_files')) {
+                        $files = $request->file('cac_files');
+                        $cac_files = md5($files->getClientOriginalName() . time()) . "." . $files->getClientOriginalExtension();
+                        $files->storeAs('public/cac_files', $cac_files);
+                    }
+
+                    $each_kycVerification->passport_cac = $cac_passport;
+                    $each_kycVerification->file_cac = $cac_files;
+                    $each_kycVerification->status = 'pending';
+
+                    if ($each_kycVerification->save()){
+
+                        $adminEmail = $this->appSettings->getSingleModel();
+
+                        $full_name = $user->name.' '.$user->last_name;
+
+                        $message = 'Hi Adnin, am '.$full_name.' by name. I re-uploaded my form of verification for KYC verification, Please treat it with all urgency. Thank you';
+
+                        $this->sendAdminEmailForAccountResolve('KYC Verification', $message, env('APP_NAME'), $this->base_url, $adminEmail->company_email_2);
+
+                        return redirect('/kyc_verification')->with('success_message', 'CAC Upload was made successfully');
+                    }else{
+                        return redirect('/kyc_verification')->with('error_message', 'An Error occurred, Please try Again Later');
+                    }
                 }
             }else{
-                //code for remove old file
-                if ($user->passport_cac !== null) {
-                    if(file_exists(storage_path('app/public/cac_passport/') . $user->passport_cac)){
-                        $file_old = storage_path('app/public/cac_passport/') . $user->passport_cac;
-                        unlink($file_old);
-                    }
-                }
+
                 if ($request->hasFile('cac_passport')) {
                     $file = $request->file('cac_passport');
                     $cac_passport = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
                     $file->storeAs('public/cac_passport', $cac_passport);
                 }
 
-                if ($user->file_cac !== null) {
-                    if(file_exists(storage_path('app/public/cac_files/') . $user->file_cac)){
-                        $file_olds = storage_path('app/public/cac_files/') . $user->file_cac;
-                        unlink($file_olds);
-                    }
-                }
                 if ($request->hasFile('cac_files')) {
                     $files = $request->file('cac_files');
                     $cac_files = md5($files->getClientOriginalName() . time()) . "." . $files->getClientOriginalExtension();
                     $files->storeAs('public/cac_files', $cac_files);
                 }
 
-                $user->passport_cac = $cac_passport;
-                $user->file_cac = $cac_files;
-                if ($user->save()){
-                    return redirect('/upload_cac')->with('success_message', 'CAC Upload was made successfully');
-                }else{
-                    return redirect('/upload_cac')->with('error_message', 'An Error occurred, Please try Again Later');
-                }
+                $unique_id = $this->createUniqueId('kyc_verifications', 'unique_id');
 
+                $kycVerifications = new KycVerification();
+                $kycVerifications->unique_id = $unique_id;
+                $kycVerifications->passport_cac = $cac_passport;
+                $kycVerifications->file_cac = $cac_files;
+                $kycVerifications->user_unique_id = $user->unique_id;
+                $kycVerifications->status = 'pending';
+
+                if ($kycVerifications->save()){
+
+                    $user->cac_verification_status = 'yes';
+                    $user->save();
+
+                    $adminEmail = $this->appSettings->getSingleModel();
+
+                    $full_name = $user->name.' '.$user->last_name;
+
+                    $message = 'Hi Adnin, am '.$full_name.' by name. I just uploaded my form of verification, Please treat it with all urgency. Thank you';
+
+                    $this->sendAdminEmailForAccountResolve('KYC Verification', $message, env('APP_NAME'), $this->base_url, $adminEmail->company_email_2);
+
+                    return redirect('/kyc_verification')->with('success_message', 'CAC Upload was made successfully');
+                }else{
+                    return redirect('/kyc_verification')->with('error_message', 'An Error occurred, Please try Again Later');
+                }
             }
         }catch (Exception $exception){
 
             $errorsArray = $exception->getMessage();
-            return  redirect('upload_cac')->with('error_message', $errorsArray);
+            return  redirect('kyc_verification')->with('error_message', $errorsArray);
 
         }
 

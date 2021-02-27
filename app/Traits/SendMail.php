@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Traits;
-use App\Mail\AccountResolveNotification;
+use App\Mail\Notification;
 use App\Mail\WithdrawMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -46,7 +46,7 @@ trait SendMail {
 
         ];
 
-        Mail::to($userEmail)->send(new AccountResolveNotification($details));
+        Mail::to($userEmail)->send(new Notification($details));
     }
 
 }
