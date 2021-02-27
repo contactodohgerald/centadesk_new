@@ -5,6 +5,8 @@ use App\Http\Controllers\Like\LikesController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\SaveCourse\SaveCourseController;
 use App\Http\Controllers\Subscribe\SubscribeController;
+use App\Http\Controllers\Users\GeneralUserController;
+use App\Http\Controllers\VerifyKYC\KYCVerificationController;
 use App\Http\Controllers\Wallet\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,4 +54,10 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('/storeReview', [ReviewController::class, 'storeReview'])->name('storeReview');
     Route::get('/getAllReviews/{course_id}', [ReviewController::class, 'getAllReviews'])->name('getAllReviews');
     Route::get('/getAllCourses/{course_id}', [ReviewController::class, 'getAllCourses'])->name('getAllCourses');
+
+    //update users fcm key
+    Route::post('/updateUserFCMKeys/{user_unique_id}', [GeneralUserController::class, 'updateUserFCMKeys'])->name('updateUserFCMKeys');
+
+    //
+    Route::post('/KYCVerificationHandler', [KYCVerificationController::class, 'KYCVerificationHandler'])->name('KYCVerificationHandler');
 });

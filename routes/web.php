@@ -1,8 +1,9 @@
 <?php
 
 
-use App\Subscription_model;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Subscribe\SubscribeController;
+use App\Http\Controllers\Users\GeneralUserController;
+use App\Http\Controllers\VerifyKYC\KYCVerificationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -60,7 +61,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/create-course',[courseController::class,'index']);
     Route::get('/view-courses', [courseController::class,'show']);
     Route::get('/explore', [courseController::class,'viewExplore'])->name('explore');
-    Route::get('/category-explore/{unique_id}', [courseController::class,'exploreCategory'])->name('category-explore');
+    Route::get('/category-explore/{unique_id?}', [courseController::class,'exploreCategory'])->name('category-explore');
     Route::get('/edit-course/{id}', [courseController::class,'update_page']);
     Route::post('/create-course', [courseController::class,'create']);
     Route::post('/edit-course/{id}', [courseController::class,'update']);
@@ -102,7 +103,7 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' => 'web'], function () {
     // user routes
-    Route::get('/teacher/profile',[UserController::class,'show_teacher_profile']);
+    Route::get('/profile',[UserController::class,'profile'])->name('profile');
     Route::post('/personal-details',[UserController::class,'update_user_details']);
     Route::post('/profile/photo',[UserController::class,'upload_cover_photo']);
 });
@@ -119,6 +120,11 @@ Route::group(['middleware' => 'web'], function () {
     // Subscription
     Route::post('/subscribe_to',[SubscriptionController::class,'subscribe_to']);
     Route::post('/unsubscribe_from',[SubscriptionController::class,'unsubscribe_from']);
+});
+
+Route::group(['middleware' => 'web'], function () {
+    // Subscribe
+    Route::get('/browse_subscribers',[SubscribeController::class,'browseSubscribers'])->name('browse_subscribers');
 });
 
 
@@ -147,7 +153,7 @@ Route::group(['middleware'=>'web'], function(){
     // Course
     Route::get('/create-course',  [courseController::class, 'index'])->name('create-course');
     Route::get('/view-courses',  [courseController::class, 'show'])->name('view-courses');
-    Route::get('/view_course/{unique_id}', [courseController::class, 'showCourses'])->name('view_course');
+    Route::get('/view_course/{unique_id?}', [courseController::class, 'showCourses'])->name('view_course');
     Route::get('/edit-course/{id}', [courseController::class, 'update_page'])->name('edit-course');
 
 });
@@ -195,12 +201,18 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 Route::group(['middleware' => 'web'], function () {
+    //users
+    Route::get('/verify_kyc', [KYCVerificationController::class, 'listKYCForVerification'])->name('verify_kyc');
+    Route::get('/verify_kyc_page/{unique_id}', [KYCVerificationController::class, 'verifyKYC'])->name('verify_kyc_page');
+});
+
+Route::group(['middleware' => 'web'], function () {
     //wallet
     Route::get('/my_balance', [TransactionController::class, 'myTransaction'])->name('my_balance');
     Route::post('/top_up', [TransactionController::class, 'topUpWallet'])->name('top_up');
     Route::get('/confirm_top_up', [TransactionController::class, 'confirmUserPayments'])->name('confirm_top_up');
     Route::post('/transactions_by_date', [TransactionController::class, 'showTransactionByDate'])->name('transactions_by_date');
-    Route::get('/transaction_history/{unique_id}', [TransactionController::class, 'showTopUpTransaction'])->name('transaction_history');
+    Route::get('/transaction_history/{unique_id?}', [TransactionController::class, 'showTopUpTransaction'])->name('transaction_history');
 
     //withdrawals
     Route::get('/withdrawals', [WithdrawalController::class, 'myWithdrawals'])->name('withdrawals');
@@ -219,10 +231,14 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' => 'web'], function () {
     //users details update
-    Route::get('/upload_cac', [UserController::class, 'uploadUserCAC'])->name('upload_cac');
+    Route::get('/kyc_verification', [UserController::class, 'uploadUserCAC'])->name('kyc_verification');
     Route::post('/update_cac_file', [UserController::class, 'uploadCACFiles'])->name('update_cac_file');
     Route::post('/update_bank_account', [UserController::class, 'bankAccountUpdate'])->name('update_bank_account');
     Route::post('/update_wallet_address', [UserController::class, 'walletAddressUpdate'])->name('update_wallet_address');
+
+
+    Route::get('/view_profile/{unique_id}', [GeneralUserController::class, 'viewUserGeneral'])->name('view_profile');
+    Route::get('/browse_instructor', [GeneralUserController::class, 'browseInstructors'])->name('browse_instructor');
 });
 
 //Route::group(['middleware'=>'web'], function(){

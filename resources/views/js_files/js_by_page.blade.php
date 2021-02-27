@@ -12,13 +12,10 @@
         let {error_code, success_statement, error_message} = postData;
         if(error_code == 0){
             $(a).text('Subscribe').attr({'disabled':false});
-            successDisplay(success_statement);
-            setTimeout(function () {
-                location.reload();
-            }, 1500)
+            showValidatorToaster(success_statement, 'success');
         }else{
             $(a).text('Subscribe').attr({'disabled':false});
-            errorDisplay(error_message);
+            showValidatorToaster(error_message, 'warning');
         }
     }
 
@@ -59,8 +56,67 @@
         });
     }
 
-    function capitalizeFirstLetter(string)
-    {
+    function showValidatorToaster(message, type_of_toast) {
+        loader_set();
+        if (type_of_toast === 'success') {
+            loader_rmv();
+            throw_snackbar(message, 'success');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+           /* setTimeout(() => {
+                window.location.href = page_redirect;
+            }, 2000);*/
+        } else {
+            loader_rmv();
+            throw_snackbar(message, 'error');
+            // window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
+    function showSuccessToaster(message, tooastType) {
+        if(tooastType === "warning"){
+            $.toast({
+                text: message,
+                heading: 'Note',
+                icon: 'warning',
+                showHideTransition: 'slide',
+                allowToastClose: true,
+                hideAfter: 5000,
+                stack: 5,
+                position: 'top-right',
+                textAlign: 'left',
+                loader: true,
+                loaderBg: '#9ec600',
+                background: 'red',
+                beforeShow: function () {},
+                afterShown: function () {},
+                beforeHide: function () {},
+                afterHidden: function () {}
+            });
+        }else if(tooastType === "success"){
+            $.toast({
+                text: message,
+                heading: 'Note',
+                icon: 'success',
+                showHideTransition: 'slide',
+                allowToastClose: true,
+                hideAfter: 5000,
+                stack: 5,
+                position: 'top-right',
+                textAlign: 'left',
+                loader: true,
+                loaderBg: '#9ec600',
+                background: 'green',
+                beforeShow: function () {},
+                afterShown: function () {},
+                beforeHide: function () {},
+                afterHidden: function () {}
+            });
+        }
+
+
+    }
+
+    function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
@@ -156,6 +212,70 @@
         }
     }
 
+    let myIndexDb = (() => {
+        let db;
+
+        function getDB(db_name, table_name) {
+            if (!db) {
+                db = new Promise((resolve, reject) => {
+                    const openreq = indexedDB.open(db_name, 1);
+
+                    openreq.onerror = () => {
+                        reject(openreq.error);
+                    };
+
+                    openreq.onupgradeneeded = () => {
+                        // First time setup: create an empty object store
+                        openreq.result.createObjectStore(table_name);
+                    };
+
+                    openreq.onsuccess = () => {
+                        resolve(openreq.result);
+                    };
+                });
+            }
+            return db;
+        }
+
+        async function withStore(type, callback, db_name, tb_name) {
+            const db = await getDB(db_name, tb_name);
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(tb_name, type);
+                transaction.oncomplete = () => resolve();
+                transaction.onerror = () => reject(transaction.error);
+                callback(transaction.objectStore(tb_name));
+            });
+        }
+
+        return {
+            async get(key,db_name, tb_name) {
+                let req;
+                await withStore('readonly', store => {
+                    req = store.get(key);
+                }, db_name, tb_name);
+                return req.result;
+            },
+            async getAll(db_name, tb_name) {
+                let req;
+                await withStore('readonly', store => {
+                    req = store.getAll();
+                },db_name, tb_name);
+                return req.result;
+            },
+            set(key, value,db_name, tb_name) {
+                return withStore('readwrite', store => {
+                    store.put(value, key);
+                },db_name, tb_name);
+            },
+            delete(key,db_name, tb_name) {
+                return withStore('readwrite', store => {
+                    store.delete(key);
+                },db_name, tb_name);
+            }
+        };
+
+    })();
+
 </script>
 
 <!--datatables-->
@@ -205,8 +325,22 @@
     @include('js_by_page.withdrawal_js')
 @endif
 
+{{--home--}}
+@php $homePage = ['home'];  @endphp
+@php $currentPageName = Request::segment(1); @endphp
+@if(in_array($currentPageName, $homePage))
+    @include('js_by_page.home_js')
+@endif
+
+{{--home--}}
+@php $verifyKycPage = ['verify_kyc_page'];  @endphp
+@php $currentPageName = Request::segment(1); @endphp
+@if(in_array($currentPageName, $verifyKycPage))
+    @include('js_by_page.kyc_verification_js')
+@endif
+
 {{--courses,--}}
-@php $pageWithdrawalArray = ['view-courses', 'view_course', 'saved-course', 'explore'];  @endphp
+@php $pageWithdrawalArray = ['view-courses', 'view_course', 'saved-course', 'explore', 'category-explore'];  @endphp
 @php $currentPageName = Request::segment(1); @endphp
 @if(in_array($currentPageName, $pageWithdrawalArray))
     @include('js_by_page.course_js')

@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Course;
 // namespace App\Http\Controllers\Course;
 
 // use App\Model\Like;
-use App\Model\Review;
-use Exception;
 use App\Model\Like;
+use App\Model\Review;
+use App\Model\SavedCourses;
+use App\Model\Subscribe;
+use App\Traits\FireBaseNotification;
+use App\User;
+use Exception;
 use App\priceModel;
 use App\course_model;
 use App\Traits\Generics;
@@ -23,15 +27,20 @@ class courseController extends Controller
 {
     use Generics;
     use appFunction;
+    use FireBaseNotification;
 
-    function __construct(Like $like, course_model $course_model, course_category_model $course_category_model, Review $review, live_stream_model $live_stream_model)
-    {
+    function __construct(
+        Like $like, course_model $course_model, course_category_model $course_category_model, Review $review, live_stream_model $live_stream_model, SavedCourses $savedCourses, User $user, Subscribe $subscribe
+    ){
         $this->middleware('auth',  ['except' => ['activateCoursesStatus']]);
         $this->like = $like;
         $this->course_model = $course_model;
         $this->course_category_model = $course_category_model;
         $this->review = $review;
         $this->live_stream_model = $live_stream_model;
+        $this->savedCourses = $savedCourses;
+        $this->user = $user;
+        $this->subscribe = $subscribe;
     }
     /**
      * Display a listing of the resource.
@@ -137,6 +146,31 @@ class courseController extends Controller
             if (!$new_course->unique_id) {
                 throw new Exception($this->errorMsgs(14)['msg']);
             } else {
+                $condition = [
+                    ['teacher_unique_id', $user->unique_id],
+                ];
+                $users_array = $this->subscribe->getAllSubscribers($condition);
+                $user_array = [];
+                foreach ($users_array as $item => $each_users_array){
+                    $query = [
+                        ['unique_id', $each_users_array->user_unique_id]
+                    ];
+                    $user_object = $this->user->getSingleUser($query);
+                    array_push($user_array, $user_object);
+
+                }
+
+                $title_ = 'A New Course titled '.$title.' Was Just Uploaded, by '.$user->name.' '.$user->last_name;
+
+                $link = 'htpps://centadesk.com';
+
+                $notification_type = 'Course Upload';
+
+                $user_to_recieve_notification = $user_array;
+                $notification_details = [$title_, $caption, $pricing];
+                $notification_details_key = ['course_title', 'course_desc', 'pricing'];
+
+                $this->NotificationsHandler($title_, $link, $notification_type, $notification_details, $notification_details_key, $user_to_recieve_notification);
                 $error = 'Course Created!';
                 return response()->json(["message" => $error, 'status' => true]);
             }
@@ -212,7 +246,7 @@ class courseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showCourses($id){
+    public function showCourses($id = null){
         //
         $condition = [
             ['unique_id', $id]
@@ -226,17 +260,26 @@ class courseController extends Controller
             ['course_unique_id', $course->unique_id],
             ['like_type', 'like']
         ];
+        $likes_array = [];
         $likesCount = $this->like->getAllLikes($condition);
+        foreach ($likesCount as $kk => $each_likesCount){
+            array_push($likes_array, $each_likesCount->user_unique_id);
+        }
 
         $course->likes = $likesCount->count();
+        $course->likes_user_array = $likes_array;
 
         $conditions = [
             ['course_unique_id', $course->unique_id],
             ['like_type', 'dislike']
         ];
+        $dislike_array = [];
         $dislikesCount = $this->like->getAllLikes($conditions);
-
+        foreach ($dislikesCount as $kk => $each_dislikesCount){
+            array_push($dislike_array, $each_dislikesCount->user_unique_id);
+        }
         $course->dislikes = $dislikesCount->count();
+        $course->dislike_user_array = $dislike_array;
 
         $course->user;
 
@@ -251,6 +294,17 @@ class courseController extends Controller
         foreach ($reviews as $each_review){
             $each_review->users;
         }
+
+        $query = [
+            ['book_unique_id', $course->unique_id ]
+        ];
+        $user_array_hold = [];
+        $users_for_course = $this->savedCourses->getAllSaveCourse($query);
+        foreach ($users_for_course as $k => $each_users_for_course){
+            array_push($user_array_hold, $each_users_for_course->user_unique_id);
+        }
+
+        $course->user_array_hold = $user_array_hold;
 
         return view('dashboard.view_course', ['course'=>$course]);
     }
@@ -431,6 +485,13 @@ class courseController extends Controller
 
             $each_course->category;
 
+            $conditions = [
+                ['course_unique_id', $each_course->unique_id ]
+            ];
+            $reviews = $this->review->getAllReviews($conditions);
+            $each_course->reviews = $reviews;
+            $each_course->count_review = $this->calculateRatings($reviews);
+
         }
 
 
@@ -448,7 +509,7 @@ class courseController extends Controller
         return view('dashboard.explore', $view);
     }
 
-    public function exploreCategory($unique_id){
+    public function exploreCategory($unique_id = null){
 
         $conditions = [
             ['unique_id', $unique_id]
@@ -468,6 +529,13 @@ class courseController extends Controller
             $each_course->price;
 
             $each_course->category;
+
+            $conditions = [
+                ['course_unique_id', $each_course->unique_id ]
+            ];
+            $reviews = $this->review->getAllReviews($conditions);
+            $each_course->reviews = $reviews;
+            $each_course->count_review = $this->calculateRatings($reviews);
 
         }
 

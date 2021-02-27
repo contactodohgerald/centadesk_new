@@ -1,5 +1,5 @@
 ﻿@php
-	$pageTitle = 'Upload CAC';
+	$pageTitle = 'KYC Verification';
 	$explore= 'active';
 @endphp
 @include('layouts.head')
@@ -12,7 +12,6 @@
 	<!-- Left Sidebar Start -->
 	@include('layouts.sidebar')
 	<!-- Left Sidebar End -->
-    @php $link = auth()->user()->returnLink() @endphp
 
 	<!-- Body Start -->
 	<div class="wrapper">
@@ -20,7 +19,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="st_title"><i class="uil uil-check-circle"></i>CAC Verification</h2>
+                        <h2 class="st_title"><i class="uil uil-check-circle"></i>KYC Verification</h2>
                     </div>
                 </div>
                 <div class="row justify-content-xl-center justify-content-lg-center justify-content-md-center">
@@ -45,7 +44,7 @@
                                         </button>
                                     </div>
                                 @endif
-                                <h4>CAC Verification</h4>
+                                <h4>KYC Verification</h4>
                                 <div class="alert alert-success text-center">We'll send you an email upon successful verification</div>
                                     <form method="POST" action="{{route('update_cac_file')}}" enctype="multipart/form-data">
                                         @csrf

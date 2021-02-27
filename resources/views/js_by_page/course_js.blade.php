@@ -106,13 +106,13 @@
             let {error_code, success_statement, error_message} = postData;
             if(error_code == 0){
                 $(a).text('Confirm Courses Status').attr({'disabled':false});
-                successDisplay(success_statement);
+                showValidatorToaster(success_statement, 'success');
                 setTimeout(function () {
                     location.reload();
-                }, 5000)
+                }, 2000)
             }else{
                 $(a).text('Confirm Courses Status').attr({'disabled':false});
-                errorDisplay(error_message);
+                showValidatorToaster(error_message, 'warning');
             }
         }
 
@@ -122,12 +122,15 @@
         let postData = await postRequest(baseUrl+'api/saveCourse', {course_unique_id:course_id, user_unique_id:user_id});
         let {error_code, success_statement, error_message} = postData;
         if(error_code == 0){
-            successDisplay(success_statement);
+            showValidatorToaster(success_statement, 'success');
+            $('.uil-heart').addClass('text-danger')
             // setTimeout(function () {
             //     location.reload();
             // }, 5000)
         }else{
-            errorDisplay(error_message);
+            //errorDisplay(error_message);
+            //showSuccessToaster(error_message, 'warning')
+            showValidatorToaster(error_message, 'warning');
         }
 
     }
@@ -142,13 +145,14 @@
             let {error_code, success_statement, error_message} = postData;
             if(error_code == 0){
                 $(a).text('Saved Course Removed').attr({'disabled':false});
-                successDisplay(success_statement);
+                showValidatorToaster(success_statement, 'success');
                 setTimeout(function () {
                     location.reload();
                 }, 2000)
             }else{
                 $(a).text('Remove').attr({'disabled':false});
-                errorDisplay(error_message);
+               // errorDisplay(error_message);
+                showValidatorToaster(error_message, 'warning');
             }
         }
 
@@ -161,12 +165,15 @@
         let postData = await postRequest(baseUrl+'api/processCourseLikeStatus', {course_unique_id:course_id, user_unique_id:userUniqueId, action:action});
         let {error_code, success_statement, error_message} = postData;
         if(error_code == 0){
-            successDisplay(success_statement);
-            setTimeout(function () {
-                location.reload();
-             }, 1500)
+            showValidatorToaster(success_statement, 'success');
+            if (action === 'like'){
+                $('.uil-thumbs-up').addClass('text-danger')
+            }else {
+                $('.uil-thumbs-down').addClass('text-danger')
+            }
         }else{
-            errorDisplay(error_message);
+            //errorDisplay(error_message);
+            showValidatorToaster(error_message, 'warning');
         }
 
     }
@@ -268,12 +275,13 @@
                     let postData = await postRequest(baseUrl+'api/storeReview', {userId:userUniqueId, courseId:courseUniqueId, message:retVal, rating:rating});
                    let {error_code, success_statement, error_message} = postData;
                     if(error_code == 0){
-                        successDisplay(success_statement);
+                        showValidatorToaster(success_statement, 'success');
                         setTimeout(function () {
                             location.reload();
                         }, 1000)
                     }else{
-                        errorDisplay(error_message);
+                       // errorDisplay(error_message);
+                        showValidatorToaster(error_message, 'warning');
                     }
                     break;
                 }

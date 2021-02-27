@@ -137,7 +137,7 @@ class TransactionController extends Controller
 
     }
 
-    public function showTopUpTransaction($unique_id){
+    public function showTopUpTransaction($unique_id = null){
 
         $userDetails = Auth::user();
 
