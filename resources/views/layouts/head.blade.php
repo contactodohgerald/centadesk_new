@@ -28,6 +28,10 @@
     {{-- <link href="{{asset('dashboard/css/instructor-dashboard.css')}}" rel="stylesheet"> --}}
     {{-- <link href="{{asset('dashboard/css/instructor-responsive.css')}}" rel="stylesheet"> --}}
 
+
+    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/custom/js-snackbar/dist/js-snackbar.css')}}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('dashboard/custom/js-snackbar/dist/site.css')}}"> --}}
+
     <!-- Vendor Stylesheets -->
     <link href="{{asset('dashboard/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/vendor/OwlCarousel/assets/owl.carousel.css')}}" rel="stylesheet">
@@ -38,5 +42,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/assets/loader.css')}}">
     {{-- <link rel="stylesheet" type="text/css" href="{{asset('dashboard/assets/bootstrap-v4.5.0/css/bootstrap.min.css')}}"> --}}
+
 
 </head>

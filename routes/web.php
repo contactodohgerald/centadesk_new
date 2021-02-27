@@ -30,6 +30,7 @@ use App\Http\Controllers\Verifications\VerifyBankController;
 use App\Http\Controllers\CurrencyRate\CurrencyRateController;
 use App\Http\Controllers\Subscriptions\SubscriptionController;
 use App\Http\Controllers\Cryptocurrency\cryptocurrencyController;
+use App\Http\Controllers\Enrollment\CourseEnrollmentController;
 use App\Http\Controllers\Ticket\TicketController;
 
 /*
@@ -87,6 +88,14 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('/ticket/create',[TicketController::class,'create']);
     Route::post('/ticket/reply/{id}',[TicketController::class,'reply']);
+
+});
+
+Route::group(['middleware' => 'web'], function () {
+    // Enroll in course
+    // Route::get('/ticket/create',[TicketController::class,'create_ticket']);
+
+    Route::post('/course/enroll/{id}',[CourseEnrollmentController::class,'enroll']);
 
 });
 

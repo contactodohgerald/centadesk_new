@@ -1,4 +1,5 @@
 @php
+$users = auth()->user();
 	$pageTitle = 'View Courses';
 	$Course = 'active';
 @endphp

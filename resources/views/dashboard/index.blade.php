@@ -1,5 +1,6 @@
 ﻿
 @php
+$users = auth()->user();
 	$pageTitle = 'Home Area';
 	$home = 'active';
 @endphp

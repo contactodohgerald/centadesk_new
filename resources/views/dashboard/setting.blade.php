@@ -1,4 +1,5 @@
 ﻿@php
+$users = auth()->user();
 	$pageTitle = 'Settings Area';
 	$Setting = 'active';
 @endphp
@@ -35,7 +36,7 @@
 									<a class="nav-link" id="pills-bitcoin-wallet-tab" data-toggle="pill" href="#pills-bitcoin-wallet" role="tab" aria-selected="false">Bitcoin Wallet</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" id="pills-privacy-tab" data-toggle="pill" href="#pills-privacy" role="tab" aria-selected="false">Privacy</a>
+									<a class="nav-link" id="pills-privacy-tab" data-toggle="pill" href="#pills-privacy" role="tab" aria-selected="false">Enrollment</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" id="pills-bllingpayment-tab" data-toggle="pill" href="#pills-bllingpayment" role="tab" aria-selected="false">Billing and Payouts</a>
@@ -349,17 +350,17 @@
 									<div class="basic_profile">
 										<div class="basic_form">
 											<div class="nstting_content">
-												<div class="basic_ptitle">
-													<h4>Profile page settings</h4>
-												</div>
-												<div class="ui toggle checkbox _1457s2">
-													<input type="checkbox" name="stream_ss8" checked>
-													<label>Show your profile on search engines</label>
-												</div>
-												<div class="ui toggle checkbox _1457s2">
-													<input type="checkbox" name="stream_ss9">
-													<label>Show courses you're taking on your profile page</label>
-												</div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="ui search focus mt-30">
+                                                            <label for="bit_coin_wallet">Course Enrollment Percentage</label>
+                                                            <div class="ui left icon input swdh11 swdh19">
+                                                                <input class="prompt srch_explore" type="number" name="enrollment_percentage" id="wallet" placeholder="Enter percentage to pay teachers" value="{{$user->wallet_address}}">
+                                                                <i class="uil uil-receipt icon icon2"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 											</div>
 										</div>
 									</div>

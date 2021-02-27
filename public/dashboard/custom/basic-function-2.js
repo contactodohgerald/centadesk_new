@@ -1,4 +1,11 @@
-// num_suffix   // setLoader   // remv_loader   // postRequest  // throwSweetalert    // getKeyByValue    // return_element_key_in_array  // ajaxRequest    // throw_snackbar   // append_id   // display_img_thumbnail
+// num_suffix
+// setLoader
+// remv_loader
+// postRequest
+// throwSweetalert
+// getKeyByValue
+// return_element_key_in_array
+// ajaxRequest
 
 // let snack_options = {
 //     message: "Error! Bitcoin Wallet Address already exist.",
@@ -10,15 +17,15 @@
 //     position: "br", // "tl","tc","tr","bl", "bc", "br"
 // };
 
-function throw_snackbar(message, status) {
+function throw_snackbar(message,status){
     SnackBar({
         message: message,
-        width: "400px",
+        width: "600px",
         fixed: true,
         status: status, // success | warning | danger | info
         timeout: 5000, // ms
         dismissible: true, // can be configured to hide its close button
-        position: "tr", // "tl","tc","tr","bl", "bc", "br"
+        position: "br", // "tl","tc","tr","bl", "bc", "br"
     });
 
 }
@@ -170,30 +177,33 @@ function return_element_key_in_array(array, val_exist) {
 
 function validator(returned, page_redirect) {
     loader_set();
+    $("#errorHold").empty();
     if (returned.status == true) {
-
         loader_rmv();
-        throw_snackbar(returned.message, 'success');
+        let errorHold = `<div class="col-12 text-center"><div class="alert alert-success">${returned.message}</div></div>`;
+        // $("#errorHold").append(errorHold);
+        throw_snackbar(returned.message,'success');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setTimeout(() => {
             window.location.href = page_redirect;
         }, 2000);
-
     } else {
-
         loader_rmv();
         for (var key in returned.errors) {
             let error = returned.errors[key];
             if (error.length == 1) {
-                throw_snackbar(returned.errors[key], 'error');
+                let errorHold = `<div class="col-12 text-center"><div class="alert alert-danger">${returned.errors[key]}</div></div>`;
+                // $("#errorHold").append(errorHold);
+                    throw_snackbar(returned.errors[key],'error');
             } else if (error.length > 1) {
                 error.forEach(e => {
-                    throw_snackbar(e, 'error');
+                    let errorHold = `<div class="col-4 text-center"><div class="alert alert-danger">${e}</div></div>`;
+                    // $("#errorHold").append(errorHold);
+                    throw_snackbar(e,'error');
                 })
             }
         }
-        // window.scrollTo({ top: 0, behavior: 'smooth' });
-
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
 function youtube_regex(url) {

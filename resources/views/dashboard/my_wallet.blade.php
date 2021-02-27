@@ -1,4 +1,5 @@
 ﻿@php
+$users = auth()->user();
 	$pageTitle = 'Wallet Area';
 	$Wallet = 'active';
 @endphp

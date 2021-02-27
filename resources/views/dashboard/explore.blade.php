@@ -1,4 +1,5 @@
 ﻿@php
+$users = auth()->user();
 $pageTitle = 'Explore';
 $explore= 'active';
 @endphp

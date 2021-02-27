@@ -1,4 +1,5 @@
 ﻿@php
+$users = auth()->user();
 	$pageTitle = 'Course Details Area';
 	$Complain = 'active';
 @endphp
@@ -23,7 +24,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
             <div class="modal-body">
-                <iframe  src="{{$course->intro_video}}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe  src="https://www.youtube.com/embed/{{$course->intro_video}}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
 
         </div>
@@ -1667,7 +1668,7 @@
                                                             @foreach($course->reviews as $key => $each_review)
 														    <div class="review_item">
                                                                 <div class="review_usr_dt">
-                                                                    <img src="images/left-imgs/img-1.jpg" alt="">
+                                                                    <img src="/storage/profile/{{ $each_review->users->profile_image }}" alt="">
                                                                     <div class="rv1458">
                                                                         <h4 class="tutor_name1" onmouseover="getRatingsForView('{{$course->unique_id}}', '{{$each_review->users->unique_id}}', '.hold_value{{$key}}')">{{$each_review->users->name}} {{$each_review->users->last_name}}</h4>
                                                                         <span class="time_145">{{$each_review->created_at->diffForHumans()}}</span>

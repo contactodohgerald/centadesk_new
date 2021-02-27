@@ -1,4 +1,5 @@
 @php
+$users = auth()->user();
 	$pageTitle = 'Live Streams';
 	$Course = 'active';
 @endphp

@@ -1,4 +1,5 @@
 ﻿@php
+$users = auth()->user();
 	$pageTitle = 'Settings Area';
 	$saveCourse = 'active';
 @endphp
@@ -16,7 +17,7 @@
 	<!-- Body Start -->
 	<div class="wrapper">
     <div class="sa4d25">
-			<div class="container-fluid">			
+			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-3 col-md-4 ">
 						<div class="section3125 hstry142">
@@ -29,11 +30,11 @@
 									<span class="vdt14">{{count($saved_courses)}} Courses</span>
 								</div>
 								<a href="javascript:;" class="rmv-btn" onclick="deleteSavedCourse(this, 'all')"><i class='uil uil-trash-alt'></i>Remove Saved Courses</a>
-							</div>						
-						</div>							
-					</div>					
+							</div>
+						</div>
+					</div>
 					<div class="col-md-9">
-						<div class="_14d25 mb-20">						
+						<div class="_14d25 mb-20">
 							<div class="row">
 								<div class="col-md-12">
                                     <h4 class="mhs_title">Saved Courses</h4>
@@ -57,8 +58,8 @@
                                                 <div class="eps_dots eps_dots10 more_dropdown">
                                                     <a href="javascript:;"><i class="uil uil-ellipsis-v"></i></a>
                                                     <div class="dropdown-content">
-                                                        <span onclick="deleteSavedCourse(this, 'single')"><i class='uil uil-times'></i>Remove</span>															
-                                                    </div>																											
+                                                        <span onclick="deleteSavedCourse(this, 'single')"><i class='uil uil-times'></i>Remove</span>
+                                                    </div>
                                                 </div>
                                                 <div class="vdtodt">
                                                     <span class="vdt14">{{$each_saved_courses->courses->views}} views</span>
@@ -81,10 +82,10 @@
                                         <div class="alert alert-success text-center">No Saved Courses, Browse through our list of Courses and add to your Saved Libary</div>
                                     </div>
                                     @endif
-								</div>									
-							</div>																		
-						</div>								
-					</div>				
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
