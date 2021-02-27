@@ -26,14 +26,14 @@
 
             if(error_code == 0){
                 $(a).text('Make Payment').attr({'disabled':false});
-                showSuccessToaster(success_message, 'success')
+                showValidatorToaster(success_message, 'success');
                 setTimeout(function () {
                     location.reload();
                 }, 5000);
                 return;
 
             }
-            showSuccessToaster(error_message, 'warning')
+            showValidatorToaster(error_message, 'warning');
            // handleTheErrorStatement(error_message, 'off', 'no', 'yes');
         }
 
@@ -62,14 +62,13 @@
             let {error_code, success_statement, error_message} = postData;
             if(error_code == 0){
                 $(a).text('Confirm Withdrawals').attr({'disabled':false});
-                showSuccessToaster(success_statement, 'success')
+                showValidatorToaster(success_statement, 'success');
                 setTimeout(function () {
                     location.reload();
-                }, 5000)
+                }, 2000)
             }else{
                 $(a).text('Confirm Withdrawals').attr({'disabled':false});
-                errorDisplay(error_message);
-                showSuccessToaster(error_message, 'warning')
+                showValidatorToaster(error_message, 'success');
             }
         }
 
@@ -133,13 +132,13 @@
             let {error_code, success_statement, error_message} = postData;
             if(error_code == 0){
                 $(a).text('Confirm Top Ups').attr({'disabled':false});
-                showSuccessToaster(success_statement, 'success')
+                showValidatorToaster(success_statement, 'success');
                 setTimeout(function () {
                     location.reload();
                 }, 5000)
             }else{
                 $(a).text('Confirm Top Ups').attr({'disabled':false});
-                showSuccessToaster(error_message, 'warning')
+                showValidatorToaster(error_message, 'warning');
             }
         }
     }
@@ -169,13 +168,13 @@
             let {error_code, success_statement, error_message} = postData;
             if(error_code == 0){
                 $(a).text('Delete Transaction(s)').attr({'disabled':false});
-                showSuccessToaster(success_statement, 'success')
+                showValidatorToaster(success_statement, 'success');
                 setTimeout(function () {
                     location.reload();
                 }, 5000)
             }else{
                 $(a).text('Delete Transaction(s)').attr({'disabled':false});
-                showSuccessToaster(error_message, 'warning')
+                showValidatorToaster(error_message, 'warning');
             }
         }
 

@@ -10,12 +10,12 @@
             let {error_code, success_statement, error_message} = postData;
             if(error_code == 0){
                 $(a).text('Redirecting ....').attr({'disabled':false});
-                showSuccessToaster(success_statement, 'success')
+                showValidatorToaster(success_statement, 'success');
                 setTimeout(function () {
                     window.location.href = baseUrl+'verify_kyc';
                 }, 1000);
             }else {
-                showSuccessToaster(error_message, 'warning')
+                showValidatorToaster(error_message, 'warning');
                 setTimeout(function () {
                     window.location.href = baseUrl+'verify_kyc';
                 }, 1000);
