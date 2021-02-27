@@ -143,7 +143,7 @@ $categories_list = $categories->getAllCategories();
                             <div class="pd_content">
                                 <div class="rhte85">
                                     <h6>{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
-                                    <div class="mef78" title="Verify">
+                                    <div class="mef78" title="Verified">
                                         <i class='uil uil-check-circle'></i>
                                     </div>
                                 </div>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Course;
 
 // namespace App\Http\Controllers\Course;
 
-use App\Model\Like;
+// use App\Model\Like;
 use App\Model\Review;
 use App\Model\SavedCourses;
 use App\Model\Subscribe;
@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use App\course_category_model;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Model\live_stream_model;
 use Illuminate\Support\Facades\Validator;
 
 class courseController extends Controller
@@ -26,15 +27,16 @@ class courseController extends Controller
     use Generics;
     use appFunction;
     use FireBaseNotification;
+  
     function __construct(
-        Like $like, course_model $course_model, course_category_model $course_category_model, Review $review, SavedCourses $savedCourses, User $user, Subscribe $subscribe
-    )
-    {
+        Like $like, course_model $course_model, course_category_model $course_category_model, Review $review, live_stream_model $live_stream_model, SavedCourses $savedCourses, User $user, Subscribe $subscribe
+    ){
         $this->middleware('auth',  ['except' => ['activateCoursesStatus']]);
         $this->like = $like;
         $this->course_model = $course_model;
         $this->course_category_model = $course_category_model;
         $this->review = $review;
+        $this->live_stream_model = $live_stream_model;
         $this->savedCourses = $savedCourses;
         $this->user = $user;
         $this->subscribe = $subscribe;
@@ -491,7 +493,19 @@ class courseController extends Controller
 
         }
 
-        return view('dashboard.explore', ['course'=>$course]);
+
+        $condition = [
+            ['status', 'live']
+        ];
+
+        $live_streams = $this->live_stream_model->get_all($condition);
+
+        $view = [
+            'course'=>$course,
+            'live_streams'=>$live_streams
+        ];
+
+        return view('dashboard.explore', $view);
     }
 
     public function exploreCategory($unique_id = null){

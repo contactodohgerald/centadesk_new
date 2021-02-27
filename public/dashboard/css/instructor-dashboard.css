@@ -3137,10 +3137,10 @@ i.icon8 {
 	padding-right: 20px;
 }
 
-.main-message-box.ta-right .message-dt > span {
+/* .main-message-box.ta-right .message-dt > span {
 	float: right;
 	width: auto;
-}
+} */
 
 .message-inner-dt {
 	float: left;

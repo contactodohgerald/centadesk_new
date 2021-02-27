@@ -52,7 +52,7 @@ class CourseCategoryModelController extends Controller
         try {
 
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:30',
+                'name' => 'required|string|max:30|unique:course_category_tb,name',
                 'description' => 'required|min:5'
             ]);
 

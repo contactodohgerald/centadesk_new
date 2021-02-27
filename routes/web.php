@@ -14,24 +14,27 @@ use App\Http\Controllers\priceController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Roles\RolesController;
-use App\Http\Controllers\Course\courseController;
+use App\Http\Controllers\LiveStream\live_stream_controller;
 
+use App\Http\Controllers\Course\courseController;
 use App\Http\Controllers\Roles\AddRolesController;
 use App\Http\Controllers\Roles\UserTypeController;
-use App\Http\Controllers\Auth\VerificationController;
 
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Complain\ComplainController;
 use App\Http\Controllers\Wallet\WithdrawalController;
 use App\Http\Controllers\Wallet\TransactionController;
 use App\Http\Controllers\CourseCategoryModelController;
 use App\Http\Controllers\SaveCourse\SaveCourseController;
-use App\Http\Controllers\AppSettings\AppSettingsController;
 
+use App\Http\Controllers\AppSettings\AppSettingsController;
 use App\Http\Controllers\Complain\ComplainHandleController;
 use App\Http\Controllers\Verifications\VerifyBankController;
 use App\Http\Controllers\CurrencyRate\CurrencyRateController;
 use App\Http\Controllers\Subscriptions\SubscriptionController;
 use App\Http\Controllers\Cryptocurrency\cryptocurrencyController;
+use App\Http\Controllers\Enrollment\CourseEnrollmentController;
+use App\Http\Controllers\Ticket\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +68,37 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/create-course', [courseController::class,'create']);
     Route::post('/edit-course/{id}', [courseController::class,'update']);
     Route::post('/delete-course/{id}', [courseController::class,'soft_delete']);
+
+});
+
+Route::group(['middleware' => 'web'], function () {
+    // Live stream
+    Route::get('/live_stream/create',[live_stream_controller::class,'create_live']);
+    Route::get('/live_stream/all',[live_stream_controller::class,'show']);
+    Route::get('/live_stream/edit/{id}',[live_stream_controller::class,'update_page']);
+    Route::get('/explore/live_streams',[live_stream_controller::class,'explore_live_streams']);
+
+    Route::post('/live/create',[live_stream_controller::class,'create']);
+    Route::post('/live/edit',[live_stream_controller::class,'update']);
+
+});
+
+Route::group(['middleware' => 'web'], function () {
+    // Ticket
+    Route::get('/ticket/create',[TicketController::class,'create_ticket']);
+    Route::get('/ticket/reply/{id}',[TicketController::class,'reply_ticket']);
+    Route::get('/ticket/all',[TicketController::class,'view_all']);
+
+    Route::post('/ticket/create',[TicketController::class,'create']);
+    Route::post('/ticket/reply/{id}',[TicketController::class,'reply']);
+
+});
+
+Route::group(['middleware' => 'web'], function () {
+    // Enroll in course
+    // Route::get('/ticket/create',[TicketController::class,'create_ticket']);
+
+    Route::post('/course/enroll/{id}',[CourseEnrollmentController::class,'enroll']);
 
 });
 

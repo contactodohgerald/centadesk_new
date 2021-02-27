@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
-<!-- Mirrored from gambolthemes.net/html-items/cursus_demo_f12/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 18 Aug 2020 17:38:47 GMT -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,6 +25,12 @@
     <link href="{{asset('dashboard/css/night-mode.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/css/jquery-steps.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/css/datepicker.min.css')}}" rel="stylesheet">
+    {{-- <link href="{{asset('dashboard/css/instructor-dashboard.css')}}" rel="stylesheet"> --}}
+    {{-- <link href="{{asset('dashboard/css/instructor-responsive.css')}}" rel="stylesheet"> --}}
+
+
+    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/custom/js-snackbar/dist/js-snackbar.css')}}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('dashboard/custom/js-snackbar/dist/site.css')}}"> --}}
     <link href="{{asset('dashboard/css/instructor-dashboard.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/css/instructor-responsive.css')}}" rel="stylesheet">
     <link href="{{asset('toast/jquery.toast.css')}}" rel="stylesheet">
@@ -42,5 +45,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/assets/loader.css')}}">
     {{-- <link rel="stylesheet" type="text/css" href="{{asset('dashboard/assets/bootstrap-v4.5.0/css/bootstrap.min.css')}}"> --}}
+
 
 </head>

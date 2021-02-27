@@ -20,10 +20,16 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script src="{{asset('dashboard/custom/custom-tinymce.js')}}"></script>
-<script src="{{asset('dashboard/custom/Basic-function.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script> --}}
 <!-- <script src="{{asset('dashboard/custom/validatorClass.js')}}"></script> -->
 <script src="{{asset('dashboard/assets/loader.js')}}"></script>
+
+<!-- Snackbar toaster -->
+<script src="{{ asset('dashboard/custom/js-snackbar/dist/js-snackbar.js') }}"></script>
+<script src="{{ asset('dashboard/custom/js-snackbar/dist/site.js') }}"></script>
+<!-- Snackbar toaster -->
+
+<script src="{{asset('dashboard/custom/Basic-function.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 <script src="{{asset('toast/jquery.toast.js')}}"></script>
 

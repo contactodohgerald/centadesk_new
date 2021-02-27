@@ -1,4 +1,5 @@
 ﻿@php
+$users = auth()->user();
 	$pageTitle = 'Settings Area';
 	$saveCourse = 'active';
 @endphp

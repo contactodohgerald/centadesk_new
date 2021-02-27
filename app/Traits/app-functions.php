@@ -96,6 +96,9 @@ trait appFunction
             case $info == 26:
                 return ['error' => 1, 'msg' => 'Error! Please Select a valid file.'];
                 break;
+            case $info == 27:
+                return ['error' => 1, 'msg' => 'Error! System Enrollment percentage is not set.'];
+                break;
         }
     }
 

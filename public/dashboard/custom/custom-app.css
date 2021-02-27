@@ -108,6 +108,16 @@ button, input, optgroup, select, textarea{
 .badge_seller{
     font-family: 'Poppins', sans-serif !important;
 }
+.group-form label{
+    font-family: 'Poppins', sans-serif !important;
+}
+.message-inner-dt > p{
+    font-family: 'Poppins', sans-serif !important;
+    width:61%;
+}
+.message-dt > span{
+    font-family: 'Poppins', sans-serif !important;
+}
 .cursor-pointer{
     cursor: pointer;
 }
@@ -151,3 +161,24 @@ button, input, optgroup, select, textarea{
   .round_img{
       border-radius: 100% !important;
   }
+  .clamp{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+ }
+.chat-date{
+    color: #afafaf;
+    font-size: 12px;
+    float: right;
+    width: 100%;
+    margin-top: 7px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+.float-right{
+    float: right;
+}
+.empty-star:before{
+    cursor: pointer;
+}

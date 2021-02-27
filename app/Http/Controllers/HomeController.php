@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\live_stream_model;
 use Illuminate\Support\Facades\Artisan;
 
 class HomeController extends Controller
@@ -12,9 +13,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(live_stream_model $live_stream)
     {
         $this->middleware('auth');
+        $this->live_stream = $live_stream;
     }
 
     /**
@@ -24,7 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $user = auth()->user();
+        $condition = [
+            ['deleted_at', null],
+            ['status', 'live'],
+        ];
+        $live_streams = $this->live_stream->get_all($condition);
+        $view = [
+            'live_streams' => $live_streams,
+            'user' => $user,
+        ];
+        return view('dashboard.index',$view);
     }
     /**
      * Clear application cache
