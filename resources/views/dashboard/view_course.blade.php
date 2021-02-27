@@ -47,7 +47,7 @@ $users = auth()->user();
 												<div class="course-overlay">
 													<div class="badge_seller">Bestseller</div>
 													<span class="play_btn1"><i class="uil uil-play"></i></span>
-													<span class="_215b02">Preview this course</span>
+													<span class="_215b02 font-poppins">Preview this course</span>
 												</div>
 											</a>
 										</div>
@@ -55,7 +55,7 @@ $users = auth()->user();
 										<input type="hidden" class="user_unique_id" value="{{auth()->user()->unique_id}}">
 										<div class="_215b10">
 											<a href="javascript:;" onclick="saveCourse('{{$course->unique_id}}', '{{auth()->user()->unique_id}}')" class="_215b11" title="Save Course">
-												<span><i class="uil uil-heart"></i></span>Save Course
+												<span><i class="uil uil-heart font-poppins"></i></span>Save Course
 											</a>
 										</div>
 
