@@ -13,12 +13,14 @@ class AddFcmKeysToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->string('andriod_fcm_key')->nullable();
-            $table->string('ios_fcm_key')->nullable();
-            $table->string('web_fcm_key')->nullable();
-        });
+        if (!Schema::hasColumn('users', 'andriod_fcm_key')){
+            Schema::table('users', function (Blueprint $table) {
+                //
+                $table->string('andriod_fcm_key')->nullable();
+                $table->string('ios_fcm_key')->nullable();
+                $table->string('web_fcm_key')->nullable();
+            });
+        }
     }
 
     /**

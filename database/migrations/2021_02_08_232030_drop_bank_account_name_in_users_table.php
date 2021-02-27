@@ -13,10 +13,12 @@ class DropBankAccountNameInUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->dropColumn('bank_account_name');
-        });
+        if (!Schema::hasColumn('users', 'bank_account_name')){
+            Schema::table('users', function (Blueprint $table) {
+                //
+                $table->dropColumn('bank_account_name');
+            });
+        }
     }
 
     /**
