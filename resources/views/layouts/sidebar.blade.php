@@ -1,12 +1,17 @@
 @php
 $user_type = auth()->user()->user_type;
-
  $condition = [
     ['status', 'pending'],
     ['ignore_status', 'no'],
  ];
 $complain = new \App\Model\AccountResolve();
 $complains = $complain->getAllOfComplain($condition);
+
+$conditions = [
+    ['status', 'pending'],
+];
+$verifications = new \App\Model\KycVerification();
+$verifications_count = $verifications->getAllKycVerification($conditions);
 @endphp
 <nav class="vertical_nav">
     <div class="left_section menu_left" id="js-menu" >
@@ -18,31 +23,20 @@ $complains = $complain->getAllOfComplain($condition);
                         <span class="menu--label">Home</span>
                     </a>
                 </li>
-                {{-- <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link <?php //print @$profile;?>" title="Profile">
-                        <i class='uil uil-user-circle menu--icon'></i>
-                        <span class="menu--label">Profile</span>
-                    </label>
-                    <ul class="sub_menu">
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">View Profile</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Edit Profile</a>
-                        </li>
-                        @if(auth()->user()->privilegeChecker('view_add_courses'))
-                        <li class="sub_menu--item">
-                            <a href="{{route('upload_cac')}}" class="sub_menu--link">Upload CAC</a>
-                        </li>
-                        @endif
-                    </ul>
-                </li> --}}
                 <li class="menu--item">
-                    <a href="/teacher/profile" class="menu--link <?php print @$profile;?>" title="Profile">
+                    <a href="{{route('profile')}}" class="menu--link <?php print @$profile;?>" title="Profile">
                         <i class='uil uil-user-circle menu--icon'></i>
                         <span class="menu--label">Profile</span>
                     </a>
                 </li>
+                @if(auth()->user()->privilegeChecker('teachers_view'))
+                    <li class="menu--item">
+                        <a href="{{route('kyc_verification')}}" class="menu--link <?php print @$profile;?>" title="Profile">
+                            <i class='uil uil-comment-verify menu--icon'></i>
+                            <span class="menu--label">KYC Verification</span>
+                        </a>
+                    </li>
+                @endif
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
                 <li class="menu--item menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$Price;?>" title="Price">
@@ -114,7 +108,20 @@ $complains = $complain->getAllOfComplain($condition);
                             <a href="/live_stream/all" class="sub_menu--link">View All</a>
                         </li>
                     </ul>
+                <li class="menu--item">
+                    <a href="{{route('browse_instructor')}}" class="menu--link <?php print @$instructor?>" title="Browse Instructors">
+                        <i class='uil uil-asterisk menu--icon'></i>
+                        <span class="menu--label">Browse Instructors</span>
+                    </a>
                 </li>
+                @if(auth()->user()->privilegeChecker('teachers_view'))
+                <li class="menu--item">
+                    <a href="{{route('browse_subscribers')}}" class="menu--link <?php print @$instructor?>" title="Subscribers">
+                        <i class='uil uil-anchor menu--icon'></i>
+                        <span class="menu--label">View Subscribers</span>
+                    </a>
+                </li>
+                @endif
                 <li class="menu--item  menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$Wallet;?>" title="Wallet">
                         <i class='uil uil-wallet menu--icon'></i>
@@ -273,6 +280,12 @@ $complains = $complain->getAllOfComplain($condition);
                         <span class="menu--label">Complains <span class="noti_count">{{$complains->count()}}</span></span>
                     </a>
                 </li>
+                <li class="menu--item">
+                    <a href="{{route('verify_kyc')}}" class="menu--link <?php print @$KYC;?>" title="KYC Verification">
+                        <i class='uil uil-comment-alt-verify menu--icon'></i>
+                        <span class="menu--label">KYC Verifications <span class="noti_count">{{$verifications_count->count()}}</span></span>
+                    </a>
+                </li>
                 @endif
                 <li class="menu--item  menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$Setting;?>" title="Setting">
@@ -306,46 +319,17 @@ $complains = $complain->getAllOfComplain($condition);
                     </ul>
                 </li>
                 @endif
-
                 <li class="menu--item">
                     <a href="javascript:void(0)" onclick="bringOutModalMain('.logout')" class="menu--link" title="Sign Out">
                         <i class='uil uil-sign-out-alt menu--icon'></i>
                         <span class="menu--label">Sign Out </span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="help.html" class="menu--link" title="Help">
-                        <i class='uil uil-question-circle menu--icon'></i>
-                        <span class="menu--label">Help</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="report_history.html" class="menu--link" title="Report History">
-                        <i class='uil uil-windsock menu--icon'></i>
-                        <span class="menu--label">Report History</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="feedback.html" class="menu--link" title="Send Feedback">
-                        <i class='uil uil-comment-alt-exclamation menu--icon'></i>
-                        <span class="menu--label">Send Feedback</span>
-                    </a>
-                </li>
             </ul>
         </div>
         <div class="left_footer">
-            <ul>
-                <li><a href="about_us.html">About</a></li>
-                <li><a href="press.html">Press</a></li>
-                <li><a href="contact_us.html">Contact Us</a></li>
-                <li><a href="coming_soon.html">Advertise</a></li>
-                <li><a href="coming_soon.html">Developers</a></li>
-                <li><a href="terms_of_use.html">Copyright</a></li>
-                <li><a href="terms_of_use.html">Privacy Policy</a></li>
-                <li><a href="terms_of_use.html">Terms</a></li>
-            </ul>
             <div class="left_footer_content">
-                <p>© 2020 <strong>Cursus</strong>. All Rights Reserved.</p>
+                <p>© @php $d=date('Y'); print $d;@endphp <strong>{{env('APP_NAME')}}</strong>. All Rights Reserved.</p>
             </div>
         </div>
     </div>

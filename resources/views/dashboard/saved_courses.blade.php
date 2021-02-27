@@ -14,6 +14,8 @@ $users = auth()->user();
 	@include('layouts.sidebar')
 	<!-- Left Sidebar End -->
 
+    @php $link = auth()->user()->returnLink() @endphp
+
 	<!-- Body Start -->
 	<div class="wrapper">
     <div class="sa4d25">
@@ -42,11 +44,11 @@ $users = auth()->user();
                                         @foreach($saved_courses  as $k => $each_saved_courses)
                                         <div class="fcrse_1 mt-30">
                                             <a href="{{route('view_course', $each_saved_courses->courses->unique_id )}}" class="hf_img">
-                                                <img src="images/courses/img-1.jpg" alt="">
+                                                <img src="{{asset($link.'course-img/'.$each_saved_courses->courses->cover_image)}}" alt="{{env('APP_NAME')}}">
                                                 <div class="course-overlay">
-                                                    <div class="badge_seller">Bestseller</div>
+<!--                                                    <div class="badge_seller">Bestseller</div>-->
                                                     <div class="crse_reviews">
-                                                        <i class="uil uil-star"></i>4.5
+                                                        <i class="uil uil-star"></i>{{$each_saved_courses->count_review}}
                                                     </div>
                                                     <span class="play_btn1"><i class="uil uil-play"></i></span>
                                                     <div class="crse_timer">

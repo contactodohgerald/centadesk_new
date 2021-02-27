@@ -1,6 +1,6 @@
 @php
 
-$categories = new App\course_category_model;
+$categories = new \App\course_category_model;
 $categories_list = $categories->getAllCategories();
 
 @endphp
@@ -133,13 +133,13 @@ $categories_list = $categories->getAllCategories();
             </li>
             <li class="ui dropdown">
                 <a href="#" class="opts_account" title="Account">
-                    <img src="/storage/profile/{{ $users->profile_image }}" alt="">
+                    <img src="{{asset(auth()->user()->returnLink().'/profile/'.auth()->user()->profile_image)}}" alt="">
                 </a>
                 <div class="menu dropdown_account">
                     <div class="channel_my">
 
                         <div class="profile_link">
-                            <img src="/storage/profile/{{ $users->profile_image }}" alt="">
+                            <img src="{{asset(auth()->user()->returnLink().'/profile/'.auth()->user()->profile_image)}}" alt="">
                             <div class="pd_content">
                                 <div class="rhte85">
                                     <h6>{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
@@ -150,7 +150,7 @@ $categories_list = $categories->getAllCategories();
                                 <span>{{auth()->user()->email}}</span>
                             </div>
                         </div>
-                        <a href="my_instructor_profile_view.html" class="dp_link_12">View Instructor Profile</a>
+                        <a href="{{route('profile')}}" class="dp_link_12">View Profile</a>
                     </div>
                     <div class="night_mode_switch__btn">
                         <a href="#" id="night-mode" class="btn-night-mode">

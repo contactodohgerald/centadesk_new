@@ -2,6 +2,9 @@
 $users = auth()->user();
 	$pageTitle = 'Course Details Area';
 	$Complain = 'active';
+	$color = '';
+	$likeColor = '';
+	$disLikeColor = '';
 @endphp
 @include('layouts.head')
 
@@ -55,7 +58,12 @@ $users = auth()->user();
 										<input type="hidden" class="user_unique_id" value="{{auth()->user()->unique_id}}">
 										<div class="_215b10">
 											<a href="javascript:;" onclick="saveCourse('{{$course->unique_id}}', '{{auth()->user()->unique_id}}')" class="_215b11" title="Save Course">
-												<span><i class="uil uil-heart"></i></span>Save Course
+                                                @if (in_array(auth()->user()->unique_id, $course->user_array_hold))
+                                                     <?php $color = 'danger'; ?>
+                                                @else
+                                                    <?php $color = ''; ?>
+                                                @endif
+												<span><i class="uil uil-heart text-{{$color}}"></i></span>Save Course
 											</a>
 										</div>
 
@@ -109,7 +117,7 @@ $users = auth()->user();
 											<a href="#"><img src="/storage/profile/{{ $course->user->profile_image }}" alt=""></a>
 										</div>
 										<div class="user_cntnt">
-											<a href="#" class="_df7852">{{ucfirst($course->user->name)}} {{ucfirst($course->user->last_name)}}</a>
+											<a href="{{route('view_profile', $course->user->unique_id )}}" class="_df7852">{{ucfirst($course->user->name)}} {{ucfirst($course->user->last_name)}}</a>
 											<button class="subscribe-btn" onclick="subscribeTOTeacher(this, '{{auth()->user()->unique_id}}', '{{$course->user->unique_id}}')">Subscribe</button>
 										</div>
 									</div>
@@ -117,13 +125,23 @@ $users = auth()->user();
 								<div class="user_dt_right">
 									<ul>
 										<li>
-											<a class="lkcm152"><i class="uil uil-eye"></i><span>{{$course->views}}</span></a>
+											<a class="lkcm152"><i class="uil uil-eye text-danger"></i><span>{{$course->views}}</span></a>
 										</li>
 										<li>
-											<a href="javascript:;" class="lkcm152" onclick="likeAndDislikeCourse('like')"><i class="uil uil-thumbs-up"></i><span>{{$course->likes}}</span></a>
+                                            @if (in_array(auth()->user()->unique_id, $course->likes_user_array))
+                                                <?php $likeColor = 'danger'; ?>
+                                            @else
+                                                <?php $likeColor = ''; ?>
+                                            @endif
+											<a href="javascript:;" class="lkcm152" onclick="likeAndDislikeCourse('like')"><i class="uil uil-thumbs-up text-{{$likeColor}}"></i><span>{{$course->likes}}</span></a>
 										</li>
 										<li>
-											<a href="javascript:;" class="lkcm152" onclick="likeAndDislikeCourse('dislike')"><i class="uil uil-thumbs-down"></i><span>{{$course->dislikes}}</span></a>
+                                            @if (in_array(auth()->user()->unique_id, $course->dislike_user_array))
+                                                <?php $disLikeColor = 'danger'; ?>
+                                            @else
+                                                <?php $disLikeColor = ''; ?>
+                                            @endif
+											<a href="javascript:;" class="lkcm152" onclick="likeAndDislikeCourse('dislike')"><i class="uil uil-thumbs-down text-{{$disLikeColor}}"></i><span>{{$course->dislikes}}</span></a>
 										</li>
 									</ul>
 								</div>

@@ -31,6 +31,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/custom/js-snackbar/dist/js-snackbar.css')}}">
     {{-- <link rel="stylesheet" type="text/css" href="{{asset('dashboard/custom/js-snackbar/dist/site.css')}}"> --}}
+    <link href="{{asset('dashboard/css/instructor-dashboard.css')}}" rel="stylesheet">
+    <link href="{{asset('dashboard/css/instructor-responsive.css')}}" rel="stylesheet">
+    <link href="{{asset('toast/jquery.toast.css')}}" rel="stylesheet">
 
     <!-- Vendor Stylesheets -->
     <link href="{{asset('dashboard/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
