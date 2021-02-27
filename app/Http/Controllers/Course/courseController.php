@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Course;
 // namespace App\Http\Controllers\Course;
 
 // use App\Model\Like;
+use App\Model\Like;
 use App\Model\Review;
 use App\Model\SavedCourses;
 use App\Model\Subscribe;
@@ -27,7 +28,7 @@ class courseController extends Controller
     use Generics;
     use appFunction;
     use FireBaseNotification;
-  
+
     function __construct(
         Like $like, course_model $course_model, course_category_model $course_category_model, Review $review, live_stream_model $live_stream_model, SavedCourses $savedCourses, User $user, Subscribe $subscribe
     ){

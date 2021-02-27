@@ -4,8 +4,6 @@
 use App\Http\Controllers\Subscribe\SubscribeController;
 use App\Http\Controllers\Users\GeneralUserController;
 use App\Http\Controllers\VerifyKYC\KYCVerificationController;
-use App\Subscription_model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
