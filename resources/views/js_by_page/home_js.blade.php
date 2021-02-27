@@ -69,12 +69,13 @@
         let {error_code, success_message, error_message} = postData;
         if(error_code == 0){
             $(a).text('Saved Successfully').attr({'disabled':false});
+            showValidatorToaster(success_message, 'success');
             myIndexDb.set('web_fcm_key',{fcm_key:web_token}, 'centadesk_db', 'contact_tb');
             setTimeout(function () {
                 location.reload();
-            }, 5000);
-            return;
-
+            }, 2000);
+        }else {
+            showValidatorToaster(error_message, 'warning');
         }
 
     }

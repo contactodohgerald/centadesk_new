@@ -12,11 +12,10 @@
         let {error_code, success_statement, error_message} = postData;
         if(error_code == 0){
             $(a).text('Subscribe').attr({'disabled':false});
-            showSuccessToaster(success_statement, 'success')
+            showValidatorToaster(success_statement, 'success');
         }else{
             $(a).text('Subscribe').attr({'disabled':false});
-            //errorDisplay(error_message);
-            showSuccessToaster(error_message, 'warning')
+            showValidatorToaster(error_message, 'warning');
         }
     }
 
@@ -55,6 +54,22 @@
                 .then(err => reject(err));
 
         });
+    }
+
+    function showValidatorToaster(message, type_of_toast) {
+        loader_set();
+        if (type_of_toast === 'success') {
+            loader_rmv();
+            throw_snackbar(message, 'success');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+           /* setTimeout(() => {
+                window.location.href = page_redirect;
+            }, 2000);*/
+        } else {
+            loader_rmv();
+            throw_snackbar(message, 'error');
+            // window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }
 
     function showSuccessToaster(message, tooastType) {
