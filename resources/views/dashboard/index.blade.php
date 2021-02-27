@@ -19,6 +19,17 @@
 		<div class="sa4d25">
 			<div class="container-fluid">
 				<div class="row">
+                    @if(auth()->user()->cac_verification_status === 'no' && auth()->user()->user_type === 'teacher')
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fa fa-envelope-o mr-2"></i>
+                            Please upload a means of identification for KYC verification
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                    @endif
 					<div class="col-xl-9 col-lg-8">
 						<div class="section3125">
 							<h4 class="item_title">Live Streams </h4>

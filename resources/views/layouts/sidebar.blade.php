@@ -1,12 +1,17 @@
 @php
 $user_type = auth()->user()->user_type;
-
  $condition = [
     ['status', 'pending'],
     ['ignore_status', 'no'],
  ];
 $complain = new \App\Model\AccountResolve();
 $complains = $complain->getAllOfComplain($condition);
+
+$conditions = [
+    ['status', 'pending'],
+];
+$verifications = new \App\Model\KycVerification();
+$verifications_count = $verifications->getAllKycVerification($conditions);
 @endphp
 <nav class="vertical_nav">
     <div class="left_section menu_left" id="js-menu" >
@@ -18,31 +23,20 @@ $complains = $complain->getAllOfComplain($condition);
                         <span class="menu--label">Home</span>
                     </a>
                 </li>
-                {{-- <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link <?php //print @$profile;?>" title="Profile">
-                        <i class='uil uil-user-circle menu--icon'></i>
-                        <span class="menu--label">Profile</span>
-                    </label>
-                    <ul class="sub_menu">
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">View Profile</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="#" class="sub_menu--link">Edit Profile</a>
-                        </li>
-                        @if(auth()->user()->privilegeChecker('view_add_courses'))
-                        <li class="sub_menu--item">
-                            <a href="{{route('upload_cac')}}" class="sub_menu--link">Upload CAC</a>
-                        </li>
-                        @endif
-                    </ul>
-                </li> --}}
                 <li class="menu--item">
-                    <a href="/teacher/profile" class="menu--link <?php print @$profile;?>" title="Profile">
+                    <a href="{{route('profile')}}" class="menu--link <?php print @$profile;?>" title="Profile">
                         <i class='uil uil-user-circle menu--icon'></i>
                         <span class="menu--label">Profile</span>
                     </a>
                 </li>
+                @if(auth()->user()->privilegeChecker('teachers_view'))
+                    <li class="menu--item">
+                        <a href="{{route('kyc_verification')}}" class="menu--link <?php print @$profile;?>" title="Profile">
+                            <i class='uil uil-comment-verify menu--icon'></i>
+                            <span class="menu--label">KYC Verification</span>
+                        </a>
+                    </li>
+                @endif
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
                 <li class="menu--item menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$Price;?>" title="Price">
@@ -102,11 +96,19 @@ $complains = $complain->getAllOfComplain($condition);
                     </a>
                 </li>
                 <li class="menu--item">
-                    <a href="live_streams.html" class="menu--link" title="Live Streams">
-                        <i class='uil uil-kayak menu--icon'></i>
-                        <span class="menu--label">Live Streams</span>
+                    <a href="{{route('browse_instructor')}}" class="menu--link <?php print @$instructor?>" title="Browse Instructors">
+                        <i class='uil uil-asterisk menu--icon'></i>
+                        <span class="menu--label">Browse Instructors</span>
                     </a>
                 </li>
+                @if(auth()->user()->privilegeChecker('teachers_view'))
+                <li class="menu--item">
+                    <a href="{{route('browse_subscribers')}}" class="menu--link <?php print @$instructor?>" title="Subscribers">
+                        <i class='uil uil-anchor menu--icon'></i>
+                        <span class="menu--label">View Subscribers</span>
+                    </a>
+                </li>
+                @endif
                 <li class="menu--item  menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$Wallet;?>" title="Wallet">
                         <i class='uil uil-wallet menu--icon'></i>
@@ -145,97 +147,6 @@ $complains = $complain->getAllOfComplain($condition);
                     </ul>
                 </li>
                 @endif
-                <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link" title="Tests">
-                        <i class='uil uil-clipboard-alt menu--icon'></i>
-                        <span class="menu--label">Tests</span>
-                    </label>
-                    <ul class="sub_menu">
-                        <li class="sub_menu--item">
-                            <a href="certification_center.html" class="sub_menu--link">Certification Center</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="certification_start_form.html" class="sub_menu--link">Certification Fill Form</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="certification_test_view.html" class="sub_menu--link">Test View</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="certification_test__result.html" class="sub_menu--link">Test Result</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="http://www.gambolthemes.net/html-items/edututs+/Instructor_Dashboard/my_certificates.html" class="sub_menu--link">My Certification</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link" title="Pages">
-                        <i class='uil uil-file menu--icon'></i>
-                        <span class="menu--label">Pages</span>
-                    </label>
-                    <ul class="sub_menu">
-                        <li class="sub_menu--item">
-                            <a href="about_us.html" class="sub_menu--link">About</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="sign_in.html" class="sub_menu--link">Sign In</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="sign_up.html" class="sub_menu--link">Sign Up</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="sign_up_steps.html" class="sub_menu--link">Sign Up Steps</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="membership.html" class="sub_menu--link">Paid Membership</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="course_detail_view.html" class="sub_menu--link">Course Detail View</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="checkout_membership.html" class="sub_menu--link">Checkout</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="invoice.html" class="sub_menu--link">Invoice</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="career.html" class="sub_menu--link">Career</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="apply_job.html" class="sub_menu--link">Job Apply</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="our_blog.html" class="sub_menu--link">Our Blog</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="blog_single_view.html" class="sub_menu--link">Blog Detail View</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="company_details.html" class="sub_menu--link">Company Details</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="press.html" class="sub_menu--link">Press</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="live_output.html" class="sub_menu--link">Live Stream View</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="add_streaming.html" class="sub_menu--link">Add live Stream</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="search_result.html" class="sub_menu--link">Search Result</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="thank_you.html" class="sub_menu--link">Thank You</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="coming_soon.html" class="sub_menu--link">Coming Soon</a>
-                        </li>
-                        <li class="sub_menu--item">
-                            <a href="error_404.html" class="sub_menu--link">Error 404</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
         <div class="left_section pt-2">
@@ -245,6 +156,12 @@ $complains = $complain->getAllOfComplain($condition);
                     <a href="{{route('complain_list')}}" class="menu--link <?php print @$Complain;?>" title="Complains">
                         <i class='uil uil-auto-flash menu--icon'></i>
                         <span class="menu--label">Complains <span class="noti_count">{{$complains->count()}}</span></span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="{{route('verify_kyc')}}" class="menu--link <?php print @$KYC;?>" title="KYC Verification">
+                        <i class='uil uil-comment-alt-verify menu--icon'></i>
+                        <span class="menu--label">KYC Verifications <span class="noti_count">{{$verifications_count->count()}}</span></span>
                     </a>
                 </li>
                 @endif
@@ -280,46 +197,17 @@ $complains = $complain->getAllOfComplain($condition);
                     </ul>
                 </li>
                 @endif
-
                 <li class="menu--item">
                     <a href="javascript:void(0)" onclick="bringOutModalMain('.logout')" class="menu--link" title="Sign Out">
                         <i class='uil uil-sign-out-alt menu--icon'></i>
                         <span class="menu--label">Sign Out </span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="help.html" class="menu--link" title="Help">
-                        <i class='uil uil-question-circle menu--icon'></i>
-                        <span class="menu--label">Help</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="report_history.html" class="menu--link" title="Report History">
-                        <i class='uil uil-windsock menu--icon'></i>
-                        <span class="menu--label">Report History</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="feedback.html" class="menu--link" title="Send Feedback">
-                        <i class='uil uil-comment-alt-exclamation menu--icon'></i>
-                        <span class="menu--label">Send Feedback</span>
-                    </a>
-                </li>
             </ul>
         </div>
         <div class="left_footer">
-            <ul>
-                <li><a href="about_us.html">About</a></li>
-                <li><a href="press.html">Press</a></li>
-                <li><a href="contact_us.html">Contact Us</a></li>
-                <li><a href="coming_soon.html">Advertise</a></li>
-                <li><a href="coming_soon.html">Developers</a></li>
-                <li><a href="terms_of_use.html">Copyright</a></li>
-                <li><a href="terms_of_use.html">Privacy Policy</a></li>
-                <li><a href="terms_of_use.html">Terms</a></li>
-            </ul>
             <div class="left_footer_content">
-                <p>© 2020 <strong>Cursus</strong>. All Rights Reserved.</p>
+                <p>© @php $d=date('Y'); print $d;@endphp <strong>{{env('APP_NAME')}}</strong>. All Rights Reserved.</p>
             </div>
         </div>
     </div>

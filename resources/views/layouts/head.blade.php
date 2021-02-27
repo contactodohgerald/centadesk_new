@@ -30,6 +30,7 @@
     <link href="{{asset('dashboard/css/datepicker.min.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/css/instructor-dashboard.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/css/instructor-responsive.css')}}" rel="stylesheet">
+    <link href="{{asset('toast/jquery.toast.css')}}" rel="stylesheet">
 
     <!-- Vendor Stylesheets -->
     <link href="{{asset('dashboard/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet">

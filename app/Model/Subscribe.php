@@ -13,6 +13,10 @@ class Subscribe extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public function users(){
+        return $this->belongsTo('App\User', 'user_unique_id');
+    }
+
     function getAllSubscribers($condition, $id = 'id', $desc = 'desc'){
 
         return Subscribe::where($condition)->orderBy($id, $desc)->get();

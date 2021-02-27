@@ -46,9 +46,9 @@
                                         <a href="{{route('view_course', $each_course->unique_id )}}" class="fcrse_img">
                                             <img src="{{asset($link.'course-img/'.$each_course->cover_image)}}" alt="">
                                             <div class="course-overlay">
-                                                <div class="badge_seller">Bestseller</div>
+<!--                                                <div class="badge_seller">Bestseller</div>-->
                                                 <div class="crse_reviews">
-                                                    <i class="uil uil-star"></i>4.5
+                                                    <i class="uil uil-star"></i>{{$each_course->count_review}}
                                                 </div>
                                                 <span class="play_btn1"><i class="uil uil-play"></i></span>
                                                 <div class="crse_timer">
@@ -73,7 +73,7 @@
                                             <a href="{{route('view_course', $each_course->unique_id )}}" class="crse14s">{{$each_course->name}}</a>
                                             <a href="javascript:;" class="crse-cate">{{$each_course->category->name}}</a>
                                             <div class="auth1lnkprce">
-                                                <p class="cr1fot">By <a href="#">{{$each_course->user->name}} {{$each_course->user->last_name}}</a></p>
+                                                <p class="cr1fot">By <a href="{{route('view_profile', $each_course->user->unique_id )}}">{{$each_course->user->name}} {{$each_course->user->last_name}}</a></p>
                                                 <div class="prce142">{{auth()->user()->getAmountForView($each_course->price->amount)['data']['currency'] }} {{number_format(auth()->user()->getAmountForView($each_course->price->amount)['data']['amount'])}}</div>
                                             </div>
                                         </div>
