@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Model\courseEnrollment;
 use App\Http\Controllers\Controller;
 use App\Model\AppSettings;
+use App\User;
 
 class CourseEnrollmentController extends Controller
 {
@@ -55,8 +56,18 @@ class CourseEnrollmentController extends Controller
             $course_creator = $course_detail['user_id'];
             $user_enrolling = $user_id;
 
+            // check if balance can pay for course
+            $user_balance = $user['balance'];
+            $course_price = $course_detail->price->amount;
+
+            if($user_balance < $course_price){
+                throw new Exception($this->errorMsgs(21)['msg']);
+            }
+
+            // insert enrollment to enrollment table
             $enroll = courseEnrollment::create([
                 'unique_id' => $unique_id,
+                'course_id' => $course_id,
                 'course_creator' => $course_creator,
                 'user_enrolling' => $user_enrolling,
                 'percentage' => $enrollment_percentage,
@@ -64,7 +75,18 @@ class CourseEnrollmentController extends Controller
 
             if (!$enroll->unique_id) {
                 throw new Exception($this->errorMsgs(14)['msg']);
-            } else {
+            }
+
+
+            // remove course price from balance and update
+            $user_balance = $user_balance - $course_price;
+            $user_detail =  User::find($user_id);
+            $user_detail->balance = $user_balance;
+            $update_user_balance = $user_detail->save();
+
+            if(!$update_user_balance){
+                throw new Exception($this->errorMsgs(14)['msg']);
+            }else {
                 $error = 'You\'ve been Enrolled Successfully!';
                 return response()->json(["message" => $error, 'status' => true]);
             }

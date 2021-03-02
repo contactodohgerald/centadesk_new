@@ -26,7 +26,7 @@ class courseEnrollment extends Model
      *
      * @var array
      */
-    protected $fillable = ['unique_id', 'course_creator','user_enrolling', 'percentage'];
+    protected $fillable = ['unique_id', 'course_id', 'course_creator','user_enrolling', 'percentage'];
 
     /**
      * One to one relationship with user table.
