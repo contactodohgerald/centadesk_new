@@ -36,4 +36,20 @@ class courseEnrollment extends Model
     public function user(){
         return $this->belongsTo('App\User', 'user_id');
     }
+
+    public function getAllEnrolls($condition, $id = 'id', $desc = 'desc'){
+
+        $course = courseEnrollment::where($condition)->orderBy($id, $desc)->get();
+
+        return $course;
+
+    }
+
+    public function getSingleEnrolls($condition){
+
+        $course = courseEnrollment::where($condition)->first();
+
+        return $course;
+
+    }
 }

@@ -97,7 +97,11 @@ $users = auth()->user();
 											</div>
 										</div>
 										<ul class="_215b31">
-											<li><button class="btn_buy">Enroll Now</button></li>
+											<li>
+                                                <a href="/course/checkout/{{ $course->unique_id }}">
+                                                    <button class="btn_buy">Enroll Now</button>
+                                                </a>
+                                            </li>
 										</ul>
 									</div>
 								</div>

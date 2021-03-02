@@ -93,7 +93,7 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' => 'web'], function () {
     // Enroll in course
-    Route::get('/course/checkout/{id}',[CourseEnrollmentController::class,'create_ticket']);
+    Route::get('/course/checkout/{id}',[CourseEnrollmentController::class,'enroll_cart']);
 
     Route::post('/course/enroll/{id}',[CourseEnrollmentController::class,'enroll']);
 
