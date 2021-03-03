@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Course\courseController;
 use App\Http\Controllers\Like\LikesController;
+use App\Http\Controllers\Review\InstructorsReviewController;
 use App\Http\Controllers\Review\ReviewController;
 use App\Http\Controllers\SaveCourse\SaveCourseController;
 use App\Http\Controllers\Subscribe\SubscribeController;
@@ -60,4 +61,11 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     //
     Route::post('/KYCVerificationHandler', [KYCVerificationController::class, 'KYCVerificationHandler'])->name('KYCVerificationHandler');
+
+    //instructors comment
+    Route::post('/createInstructorComment', [InstructorsReviewController::class, 'createInstructorComment'])->name('createInstructorComment');
+    Route::post('/replyInstructorComment', [InstructorsReviewController::class, 'replyInstructorComment'])->name('replyInstructorComment');
+
+    //likes & dislike
+    Route::post('/processReviewLikeStatus', [InstructorsReviewController::class, 'processReviewLikeStatus'])->name('processReviewLikeStatus');
 });
