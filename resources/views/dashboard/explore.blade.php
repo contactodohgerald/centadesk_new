@@ -64,7 +64,7 @@ $explore= 'active';
                                 <div class="col-lg-3 col-md-4">
                                     <div class="fcrse_1 mt-30">
                                         <a href="{{route('view_course', $each_course->unique_id )}}" class="fcrse_img">
-                                            <img src="{{asset($link.'course-img/'.$each_course->cover_image)}}" width="218.5px" height="122.91">
+                                            <img src="{{asset($link.'course-img/'.$each_course->cover_image)}}" alt="{{env('APP_NAME')}}" width="218.5px" height="122.91">
                                             <div class="course-overlay">
 <!--                                                <div class="badge_seller">Bestseller</div>-->
                                                 <div class="crse_reviews">
@@ -80,7 +80,7 @@ $explore= 'active';
                                             <div class="eps_dots more_dropdown">
                                                 <a href="javascript:;"><i class="uil uil-ellipsis-v"></i></a>
                                                 <div class="dropdown-content">
-                                                    <!--                                                    <span><i class='uil uil-share-alt'></i>Share</span>-->
+                                                    <a href="{{env('BASE_URL')}}{{$each_course->unique_id}}"><span><i class='uil uil-share-alt'></i>Share</span></a>
                                                     <span onclick="saveCourse('{{$each_course->unique_id}}', '{{auth()->user()->unique_id}}') "><i class="uil uil-heart"></i>Save</span>
                                                     <!--                                                    <span><i class='uil uil-ban'></i>Not Interested</span>
                                                     <span><i class="uil uil-windsock"></i>Report</span>-->

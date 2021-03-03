@@ -11,10 +11,10 @@
         let postData = await postRequest(baseUrl+'api/subscribeTOTeacher', {userId:userId, teacherId:teacherId});
         let {error_code, success_statement, error_message} = postData;
         if(error_code == 0){
-            $(a).text('Subscribe').attr({'disabled':false});
+            $(a).text('Subscribed').attr({'disabled':false});
             showValidatorToaster(success_statement, 'success');
         }else{
-            $(a).text('Subscribe').attr({'disabled':false});
+            $(a).text('Subscribed').attr({'disabled':false});
             showValidatorToaster(error_message, 'warning');
         }
     }
@@ -344,6 +344,13 @@
 @php $currentPageName = Request::segment(1); @endphp
 @if(in_array($currentPageName, $pageWithdrawalArray))
     @include('js_by_page.course_js')
+@endif
+
+{{--profiles,--}}
+@php $view_profile = ['view_profile'];  @endphp
+@php $currentPageName = Request::segment(1); @endphp
+@if(in_array($currentPageName, $view_profile))
+    @include('js_by_page.profile_js')
 @endif
 
 <style>

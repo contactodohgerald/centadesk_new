@@ -3014,7 +3014,7 @@ i.icon2 {
     margin-top: 3px;
     padding: 15px 30px 15px 20px;
     background: #fff;
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 .accordion-header .section-header-left {
@@ -6625,7 +6625,7 @@ a.rmv-btn i {
 }
 
 .cmtk_dt {
-    padding: 106px 0 117px;
+    padding: 10px 0 10px;
 	text-align: center;
 }
 
@@ -6763,8 +6763,8 @@ a.rmv-btn i {
 }
 
 .cmtk_dt .clock li span {
-    font-weight: 600;
-    font-size: 8em;
+    font-weight: 400;
+    font-size: 4em;
     color: #fff;
     line-height: 1em;
 	display: block;
