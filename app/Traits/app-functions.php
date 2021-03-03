@@ -61,7 +61,7 @@ trait appFunction
                 return ['error' => 1, 'msg' => 'Database Error!. If error persists, please kindly contact your administrator!'];
                 break;
             case $info == 15:
-                return ['error' => 1, 'msg' => 'System Error!. If error persists, please kindly contact your administrator!'];
+                return ['error' => 1, 'msg' => 'System Error! If error persists, please kindly contact your administrator.'];
                 break;
             case $info == 16:
                 return ['error' => 1, 'msg' => 'Error! Title provided already exists!'];

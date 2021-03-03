@@ -35,9 +35,11 @@ $users = auth()->user();
 								<li class="nav-item">
 									<a class="nav-link" id="pills-bitcoin-wallet-tab" data-toggle="pill" href="#pills-bitcoin-wallet" role="tab" aria-selected="false">Bitcoin Wallet</a>
 								</li>
+                                @if(auth()->user()->privilegeChecker('view_restricted_roles'))
 								<li class="nav-item">
 									<a class="nav-link" id="pills-privacy-tab" data-toggle="pill" href="#pills-privacy" role="tab" aria-selected="false">Enrollment</a>
 								</li>
+                                @endif
 								<li class="nav-item">
 									<a class="nav-link" id="pills-closeaccount-tab" data-toggle="pill" href="#pills-closeaccount" role="tab" aria-selected="false">Close Account</a>
 								</li>
@@ -322,7 +324,7 @@ $users = auth()->user();
 													<div class="row">
 														<div class="col-lg-6">
 															<div class="ui search focus mt-30">
-																<label for="bit_coin_wallet">Bitcoin Wallet Address</label>
+																<label class="text-dark night-text" for="bit_coin_wallet">Bitcoin Wallet Address</label>
 																<div class="ui left icon input swdh11 swdh19">
 																	<input class="prompt srch_explore" type="text" name="bit_coin_wallet" id="bit_coin_wallet" required placeholder="Enter Address for recieving payment" value="{{$user->wallet_address}}">
 																	<i class="uil uil-bitcoin icon icon2"></i>

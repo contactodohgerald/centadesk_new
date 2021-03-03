@@ -25,11 +25,12 @@ class TransactionController extends Controller
         $this->user = $user;
     }
 
-    public function myTransaction(){
+    public function myTransaction()
+    {
 
         $userDetails = Auth::user();
 
-        if ($userDetails->user_type === 'admin' || $userDetails->user_type === 'super_admin'){
+        if ($userDetails->user_type === 'admin' || $userDetails->user_type === 'super_admin') {
 
             $condition = [
                 ['action_type', 'top_up'],
@@ -47,7 +48,7 @@ class TransactionController extends Controller
                 ['status', 'confirmed'],
             ];
             $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
-        }else{
+        } else {
             $condition = [
                 ['user_unique_id', $userDetails->unique_id],
                 ['action_type', 'top_up'],
@@ -69,17 +70,17 @@ class TransactionController extends Controller
             $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
         }
 
-        $data = ['transaction'=>$transaction, 'pending_transaction'=>$pending_transaction, 'successful_transaction'=>$successful_transaction, 'userDetails'=>$userDetails, 'dates'=>'ALL'];
+        $data = ['transaction' => $transaction, 'pending_transaction' => $pending_transaction, 'successful_transaction' => $successful_transaction, 'userDetails' => $userDetails, 'dates' => 'ALL'];
 
         return view('dashboard.my_wallet', $data);
-
     }
 
-    public function showTransactionByDate(Request $request){
+    public function showTransactionByDate(Request $request)
+    {
 
         $userDetails = Auth::user();
 
-        if ($userDetails->user_type === 'admin' || $userDetails->user_type === 'super_admin'){
+        if ($userDetails->user_type === 'admin' || $userDetails->user_type === 'super_admin') {
 
             $condition = [
                 ['created_at', '>=', $request->start_date],
@@ -103,7 +104,7 @@ class TransactionController extends Controller
                 ['status', 'confirmed'],
             ];
             $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
-        }else{
+        } else {
             $condition = [
                 ['user_unique_id', $userDetails->unique_id],
                 ['created_at', '>=', $request->start_date],
@@ -131,13 +132,13 @@ class TransactionController extends Controller
             $successful_transaction = $this->transactionModel->getAllTransaction($conditionss);
         }
 
-        $data = ['transaction'=>$transaction, 'pending_transaction'=>$pending_transaction, 'successful_transaction'=>$successful_transaction, 'userDetails'=>$userDetails, 'dates'=>$request->start_date.' TO '.$request->end_date];
+        $data = ['transaction' => $transaction, 'pending_transaction' => $pending_transaction, 'successful_transaction' => $successful_transaction, 'userDetails' => $userDetails, 'dates' => $request->start_date . ' TO ' . $request->end_date];
 
         return view('dashboard.my_wallet', $data);
-
     }
 
-    public function showTopUpTransaction($unique_id = null){
+    public function showTopUpTransaction($unique_id = null)
+    {
 
         $userDetails = Auth::user();
 
@@ -147,27 +148,28 @@ class TransactionController extends Controller
 
         $transactions = $this->transactionModel->getSingleTransaction($condition);
 
-        return view('dashboard.transaction_history', ['userDetails'=>$userDetails, 'transactions'=>$transactions]);
+        return view('dashboard.transaction_history', ['userDetails' => $userDetails, 'transactions' => $transactions]);
     }
 
-    protected function Validator($request){
+    protected function Validator($request)
+    {
 
         $this->validator = Validator::make($request->all(), [
             'topUpAmount' => 'required',
         ]);
-
     }
 
-    public function topUpWallet(Request $request){
+    public function topUpWallet(Request $request)
+    {
 
         $user_details = Auth::user();
 
-        try{
-            $this->Validator($request);//validate fields
+        try {
+            $this->Validator($request); //validate fields
 
             $user_unique_id = $user_details->unique_id;
 
-            $user_full_name = $user_details->name. ' '.$user_details->last_name;
+            $user_full_name = $user_details->name . ' ' . $user_details->last_name;
 
             $user_preferred_currency = $user_details->getBalanceForView()['data']['currency'];
 
@@ -191,40 +193,37 @@ class TransactionController extends Controller
 
             $newTransactionDetails = $this->transactionModel->insertIntoTransactionModel($request);
 
-            if ($newTransactionDetails){
+            if ($newTransactionDetails) {
 
                 $ipaddress = $this->get_client_ip();
 
-                $pay_with_flutterwave = $this->pay_with_flutterwave( $this->base_url."/confirm_top_up", $inputed_amount, $user_details->email, $user_details->phone, $user_full_name, $unique_id, $user_preferred_currency, $user_details->id, $ipaddress);
+                $pay_with_flutterwave = $this->pay_with_flutterwave($this->base_url . "/confirm_top_up", $inputed_amount, $user_details->email, $user_details->phone, $user_full_name, $unique_id, $user_preferred_currency, $user_details->id, $ipaddress);
 
                 return redirect()->to($pay_with_flutterwave);
-
-            }else{
+            } else {
                 return redirect('/my_balance')->with('error_message', 'An Error occurred, Please try Again Later');
             }
-
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
 
             $errorsArray = $exception->getMessage();
             return  redirect('/my_balance')->with('error_message', $errorsArray);
-
         }
-
     }
 
-    public function confirmUserPayments(){
+    public function confirmUserPayments()
+    {
 
         $transaction_id = $_GET['transaction_id'];
         $tx_ref = $_GET['tx_ref'];
         $status = $_GET['status'];
 
-        if ($status === 'successful'){
+        if ($status === 'successful') {
 
             $decoded_response = $this->confirmPayments($transaction_id);
 
-            if ($decoded_response['status'] === 'success'){
+            if ($decoded_response['status'] === 'success') {
 
-                if ($decoded_response['data']['tx_ref'] != $tx_ref){
+                if ($decoded_response['data']['tx_ref'] != $tx_ref) {
                     return redirect('/my_balance')->with('error_message', 'Transaction Confirmation Was Not Successful, An Error Occurred');
                 }
 
@@ -242,18 +241,18 @@ class TransactionController extends Controller
 
                 $convertedPrice = $this->calculateExchangeRate($user, $transactionModel->amount, $type_of_action = 'sending_to_view');
 
-                $round_up_amount =  round($convertedPrice['data']['amount'] );
+                $round_up_amount =  round($convertedPrice['data']['amount']);
 
                 $returned_amount = $decoded_response['data']['amount'];
 
                 //display error
-                if ($returned_amount != $round_up_amount || $returned_amount > $round_up_amount){
+                if ($returned_amount != $round_up_amount || $returned_amount > $round_up_amount) {
                     $transactionModel->status = 'failed';
                     $transactionModel->save();
                     return redirect('/my_balance')->with('error_message', 'Amount Paid Is Not Equal To Actual Price');
                 }
 
-                if ($decoded_response['data']['currency'] !== $transactionModel->currency){
+                if ($decoded_response['data']['currency'] !== $transactionModel->currency) {
                     $transactionModel->status = 'failed';
                     $transactionModel->save();
                     return redirect('/my_balance')->with('error_message', 'Currency Is Not Equal To That Of The Actual Price');
@@ -274,94 +273,92 @@ class TransactionController extends Controller
                 $user->balance = $add_to_user_balance;
                 $user->save();
 
-                return redirect('/my_balance')->with('success_message', 'The sum of '.$round_up_amount .'('.$transactionModel->currency.')'.' was successfully added to your account');
-
-            }else{
+                return redirect('/my_balance')->with('success_message', 'The sum of ' . $round_up_amount . '(' . $transactionModel->currency . ')' . ' was successfully added to your account');
+            } else {
                 return redirect('/my_balance')->with('error_message', 'Payment Was Not Verified, An Error Occurred');
             }
-
         }
     }
 
-    function handleTransferValidation(array $data){
+    function handleTransferValidation(array $data)
+    {
 
         $validator = Validator::make($data, [
             'withdrawalId' => 'required|string'
         ]);
 
         return $validator;
-
     }
 
-    function handleTransfers(Request $request){
+    function handleTransfers(Request $request)
+    {
 
-        try{
+        try {
 
             $validation = $this->handleTransferValidation($request->all());
-            if($validation->fails()){
+            if ($validation->fails()) {
                 //return Redirect::back()->withErrors($validation->messages());
-                return response()->json(['error_code'=>1, 'error_message'=>$validation->messages()]);
+                return response()->json(['error_code' => 1, 'error_message' => $validation->messages()]);
             }
 
             $bulk_data = [];
 
             $withdrawalId = explode('|', $request->withdrawalId);
 
-            foreach($withdrawalId as $k => $eachWithdrawalId){
+            foreach ($withdrawalId as $k => $eachWithdrawalId) {
 
                 $withdrawalDetails = $this->transactionModel->selectSingleTransactionModel($eachWithdrawalId);
 
                 $withdrawalDetails->users;
 
-                if($withdrawalDetails === null){
+                if ($withdrawalDetails === null) {
                     throw new Exception('Withdrawal could not be found!');
                     return;
                 }
 
-                if($withdrawalDetails->amount > $withdrawalDetails->users->balance){
+                if ($withdrawalDetails->amount > $withdrawalDetails->users->balance) {
                     throw new Exception('Insufficient Balance, Amount cannot be withdrawn!');
                     return;
                 }
-                if($withdrawalDetails->status === 'confirmed'){
-                    throw new Exception('Withdrawal at line '.($k+1).' have already been processed before');
+                if ($withdrawalDetails->status === 'confirmed') {
+                    throw new Exception('Withdrawal at line ' . ($k + 1) . ' have already been processed before');
                     return;
                 }
 
                 $bulk_data[] = [
-                    "bank_code"=>$withdrawalDetails->users->bank_code,
-                    "account_number"=>$withdrawalDetails->users->account_number,
-                    "amount"=>$withdrawalDetails->amount * $withdrawalDetails->users->currency_details->rate_of_conversion,
-                    "currency"=>$withdrawalDetails->users->currency_details->second_currency,
-                    "narration"=>$withdrawalDetails->description,
-                    "reference"=>$withdrawalDetails->unique_id
+                    "bank_code" => $withdrawalDetails->users->bank_code,
+                    "account_number" => $withdrawalDetails->users->account_number,
+                    "amount" => $withdrawalDetails->amount * $withdrawalDetails->users->currency_details->rate_of_conversion,
+                    "currency" => $withdrawalDetails->users->currency_details->second_currency,
+                    "narration" => $withdrawalDetails->description,
+                    "reference" => $withdrawalDetails->unique_id
                 ];
-
             }
 
-            if(count($bulk_data) > 0){
+            if (count($bulk_data) > 0) {
 
                 $flutter_wave_details = PaymentGatewayBox::getFlutterWaveDetails();
 
-                if($flutter_wave_details['error_code'] == 1){
+                if ($flutter_wave_details['error_code'] == 1) {
                     throw new Exception($flutter_wave_details['error']);
                     return;
                 }
                 $secKey = $flutter_wave_details['data']['gate_way_manager_fields']['secret_key'];
 
                 $payment_data = [
-                    "title"=>env('APP_NAME').' Payment',
-                    "bulk_data"=>$bulk_data,
+                    "title" => env('APP_NAME') . ' Payment',
+                    "bulk_data" => $bulk_data,
                 ];
 
                 $response = $this->commencePayment($payment_data, $secKey);
 
-                if($response['error_code'] == 1){
+                if ($response['error_code'] == 1) {
                     throw new Exception($response['error']);
                     return;
                 }
 
                 //loop through and update payments to processing
-                foreach($withdrawalId as $k => $eachWithdrawalId) {
+                foreach ($withdrawalId as $k => $eachWithdrawalId) {
                     $withdrawalDetails = $this->transactionModel->selectSingleTransactionModel($eachWithdrawalId);
                     $withdrawalDetails->status = 'processing';
                     $withdrawalDetails->save();
@@ -370,21 +367,19 @@ class TransactionController extends Controller
                 $this->retrieveStatusOfBulkTransfer();
 
                 //return Redirect::back()->with('success_message', $response['payment_response']['message']);
-                return response()->json(['error_code'=>0, 'success_message'=>$response['data']['payment_response']['message'], 'data'=>$response['data']['payment_response'] ]);
-
+                return response()->json(['error_code' => 0, 'success_message' => $response['data']['payment_response']['message'], 'data' => $response['data']['payment_response']]);
             }
-
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
 
             $error = $exception->getMessage();
-            return response()->json(['error_code'=>1, 'error_message'=>['general_error'=>[$error]]]);
+            return response()->json(['error_code' => 1, 'error_message' => ['general_error' => [$error]]]);
             //return Redirect::back()->with('error_message', $error);
 
         }
-
     }
 
-    public function commencePayment($post_data, $secKey){
+    public function commencePayment($post_data, $secKey)
+    {
 
         $data_string = json_encode($post_data);
 
@@ -399,7 +394,7 @@ class TransactionController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS =>$data_string,
+            CURLOPT_POSTFIELDS => $data_string,
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/json",
                 "Authorization: Bearer $secKey"
@@ -412,31 +407,31 @@ class TransactionController extends Controller
 
         $resp = json_decode($response, true);
 
-        if($resp['status'] === 'success'){
+        if ($resp['status'] === 'success') {
             return [
-                'error_code'=>0,
-                'error'=>'',
-                'data'=>[
-                    'payment_response'=>$resp
+                'error_code' => 0,
+                'error' => '',
+                'data' => [
+                    'payment_response' => $resp
                 ]
             ];
         }
 
         return [
-            'error_code'=>1,
-            'error'=>'Payment processing failed',
-            'data'=>[]
+            'error_code' => 1,
+            'error' => 'Payment processing failed',
+            'data' => []
         ];
-
     }
 
-    public function retrieveStatusOfBulkTransfer(){
+    public function retrieveStatusOfBulkTransfer()
+    {
 
-        try{
+        try {
 
             //get the flutterwave details
             $flutter_wave_details = PaymentGatewayBox::getFlutterWaveDetails();
-            if($flutter_wave_details['error_code'] == 1){
+            if ($flutter_wave_details['error_code'] == 1) {
                 throw new Exception($flutter_wave_details['error']);
                 return;
             }
@@ -445,7 +440,7 @@ class TransactionController extends Controller
             //get all the processing withdrawals
             $conditions[] = ['status', '=', 'pending'];
             $pendingWithdrawalPayment = $this->transactionModel->getAllWithConditions($conditions);
-            if(count($pendingWithdrawalPayment) > 0){
+            if (count($pendingWithdrawalPayment) > 0) {
 
                 $curl = curl_init();
                 ///"Content-Type: application/json"
@@ -467,20 +462,20 @@ class TransactionController extends Controller
                 curl_close($curl);
                 $results = json_decode($response, true);
 
-                if($results['status'] !== 'success'){
+                if ($results['status'] !== 'success') {
                     throw new Exception($results['message']);
                     return;
                 }
 
-                $allTransfers = $results['data'];//
+                $allTransfers = $results['data']; //
 
-                foreach($pendingWithdrawalPayment as $k => $eachPendingPayment){//loops through the pending payments
+                foreach ($pendingWithdrawalPayment as $k => $eachPendingPayment) { //loops through the pending payments
 
                     foreach ($allTransfers as $l => $eachTransferObject) {
 
-                        if($eachPendingPayment->unique_id === $eachTransferObject['reference']){
+                        if ($eachPendingPayment->unique_id === $eachTransferObject['reference']) {
 
-                            if($eachTransferObject['status'] === 'SUCCESSFUL'){
+                            if ($eachTransferObject['status'] === 'SUCCESSFUL') {
 
                                 $amount = $eachTransferObject['amount'];
                                 $eachPendingPayment->payment_status = 'confirmed';
@@ -491,55 +486,49 @@ class TransactionController extends Controller
                                 $userDetails->balance = $userDetails->balance - $eachPendingPayment->amount;
                                 $userDetails->save();
                             }
-
                         }
-
                     }
-
                 }
 
                 return [
-                    'error_code'=>0,
-                    'error'=>['pendingWithdrawalPayment'=>$pendingWithdrawalPayment, 'allTransfers'=>$allTransfers],
-                    'data'=>[]
+                    'error_code' => 0,
+                    'error' => ['pendingWithdrawalPayment' => $pendingWithdrawalPayment, 'allTransfers' => $allTransfers],
+                    'data' => []
                 ];
-
             }
-
-        }catch(Exception $exception){
+        } catch (Exception $exception) {
             $error = $exception->getMessage();
             return [
-                'error_code'=>1,
-                'error'=>$error,
-                'data'=>[]
+                'error_code' => 1,
+                'error' => $error,
+                'data' => []
             ];
         }
-
     }
 
-    function handleTransferValidations(array $data){
+    function handleTransferValidations(array $data)
+    {
 
         $validator = Validator::make($data, [
             'dataArray' => 'required|string'
         ]);
 
         return $validator;
-
     }
 
     public function markWithdrawalsAsPaid(Request $request)
     {
-        try{
+        try {
 
             $validation = $this->handleTransferValidations($request->all());
-            if($validation->fails()){
+            if ($validation->fails()) {
                 //return Redirect::back()->withErrors($validation->messages());
-                return response()->json(['error_code'=>1, 'error_message'=>$validation->messages()]);
+                return response()->json(['error_code' => 1, 'error_message' => $validation->messages()]);
             }
 
             $dataArray = explode('|', $request->dataArray);
 
-            foreach($dataArray as $eachDataArray){
+            foreach ($dataArray as $eachDataArray) {
 
                 //update the withdrawal status to confirmed
                 $withdrawalDetails = $this->transactionModel->selectSingleTransactionModel($eachDataArray);
@@ -551,16 +540,15 @@ class TransactionController extends Controller
                 $withdrawalDetails->users->balance = $withdrawalDetails->users->balance - $withdrawalDetails->amount;
                 $withdrawalDetails->users->save();
             }
-            return response()->json(['error_code'=>0, 'success_statement'=>'Selected Withdrawals have been marked as paid']);
-           // return ['error_code'=>1, 'error_message'=>'An error occurred, please try again'];
+            return response()->json(['error_code' => 0, 'success_statement' => 'Selected Withdrawals have been marked as paid']);
+            // return ['error_code'=>1, 'error_message'=>'An error occurred, please try again'];
 
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
 
             $error = $exception->getMessage();
-            return response()->json(['error_code'=>1, 'error_message'=>['general_error'=>[$error]]]);
+            return response()->json(['error_code' => 1, 'error_message' => ['general_error' => [$error]]]);
             //return Redirect::back()->with('error_message', $error);
 
         }
-
     }
 }

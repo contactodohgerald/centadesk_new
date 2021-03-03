@@ -48,7 +48,10 @@ $users = auth()->user();
 								<h1><b>{{number_format($userDetails->calculateUserBalance(), 2)}} ({{$userDetails->getBalanceForView()['data']['currency']}})</b></h1>
 							</div>
 							<div class="card_dash_right1">
-								<button class="create_btn_dash" onclick="bringOutModalMain('.accountTopUp')">Account TopUp</button>
+								<button class="create_btn_dash" onclick="bringOutModalMain('.accountTopUp')">TopUp with Bitcoin</button>
+							</div>
+							<div class="card_dash_right1 mr-2">
+								<button class="create_btn_dash" onclick="bringOutModalMain('.accountTopUp')">TopUp with Flutterwave</button>
 							</div>
 						</div>
 					</div>
@@ -88,13 +91,13 @@ $users = auth()->user();
 						<div class="my_courses_tabs">
 							<ul class="nav nav-pills my_crse_nav" id="pills-tab" role="tablist">
 								<li class="nav-item">
-									<a class="nav-link active" id="pills-my-courses-tab" data-toggle="pill" href="#pills-my-courses" role="tab" aria-controls="pills-my-courses" aria-selected="true"><i class="uil uil-wallet"></i>All Transaction</a>
+									<a class="nav-link active" id="pills-my-courses-tab" data-toggle="pill" href="#pills-my-courses" role="tab" aria-controls="pills-my-courses" aria-selected="true"><i class="uil uil-wallet"></i>All </a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" id="pills-upcoming-courses-tab" data-toggle="pill" href="#pills-upcoming-courses" role="tab" aria-controls="pills-upcoming-courses" aria-selected="false"><i class="uil uil-thumbs-up"></i>Confirmed Transaction</a>
+									<a class="nav-link" id="pills-upcoming-courses-tab" data-toggle="pill" href="#pills-upcoming-courses" role="tab" aria-controls="pills-upcoming-courses" aria-selected="false"><i class="uil uil-thumbs-up"></i>Confirmed </a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" id="pills-my-purchases-tab" data-toggle="pill" href="#pills-my-purchases" role="tab" aria-controls="pills-my-purchases" aria-selected="false"><i class="uil uil-thumbs-down"></i>Failed Transaction</a>
+									<a class="nav-link" id="pills-my-purchases-tab" data-toggle="pill" href="#pills-my-purchases" role="tab" aria-controls="pills-my-purchases" aria-selected="false"><i class="uil uil-thumbs-down"></i>Failed </a>
 								</li>
 							</ul>
 							<div class="tab-content" id="pills-tabContent">
@@ -288,6 +291,38 @@ $users = auth()->user();
 		@include('layouts.footer')
 
 	</div>
+    <div class="modal zoomInUp " id="enroll_modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"  style="background-color: #333 !important;">
+                <div class="modal-header">
+                    <h4>Enroll for Course?</h4>
+                </div>
+                <form class="enroll_form">
+                    @csrf
+                    <div class="modal-body">
+                        <p class="">By clicking continue, your account wallet will be used to pay for this course.</p>
+                    </div>
+                </form>
+                <div class="modal-footer no-border">
+                    <div class="text-right">
+                        <button class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary btn-sm enroll_btn" data-dismiss="modal">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 	<!-- Body End -->
 
 @include('layouts.e_script')
+<script>
+    $(document).ready(function() {
+
+        $('.enroll_modal').click(function(e) {
+            e.preventDefault();
+            append_id('enroll_id', '.enroll_form', '#enroll_modal', this)
+            $('#enroll_modal').modal('toggle');
+        });
+
+    });
+</script>

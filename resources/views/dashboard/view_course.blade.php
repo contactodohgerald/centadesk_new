@@ -57,11 +57,11 @@ $users = auth()->user();
 										<input type="hidden" class="course_unique_id" value="{{$course->unique_id}}">
 										<input type="hidden" class="user_unique_id" value="{{auth()->user()->unique_id}}">
 										<div class="_215b10">
-											<a href="javascript:;" onclick="saveCourse('{{$course->unique_id}}', '{{auth()->user()->unique_id}}')" class="_215b11" title="Save Course">
+											<a href="javascript:;" onclick="saveCourse('{{$course->unique_id}}', '{{auth()->user()->unique_id}}')" class="_215b11 font-poppins" title="Save Course">
                                                 @if (in_array(auth()->user()->unique_id, $course->user_array_hold))
                                                      <?php
                                                     $color = 'danger';
-                                                    $text = 'Course Saved!';
+                                                    $text = 'Course Saved';
                                                     ?>
                                                 @else
                                                     <?php
@@ -73,7 +73,7 @@ $users = auth()->user();
 											</a>
 										</div>
                     <div class="_215b10">
-                        <a href="{{env('BASE_URL')}}{{$course->unique_id}}" class="_215b11" title="Share Course">
+                        <a href="{{env('BASE_URL')}}{{$course->unique_id}}" class="_215b11 font-poppins" title="Share Course">
                             <span><i class="uil uil-share-alt"></i></span>Share Course
                         </a>
                     </div>
@@ -173,7 +173,7 @@ $users = auth()->user();
 								<nav>
 									<div class="nav nav-tabs tab_crse justify-content-center" id="nav-tab" role="tablist">
 										<a class="nav-item nav-link active" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-selected="true">About</a>
-										<a class="nav-item nav-link" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" aria-selected="false">Download Url's</a>
+										<a class="nav-item nav-link" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" aria-selected="false">Course Url's</a>
 										<a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="false">Reviews</a>
 									</div>
 								</nav>
@@ -198,7 +198,7 @@ $users = auth()->user();
 									</div>
 									<div class="tab-pane fade" id="nav-courses" role="tabpanel">
 										<div class="crse_content">
-											<h3>Course Download Links</h3>
+											<h3 class="font-poppins">Course Download Links</h3>
 											<div class="_112456">
 												<ul class="accordion-expand-holder">
 													<li><span class="_fgr123"> {{count($course->course_download_links)}} links</span></li>
@@ -212,7 +212,7 @@ $users = auth()->user();
                                                         <div class="section-header-left">
                                                             <span class="section-title-wrapper">
                                                                 <i class='uil uil-presentation-play crse_icon'></i>
-                                                                <span class="section-title-text">{{$each_course_link}}</span>
+                                                                <span class="section-title-text font-poppins">{{$each_course_link}}</span>
                                                             </span>
                                                         </div>
                                                     </a>

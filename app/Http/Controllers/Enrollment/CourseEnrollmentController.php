@@ -18,6 +18,7 @@ class CourseEnrollmentController extends Controller
 
     public function __construct(AppSettings $AppSettings, course_model $course, courseEnrollment $courseEnrollment)
     {
+        $this->middleware('auth');
         $this->AppSettings = $AppSettings;
         $this->course = $course;
         $this->courseEnrollment = $courseEnrollment;
@@ -48,6 +49,36 @@ class CourseEnrollmentController extends Controller
         ];
         // return $view;
         return view('dashboard.shopping_cart', $view);
+    }
+
+    public function my_enrolled_courses(Request $request)
+    {
+        $user = auth()->user();
+
+        // get all user enrolllments
+        $condition = [
+            ['user_enrolling', $user['unique_id'] ],
+        ];
+        $enrollments = $this->courseEnrollment->getAllEnrolls($condition);
+
+        // get course details for each user enrollment
+        $enrolled_courses = [];
+
+        foreach ($enrollments as $e ) {
+            $condition = [
+                ['unique_id', $e['course_id'] ],
+            ];
+            $each_course = $this->course->getSingleCourse($condition);
+            array_push($enrolled_courses,$each_course);
+        }
+
+
+        $view = [
+            'courses' => $enrolled_courses,
+        ];
+        // return $view;
+        return view('dashboard.enrolled_courses', $view);
+
     }
 
 

@@ -94,6 +94,7 @@ Route::group(['middleware' => 'web'], function () {
 Route::group(['middleware' => 'web'], function () {
     // Enroll in course
     Route::get('/course/checkout/{id}',[CourseEnrollmentController::class,'enroll_cart']);
+    Route::get('/courses/enrolled',[CourseEnrollmentController::class,'my_enrolled_courses'])->name('enrolled_course');
 
     Route::post('/course/enroll/{id}',[CourseEnrollmentController::class,'enroll']);
 
@@ -112,6 +113,7 @@ Route::group(['middleware' => 'web'], function () {
     // crypto currency
     // Route::post('/user/wallet/update',[cryptocurrencyController::class,'update_wallet']);
     Route::post('/generate_address',[cryptocurrencyController::class,'gen_payment_address']);
+    Route::post('/top_up_btc',[cryptocurrencyController::class,'create_transaction']);
 });
 
 

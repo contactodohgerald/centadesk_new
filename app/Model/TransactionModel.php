@@ -53,6 +53,7 @@ class TransactionModel extends Model
         $transaction->recurrence = $requestObject->recurrence ?? '';
         $transaction->top_up_option = $requestObject->top_up_option ?? '';
         $transaction->is_deleted = 'no';
+        $transaction->btc_payment_address = $requestObject->btc_payment_address ?? null;
         if($transaction->save()){
             return $transaction;
         }
