@@ -44,7 +44,7 @@ $users = auth()->user();
                                         @foreach($saved_courses  as $k => $each_saved_courses)
                                         <div class="fcrse_1 mt-30">
                                             <a href="{{route('view_course', $each_saved_courses->courses->unique_id )}}" class="hf_img">
-                                                <img src="{{asset($link.'course-img/'.$each_saved_courses->courses->cover_image)}}" alt="{{env('APP_NAME')}}">
+                                                <img src="{{asset($link.'course-img/'.$each_saved_courses->courses->cover_image)}}" alt="{{env('APP_NAME')}}"  height="180">
                                                 <div class="course-overlay">
 <!--                                                    <div class="badge_seller">Bestseller</div>-->
                                                     <div class="crse_reviews">

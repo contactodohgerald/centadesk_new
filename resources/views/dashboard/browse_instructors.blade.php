@@ -41,8 +41,8 @@
                                         <div class="col-xl-3 col-lg-4 col-md-6">
                                             <div class="fcrse_1 mt-30">
                                                 <div class="tutor_img">
-                                            <a href="instructor_profile_view.html">
-                                                <img src="{{asset(auth()->user()->returnLink().'/profile/'.$each_instructors->profile_image)}}" alt="">
+                                            <a href="{{route('view_profile', $each_instructors->unique_id )}}">
+                                                <img src="{{asset(auth()->user()->returnLink().'/profile/'.$each_instructors->profile_image)}}" alt="{{env('APP_NAME')}}">
                                             </a>
                                         </div>
                                                 <div class="tutor_content_dt">
@@ -53,9 +53,6 @@
                                                 </div>
                                             </div>
                                             <div class="tutor_cate">{{$each_instructors->professonal_heading}}</div>
-                                            <ul class="tutor_social_links mb-2">
-                                                <li> <button class="sbbc145" onclick="subscribeTOTeacher(this, '{{auth()->user()->unique_id}}', '{{$each_instructors->unique_id}}')">Subscribe</button></li>
-                                            </ul>
                                             <ul class="tutor_social_links">
                                                 <li><a href="https://facebook.com/{{ $each_instructors->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
                                                 <li><a href="https://twitter.com/{{ $each_instructors->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>

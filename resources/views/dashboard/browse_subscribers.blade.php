@@ -38,18 +38,18 @@
                                         <div class="col-xl-3 col-lg-4 col-md-6">
                                             <div class="fcrse_1 mt-30">
                                                 <div class="tutor_img">
-                                                    <a href="instructor_profile_view.html">
+                                                    <a href="{{route('view_profile', $each_subscribe->unique_id )}}">
                                                         <img src="{{asset(auth()->user()->returnLink().'/profile/'.$each_subscribe->users->profile_image)}}" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="tutor_content_dt">
                                                     <div class="tutor150">
                                                         <a href="{{route('view_profile', $each_subscribe->users->unique_id )}}" class="tutor_name">{{ucfirst($each_subscribe->users->name)}} {{ucfirst($each_subscribe->users->last_name)}}</a>
-                                                        <div class="mef78" title="Verify">
+                                                        <div class="mef78" title="Verified">
                                                             <i class="uil uil-check-circle"></i>
                                                         </div>
                                                     </div>
-                                                    @if($each_subscribe->users->user_type === 'teacher')
+                                                    @if($each_subscribe->users->user_type != 'student')
                                                         <div class="tutor_cate">{{$each_subscribe->users->professonal_heading}}</div>
                                                         <ul class="tutor_social_links">
                                                             <li><a href="https://facebook.com/{{ $each_subscribe->users->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>

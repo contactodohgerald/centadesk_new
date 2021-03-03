@@ -10,6 +10,7 @@ use App\Model\Review;
 use App\Model\SavedCourses;
 use App\Model\Subscribe;
 use App\Traits\FireBaseNotification;
+use App\Traits\UsersArray;
 use App\User;
 use Exception;
 use App\priceModel;
@@ -28,6 +29,7 @@ class courseController extends Controller
     use Generics;
     use appFunction;
     use FireBaseNotification;
+    use UsersArray;
 
     function __construct(
         Like $like, course_model $course_model, course_category_model $course_category_model, Review $review, live_stream_model $live_stream_model, SavedCourses $savedCourses, User $user, Subscribe $subscribe
@@ -243,8 +245,6 @@ class courseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function showCourses($id = null){
         //
@@ -256,30 +256,15 @@ class courseController extends Controller
         $course->views += 1;
         $course->save();
 
-        $condition = [
-            ['course_unique_id', $course->unique_id],
-            ['like_type', 'like']
-        ];
-        $likes_array = [];
-        $likesCount = $this->like->getAllLikes($condition);
-        foreach ($likesCount as $kk => $each_likesCount){
-            array_push($likes_array, $each_likesCount->user_unique_id);
-        }
+        //function that returns an array of users that likes this course and also the course like count
+        $likes_array = $this->returnUserArrayForDislikes($course->unique_id);
+        $course->likes = $likes_array['like_count'];
+        $course->likes_user_array = $likes_array['like_user_array'];
 
-        $course->likes = $likesCount->count();
-        $course->likes_user_array = $likes_array;
-
-        $conditions = [
-            ['course_unique_id', $course->unique_id],
-            ['like_type', 'dislike']
-        ];
-        $dislike_array = [];
-        $dislikesCount = $this->like->getAllLikes($conditions);
-        foreach ($dislikesCount as $kk => $each_dislikesCount){
-            array_push($dislike_array, $each_dislikesCount->user_unique_id);
-        }
-        $course->dislikes = $dislikesCount->count();
-        $course->dislike_user_array = $dislike_array;
+        //function that returns an array of users that dislikes this course and also the course dislike count
+        $dislike_array = $this->returnUsersArrayForLikes($course->unique_id);
+        $course->dislikes = $dislike_array['dislike_count'];
+        $course->dislike_user_array = $dislike_array['dislike_user_array'];
 
         $course->user;
 
@@ -288,23 +273,20 @@ class courseController extends Controller
         $review_condition = [
             ['course_unique_id', $course->unique_id]
         ];
-
         $reviews = $this->review->getAllReviews($review_condition);
         $course->reviews = $reviews;
         foreach ($reviews as $each_review){
             $each_review->users;
         }
 
-        $query = [
-            ['book_unique_id', $course->unique_id ]
-        ];
-        $user_array_hold = [];
-        $users_for_course = $this->savedCourses->getAllSaveCourse($query);
-        foreach ($users_for_course as $k => $each_users_for_course){
-            array_push($user_array_hold, $each_users_for_course->user_unique_id);
-        }
-
+        $user_array_hold = $this->returnArrayForUsersSavedCourse($course->unique_id);
         $course->user_array_hold = $user_array_hold;
+
+        $course_download_links = explode("++", $course->course_urls);
+        $course->course_download_links = $course_download_links;
+
+        $array_of_subscribers = $this->returnArrayForSubscribeUsers($course->user->unique_id);
+        $course->array_of_subscribers = $array_of_subscribers;
 
         return view('dashboard.view_course', ['course'=>$course]);
     }

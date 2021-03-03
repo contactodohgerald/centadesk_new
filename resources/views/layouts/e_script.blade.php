@@ -35,6 +35,8 @@
 
 @include('js_files.js_by_page')
 
+<script src="{{asset('js_files/firebase-messaging-sw.js')}}"></script>
+
 <script type="text/javascript">
     function closeErrorCarrierBox(a) {
         // console.log('yh')
