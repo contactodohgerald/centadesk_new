@@ -251,7 +251,6 @@
     }
 
     async function rateCourseFunction(a){
-
         let retVal = prompt('Write a Review');
         if (retVal != null){
 
@@ -287,7 +286,6 @@
                 }
             }
         }
-
     }
 
 </script>
