@@ -57,7 +57,6 @@ Route::get('/clear-cache', 'HomeController@clear_cache');
 
 Route::group(['middleware' => 'web'], function () {
     // courses
-
     Route::get('/create-course',[courseController::class,'index']);
     Route::get('/view-courses', [courseController::class,'show']);
     Route::get('/explore', [courseController::class,'viewExplore'])->name('explore');
@@ -94,7 +93,7 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' => 'web'], function () {
     // Enroll in course
-    // Route::get('/ticket/create',[TicketController::class,'create_ticket']);
+    Route::get('/course/checkout/{id}',[CourseEnrollmentController::class,'enroll_cart']);
 
     Route::post('/course/enroll/{id}',[CourseEnrollmentController::class,'enroll']);
 
@@ -171,6 +170,7 @@ Route::group(['middleware'=>'web'], function(){
     Route::get('/main_settings_page', [AppSettingsController::class, 'mainSettings'])->name('main_settings_page');
     Route::get('/app_settings_page', [AppSettingsController::class, 'appSettings'])->name('app_settings_page');
     Route::post('/update_app_settings/{unique_id}', [AppSettingsController::class, 'updateAppSettings'])->name('update_app_settings');
+    Route::post('/update_course_percent/{unique_id}', [AppSettingsController::class, 'update_enrollment_percentage']);
 });
 
 Route::group(['middleware' => 'web'], function () {

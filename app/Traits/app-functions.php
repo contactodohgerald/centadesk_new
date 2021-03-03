@@ -99,6 +99,9 @@ trait appFunction
             case $info == 27:
                 return ['error' => 1, 'msg' => 'Error! System Enrollment percentage is not set.'];
                 break;
+            case $info == 28:
+                return ['error' => 1, 'msg' => 'Error! You are enrolled for this course already.'];
+                break;
         }
     }
 

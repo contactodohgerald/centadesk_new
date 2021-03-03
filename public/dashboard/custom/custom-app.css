@@ -118,6 +118,15 @@ button, input, optgroup, select, textarea{
 .message-dt > span{
     font-family: 'Poppins', sans-serif !important;
 }
+.sign_form h2{
+    font-family: 'Poppins', sans-serif !important;
+}
+.sign_form p{
+    font-family: 'Poppins', sans-serif !important;
+}
+.ui.checkbox.mncheck .box, .ui.checkbox.mncheck label{
+    font-family: 'Poppins', sans-serif !important;
+}
 .cursor-pointer{
     cursor: pointer;
 }
@@ -181,4 +190,10 @@ button, input, optgroup, select, textarea{
 }
 .empty-star:before{
     cursor: pointer;
+}
+
+button:disabled {
+    color: internal-light-dark(rgba(16, 16, 16, 0.3), white);
+    background-color: internal-light-dark(rgba(239, 239, 239, 0.3), rgba(19, 1, 1, 0.3));
+    border-color: internal-light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
 }

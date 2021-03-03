@@ -11,6 +11,7 @@
 
     <!-- Stylesheets -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link href='{{asset('dashboard/vendor/unicons-2.0.1/css/unicons.css')}}' rel='stylesheet'>
     <link href="{{asset('dashboard/css/vertical-responsive-menu.min.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/css/style.css')}}" rel="stylesheet">
@@ -23,5 +24,6 @@
     <link href="{{asset('dashboard/vendor/OwlCarousel/assets/owl.theme.default.min.css')}}" rel="stylesheet">
     <link href="{{asset('dashboard/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('dashboard/vendor/semantic/semantic.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('dashboard/custom/custom-app.css')}}">
 
 </head>

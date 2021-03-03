@@ -50,7 +50,7 @@ $users = auth()->user();
 												<div class="course-overlay">
 {{--													<div class="badge_seller">Bestseller</div>--}}
 													<span class="play_btn1"><i class="uil uil-play"></i></span>
-													<span class="_215b02">Preview this course</span>
+													<span class="_215b02 font-poppins">Preview this course</span>
 												</div>
 											</a>
 										</div>
@@ -72,11 +72,11 @@ $users = auth()->user();
 												<span><i class="uil uil-heart text-{{$color}}"></i></span>{{$text}}
 											</a>
 										</div>
-                                        <div class="_215b10">
-                                            <a href="{{env('BASE_URL')}}{{$course->unique_id}}" class="_215b11" title="Share Course">
-                                                <span><i class="uil uil-share-alt"></i></span>Share Course
-                                            </a>
-                                        </div>
+                    <div class="_215b10">
+                        <a href="{{env('BASE_URL')}}{{$course->unique_id}}" class="_215b11" title="Share Course">
+                            <span><i class="uil uil-share-alt"></i></span>Share Course
+                        </a>
+                    </div>
 									</div>
 									<div class="col-xl-8 col-lg-7 col-md-6">
 										<div class="_215b03">
@@ -107,7 +107,11 @@ $users = auth()->user();
 											</div>
 										</div>
 										<ul class="_215b31">
-											<li><button class="btn_buy">Enroll Now</button></li>
+											<li>
+                                                <a href="/course/checkout/{{ $course->unique_id }}">
+                                                    <button class="btn_buy">Enroll Now</button>
+                                                </a>
+                                            </li>
 										</ul>
 									</div>
 								</div>

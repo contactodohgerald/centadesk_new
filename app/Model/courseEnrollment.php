@@ -26,7 +26,7 @@ class courseEnrollment extends Model
      *
      * @var array
      */
-    protected $fillable = ['unique_id', 'course_creator','user_enrolling', 'percentage'];
+    protected $fillable = ['unique_id', 'course_id', 'course_creator','user_enrolling', 'percentage'];
 
     /**
      * One to one relationship with user table.
@@ -35,5 +35,21 @@ class courseEnrollment extends Model
      */
     public function user(){
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function getAllEnrolls($condition, $id = 'id', $desc = 'desc'){
+
+        $course = courseEnrollment::where($condition)->orderBy($id, $desc)->get();
+
+        return $course;
+
+    }
+
+    public function getSingleEnrolls($condition){
+
+        $course = courseEnrollment::where($condition)->first();
+
+        return $course;
+
     }
 }
