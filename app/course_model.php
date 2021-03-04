@@ -47,6 +47,10 @@ class course_model extends Model
         return $this->belongsTo('App\priceModel', 'pricing');
     }
 
+    public function courseEnrollment(){
+        return $this->hasMany('App\Model\courseEnrollment', 'course_id');
+    }
+
     public function getAllCourse($condition, $id = 'id', $desc = 'desc'){
 
         $course = course_model::where($condition)->orderBy($id, $desc)->get();
