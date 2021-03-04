@@ -58,7 +58,7 @@ $users = auth()->user();
 										<li>
 											<div class="_ttl121">
 												<div class="_ttl122">Reviews</div>
-												<div class="_ttl123">115K</div>
+                                                <div class="_ttl123">{{count($user->comments_for_instructor)}}</div>
 											</div>
 										</li>
 										<li>
@@ -101,7 +101,7 @@ $users = auth()->user();
 								<div class="nav nav-tabs tab_crse" id="nav-tab" role="tablist">
 									<a class="nav-item nav-link active" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-selected="true">About</a>
 									<a class="nav-item nav-link" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" aria-selected="false">Courses</a>
-									<a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="false">Discussion</a>
+{{--									<a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="false">Discussion</a>--}}
                                     <a class="nav-item nav-link" id="nav-subscriptions-tab" data-toggle="tab" href="#nav-subscriptions" role="tab" aria-selected="false">Subscriptions</a>
 								</div>
 							</nav>
@@ -171,77 +171,83 @@ $users = auth()->user();
 										</div>
 									</div>
 								</div>
-								<div class="tab-pane fade" id="nav-reviews" role="tabpanel">
-									<div class="student_reviews">
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="review_right">
-													<div class="review_right_heading">
-														<h3>Discussions</h3>
-													</div>
-												</div>
-												<div class="cmmnt_1526">
-													<div class="cmnt_group">
-														<div class="img160">
-															<img src="images/left-imgs/img-1.jpg" alt="">
-														</div>
-														<textarea class="_cmnt001" placeholder="Add a public comment"></textarea>
-													</div>
-													<button class="cmnt-btn" type="submit">Comment</button>
-												</div>
-												<div class="review_all120">
-													<div class="review_item">
-														<div class="review_usr_dt">
-															<img src="images/left-imgs/img-1.jpg" alt="">
-															<div class="rv1458">
-																<h4 class="tutor_name1">John Doe</h4>
-																<span class="time_145">2 hour ago</span>
-															</div>
-															<div class="eps_dots more_dropdown">
-																<a href="#"><i class="uil uil-ellipsis-v"></i></a>
-																<div class="dropdown-content">
-																	<span><i class='uil uil-comment-alt-edit'></i>Edit</span>
-																	<span><i class='uil uil-trash-alt'></i>Delete</span>
-																</div>
-															</div>
-														</div>
-														<p class="rvds10">Nam gravida elit a velit rutrum, eget dapibus ex elementum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce lacinia, nunc sit amet tincidunt venenatis.</p>
-														<div class="rpt101">
-															<a href="#" class="report155"><i class='uil uil-thumbs-up'></i> 10</a>
-															<a href="#" class="report155"><i class='uil uil-thumbs-down'></i> 1</a>
-															<a href="#" class="report155"><i class='uil uil-heart'></i></a>
-															<a href="#" class="report155 ml-3">Reply</a>
-														</div>
-													</div>
-													<div class="review_reply">
-														<div class="review_item">
-															<div class="review_usr_dt">
-																<img src="images/left-imgs/img-3.jpg" alt="">
-																<div class="rv1458">
-																	<h4 class="tutor_name1">Rock Doe</h4>
-																	<span class="time_145">1 hour ago</span>
-																</div>
-																<div class="eps_dots more_dropdown">
-																	<a href="#"><i class="uil uil-ellipsis-v"></i></a>
-																	<div class="dropdown-content">
-																		<span><i class='uil uil-trash-alt'></i>Delete</span>
-																	</div>
-																</div>
-															</div>
-															<p class="rvds10">Fusce lacinia, nunc sit amet tincidunt venenatis.</p>
-															<div class="rpt101">
-																<a href="#" class="report155"><i class='uil uil-thumbs-up'></i> 4</a>
-																<a href="#" class="report155"><i class='uil uil-thumbs-down'></i> 2</a>
-																<a href="#" class="report155"><i class='uil uil-heart'></i></a>
-																<a href="#" class="report155 ml-3">Reply</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+                                <div class="tab-pane fade" id="nav-reviews" role="tabpanel">
+                                    <div class="student_reviews">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="review_right">
+                                                    <div class="review_right_heading">
+                                                        <h3>Discussions</h3>
+                                                    </div>
+                                                </div>
+                                                @if(auth()->user())
+                                                    <div class="cmmnt_1526">
+                                                        <div class="cmnt_group">
+                                                            <div class="img160">
+                                                                <img src="{{asset($link.'/profile/'.$user->profile_image)}}" alt="{{env('APP_NAME')}}">
+                                                            </div>
+                                                            <textarea class="_cmnt001" rows="50" cols="50" id="comments_hold" placeholder="Add a public comment"></textarea>
+                                                        </div>
+                                                        <button class="cmnt-btn" type="submit" onclick="instructorsComment(this, '{{$user->unique_id}}')">Comment</button>
+                                                    </div>
+                                                @endif
+                                                @if(count($user->comments_for_instructor) > 0)
+                                                    <div class="review_all120">
+                                                        @foreach($user->comments_for_instructor as $kkk => $each_comment)
+                                                            <div class="review_item">
+                                                                <div class="review_usr_dt">
+                                                                    <img src="{{asset($link.'/profile/'.$each_comment->users->profile_image)}}" alt="">
+                                                                    <div class="rv1458">
+                                                                        <h4 class="tutor_name1">{{ucfirst($each_comment->users->name)}} {{ucfirst($each_comment->users->last_name)}}</h4>
+                                                                        <span class="time_145">{{$each_comment->created_at->diffForHumans()}}</span>
+                                                                    </div>
+                                                                    <div class="eps_dots more_dropdown">
+                                                                        <a href="#"><i class="uil uil-ellipsis-v"></i></a>
+                                                                        <div class="dropdown-content">
+                                                                            <span><i class='uil uil-trash-alt'></i>Delete</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="rvds10">{{$each_comment->comment}}</p>
+                                                                <div class="rpt101">
+                                                                    <a href="javascript:;" class="report155"><i class='uil uil-thumbs-up' onclick="likeAndDislikeMainReview(this, 'like', '{{$each_comment->unique_id}}')"></i>{{count($each_comment->likes)}}</a>
+                                                                    <a href="javascript:;" class="report155"><i class='uil uil-thumbs-down' onclick="likeAndDislikeMainReview(this, 'dislike', '{{$each_comment->unique_id}}')"></i>{{count($each_comment->dislikes)}}</a>
+                                                                    <a href="javascript:;" class="report155 ml-3" onclick="replyInstructorsComment(this, '{{$each_comment->unique_id}}')">Reply</a>
+                                                                </div>
+                                                            </div>
+                                                            @if(count($each_comment->each_instructor_comments) > 0)
+                                                                @foreach($each_comment->each_instructor_comments as $each_reply)
+                                                                    <div class="review_reply">
+                                                                        <div class="review_item">
+                                                                            <div class="review_usr_dt">
+                                                                                <img src="{{asset($link.'/profile/'.$each_reply->users->profile_image)}}" alt="{{env('APP_NEW')}}">
+                                                                                <div class="rv1458">
+                                                                                    <h4 class="tutor_name1">{{ucfirst($each_reply->users->name)}} {{ucfirst($each_reply->users->last_name)}}</h4>
+                                                                                    <span class="time_145">{{$each_reply->created_at->diffForHumans()}}</span>
+                                                                                </div>
+                                                                                <div class="eps_dots more_dropdown">
+                                                                                    <a href="javascript:;"><i class="uil uil-ellipsis-v"></i></a>
+                                                                                    <div class="dropdown-content">
+                                                                                        <span><i class='uil uil-trash-alt'></i>Delete</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <p class="rvds10">{{$each_reply->comment}}</p>
+                                                                            <div class="rpt101">
+                                                                                <a href="javascript:;" class="report155"><i class='uil uil-thumbs-up' onclick="likeAndDislikeMainReview(this, 'like', '{{$each_reply->unique_id}}')"></i>{{count($each_reply->comment_reply_likes)}}</a>
+                                                                                <a href="javascript:;" class="report155"><i class='uil uil-thumbs-down' onclick="likeAndDislikeMainReview(this, 'dislike', '{{$each_reply->unique_id}}')"></i>{{count($each_reply->comment_reply_dislikes)}}</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="tab-pane fade show" id="nav-subscriptions" role="tabpanel">
                                     <div class="_htg451">
                                         <div class="_htg452">
@@ -266,7 +272,12 @@ $users = auth()->user();
                                                             </div>
                                                             <div class="tutor_cate">{{$each_subscribe->users->professonal_heading}}</div>
                                                             <ul class="tutor_social_links">
-                                                                <button class="sbbc145" onclick="subscribeTOTeacher(this, '{{auth()->user()->unique_id}}', '{{$each_subscribe->users->unique_id}}')">Subscribe</button>
+                                                                @if (in_array(auth()->user()->unique_id, $user->array_of_subscribers))
+                                                                    <?php $subscribe_text = 'Subscribed'; ?>
+                                                                @else
+                                                                    <?php $subscribe_text = 'Subscribe'; ?>
+                                                                @endif
+                                                                <button class="sbbc145" onclick="subscribeTOTeacher(this, '{{auth()->user()->unique_id}}', '{{$each_subscribe->users->unique_id}}')">{{$subscribe_text}} <i class="uil uil-{{($subscribe_text === 'Subscribed')?'check-circle':''}}"></i></button>
                                                             </ul>
                                                             <div class="tut1250">
                                                                 <span class="vdt15">100K Students</span>

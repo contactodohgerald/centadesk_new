@@ -28,6 +28,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('currency:update')->twiceDaily(1, 13);
         $schedule->command('confirm:payment')->daily();
         $schedule->command('confirm:dailytopup')->everyMinute();
+        $schedule->command('confirm:user_transact_check')->daily();
+        $schedule->command('ban:user_account')->daily();
     }
 
     /**

@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Users;
 use App\course_model;
 use App\Http\Controllers\Controller;
 use App\Model\AppSettings;
+use App\Model\InsrtuctorReviewReply;
+use App\Model\InstructorReviewLike;
+use App\Model\InstructorsReview;
 use App\Model\KycVerification;
 use App\Model\Subscribe;
 use App\Traits\Generics;
 use App\Traits\SendMail;
+use App\Traits\UsersArray;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,14 +22,19 @@ use App\Traits\appFunction;
 
 class UserController extends Controller
 {
-    use appFunction, SendMail, Generics;
+    use appFunction, SendMail, Generics, UsersArray;
 
-    function __construct(KycVerification $kycVerification, AppSettings $appSettings, course_model $course_model, Subscribe $subscribe){
+    function __construct(
+        KycVerification $kycVerification, AppSettings $appSettings, course_model $course_model, Subscribe $subscribe, InstructorReviewLike $instructorReviewLike, InsrtuctorReviewReply $instructorReviewReply, InstructorsReview $instructorsReview
+    ){
         $this->middleware('auth');
         $this->kycVerification = $kycVerification;
         $this->appSettings = $appSettings;
         $this->course_model = $course_model;
         $this->subscribe = $subscribe;
+        $this->instructorReviewLike = $instructorReviewLike;
+        $this->instructorsReview = $instructorsReview;
+        $this->instructorReviewReply = $instructorReviewReply;
     }
     /**
      * Function to display teacher profile page.
@@ -68,6 +77,57 @@ class UserController extends Controller
             $course_model = $this->course_model->getAllCourse($conditions);
             $each_subscribe->count_course = count($course_model);
         }
+
+        $query = [
+            ['instructor_unique_id', $user->unique_id]
+        ];
+        $instructors = $this->instructorsReview->getAllInstructorReview($query);
+        $user->comments_for_instructor = $instructors;
+        foreach ($user->comments_for_instructor as $each_instructor_comment){
+            $each_instructor_comment->users;
+
+            $likes_query = [
+                ['main_review_id', $each_instructor_comment->unique_id],
+                ['like_type', 'like'],
+            ];
+            $likes = $this->instructorReviewLike->getAllInstructorReviewLike($likes_query);
+            $each_instructor_comment->likes = $likes;
+
+            $likes_query = [
+                ['main_review_id', $each_instructor_comment->unique_id],
+                ['like_type', 'dislike'],
+            ];
+            $likes = $this->instructorReviewLike->getAllInstructorReviewLike($likes_query);
+            $each_instructor_comment->dislikes = $likes;
+
+            $queries = [
+                ['main_instructor_unique_id', $each_instructor_comment->unique_id]
+            ];
+            $instructorReviewReply = $this->instructorReviewReply->getAllInstructorReviewReply($queries);
+
+            $each_instructor_comment->each_instructor_comments = $instructorReviewReply;
+
+            foreach ($each_instructor_comment->each_instructor_comments as $comment){
+                $comment->users;
+                $likes_query = [
+                    ['main_review_id', $comment->unique_id],
+                    ['like_type', 'like'],
+                ];
+                $likes = $this->instructorReviewLike->getAllInstructorReviewLike($likes_query);
+                $comment->comment_reply_likes = $likes;
+
+                $likes_query = [
+                    ['main_review_id', $comment->unique_id],
+                    ['like_type', 'dislike'],
+                ];
+                $likes = $this->instructorReviewLike->getAllInstructorReviewLike($likes_query);
+                $comment->comment_reply_dislikes = $likes;
+
+            }
+        }
+
+        $array_of_subscribers = $this->returnArrayForSubscribeUsers($user->unique_id);
+        $user->array_of_subscribers = $array_of_subscribers;
 
         return view('dashboard.profile', ['user'=>$user]);
     }

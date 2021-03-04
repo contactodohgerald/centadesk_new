@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Enrollment;
 
 use App\course_model;
+use Carbon\Carbon;
 use Exception;
 use App\Traits\Generics;
 use App\Traits\appFunction;
@@ -121,6 +122,8 @@ class CourseEnrollmentController extends Controller
             $user_balance = $user_balance - $course_price;
             $user_detail =  User::find($user_id);
             $user_detail->balance = $user_balance;
+            $user_detail->yearly_subscription_status = 'yes';
+            $user_detail->subscription_date = Carbon::now()->toDateTimeString();
             $update_user_balance = $user_detail->save();
 
             if(!$update_user_balance){

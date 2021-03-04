@@ -73,7 +73,7 @@ $users = auth()->user();
 											</a>
 										</div>
                     <div class="_215b10">
-                        <a href="{{env('BASE_URL')}}{{$course->unique_id}}" class="_215b11" title="Share Course">
+                        <a href="{{env('BASE_URL')}}course_details/{{$course->unique_id}}" class="_215b11" title="Share Course">
                             <span><i class="uil uil-share-alt"></i></span>Share Course
                         </a>
                     </div>
@@ -173,7 +173,10 @@ $users = auth()->user();
 								<nav>
 									<div class="nav nav-tabs tab_crse justify-content-center" id="nav-tab" role="tablist">
 										<a class="nav-item nav-link active" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-selected="true">About</a>
+
+                                        @if (in_array(auth()->user()->unique_id, $course->array_of_enrolled_users))
 										<a class="nav-item nav-link" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" aria-selected="false">Download Url's</a>
+                                        @endif
 										<a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="false">Reviews</a>
 									</div>
 								</nav>
