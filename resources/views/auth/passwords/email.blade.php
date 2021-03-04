@@ -38,13 +38,12 @@
                         <div class="ui left icon input swdh95">
                             <input id="email" type="email" class="prompt srch_explore @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email Address">
                             <i class="uil uil-envelope icon icon2"></i>
-
-                            @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
                         </div>
+                        @error('email')
+                        <span class="" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                     <button class="login-btn" type="submit">Send Password Reset Link</button>
                 </form>
