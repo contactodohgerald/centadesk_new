@@ -102,8 +102,9 @@ class AppSettingsController extends Controller
         }
     }
 
-    public function update_enrollment_percentage(Request $request, $unique_id)
+    public function update_enrollment_percentage(Request $request)
     {
+        // return 'man';
         try {
             if (!$request->isMethod('POST')) {
                 throw new Exception('This is not a valid request.');
@@ -116,8 +117,9 @@ class AppSettingsController extends Controller
                 return response()->json(['errors' => $validator->errors(), 'status' => false]);
             }
 
+
             $condition = [
-                ['unique_id', $unique_id]
+                ['unique_id', 'ozV4GtwTx6AMa0yiIQk4ef025573572a01ea']
             ];
             $appSettings = $this->appSettings->getSingleAppSettings($condition);
             $appSettings->enrollment_percentage = $request->input('percentage');

@@ -32,7 +32,9 @@ use App\Http\Controllers\CurrencyRate\CurrencyRateController;
 use App\Http\Controllers\Subscriptions\SubscriptionController;
 use App\Http\Controllers\Cryptocurrency\cryptocurrencyController;
 use App\Http\Controllers\Enrollment\CourseEnrollmentController;
+use App\Http\Controllers\PaymentAddress\PaymentAddressController;
 use App\Http\Controllers\Ticket\TicketController;
+use App\Model\paymentAddress;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,75 +59,77 @@ Route::get('/clear-cache', 'HomeController@clear_cache');
 
 Route::group(['middleware' => 'web'], function () {
     // courses
-    Route::get('/create-course',[courseController::class,'index']);
-    Route::get('/view-courses', [courseController::class,'show']);
-    Route::get('/explore', [courseController::class,'viewExplore'])->name('explore');
-    Route::get('/category-explore/{unique_id?}', [courseController::class,'exploreCategory'])->name('category-explore');
-    Route::get('/edit-course/{id}', [courseController::class,'update_page']);
-    Route::post('/create-course', [courseController::class,'create']);
-    Route::post('/edit-course/{id}', [courseController::class,'update']);
-    Route::post('/delete-course/{id}', [courseController::class,'soft_delete']);
-
+    Route::get('/create-course', [courseController::class, 'index']);
+    Route::get('/view-courses', [courseController::class, 'show']);
+    Route::get('/explore', [courseController::class, 'viewExplore'])->name('explore');
+    Route::get('/category-explore/{unique_id?}', [courseController::class, 'exploreCategory'])->name('category-explore');
+    Route::get('/edit-course/{id}', [courseController::class, 'update_page']);
+    Route::post('/create-course', [courseController::class, 'create']);
+    Route::post('/edit-course/{id}', [courseController::class, 'update']);
+    Route::post('/delete-course/{id}', [courseController::class, 'soft_delete']);
 });
 
 Route::group(['middleware' => 'web'], function () {
     // Live stream
-    Route::get('/live_stream/create',[live_stream_controller::class,'create_live']);
-    Route::get('/live_stream/all',[live_stream_controller::class,'show']);
-    Route::get('/live_stream/edit/{id}',[live_stream_controller::class,'update_page']);
-    Route::get('/explore/live_streams',[live_stream_controller::class,'explore_live_streams']);
+    Route::get('/live_stream/create', [live_stream_controller::class, 'create_live']);
+    Route::get('/live_stream/all', [live_stream_controller::class, 'show']);
+    Route::get('/live_stream/edit/{id}', [live_stream_controller::class, 'update_page']);
+    Route::get('/explore/live_streams', [live_stream_controller::class, 'explore_live_streams']);
 
-    Route::post('/live/create',[live_stream_controller::class,'create']);
-    Route::post('/live/edit',[live_stream_controller::class,'update']);
-
+    Route::post('/live/create', [live_stream_controller::class, 'create']);
+    Route::post('/live/edit', [live_stream_controller::class, 'update']);
 });
 
 Route::group(['middleware' => 'web'], function () {
     // Ticket
-    Route::get('/ticket/create',[TicketController::class,'create_ticket']);
-    Route::get('/ticket/reply/{id}',[TicketController::class,'reply_ticket']);
-    Route::get('/ticket/all',[TicketController::class,'view_all']);
+    Route::get('/ticket/create', [TicketController::class, 'create_ticket']);
+    Route::get('/ticket/reply/{id}', [TicketController::class, 'reply_ticket']);
+    Route::get('/ticket/all', [TicketController::class, 'view_all']);
 
-    Route::post('/ticket/create',[TicketController::class,'create']);
-    Route::post('/ticket/reply/{id}',[TicketController::class,'reply']);
-
+    Route::post('/ticket/create', [TicketController::class, 'create']);
+    Route::post('/ticket/reply/{id}', [TicketController::class, 'reply']);
 });
 
 Route::group(['middleware' => 'web'], function () {
     // Enroll in course
-    Route::get('/course/checkout/{id}',[CourseEnrollmentController::class,'enroll_cart']);
-    Route::get('/courses/enrolled',[CourseEnrollmentController::class,'my_enrolled_courses'])->name('enrolled_course');
+    Route::get('/course/checkout/{id}', [CourseEnrollmentController::class, 'enroll_cart']);
+    Route::get('/courses/enrolled', [CourseEnrollmentController::class, 'my_enrolled_courses'])->name('enrolled_course');
 
-    Route::post('/course/enroll/{id}',[CourseEnrollmentController::class,'enroll']);
-
+    Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
 });
 
 
 Route::group(['middleware' => 'web'], function () {
     // user routes
-    Route::get('/profile',[UserController::class,'profile'])->name('profile');
-    Route::post('/personal-details',[UserController::class,'update_user_details']);
-    Route::post('/profile/photo',[UserController::class,'upload_cover_photo']);
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::post('/personal-details', [UserController::class, 'update_user_details']);
+    Route::post('/profile/photo', [UserController::class, 'upload_cover_photo']);
 });
 
 
 Route::group(['middleware' => 'web'], function () {
     // crypto currency
+    Route::get('/wallet/bitcoin/gateway/{id}', [cryptocurrencyController::class, 'payment_gateway'])->name('btc_gateway');
+
+
     // Route::post('/user/wallet/update',[cryptocurrencyController::class,'update_wallet']);
-    Route::post('/generate_address',[cryptocurrencyController::class,'gen_payment_address']);
-    Route::post('/top_up_btc',[cryptocurrencyController::class,'create_transaction']);
+    Route::post('/generate_address', [cryptocurrencyController::class, 'gen_payment_address']);
+    Route::post('/top_up_btc', [cryptocurrencyController::class, 'create_transaction'])->name('top_up_with_btc');
+
+
+    // Route::get('/prev_address/{xpub}',[PaymentAddressController::class,'get_prev_addresses']);
 });
 
 
 Route::group(['middleware' => 'web'], function () {
     // Subscription
-    Route::post('/subscribe_to',[SubscriptionController::class,'subscribe_to']);
-    Route::post('/unsubscribe_from',[SubscriptionController::class,'unsubscribe_from']);
+    Route::post('/subscribe_to', [SubscriptionController::class, 'subscribe_to']);
+    Route::post('/unsubscribe_from', [SubscriptionController::class, 'unsubscribe_from']);
 });
 
 Route::group(['middleware' => 'web'], function () {
     // Subscribe
-    Route::get('/browse_subscribers',[SubscribeController::class,'browseSubscribers'])->name('browse_subscribers');
+    Route::get('/browse_subscribers', [SubscribeController::class, 'browseSubscribers'])->name('browse_subscribers');
 });
 
 
@@ -140,39 +144,36 @@ Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verifyE
 //resend verification link
 Route::post('/email/verification-notification', [VerificationController::class, 'sendVerificationEmailNotification'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::group(['middleware'=>'web'], function(){
+Route::group(['middleware' => 'web'], function () {
     //create Course Category
     Route::get('/create_category', [CourseCategoryModelController::class, 'index'])->name('create_category');
     Route::get('/view_category', [CourseCategoryModelController::class, 'viewCoursesCategories'])->name('view_category');
     Route::post('/add_category', [CourseCategoryModelController::class, 'create'])->name('add_category');
     Route::get('/edit_category/{unique_id}', [CourseCategoryModelController::class, 'show'])->name('edit_category');
     Route::post('/update_category/{unique_id}', [CourseCategoryModelController::class, 'update'])->name('update_category');
-
 });
 
-Route::group(['middleware'=>'web'], function(){
+Route::group(['middleware' => 'web'], function () {
     // Course
     Route::get('/create-course',  [courseController::class, 'index'])->name('create-course');
     Route::get('/view-courses',  [courseController::class, 'show'])->name('view-courses');
     Route::get('/view_course/{unique_id?}', [courseController::class, 'showCourses'])->name('view_course');
     Route::get('/edit-course/{id}', [courseController::class, 'update_page'])->name('edit-course');
-
 });
 
-Route::group(['middleware'=>'web'], function(){
+Route::group(['middleware' => 'web'], function () {
     //create Price For Course
     Route::get('/create_price', [priceController::class, 'create'])->name('create_price');
     Route::post('/store_price', [priceController::class, 'store'])->name('store_price');
     Route::get('/view_price', [priceController::class, 'index'])->name('view_price');
-
 });
 
-Route::group(['middleware'=>'web'], function(){
+Route::group(['middleware' => 'web'], function () {
     //system settings
     Route::get('/main_settings_page', [AppSettingsController::class, 'mainSettings'])->name('main_settings_page');
     Route::get('/app_settings_page', [AppSettingsController::class, 'appSettings'])->name('app_settings_page');
     Route::post('/update_app_settings/{unique_id}', [AppSettingsController::class, 'updateAppSettings'])->name('update_app_settings');
-    Route::post('/update_course_percent/{unique_id}', [AppSettingsController::class, 'update_enrollment_percentage']);
+    Route::post('/update_course_percent', [AppSettingsController::class, 'update_enrollment_percentage']);
 });
 
 Route::group(['middleware' => 'web'], function () {
@@ -180,13 +181,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/update_user_currency', [CurrencyRateController::class, 'updateUserPreferredCurrency'])->name('update_user_currency');
 });
 
-Route::group(['middleware'=>'web'], function(){
+Route::group(['middleware' => 'web'], function () {
     //saved courses
     Route::get('/saved-course', [SaveCourseController::class, 'getAllSavedCourse'])->name('saved-course');
-
 });
 
-Route::group(['middleware'=>'web'], function(){
+Route::group(['middleware' => 'web'], function () {
     //users
     Route::get('/all_students', [AdminController::class, 'showAllStudents'])->name('all_students');
     Route::get('/all_instructor', [AdminController::class, 'showAllInstructor'])->name('all_instructor');

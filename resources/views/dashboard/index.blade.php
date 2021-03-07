@@ -77,7 +77,7 @@ $users = auth()->user();
                                     @foreach ($live_streams as $e)
 									<div class="item">
 										<div class="stream_1">
-											we<a href="{{ $e->meeting_url }}" class="stream_bg">
+											<a href="{{ $e->meeting_url }}" class="stream_bg">
 												<img src="/storage/profile/{{ $e->user->profile_image }}" alt="">
                                                 <h4 class="font-poppins">{{ $e->user->name }} {{ $e->user->last_name }}</h4>
                                                 {{-- <p class="font-poppins text-capitalize clamp">{{ $e->title }}</p> --}}

@@ -341,25 +341,19 @@ $users = auth()->user();
 							</div>
 							<div class="tab-pane fade" id="pills-privacy" role="tabpanel" aria-labelledby="pills-privacy-tab">
 								<div class="account_setting">
-									<h4>Privacy</h4>
-									<p>Modify your privacy settings here.</p>
-									<div class="basic_profile">
-										<div class="basic_form">
-											<div class="nstting_content">
+									{{-- <h4>Enrollment</h4> --}}
+									<p>Enter percentage to be removed from payments made to teachers.</p>
                                                 <div class="row">
                                                     <div class="col-lg-6">
-                                                        <div class="ui search focus mt-30">
+                                                        <div class="ui search focus">
                                                             <label for="bit_coin_wallet">Course Enrollment Percentage</label>
                                                             <div class="ui left icon input swdh11 swdh19">
-                                                                <input class="prompt srch_explore" type="number" name="enrollment_percentage" id="wallet" placeholder="Enter percentage to pay teachers" value="{{$user->wallet_address}}">
+                                                                <input class="prompt srch_explore" type="number" name="enrollment_percentage" id="wallet" placeholder="Enter percentage to pay teachers" value="">
                                                                 <i class="uil uil-receipt icon icon2"></i>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-											</div>
-										</div>
-									</div>
 									<button class="save_btn" type="submit">Save Changes</button>
 								</div>
 							</div>

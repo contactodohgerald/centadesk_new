@@ -39,7 +39,7 @@ $users = auth()->user();
 						<div class="_14d25 mb-20">
 							<div class="row">
 								<div class="col-md-12">
-                                    <h4 class="mhs_title font-poppins">My Enrolled Courses</h4>
+                                    <h4 class="mhs_title font-poppins">Courses i enrolled in</h4>
                                     @if(count($courses) > 0)
                                         @foreach($courses  as $k => $e)
                                         <div class="fcrse_1 mt-30">
@@ -81,7 +81,7 @@ $users = auth()->user();
                                         @endforeach
                                     @else
                                     <div class="fcrse_1 mt-30">
-                                        <div class="alert alert-success text-center">No Saved Courses, Browse through our list of Courses and add to your Saved Libary</div>
+                                        <div class="alert alert-success text-center">You haven't enrolled for any course, Browse through our Courses & add to your Enrolled Library</div>
                                     </div>
                                     @endif
 								</div>

@@ -102,6 +102,12 @@ trait appFunction
             case $info == 28:
                 return ['error' => 1, 'msg' => 'Error! You are enrolled for this course already.'];
                 break;
+            case $info == 29:
+                return ['error' => 1, 'msg' => 'Error! Provide the required function arguments.'];
+                break;
+            case $info == 30:
+                return ['error' => 1, 'msg' => 'Error! No previous address has been generated for this xpub'];
+                break;
         }
     }
 

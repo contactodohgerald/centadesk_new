@@ -213,16 +213,4 @@ class TicketController extends Controller
             return response()->json(["errors" => $error, 'status' => false]);
         }
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ticket  $ticket
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Ticket $ticket)
-    {
-        //
-    }
 }

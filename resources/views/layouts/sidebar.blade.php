@@ -73,6 +73,7 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                         <span class="menu--label text-dark night-text">Courses</span>
                     </label>
                     <ul class="sub_menu">
+                        {{-- for_teacher_and_admin --}}
                         @if(auth()->user()->privilegeChecker('view_add_courses'))
                         <li class="sub_menu--item">
                             <a href="/create-course" class="sub_menu--link">Create new</a>
@@ -215,11 +216,11 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
-                            <a href="{{route('main_settings_page')}}" class="sub_menu--link">Main Setting</a>
+                            <a href="{{route('main_settings_page')}}" class="sub_menu--link">Account </a>
                         </li>
                         @if(auth()->user()->privilegeChecker('view_restricted_roles'))
                         <li class="sub_menu--item">
-                            <a href="{{route('app_settings_page')}}" class="sub_menu--link">App Setting</a>
+                            <a href="{{route('app_settings_page')}}" class="sub_menu--link">System </a>
                         </li>
                         @endif
                     </ul>
