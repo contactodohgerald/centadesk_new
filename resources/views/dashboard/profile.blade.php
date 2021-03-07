@@ -34,7 +34,11 @@ $users = auth()->user();
 										</div>
 										<div class="prfledt1 ">
 											<h2 class="text-capitalize">{{ $user->name }} {{ $user->last_name }}</h2>
-											<span class="text-capitalize">{{ $user->professonal_heading }} | {{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span>
+											<span class="text-capitalize">{{ $user->professonal_heading }}
+                                                @if ($user->professonal_heading)
+                                                    |
+                                                @endif
+                                                {{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span>
 											<div class="mt-1">
                                                 <a href="">https://www.centadesk.com/scl/ref={{ $user->user_referral_id }}
                                                 </a>

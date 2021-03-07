@@ -146,10 +146,10 @@ $users = auth()->user();
 									{{-- <a href="#"><i class='uil uil-times'></i></a> --}}
 								</div>
 								<a href="" class="crse14s title900 pt-2 font-poppins">{{ucfirst($course->name)}}</a>
-                                <a class="_215b04 font-poppins ">{{$course->short_caption}}</a>
-                                <a href="" class="crse-cate font-poppins">{{$course->category->name}}</a>
+                                <a class="_215b04 font-poppins text-capitalize">{{$course->short_caption}}</a>
+                                <a href="" class="crse-cate font-poppins text-capitalize">{{$course->category->name}}</a>
 								<div class="auth1lnkprce">
-									<p class="cr1fot font-poppins">By <a class="" href="{{route('view_profile', $course->user->unique_id )}}">{{$course->user->name}} {{$course->user->last_name}}</a></p>
+									<p class="cr1fot font-poppins text-capitalize">By <a class="" href="{{route('view_profile', $course->user->unique_id )}}">{{$course->user->name}} {{$course->user->last_name}}</a></p>
                                     <div class="prce142 font-poppins">{{auth()->user()->getAmountForView($course->price->amount)['data']['currency'] }} {{number_format(auth()->user()->getAmountForView($course->price->amount)['data']['amount'])}}</div>
 								</div>
 							</div>

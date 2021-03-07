@@ -78,6 +78,7 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('/live/create', [live_stream_controller::class, 'create']);
     Route::post('/live/edit', [live_stream_controller::class, 'update']);
+    Route::post('/delete-live/{id}', [live_stream_controller::class, 'soft_delete']);
 });
 
 Route::group(['middleware' => 'web'], function () {
@@ -96,6 +97,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/courses/enrolled', [CourseEnrollmentController::class, 'my_enrolled_courses'])->name('enrolled_course');
 
     Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
+    Route::post('/delete-enroll/{id}', [CourseEnrollmentController::class, 'soft_delete']);
+    Route::post('/delete-batch', [CourseEnrollmentController::class, 'batch_soft_Delete']);
 });
 
 

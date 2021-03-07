@@ -80,8 +80,8 @@ $disLikeColor = '';
                                 </div>
                                 <div class="col-xl-8 col-lg-7 col-md-6">
                                     <div class="_215b03">
-                                        <h2 class="font-poppins">{{ucfirst($course->name)}}</h2>
-                                        <span class="_215b04 font-poppins">{{$course->short_caption}}</span>
+                                        <h2 class="font-poppins text-capitalize">{{ucfirst($course->name)}}</h2>
+                                        <span class="_215b04 font-poppins text-capitalize">{{$course->short_caption}}</span>
                                     </div>
                                     <div class="_215b05 font-poppins">
                                         <div class="crse_reviews mr-2 rating_ratio font-poppins">

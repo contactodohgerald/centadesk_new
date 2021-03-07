@@ -44,6 +44,9 @@ class courseEnrollment extends Model
     public function user_enroll(){
         return $this->belongsTo('App\User', 'user_enrolling');
     }
+    public function course(){
+        return $this->belongsTo('App\Course_model', 'course_id');
+    }
 
     public function getAllEnrolls($condition, $id = 'id', $desc = 'desc'){
 

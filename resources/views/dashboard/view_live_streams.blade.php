@@ -104,7 +104,7 @@ $users = auth()->user();
 													<td class="text-center">
                                                         <a href="{{ $e->meeting_url }}" title="Visit Stream Link" class="gray-s"><i class="uil uil-adjust"></i></a>
 														<a href="/live_stream/edit/{{ $e->unique_id }}" title="Edit" class="cursor-pointer gray-s"><i class="uil uil-edit-alt"></i></a>
-														<a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s delete_course_modal"><i class="uil uil-trash-alt"></i></a>
+														<a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s delete_live_modal"><i class="uil uil-trash-alt"></i></a>
 													</td>
                                                 </tr>
                                                 @endforeach
@@ -124,22 +124,22 @@ $users = auth()->user();
             </div>
             @include('layouts.footer')
         </div>
-        <div class="modal zoomInUp " id="delete_course_modal">
+        <div class="modal zoomInUp " id="delete_live_modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content"  style="background-color: #333 !important;">
                     <div class="modal-header">
-                        <h4>Delete Course?</h4>
+                        <h4>Delete Live?</h4>
                     </div>
-                    <form class="delete_course_form">
+                    <form class="delete_live_form">
                         @csrf
                         <div class="modal-body">
-                            <p class="text-danger">By clicking continue, this course will be deleted permanently. <br> It can't be recovered after this.</p>
+                            <p class="text-danger">By clicking continue, this Live stream will be deleted from history permanently. </p>
                         </div>
                     </form>
                     <div class="modal-footer no-border">
                         <div class="text-right">
                             <button class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
-                            <button class="btn btn-primary btn-sm delete_course_btn" data-dismiss="modal">Continue</button>
+                            <button class="btn btn-primary btn-sm delete_live_btn" data-dismiss="modal">Continue</button>
                         </div>
                     </div>
                 </div>
@@ -151,21 +151,21 @@ $users = auth()->user();
 
         <script>
             $(document).ready(function () {
-                $('.delete_course_modal').click(function(e) {
+                $('.delete_live_modal').click(function(e) {
                     e.preventDefault();
-                    append_id('delete_course_id', '.delete_course_form', '#delete_course_modal', this)
-                    $('#delete_course_modal').modal('toggle');
+                    append_id('delete_live_id', '.delete_live_form', '#delete_live_modal', this)
+                    $('#delete_live_modal').modal('toggle');
                 });
 
 
-            $('.delete_course_btn').click(async function(e) {
+            $('.delete_live_btn').click(async function(e) {
                 e.preventDefault();
-                let delete_course_form = $('.delete_course_form').serializeArray();
-                let form_data = set_form_data(delete_course_form);
-                let returned = await ajaxRequest('/delete-course/'+delete_course_form[1].value, form_data);
+                let delete_live_form = $('.delete_live_form').serializeArray();
+                let form_data = set_form_data(delete_live_form);
+                let returned = await ajaxRequest('/delete-live/'+delete_live_form[1].value, form_data);
                 console.log(returned);
                 // return;
-                validator(returned, '/view-courses');
+                validator(returned, '/live_stream/all');
             });
 
             });

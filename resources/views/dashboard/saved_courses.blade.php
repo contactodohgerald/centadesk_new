@@ -24,14 +24,13 @@ $users = auth()->user();
 					<div class="col-lg-3 col-md-4 ">
 						<div class="section3125 hstry142">
 							<div class="grp_titles pt-0">
-								<div class="ht_title">Saved Courses</div>
-								<a href="#" class="ht_clr">Remove All</a>
+								<div class="ht_title">
+									<span class="vdt14">{{count($saved_courses)}} Saved Course(s)</span></div>
 							</div>
 							<div class="tb_145">
 								<div class="wtch125">
-									<span class="vdt14">{{count($saved_courses)}} Courses</span>
 								</div>
-								<a href="javascript:;" class="rmv-btn" onclick="deleteSavedCourse(this, 'all')"><i class='uil uil-trash-alt'></i>Remove Saved Courses</a>
+								<a href="javascript:;" class="rmv-btn font-poppins" onclick="deleteSavedCourse(this, 'all')"><i class='uil uil-trash-alt'></i>Remove all Saved Courses</a>
 							</div>
 						</div>
 					</div>
@@ -39,7 +38,7 @@ $users = auth()->user();
 						<div class="_14d25 mb-20">
 							<div class="row">
 								<div class="col-md-12">
-                                    <h4 class="mhs_title">Saved Courses</h4>
+                                    <h4 class="mhs_title font-poppins">Courses i saved</h4>
                                     @if(count($saved_courses) > 0)
                                         @foreach($saved_courses  as $k => $each_saved_courses)
                                         <div class="fcrse_1 mt-30">
@@ -47,11 +46,11 @@ $users = auth()->user();
                                                 <img src="{{asset($link.'course-img/'.$each_saved_courses->courses->cover_image)}}" alt="{{env('APP_NAME')}}"  height="180">
                                                 <div class="course-overlay">
 <!--                                                    <div class="badge_seller">Bestseller</div>-->
-                                                    <div class="crse_reviews">
+                                                    <div class="crse_reviews font-poppins">
                                                         <i class="uil uil-star"></i>{{$each_saved_courses->count_review}}
                                                     </div>
                                                     <span class="play_btn1"><i class="uil uil-play"></i></span>
-                                                    <div class="crse_timer">
+                                                    <div class="crse_timer font-poppins">
                                                     {{$each_saved_courses->created_at->diffForHumans()}}
                                                     </div>
                                                 </div>
@@ -81,7 +80,16 @@ $users = auth()->user();
                                         @endforeach
                                     @else
                                     <div class="fcrse_1 mt-30">
-                                        <div class="alert alert-success text-center">No Saved Courses, Browse through our list of Courses and add to your Saved Libary</div>
+                                        <div class="fcrse_1 mt-30 text-center">
+                                            {{-- <div class="alert alert-success text-center"> --}}
+                                                <p>
+                                                    <h6>
+                                                        No Saved Courses. Browse through our list of Courses and add to your Saved Libary.
+                                                    </h6>
+                                                </p>
+                                            {{-- </div> --}}
+                                        </div>
+                                        {{-- <div class="alert alert-success text-center">No Saved Courses, Browse through our list of Courses and add to your Saved Libary</div> --}}
                                     </div>
                                     @endif
 								</div>
