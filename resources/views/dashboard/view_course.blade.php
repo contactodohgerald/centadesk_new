@@ -72,11 +72,11 @@ $users = auth()->user();
 												<span><i class="uil uil-heart text-{{$color}}"></i></span>{{$text}}
 											</a>
 										</div>
-                    <div class="_215b10">
-                        <a href="{{env('BASE_URL')}}course_details/{{$course->unique_id}}" class="_215b11" title="Share Course">
-                            <span><i class="uil uil-share-alt"></i></span>Share Course
-                        </a>
-                    </div>
+                                        <div class="_215b10">
+                                            <a href="{{route('course-details', $course->unique_id)}}" class="_215b11" title="Share Course">
+                                                <span><i class="uil uil-share-alt"></i></span>Share Course
+                                            </a>
+                                        </div>
 									</div>
 									<div class="col-xl-8 col-lg-7 col-md-6">
 										<div class="_215b03">

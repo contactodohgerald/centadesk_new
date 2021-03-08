@@ -47,23 +47,35 @@ class course_model extends Model
         return $this->belongsTo('App\priceModel', 'pricing');
     }
 
+    public function review(){
+        return $this->hasMany('App\Model\Review', 'course_unique_id');
+    }
+
     public function courseEnrollment(){
         return $this->hasMany('App\Model\courseEnrollment', 'course_id');
     }
 
     public function getAllCourse($condition, $id = 'id', $desc = 'desc'){
 
-        $course = course_model::where($condition)->orderBy($id, $desc)->get();
+        return course_model::where($condition)->orderBy($id, $desc)->get();
 
-        return $course;
+    }
+
+    public function getAllCourseWithLimit($condition){
+
+        return course_model::latest()->where($condition)->get();
+
+    }
+
+    public function getCourseByPaginate($number, $condition = null, $id = 'id', $desc = 'desc'){
+
+        return course_model::where($condition)->orderBy($id, $desc)->simplePaginate($number);
 
     }
 
     public function getSingleCourse($condition){
 
-        $course = course_model::where($condition)->first();
-
-        return $course;
+        return course_model::where($condition)->first();
 
     }
 
