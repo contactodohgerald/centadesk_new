@@ -171,4 +171,13 @@ trait Generics{
 
     }
 
+    function getAmountForNotLoggedInUser($amount_sent_in = 0){
+        //select the currency
+        $currency_details = CurrencyRatesModel::find(50);
+        $rate = $currency_details->rate_of_conversion;
+
+        return $amount_sent_in * $rate;
+
+    }
+
 }

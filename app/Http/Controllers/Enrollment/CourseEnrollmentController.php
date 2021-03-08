@@ -17,8 +17,10 @@ class CourseEnrollmentController extends Controller
 {
     use Generics, appFunction;
 
-    public function __construct(AppSettings $AppSettings, course_model $course, courseEnrollment $courseEnrollment)
-    {
+    public function __construct(
+        AppSettings $AppSettings, course_model $course, courseEnrollment $courseEnrollment
+    ){
+        $this->middleware('auth',  ['except' => ['enroll']]);
         $this->AppSettings = $AppSettings;
         $this->course = $course;
         $this->courseEnrollment = $courseEnrollment;
