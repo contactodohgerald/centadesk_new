@@ -144,7 +144,7 @@ class User extends Authenticatable implements MustVerifyEmail
     function returnLink(){
 
         if(env('APP_ENV') === 'production'){
-            return 'public/storage/';
+            return 'storage/';
         }else{
             return 'storage/';
         }
