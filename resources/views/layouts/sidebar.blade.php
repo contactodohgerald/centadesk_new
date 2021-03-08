@@ -52,10 +52,10 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                         </li>
                     </ul>
                 </li>
-                <li class="menu--item menu--item__has_sub_menu">
+                <li class="menu--item menu--item__has_sub_menu text-dark night-text">
                     <label class="menu--link <?php print @$Categories;?>" title="Categories">
-                        <i class='uil uil-layers menu--icon'></i>
-                        <span class="menu--label">Course Categories</span>
+                        <i class='uil uil-layers menu--icon text-dark night-text'></i>
+                        <span class="menu--label text-dark night-text">Course Categories</span>
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
@@ -68,7 +68,7 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                 </li>
                 @endif
                 <li class="menu--item menu--item__has_sub_menu">
-                    <label class="menu--link <?php print @$Course;?>" title="Categories">
+                    <label class="menu--link <?php print @$Course;?> text-dark night-text" title="Categories">
                         <i class='uil uil-plus-circle menu--icon text-dark night-text'></i>
                         <span class="menu--label text-dark night-text">Courses</span>
                     </label>
@@ -109,9 +109,9 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     </a>
                 </li> --}}
                 <li class="menu--item menu--item__has_sub_menu">
-                    <label class="menu--link <?php print @$live_stream;?>" title="Live Stream">
-                        <i class='uil uil-kayak menu--icon'></i>
-                        <span class="menu--label">Live Streams</span>
+                    <label class="menu--link <?php print @$live_stream;?> text-dark night-text" title="Live Stream">
+                        <i class='uil uil-kayak menu--icon text-dark night-text'></i>
+                        <span class="menu--label  text-dark night-text">Live Streams</span>
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
@@ -136,9 +136,9 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                 </li>
                 @endif
                 <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link <?php print @$Wallet;?>" title="Wallet">
-                        <i class='uil uil-wallet menu--icon'></i>
-                        <span class="menu--label">Wallet</span>
+                    <label class="menu--link <?php print @$Wallet;?> text-dark night-text" title="Wallet">
+                        <i class='uil uil-wallet menu--icon text-dark night-text'></i>
+                        <span class="menu--label text-dark night-text">Wallet</span>
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
@@ -147,9 +147,9 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     </ul>
                 </li>
                 <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link <?php print @$Withdrawal;?>" title="Wallet">
-                        <i class='uil uil-money-withdraw menu--icon'></i>
-                        <span class="menu--label">Withdrawal</span>
+                    <label class="menu--link <?php print @$Withdrawal;?> text-dark night-text" title="Wallet">
+                        <i class='uil uil-money-withdraw menu--icon text-dark night-text'></i>
+                        <span class="menu--label text-dark night-text">Withdrawal</span>
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
@@ -210,9 +210,9 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                 </li>
                 @endif
                 <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link <?php print @$Setting;?>" title="Setting">
-                        <i class='uil uil-cog menu--icon'></i>
-                        <span class="menu--label">Setting </span>
+                    <label class="menu--link <?php print @$Setting;?> text-dark night-text" title="Setting">
+                        <i class='uil uil-cog menu--icon text-dark night-text'></i>
+                        <span class="menu--label text-dark night-text">Setting </span>
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">

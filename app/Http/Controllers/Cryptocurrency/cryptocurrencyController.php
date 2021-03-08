@@ -20,8 +20,8 @@ class cryptocurrencyController extends Controller
     use appFunction, Generics;
 
     private $blockchain_api_v2_key = '0b9da7ee-b055-42fc-ac3f-1872f7641577';
-    private $call_back_url = 'https://centadesk.com';
     private $crypto_compare_api_key = '9f84f53a067dd8d02d95feb9fef27ba64208ef313e0c7367a8e7f2d49f5866e7';
+    private $blockchain_api_secrete = '9f055-42fc-ac3f-1872f9f5866e7';
 
     // old xpub6CiHKyu1wfr4WYXUv9amvGUErgKpMGtc8qmKFakjMbVK8EctZihZGpEA9ybLusoyUVg7PRrwy3DMN4Gxu2EiwvF2boBTHyLy9kqcvwSmm6V
 
@@ -67,11 +67,11 @@ class cryptocurrencyController extends Controller
      */
     public function gen_payment_address(Request $request, $txn_id)
     {
+        $callback_url = 'https://centadesk.com/blockchain/callback?txn_id='.$txn_id.'&secret='.$this->blockchain_api_secrete;
         // Get the account xpub.
         $app_settings = $this->appSettings->getSingleModel();
         $app_xpub = $app_settings['account_xpub'];
 
-        $callback_url = $this->call_back_url;
         $api_key = $this->blockchain_api_v2_key;
         try {
             if (empty($txn_id)) {
@@ -212,6 +212,17 @@ class cryptocurrencyController extends Controller
         $amt_in_coin = $amt_in_usd / $equiv;
         return $amt_in_coin;
     }
+    public function btc_to_satoshi($btc)
+    {
+        $satoshi_equiv = $btc / 0.00000001;
+        return $satoshi_equiv;
+    }
+
+    public function satoshi_to_btc($satoshi)
+    {
+        $btc_equiv = $satoshi * 0.00000001;
+        return $btc_equiv;
+    }
 
     public function confirm_payment()
     {
@@ -220,5 +231,34 @@ class cryptocurrencyController extends Controller
         change transaction status to confirmed
         top up the balance in the user table
         */
+
+
+        // $response = $this->curl_request('GET', 'https://api.blockchain.info/v2/receive?xpub=' . $app_xpub . '&callback=' . urlencode($callback_url) . '&key=' . $api_key . '');
+
+        $real_secret = 'ZzsMLGKe162CfA5EcG6j';
+        $invoice_id = $_GET['invoice_id']; //invoice_id is passed back to the callback URL
+        $transaction_hash = $_GET['transaction_hash'];
+        $value_in_satoshi = $_GET['value'];
+        $value_in_btc = $value_in_satoshi / 100000000;
+
+        //Commented out to test, uncomment when live
+        if ($_GET['test'] == true) {
+            return;
+        }
+
+        try {
+        //create or open the database
+        $database = new SQLiteDatabase('db.sqlite', 0666, $error);
+        } catch(Exception $e) {
+        die($error);
+        }
+
+        //Add the invoice to the database
+        $stmt = $db->prepare("replace INTO invoice_payments (invoice_id, transaction_hash, value) values(?, ?, ?)");
+        $stmt->bind_param("isd", $invoice_id, $transaction_hash, $value_in_btc);
+
+        if($stmt->execute()) {
+        echo "*ok*";
+        }
     }
 }

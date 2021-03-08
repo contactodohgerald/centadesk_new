@@ -113,14 +113,15 @@ Route::group(['middleware' => 'web'], function () {
 Route::group(['middleware' => 'web'], function () {
     // crypto currency
     Route::get('/wallet/bitcoin/gateway/{id}', [cryptocurrencyController::class, 'payment_gateway'])->name('btc_gateway');
+    Route::get('/blockchain/callback', [cryptocurrencyController::class, 'payment_gateway'])->name('btc_gateway');
 
 
+    // Route::get('/prev_address/{xpub}',[PaymentAddressController::class,'get_prev_addresses']);
     // Route::post('/user/wallet/update',[cryptocurrencyController::class,'update_wallet']);
     Route::post('/generate_address', [cryptocurrencyController::class, 'gen_payment_address']);
     Route::post('/top_up_btc', [cryptocurrencyController::class, 'create_transaction'])->name('top_up_with_btc');
 
 
-    // Route::get('/prev_address/{xpub}',[PaymentAddressController::class,'get_prev_addresses']);
 });
 
 
