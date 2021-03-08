@@ -147,11 +147,11 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="d-flex align-items-center mb-30">
                                                     <div class="mr-15">
-                                                        <img src="{{asset('storage/profile/'.$each_subscribers->profile_image)}}" class="avatar avatar-lg rounded10 bg-primary-light" alt="{{env('APP_NAME')}}">
+                                                        <img src="{{asset('storage/profile/'.$each_subscribers->users->profile_image)}}" class="avatar avatar-lg rounded10 bg-primary-light" alt="{{env('APP_NAME')}}">
                                                     </div>
                                                     <div class="d-flex flex-column font-weight-500">
-                                                        <a href="#" class="text-dark hover-primary mb-1 font-size-16">{{ucfirst($each_subscribers->name)}} {{ucfirst($each_subscribers->last_name)}}</a>
-                                                        <span class="text-mute">{{$each_subscribers->email}}</span>
+                                                        <a href="#" class="text-dark hover-primary mb-1 font-size-16">{{ucfirst($each_subscribers->users->name)}} {{ucfirst($each_subscribers->users->last_name)}}</a>
+                                                        <span class="text-mute">{{$each_subscribers->users->email}}</span>
                                                     </div>
                                                 </div>
                                             </div>

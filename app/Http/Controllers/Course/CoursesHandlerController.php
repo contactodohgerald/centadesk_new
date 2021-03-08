@@ -71,9 +71,6 @@ class CoursesHandlerController extends Controller
             $instructors = $this->user->getSingleUser($query);
 
             $instructors->courses;
-
-            $instructors->subscribers;
-
             foreach ($instructors->courses as $kk => $each_course){
                 $each_course->price;
 
@@ -81,6 +78,11 @@ class CoursesHandlerController extends Controller
 
                 $each_course->review;
                 $each_course->count_reviews = $this->calculateRatings($each_course->review);
+            }
+
+            $instructors->subscribers;
+            foreach ($instructors->subscribers as $s => $each_subscribers){
+                $each_subscribers->users;
             }
 
             return view('front-end.instructor_profile', ['instructors'=>$instructors]);

@@ -84,10 +84,14 @@
                         <div class="staff-bx">
                             <div class="staff-info d-flex align-items-center">
                                 <div class="staff-thumb mr-10">
-                                    <img src="{{asset('storage/profile/'.$course->user->profile_image)}}" alt="{{env('APP_NAME')}}" class="bg-secondary-light rounded-circle max-w-60">
+                                    <a href="{{route('instructor-profile', $course->user->unique_id)}}">
+                                        <img src="{{asset('storage/profile/'.$course->user->profile_image)}}" alt="{{env('APP_NAME')}}" class="bg-secondary-light rounded-circle max-w-60">
+                                    </a>
                                 </div>
                                 <div class="staff-name">
-                                    <h5 class="mb-0">{{ucfirst($course->user->name)}} {{ucfirst($course->user->last_name)}}</h5>
+                                    <a href="{{route('instructor-profile', $course->user->unique_id)}}">
+                                        <h5 class="mb-0">{{ucfirst($course->user->name)}} {{ucfirst($course->user->last_name)}}</h5>
+                                    </a>
                                     <span>{{ucfirst($course->user->professonal_heading)}}</span>
                                 </div>
                             </div>
