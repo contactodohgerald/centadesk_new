@@ -289,6 +289,12 @@ class courseController extends Controller
 
         $array_of_subscribers = $this->returnArrayForSubscribeUsers($course->user->unique_id);
         $course->array_of_subscribers = $array_of_subscribers;
+        $course->courseEnrollment;
+        $arrays = [];
+        foreach ($course->courseEnrollment as $each_enrollment){
+            array_push($arrays, $each_enrollment->user_enrolling);
+        }
+        $course->array_of_enrolled_users = $arrays;
 
         $conditions = [
             ['course_id',$course->unique_id],

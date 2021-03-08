@@ -34,13 +34,12 @@
                         <div class="ui left icon input swdh95">
                             <input id="password" type="password" class="prompt srch_explore @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="password" autofocus placeholder="Password">
                             <i class="uil uil-envelope icon icon2"></i>
-
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
                         </div>
+                        @error('password')
+                        <span class="" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                     <button class="login-btn" type="submit">Confirm Password</button>
 

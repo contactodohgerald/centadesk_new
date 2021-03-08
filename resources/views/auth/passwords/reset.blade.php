@@ -32,26 +32,24 @@
                         <div class="ui left icon input swdh95">
                             <input id="email" type="email" class="prompt srch_explore @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus placeholder="Email Address">
                             <i class="uil uil-envelope icon icon2"></i>
-
-                            @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
                         </div>
+                        @error('email')
+                        <span class="" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
 
                     <div class="ui search focus mt-15">
                         <div class="ui left icon input swdh95">
                             <input id="password" type="password" class="prompt srch_explore @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
                             <i class="uil uil-key-skeleton-alt icon icon2"></i>
-
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
                         </div>
+                        @error('password')
+                        <span class="" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
 
                     <div class="ui search focus mt-15">

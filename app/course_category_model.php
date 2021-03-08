@@ -29,6 +29,10 @@ class course_category_model extends Model
      */
     protected $fillable = ['unique_id', 'name', 'description'];
 
+    public function courses(){
+        return $this->hasMany('App\course_model', 'category_id');
+    }
+
     function getAllCategories($desc = 'desc', $id = 'id'){
 
         $categories = course_category_model::orderBy($id, $desc)->get();

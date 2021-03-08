@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Http\Controllers\Course\CoursesHandlerController;
+use App\Http\Controllers\Route\RouteController;
 use App\Http\Controllers\Subscribe\SubscribeController;
 use App\Http\Controllers\Users\GeneralUserController;
 use App\Http\Controllers\VerifyKYC\KYCVerificationController;
@@ -44,12 +46,8 @@ use App\Model\paymentAddress;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
+| about
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
@@ -93,12 +91,20 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' => 'web'], function () {
     // Enroll in course
-    Route::get('/course/checkout/{id}', [CourseEnrollmentController::class, 'enroll_cart']);
     Route::get('/courses/enrolled', [CourseEnrollmentController::class, 'my_enrolled_courses'])->name('enrolled_course');
+    Route::get('/course/checkout/{id}',[CourseEnrollmentController::class,'enroll_cart'])->name('checkout');
+    Route::post('/course/enroll/{id}',[CourseEnrollmentController::class,'enroll']);
 
     Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
     Route::post('/delete-enroll/{id}', [CourseEnrollmentController::class, 'soft_delete']);
     Route::post('/delete-batch', [CourseEnrollmentController::class, 'batch_soft_Delete']);
+});
+Route::group(['middleware' => 'web'], function () {
+    // front side web routes
+    Route::get('/about',[RouteController::class,'aboutUsPage'])->name('about');
+    Route::get('/contact',[RouteController::class,'contactUsPage'])->name('contact');
+    Route::get('/faq',[RouteController::class,'faqPage'])->name('faq');
+
 });
 
 
@@ -163,6 +169,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/view-courses',  [courseController::class, 'show'])->name('view-courses');
     Route::get('/view_course/{unique_id?}', [courseController::class, 'showCourses'])->name('view_course');
     Route::get('/edit-course/{id}', [courseController::class, 'update_page'])->name('edit-course');
+
+    //front end section
+    Route::get('/', [CoursesHandlerController::class, 'homePage'])->name('/');
+    Route::get('/list-courses', [CoursesHandlerController::class, 'getAllCourses'])->name('list-courses');
+    Route::get('/categories', [CoursesHandlerController::class, 'getAllCategories'])->name('categories');
+    Route::get('/instructors-list', [CoursesHandlerController::class, 'getAllInstructorsList'])->name('instructors-list');
+    Route::get('/instructor-profile/{unique_id?}', [CoursesHandlerController::class, 'getInstructorProfile'])->name('instructor-profile');
+    Route::get('/course-list/{unique_id?}', [CoursesHandlerController::class, 'courseListPage'])->name('course-list');
+    Route::get('/course-details/{unique_id?}', [CoursesHandlerController::class, 'getCourseDetails'])->name('course-details');
+
 });
 
 Route::group(['middleware' => 'web'], function () {
