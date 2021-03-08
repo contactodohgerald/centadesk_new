@@ -34,18 +34,22 @@ $users = auth()->user();
 										</div>
 										<div class="prfledt1 ">
 											<h2 class="text-capitalize">{{ $user->name }} {{ $user->last_name }}</h2>
-											<span class="text-capitalize">{{ $user->professonal_heading }}</span>
+											<span class="text-capitalize">{{ $user->professonal_heading }}
+                                                @if ($user->professonal_heading)
+                                                    |
+                                                @endif
+                                                {{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span>
 											<div class="mt-1">
                                                 <a href="">https://www.centadesk.com/scl/ref={{ $user->user_referral_id }}
                                                 </a>
                                             </div>
-                                            <span class="text-capitalize">{{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span>
+                                            {{-- <span class="text-capitalize">{{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span> --}}
 										</div>
 									</div>
 									<ul class="_ttl120">
 										<li>
 											<div class="_ttl121">
-												<div class="_ttl122">Enroll Students</div>
+												<div class="_ttl122">Enrollments</div>
 												<div class="_ttl123">612K</div>
 											</div>
 										</li>
@@ -101,8 +105,8 @@ $users = auth()->user();
 								<div class="nav nav-tabs tab_crse" id="nav-tab" role="tablist">
 									<a class="nav-item nav-link active" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-selected="true">About</a>
 									<a class="nav-item nav-link" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" aria-selected="false">Courses</a>
-{{--									<a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="false">Discussion</a>--}}
-                                    <a class="nav-item nav-link" id="nav-subscriptions-tab" data-toggle="tab" href="#nav-subscriptions" role="tab" aria-selected="false">Subscriptions</a>
+{{--							<a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="false">Discussion</a>--}}
+                  <a class="nav-item nav-link" id="nav-subscriptions-tab" data-toggle="tab" href="#nav-subscriptions" role="tab" aria-selected="false">Subscribers</a>
 								</div>
 							</nav>
 						</div>
@@ -126,7 +130,7 @@ $users = auth()->user();
 								</div>
 								<div class="tab-pane fade" id="nav-courses" role="tabpanel">
 									<div class="crse_content">
-										<h3>My courses ({{ count($user->courses) }})</h3>
+										<h3 class="font-poppins">My courses ({{ count($user->courses) }})</h3>
 										<div class="_14d25">
 											<div class="row">
                                                 @foreach ($user->courses as $e)
@@ -135,7 +139,7 @@ $users = auth()->user();
 														<a href="{{route('view_course', $e->unique_id )}}" class="fcrse_img">
 															<img src="{{asset($link.'/course-img/'.$e->cover_image)}}" width="218.5px" height="122.91">
 															<div class="course-overlay">
-																<div class="badge_seller">Bestseller</div>
+																<div class="badge_seller font-poppins">Bestseller</div>
 																<div class="crse_reviews">
 																	<i class="uil uil-star"></i>4.5
 																</div>
@@ -156,11 +160,11 @@ $users = auth()->user();
 																<span class="vdt14">{{$e->views}} views</span>&nbsp;
 																<span class="vdt14">{{$e->created_at->diffForHumans()}}</span>
 															</div>
-															<a href="{{route('view_course', $e->unique_id )}}" class="crse14s">{{ $e->name}}</a>
-                                                            <a href="javascript:;" class="crse-cate">{{$e->category->name}}</a>
+															<a href="{{route('view_course', $e->unique_id )}}" class="crse14s font-poppins">{{ $e->name}}</a>
+                                                            <a href="javascript:;" class="crse-cate font-poppins">{{$e->category->name}}</a>
 															<div class="auth1lnkprce">
-																<p class="cr1fot text-capitalize">By <a href="#">{{ $e->user->name }} {{ $e->user->last_name }}</a></p>
-																<div class="prce142">{{auth()->user()->getAmountForView($e->price->amount)['data']['currency'] }} {{number_format(auth()->user()->getAmountForView($e->price->amount)['data']['amount'])}}</div>
+																<p class="cr1fot text-capitalize font-poppins">By <a href="#">{{ $e->user->name }} {{ $e->user->last_name }}</a></p>
+																<div class="prce142 font-poppins">{{auth()->user()->getAmountForView($e->price->amount)['data']['currency'] }} {{number_format(auth()->user()->getAmountForView($e->price->amount)['data']['amount'])}}</div>
 																<button class="shrt-cart-btn" title="cart"><i class="uil uil-shopping-cart-alt"></i></button>
 															</div>
 														</div>
@@ -264,7 +268,7 @@ $users = auth()->user();
                                                             <a href="#"><img src="{{asset($link.'/profile/'.$each_subscribe->users->profile_image)}}" alt=""></a>
                                                         </div>
                                                         <div class="tutor_content_dt">
-                                                            <div class="tutor150">
+                                                            <div class="tutor150 text-capitalize">
                                                                 <a href="{{route('view_profile', $each_subscribe->users->unique_id )}}" class="tutor_name">{{$each_subscribe->users->name}} {{$each_subscribe->users->last_name}}</a>
                                                                 <div class="mef78" title="Verify">
                                                                     <i class="uil uil-check-circle"></i>

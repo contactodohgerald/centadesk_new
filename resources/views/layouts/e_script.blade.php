@@ -32,6 +32,7 @@
 <script src="{{asset('dashboard/custom/Basic-function.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 <script src="{{asset('toast/jquery.toast.js')}}"></script>
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
 @include('js_files.js_by_page')
 

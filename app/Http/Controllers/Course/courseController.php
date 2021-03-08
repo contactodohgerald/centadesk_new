@@ -5,23 +5,24 @@ namespace App\Http\Controllers\Course;
 // namespace App\Http\Controllers\Course;
 
 // use App\Model\Like;
-use App\Model\Like;
-use App\Model\Review;
-use App\Model\SavedCourses;
-use App\Model\Subscribe;
-use App\Traits\FireBaseNotification;
-use App\Traits\UsersArray;
 use App\User;
 use Exception;
+use App\Model\Like;
 use App\priceModel;
 use App\course_model;
+use App\Model\Review;
+use App\Model\Subscribe;
 use App\Traits\Generics;
+use App\Traits\UsersArray;
+use App\Model\SavedCourses;
 use App\Traits\appFunction;
 use Illuminate\Http\Request;
 use App\course_category_model;
+use App\Model\courseEnrollment;
+use App\Model\live_stream_model;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Model\live_stream_model;
+use App\Traits\FireBaseNotification;
 use Illuminate\Support\Facades\Validator;
 
 class courseController extends Controller
@@ -32,7 +33,7 @@ class courseController extends Controller
     use UsersArray;
 
     function __construct(
-        Like $like, course_model $course_model, course_category_model $course_category_model, Review $review, live_stream_model $live_stream_model, SavedCourses $savedCourses, User $user, Subscribe $subscribe
+        Like $like, course_model $course_model, course_category_model $course_category_model, Review $review, live_stream_model $live_stream_model, SavedCourses $savedCourses, User $user, Subscribe $subscribe, courseEnrollment $courseEnrollment
     ){
         $this->middleware('auth',  ['except' => ['activateCoursesStatus']]);
         $this->like = $like;
@@ -43,6 +44,7 @@ class courseController extends Controller
         $this->savedCourses = $savedCourses;
         $this->user = $user;
         $this->subscribe = $subscribe;
+        $this->courseEnrollment = $courseEnrollment;
     }
     /**
      * Display a listing of the resource.
@@ -294,7 +296,13 @@ class courseController extends Controller
         }
         $course->array_of_enrolled_users = $arrays;
 
-        return view('dashboard.view_course', ['course'=>$course]);
+        $conditions = [
+            ['course_id',$course->unique_id],
+        ];
+        $enrolls = $this->courseEnrollment->getAllEnrolls($conditions);
+        // return ['course'=>$course, 'enrolls'=> $enrolls];
+
+        return view('dashboard.view_course', ['course'=>$course, 'enrolls'=> $enrolls]);
     }
 
     /**

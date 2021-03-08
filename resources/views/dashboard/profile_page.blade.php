@@ -33,17 +33,22 @@
 										</div>
 										<div class="prfledt1 ">
 											<h2 class="text-capitalize">{{ $user->name }} {{ $user->last_name }}</h2>
-											<span class="text-capitalize">{{ $user->professonal_heading }}</span>
+											<span class="text-capitalize">{{ $user->professonal_heading }}
+                                                @if ($user->professonal_heading)
+                                                    |
+                                                @endif
+
+                                                {{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span>
 											<div class="mt-1">
                                                 <a href="">https://www.centadesk.com/scl/ref={{ $user->user_referral_id }}</a>
                                             </div>
-                                            <span class="text-capitalize">{{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span>
+                                            {{-- <span class="text-capitalize">{{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span> --}}
 										</div>
 									</div>
 									<ul class="_ttl120">
 										<li>
 											<div class="_ttl121">
-												<div class="_ttl122">Enroll Students</div>
+												<div class="_ttl122">Enrollments</div>
 												<div class="_ttl123">612K</div>
 											</div>
 										</li>
@@ -107,7 +112,7 @@
 									<a class="nav-item nav-link active" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-selected="true">About</a>
 									<a class="nav-item nav-link" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" aria-selected="false">Courses</a>
 <!--									<a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="false">Discussion</a>-->
-                                    <a class="nav-item nav-link" id="nav-subscriptions-tab" data-toggle="tab" href="#nav-subscriptions" role="tab" aria-selected="false">Subscriptions</a>
+                                    <a class="nav-item nav-link" id="nav-subscriptions-tab" data-toggle="tab" href="#nav-subscriptions" role="tab" aria-selected="false">Subscribers</a>
 								</div>
 							</nav>
 						</div>

@@ -53,6 +53,37 @@ class CourseEnrollmentController extends Controller
         return view('dashboard.shopping_cart', $view);
     }
 
+    public function my_enrolled_courses(Request $request)
+    {
+        $user = auth()->user();
+
+        // get all user enrolllments
+        $condition = [
+            ['user_enrolling', $user['unique_id'] ],
+        ];
+        $enrollments = $this->courseEnrollment->getAllEnrolls($condition);
+
+        // get course details for each user enrollment
+        // $enrolled_courses = [];
+
+        // foreach ($enrollments as $e ) {
+        //     $condition = [
+        //         ['unique_id', $e['course_id'] ],
+        //     ];
+        //     $each_course = $this->course->getSingleCourse($condition);
+        //     array_push($enrolled_courses,$each_course);
+        // }
+
+
+        $view = [
+            // 'courses' => $enrolled_courses,
+            'enrolls' => $enrollments,
+        ];
+        // return $view;
+        return view('dashboard.enrolled_courses', $view);
+
+    }
+
 
     /**
      * Post Method for enrolling in a course.
@@ -143,28 +174,62 @@ class CourseEnrollmentController extends Controller
             return response()->json(["errors" => $error, 'status' => false]);
         }
     }
-
-
     /**
-     * Update the specified resource in storage.
+     * Function to soft delete an enrollment.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\courseEnrollment  $courseEnrollment
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param string $id
+     * @return void
      */
-    public function update(Request $request, courseEnrollment $courseEnrollment)
+    public function soft_delete(Request $request, $id)
     {
-        //
+        try {
+            if (!$id) {
+                throw new Exception($this->errorMsgs(15)['msg']);
+            }
+            $deleted = courseEnrollment::find($id)->delete();
+
+            if (!$deleted) {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            } else {
+                $error = 'Course Removed Successfully!';
+                return response()->json(["message" => $error, 'status' => true]);
+            }
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\courseEnrollment  $courseEnrollment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(courseEnrollment $courseEnrollment)
+    public function batch_soft_Delete(Request $request)
     {
-        //
+        // return response()->json($request);
+        $batch = explode(',',$request['students_to_promote_batch']);
+        foreach ($batch as $e ) {
+            try {
+                if (!$e) {
+                    throw new Exception($this->errorMsgs(15)['msg']);
+                }
+                $deleted = courseEnrollment::find($e)->delete();
+
+                if (!$deleted) {
+                    throw new Exception($this->errorMsgs(14)['msg']);
+                }
+            } catch (Exception $e) {
+
+                $error = $e->getMessage();
+                $error = [
+                    'errors' => [$error],
+                ];
+                return response()->json(["errors" => $error, 'status' => false]);
+            }
+        }
+
+        $error = 'All Enrolled Courses Removed Successfully!';
+        return response()->json(["message" => $error, 'status' => true]);
     }
 }

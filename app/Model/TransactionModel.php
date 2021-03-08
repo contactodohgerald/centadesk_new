@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TransactionModel extends Model
 {
-    //
     use SoftDeletes;
     protected $primaryKey = 'unique_id';
     public $incrementing = false;
@@ -53,6 +52,8 @@ class TransactionModel extends Model
         $transaction->recurrence = $requestObject->recurrence ?? '';
         $transaction->top_up_option = $requestObject->top_up_option ?? '';
         $transaction->is_deleted = 'no';
+        $transaction->btc_payment_address = $requestObject->btc_payment_address ?? null;
+        $transaction->amount_in_btc = $requestObject->amount_in_btc ?? null;
         if($transaction->save()){
             return $transaction;
         }
