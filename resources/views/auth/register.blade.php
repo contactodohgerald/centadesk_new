@@ -42,60 +42,60 @@
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore @error('referred_id') is-invalid @enderror" type="text" name="referred_id" value="{{ isset($_GET['ref']) ? $_GET['ref'] : old('referred_id') }}" id="referred_id" required maxlength="64" placeholder="Referrer Id">
                                         <i class="uil uil-airplay icon icon2"></i>
-                                        @error('referred_id')
-                                        <span class="invalid-feedback" role="alert">
+                                    </div>
+                                    @error('referred_id')
+                                    <span class="" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                        @enderror
-                                    </div>
+                                    @enderror
                                 </div>
 
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') }}" id="name" required maxlength="64" placeholder="First Name">
                                         <i class="uil uil-info-circle icon icon2"></i>
-                                        @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('name')
+                                    <span class="" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore @error('last_name') is-invalid @enderror" type="text" name="last_name" value="{{ old('last_name') }}" id="last_name" required maxlength="64" placeholder="Last Name">
                                         <i class="uil uil-info-circle icon icon2"></i>
-                                        @error('last_name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('last_name')
+                                    <span class="" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" id="email" required  placeholder="Email">
                                         <i class="uil uil-envelope icon icon2"></i>
-                                        @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('email')
+                                    <span class="" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore @error('password') is-invalid @enderror" type="password" name="password" value="{{ old('password') }}" id="password" required  placeholder="Password">
                                         <i class="uil uil-padlock icon icon2"></i>
-                                        @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('password')
+                                    <span class="" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
 
@@ -120,61 +120,60 @@
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore @error('referred_id') is-invalid @enderror" type="text" name="referred_id" value="{{ isset($_GET['ref']) ? $_GET['ref'] : old('referred_id') }}" id="referred_id" required maxlength="64" placeholder="Referrer Id">
                                         <i class="uil uil-airplay icon icon2"></i>
-
-                                        @error('referred_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('referred_id')
+                                    <span class="" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') }}" id="name" required maxlength="64" placeholder="First Name">
                                         <i class="uil uil-info-circle icon icon2"></i>
-                                        @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore @error('last_name') is-invalid @enderror" type="text" name="last_name" value="{{ old('last_name') }}" id="last_name" required maxlength="64" placeholder="Last Name">
                                         <i class="uil uil-info-circle icon icon2"></i>
-                                        @error('last_name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('last_name')
+                                    <span class="" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" id="email" required  placeholder="Email">
                                         <i class="uil uil-envelope icon icon2"></i>
-                                        @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('email')
+                                    <span class="" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
                                 <div class="ui search focus mt-15">
                                     <div class="ui left icon input swdh95">
                                         <input class="prompt srch_explore @error('password') is-invalid @enderror" type="password" name="password" value="{{ old('password') }}" id="password" required  placeholder="Password">
                                         <i class="uil uil-padlock icon icon2"></i>
-                                        @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('password')
+                                    <span class="" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
 

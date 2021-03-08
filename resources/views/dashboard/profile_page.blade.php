@@ -40,8 +40,7 @@
 
                                                 {{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span>
 											<div class="mt-1">
-                                                <a href="">https://www.centadesk.com/scl/ref={{ $user->user_referral_id }}
-                                                </a>
+                                                <a href="">https://www.centadesk.com/scl/ref={{ $user->user_referral_id }}</a>
                                             </div>
                                             {{-- <span class="text-capitalize">{{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span> --}}
 										</div>

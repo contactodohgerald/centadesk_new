@@ -65,6 +65,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function courses(){
+        return $this->hasMany('App\course_model', 'user_id');
+    }
+
+    public function subscribers(){
+        return $this->hasMany('App\Model\Subscribe', 'user_unique_id');
+    }
+
     public function getSingleUser($condition){
 
         $users = User::where($condition)->first();

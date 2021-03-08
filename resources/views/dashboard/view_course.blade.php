@@ -33,7 +33,71 @@ $disLikeColor = '';
             </div>
         </div>
     </div>
-    <!-- Video Model End -->
+</div>
+<!-- Video Model End -->
+
+	<!-- Body Start -->
+		<div class="wrapper _bg4586">
+			<div class="_215b01">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="section3125">
+								<div class="row justify-content-center">
+									<div class="col-xl-4 col-lg-5 col-md-6">
+										<div class="preview_video">
+											<a href="#" class="fcrse_img" data-toggle="modal" data-target="#videoModal">
+												<img src="{{asset($link.'course-img/'.$course->cover_image)}}" alt="">
+												<div class="course-overlay">
+{{--													<div class="badge_seller">Bestseller</div>--}}
+													<span class="play_btn1"><i class="uil uil-play"></i></span>
+													<span class="_215b02 font-poppins">Preview this course</span>
+												</div>
+											</a>
+										</div>
+										<input type="hidden" class="course_unique_id" value="{{$course->unique_id}}">
+										<input type="hidden" class="user_unique_id" value="{{auth()->user()->unique_id}}">
+										<div class="_215b10">
+											<a href="javascript:;" onclick="saveCourse('{{$course->unique_id}}', '{{auth()->user()->unique_id}}')" class="_215b11" title="Save Course">
+                                                @if (in_array(auth()->user()->unique_id, $course->user_array_hold))
+                                                     <?php
+                                                    $color = 'danger';
+                                                    $text = 'Course Saved!';
+                                                    ?>
+                                                @else
+                                                    <?php
+                                                    $color = '';
+                                                    $text = 'Save Course';
+                                                    ?>
+                                                @endif
+												<span><i class="uil uil-heart text-{{$color}}"></i></span>{{$text}}
+											</a>
+										</div>
+                                        <div class="_215b10">
+                                            <a href="{{route('course-details', $course->unique_id)}}" class="_215b11" title="Share Course">
+                                                <span><i class="uil uil-share-alt"></i></span>Share Course
+                                            </a>
+                                        </div>
+									</div>
+									<div class="col-xl-8 col-lg-7 col-md-6">
+										<div class="_215b03">
+											<h2 class="font-poppins">{{ucfirst($course->name)}}</h2>
+											<span class="_215b04 font-poppins">{{$course->short_caption}}</span>
+										</div>
+										<div class="_215b05 font-poppins">
+											<div class="crse_reviews mr-2 rating_ratio font-poppins">
+											</div>
+											({{count($course->reviews)}} ratings)
+										</div>
+										<div class="_215b05 font-poppins">
+											114,521 students enrolled
+										</div>
+										<div class="_215b05 font-poppins">
+											Last updated: {{$course->created_at->diffForHumans()}}
+										</div>
+                                        <div class="_215b05 font-poppins">
+											Rate This Course:
+                                            <div class="rating-box mt-20" id="rate">
 
     <!-- Body Start -->
     <div class="wrapper _bg4586">
@@ -252,6 +316,60 @@ $disLikeColor = '';
                                                             <span class="rating-star full-star"></span>
                                                             <span class="rating-star full-star"></span>
                                                             <span class="rating-star half-star"></span>
+
+											<a href="javascript:;" class="lkcm152" onclick="likeAndDislikeCourse('dislike')"><i class="uil uil-thumbs-down text-{{$disLikeColor}}"></i><span>{{$course->dislikes}}</span></a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="course_tabs">
+								<nav>
+									<div class="nav nav-tabs tab_crse justify-content-center" id="nav-tab" role="tablist">
+										<a class="nav-item nav-link active" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-selected="true">About</a>
+
+                                        @if (in_array(auth()->user()->unique_id, $course->array_of_enrolled_users))
+										<a class="nav-item nav-link" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" aria-selected="false">Download Url's</a>
+                                        @endif
+										<a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="false">Reviews</a>
+									</div>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="_215b17">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="course_tab_content">
+								<div class="tab-content" id="nav-tabContent">
+									<div class="tab-pane fade show active" id="nav-about" role="tabpanel">
+										<div class="_htg451">
+											<div class="_htg452 mt-35">
+												<h3>Description</h3>
+												<p>{!! $course->description !!}</p>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="nav-courses" role="tabpanel">
+										<div class="crse_content">
+											<h3>Course Download Links</h3>
+											<div class="_112456">
+												<ul class="accordion-expand-holder">
+													<li><span class="_fgr123"> {{count($course->course_download_links)}} links</span></li>
+{{--													<li><span class="_fgr123">47:06:29</span></li>--}}
+												</ul>
+											</div>
+                                            @if(count($course->course_download_links) > 0)
+                                                <div id="accordion" class="ui-accordion ui-widget ui-helper-reset">
+                                                    @foreach($course->course_download_links as $each_course_link)
+                                                    <a href="{{$each_course_link}}" class="accordion-header" target="_blank">
+                                                        <div class="section-header-left">
+                                                            <span class="section-title-wrapper">
+                                                                <i class='uil uil-presentation-play crse_icon'></i>
+                                                                <span class="section-title-text">{{$each_course_link}}</span>
+                                                            </span>
                                                         </div>
                                                         <div class="_rate002">Course Rating</div>
                                                     </div>

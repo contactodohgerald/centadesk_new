@@ -50,17 +50,23 @@ class courseEnrollment extends Model
 
     public function getAllEnrolls($condition, $id = 'id', $desc = 'desc'){
 
-        $course = courseEnrollment::where($condition)->orderBy($id, $desc)->get();
-
-        return $course;
+        return courseEnrollment::where($condition)
+            ->orderBy($id, $desc)
+            ->get();
 
     }
 
     public function getSingleEnrolls($condition){
 
-        $course = courseEnrollment::where($condition)->first();
+        return courseEnrollment::where($condition)
+            ->first();
 
-        return $course;
+    }
+
+    public function getLatestEnrolls($condition){
+       return courseEnrollment::where($condition)
+            ->latest()
+            ->first();
 
     }
 }

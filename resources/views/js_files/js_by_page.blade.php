@@ -347,7 +347,7 @@
 @endif
 
 {{--profiles,--}}
-@php $view_profile = ['view_profile'];  @endphp
+@php $view_profile = ['view_profile', 'profile'];  @endphp
 @php $currentPageName = Request::segment(1); @endphp
 @if(in_array($currentPageName, $view_profile))
     @include('js_by_page.profile_js')
