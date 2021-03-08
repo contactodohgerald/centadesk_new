@@ -216,26 +216,34 @@ class live_stream_controller extends Controller
             return response()->json(["errors" => $error, 'status' => false]);
         }
     }
-
     /**
-     * Store a newly created resource in storage.
+     * Function to soft delete live stream.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param string $id
+     * @return void
      */
-    public function store(Request $request)
+    public function soft_delete(Request $request, $id)
     {
-        //
-    }
+        try {
+            if (!$id) {
+                throw new Exception($this->errorMsgs(15)['msg']);
+            }
+            $deleted = live_stream_model::find($id)->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+            if (!$deleted) {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            } else {
+                $error = 'Live Stream Deleted Successfully!';
+                return response()->json(["message" => $error, 'status' => true]);
+            }
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
+        }
     }
 }

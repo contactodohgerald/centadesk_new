@@ -67,34 +67,47 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     </ul>
                 </li>
                 @endif
-                @if(auth()->user()->privilegeChecker('view_add_courses'))
                 <li class="menu--item menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$Course;?>" title="Categories">
-                        <i class='uil uil-plus-circle menu--icon'></i>
-                        <span class="menu--label">Courses</span>
+                        <i class='uil uil-plus-circle menu--icon text-dark night-text'></i>
+                        <span class="menu--label text-dark night-text">Courses</span>
                     </label>
                     <ul class="sub_menu">
+                        {{-- for_teacher_and_admin --}}
+                        @if(auth()->user()->privilegeChecker('view_add_courses'))
                         <li class="sub_menu--item">
-                            <a href="/create-course" class="sub_menu--link">Create</a>
+                            <a href="/create-course" class="sub_menu--link">Create new</a>
                         </li>
                         <li class="sub_menu--item">
-                            <a href="/view-courses" class="sub_menu--link">View All</a>
+                            <a href="/view-courses" class="sub_menu--link">View created</a>
+                        </li>
+                        @endif
+                        <li class="sub_menu--item">
+                            <a href="{{route('enrolled_course')}}" class="sub_menu--link">Enrolled</a>
+                        </li>
+                        <li class="sub_menu--item">
+                            <a href="{{route('saved-course')}}" class="sub_menu--link">Saved</a>
                         </li>
                     </ul>
                 </li>
-                @endif
                 <li class="menu--item">
                     <a href="{{route('explore')}}" class="menu--link <?php print @$explore;?>" title="Explore">
                         <i class='uil uil-search menu--icon'></i>
                         <span class="menu--label">Explore</span>
                     </a>
                 </li>
-                <li class="menu--item">
+                {{-- <li class="menu--item">
                     <a href="{{route('saved-course')}}" class="menu--link <?php print @$saveCourse;?>" title="Saved Courses">
                         <i class="uil uil-heart-alt menu--icon"></i>
                         <span class="menu--label">Saved Courses</span>
                     </a>
                 </li>
+                <li class="menu--item">
+                    <a href="{{route('enrolled_course')}}" class="menu--link <?php print @$enrolledCourse;?>" title="Saved Courses">
+                        <i class="uil uil-heart-alt menu--icon"></i>
+                        <span class="menu--label">Enrolled Courses</span>
+                    </a>
+                </li> --}}
                 <li class="menu--item menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$live_stream;?>" title="Live Stream">
                         <i class='uil uil-kayak menu--icon'></i>
@@ -203,11 +216,11 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
-                            <a href="{{route('main_settings_page')}}" class="sub_menu--link">Main Setting</a>
+                            <a href="{{route('main_settings_page')}}" class="sub_menu--link">Account </a>
                         </li>
                         @if(auth()->user()->privilegeChecker('view_restricted_roles'))
                         <li class="sub_menu--item">
-                            <a href="{{route('app_settings_page')}}" class="sub_menu--link">App Setting</a>
+                            <a href="{{route('app_settings_page')}}" class="sub_menu--link">System </a>
                         </li>
                         @endif
                     </ul>
@@ -238,7 +251,7 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
         </div>
         <div class="left_footer">
             <div class="left_footer_content">
-                <p>© @php $d=date('Y'); print $d;@endphp <strong>{{env('APP_NAME')}}</strong>. All Rights Reserved.</p>
+                <p class="font-poppins">© @php $d=date('Y'); print $d;@endphp <strong>{{env('APP_NAME')}}</strong>. All Rights Reserved.</p>
             </div>
         </div>
     </div>

@@ -28,13 +28,24 @@ class courseEnrollment extends Model
      */
     protected $fillable = ['unique_id', 'course_id', 'course_creator','user_enrolling', 'percentage'];
 
+
+    // public function user(){
+    //     return $this->belongsTo('App\User', 'user_id');
+    // }
+
     /**
      * One to one relationship with user table.
      *
      * @return array
      */
-    public function user(){
-        return $this->belongsTo('App\User', 'user_id');
+    public function creator(){
+        return $this->belongsTo('App\User', 'course_creator');
+    }
+    public function user_enroll(){
+        return $this->belongsTo('App\User', 'user_enrolling');
+    }
+    public function course(){
+        return $this->belongsTo('App\Course_model', 'course_id');
     }
 
     public function getAllEnrolls($condition, $id = 'id', $desc = 'desc'){

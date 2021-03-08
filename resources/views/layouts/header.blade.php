@@ -103,7 +103,7 @@ $categories_list = $categories->getAllCategories();
                             <img src="{{asset(auth()->user()->returnLink().'/profile/'.auth()->user()->profile_image)}}" alt="">
                             <div class="pd_content">
                                 <div class="rhte85">
-                                    <h6>{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
+                                    <h6 class="text-capitalize">{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
                                     <div class="mef78" title="Verified">
                                         <i class='uil uil-check-circle'></i>
                                     </div>
@@ -114,7 +114,7 @@ $categories_list = $categories->getAllCategories();
                         <a href="{{route('profile')}}" class="dp_link_12">View Profile</a>
                     </div>
                     <div class="night_mode_switch__btn">
-                        <a href="#" id="night-mode" class="btn-night-mode">
+                        <a href="#" id="night-mode" class="btn-night-mode font-poppins">
                             <i class="uil uil-moon"></i> Night mode
                             <span class="btn-night-mode-switch">
 									<span class="uk-switch-button"></span>

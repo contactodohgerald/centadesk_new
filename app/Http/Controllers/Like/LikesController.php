@@ -88,15 +88,15 @@ class LikesController extends Controller
             $likes->save();
 
             if ($action === 'like'){
-                return 'liked!';
+                return 'Liked!';
             }else{
-                return 'disliked!';
+                return 'Disliked!';
             }
         }else{
 
             $like->delete();
 
-            return 'removed!';
+            return 'Removed!';
 
         }
 
