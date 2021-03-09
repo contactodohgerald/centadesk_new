@@ -119,7 +119,7 @@ Route::group(['middleware' => 'web'], function () {
 Route::group(['middleware' => 'web'], function () {
     // crypto currency
     Route::get('/wallet/bitcoin/gateway/{id}', [cryptocurrencyController::class, 'payment_gateway'])->name('btc_gateway');
-    Route::get('/blockchain/callback', [cryptocurrencyController::class, 'payment_gateway'])->name('btc_gateway');
+    Route::get('/blockchain/callback', [cryptocurrencyController::class, 'confirm_payment'])->name('btc_gateway');
 
 
     // Route::get('/prev_address/{xpub}',[PaymentAddressController::class,'get_prev_addresses']);

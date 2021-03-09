@@ -52,8 +52,8 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                         </li>
                     </ul>
                 </li>
-                <li class="menu--item menu--item__has_sub_menu text-dark night-text">
-                    <label class="menu--link <?php print @$Categories;?>" title="Categories">
+                <li class="menu--item menu--item__has_sub_menu">
+                    <label class="menu--link <?php print @$Categories;?> text-dark night-text" title="Categories">
                         <i class='uil uil-layers menu--icon text-dark night-text'></i>
                         <span class="menu--label text-dark night-text">Course Categories</span>
                     </label>
@@ -96,18 +96,6 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                         <span class="menu--label">Explore</span>
                     </a>
                 </li>
-                {{-- <li class="menu--item">
-                    <a href="{{route('saved-course')}}" class="menu--link <?php print @$saveCourse;?>" title="Saved Courses">
-                        <i class="uil uil-heart-alt menu--icon"></i>
-                        <span class="menu--label">Saved Courses</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="{{route('enrolled_course')}}" class="menu--link <?php print @$enrolledCourse;?>" title="Saved Courses">
-                        <i class="uil uil-heart-alt menu--icon"></i>
-                        <span class="menu--label">Enrolled Courses</span>
-                    </a>
-                </li> --}}
                 <li class="menu--item menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$live_stream;?> text-dark night-text" title="Live Stream">
                         <i class='uil uil-kayak menu--icon text-dark night-text'></i>

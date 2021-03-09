@@ -223,3 +223,6 @@ button:disabled {
 .night-mode .exp{
     color:white !important;
   }
+  .value_content p{
+      font-size: 18px;
+  }
