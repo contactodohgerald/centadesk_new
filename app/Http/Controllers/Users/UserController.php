@@ -214,6 +214,8 @@ class UserController extends Controller
                 'twitter' => 'string',
                 'linkedin' => 'string',
                 'youtube' => 'string',
+                'instagram' => 'string',
+                'whatsapp' => 'string',
             ]);
 
             if ($validator->fails()) {
@@ -228,6 +230,8 @@ class UserController extends Controller
             $twitter = $request->input('twitter');
             $linkedin = $request->input('linkedin');
             $youtube = $request->input('youtube');
+            $instagram = $request->input('instagram');
+            $whatsapp = $request->input('whatsapp');
 
             $user = User::find($user->unique_id);
 
@@ -239,6 +243,8 @@ class UserController extends Controller
             $user->twitter = $twitter;
             $user->linkedin = $linkedin;
             $user->youtube = $youtube;
+            $user->instagram = $instagram;
+            $user->whatsapp = $whatsapp;
             $updated = $user->save();
 
 
