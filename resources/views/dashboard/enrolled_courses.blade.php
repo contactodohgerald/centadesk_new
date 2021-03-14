@@ -110,7 +110,7 @@ $users = auth()->user();
 	</div>
     <div class="modal zoomInUp " id="delete_enroll_modal">
         <div class="modal-dialog" role="document">
-            <div class="modal-content"  style="background-color: #333 !important;">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h4>Remove Course?</h4>
                 </div>
@@ -131,14 +131,14 @@ $users = auth()->user();
     </div>
     <div class="modal zoomInUp " id="delete_all_modal">
         <div class="modal-dialog" role="document">
-            <div class="modal-content"  style="background-color: #333 !important;">
+            <div class="modal-content" >
                 <div class="modal-header">
                     <h4>Remove Courses?</h4>
                 </div>
                 <form class="delete_enroll_form">
                     @csrf
                     <div class="modal-body">
-                        <p class="text-danger">By clicking continue, You won't have access to this course(s) you enrolled for! </p>
+                        <p class="text-danger">By clicking continue, You won't have access to the course(s) you enrolled for! </p>
                     </div>
                 </form>
                 <div class="modal-footer no-border">

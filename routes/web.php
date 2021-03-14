@@ -69,10 +69,11 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' => 'web'], function () {
     // Live stream
-    Route::get('/live_stream/create', [live_stream_controller::class, 'create_live']);
+    Route::get('/live_stream/create', [live_stream_controller::class, 'create_live'])->name('create_live');
     Route::get('/live_stream/all', [live_stream_controller::class, 'show']);
     Route::get('/live_stream/edit/{id}', [live_stream_controller::class, 'update_page']);
     Route::get('/explore/live_streams', [live_stream_controller::class, 'explore_live_streams']);
+    Route::get('/live_stream/details/{id}', [live_stream_controller::class, 'live_stream_details'])->name('stream_details');
 
     Route::post('/live/create', [live_stream_controller::class, 'create']);
     Route::post('/live/edit', [live_stream_controller::class, 'update']);
@@ -92,8 +93,8 @@ Route::group(['middleware' => 'web'], function () {
 Route::group(['middleware' => 'web'], function () {
     // Enroll in course
     Route::get('/courses/enrolled', [CourseEnrollmentController::class, 'my_enrolled_courses'])->name('enrolled_course');
-    Route::get('/course/checkout/{id}',[CourseEnrollmentController::class,'enroll_cart'])->name('checkout');
-    Route::post('/course/enroll/{id}',[CourseEnrollmentController::class,'enroll']);
+    Route::get('/course/checkout/{id}', [CourseEnrollmentController::class, 'enroll_cart'])->name('checkout');
+    Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
 
     Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
     Route::post('/delete-enroll/{id}', [CourseEnrollmentController::class, 'soft_delete']);
@@ -101,10 +102,9 @@ Route::group(['middleware' => 'web'], function () {
 });
 Route::group(['middleware' => 'web'], function () {
     // front side web routes
-    Route::get('/about',[RouteController::class,'aboutUsPage'])->name('about');
-    Route::get('/contact',[RouteController::class,'contactUsPage'])->name('contact');
-    Route::get('/faq',[RouteController::class,'faqPage'])->name('faq');
-
+    Route::get('/about', [RouteController::class, 'aboutUsPage'])->name('about');
+    Route::get('/contact', [RouteController::class, 'contactUsPage'])->name('contact');
+    Route::get('/faq', [RouteController::class, 'faqPage'])->name('faq');
 });
 
 
@@ -126,8 +126,6 @@ Route::group(['middleware' => 'web'], function () {
     // Route::post('/user/wallet/update',[cryptocurrencyController::class,'update_wallet']);
     Route::post('/generate_address', [cryptocurrencyController::class, 'gen_payment_address']);
     Route::post('/top_up_btc', [cryptocurrencyController::class, 'create_transaction'])->name('top_up_with_btc');
-
-
 });
 
 
@@ -178,7 +176,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/instructor-profile/{unique_id?}', [CoursesHandlerController::class, 'getInstructorProfile'])->name('instructor-profile');
     Route::get('/course-list/{unique_id?}', [CoursesHandlerController::class, 'courseListPage'])->name('course-list');
     Route::get('/course-details/{unique_id?}', [CoursesHandlerController::class, 'getCourseDetails'])->name('course-details');
-
 });
 
 Route::group(['middleware' => 'web'], function () {

@@ -189,7 +189,7 @@ $home = 'active';
                                     @foreach ($live_streams as $e)
                                     <div class="item">
                                         <div class="stream_1">
-                                            <a href="{{ $e->meeting_url }}" class="stream_bg">
+                                            <a href="{{ route('stream_details',['id'=>$e->unique_id]) }}" class="stream_bg">
                                                 <img src="/storage/profile/{{ $e->user->profile_image }}" alt="">
                                                 <h4 class="font-poppins">{{ $e->user->name }} {{ $e->user->last_name }}</h4>
                                                 {{-- <p class="font-poppins text-capitalize clamp">{{ $e->title }}</p> --}}

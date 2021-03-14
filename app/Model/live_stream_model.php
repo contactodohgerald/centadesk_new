@@ -28,7 +28,8 @@ class live_stream_model extends Model
      *
      * @var array
      */
-    protected $fillable = ['unique_id', 'user_id','title', 'status', 'meeting_url', 'date_to_start', 'time_to_start'];
+            // $table->dropColumn(['description', 'passcode', 'privacy', 'software']);
+    protected $fillable = ['unique_id', 'user_id','title', 'status', 'meeting_url', 'date_to_start', 'time_to_start', 'description', 'passcode', 'privacy', 'software'];
 
 
     public function user(){

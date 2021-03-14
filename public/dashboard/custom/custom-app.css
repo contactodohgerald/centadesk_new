@@ -226,3 +226,6 @@ button:disabled {
   .value_content p{
       font-size: 18px;
   }
+  .stream-pad{
+    padding: 20px 30px;
+  }
