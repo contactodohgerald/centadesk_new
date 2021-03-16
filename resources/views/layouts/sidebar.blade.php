@@ -38,10 +38,10 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     </li>
                 @endif
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                <li class="menu--item menu--item__has_sub_menu">
+                <li class="menu--item menu--item__has_sub_menu text-dark night-text">
                     <label class="menu--link <?php print @$Price;?>" title="Price">
-                        <i class='uil uil-money-bill menu--icon'></i>
-                        <span class="menu--label">Course Price</span>
+                        <i class='uil uil-money-bill menu--icon text-dark night-text'></i>
+                        <span class="menu--label text-dark night-text">Course Price</span>
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
@@ -146,10 +146,10 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     </ul>
                 </li>
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                <li class="menu--item  menu--item__has_sub_menu">
+                <li class="menu--item  menu--item__has_sub_menu  text-dark night-text">
                     <label class="menu--link <?php print @$Users;?>" title="Users">
-                        <i class='uil uil-user menu--icon'></i>
-                        <span class="menu--label">Users</span>
+                        <i class='uil uil-user menu--icon  text-dark night-text'></i>
+                        <span class="menu--label  text-dark night-text">Users</span>
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
