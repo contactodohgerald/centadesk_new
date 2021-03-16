@@ -1,9 +1,6 @@
 @php
     $current_page = 'Testimonies';
     $testimonies = 'active';
-
-    $test = new \App\Model\TestimonyModel();
-    $testimonys = $test->getAllTestimony();
  @endphp
 @include('includes.head')
 

@@ -13,8 +13,13 @@ class TestimoniesController extends Controller
     //
     use Generics;
 
+    function __construct(TestimonyModel $testimonyModel){
+        $this->testimonyModel = $testimonyModel;
+    }
+
     public function showTestimonies(){
-        return view('front-end.testimonies');
+        $testimonys = $this->testimonyModel->getAllTestimony();
+        return view('front-end.testimonies', ['testimonys'=>$testimonys]);
     }
 
     public function createTestimony(){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Course;
 use App\course_category_model;
 use App\course_model;
 use App\Http\Controllers\Controller;
+use App\Model\BlogModel;
 use App\Model\Like;
 use App\Model\Review;
 use App\Traits\Generics;
@@ -17,13 +18,14 @@ class CoursesHandlerController extends Controller
     //
     use Generics, UsersArray;
     function __construct(
-        course_category_model $course_category_model, course_model $course_model, Review $review, Like $like, User $user
+        course_category_model $course_category_model, course_model $course_model, Review $review, Like $like, User $user, BlogModel $blogModel
     ){
         $this->course_category_model = $course_category_model;
         $this->course_model = $course_model;
         $this->review = $review;
         $this->like = $like;
         $this->user = $user;
+        $this->blogModel = $blogModel;
     }
 
     public function homePage(){
@@ -42,6 +44,13 @@ class CoursesHandlerController extends Controller
         ];
         $instructors = $this->user->getAllUsers($query);
 
+        $blogs = $this->blogModel->getAllBlogPost([
+            ['status', 'confirmed'],
+        ]);
+        foreach ($blogs as $each_blog_post){
+            $each_blog_post->blogComments;
+        }
+
         $view = [
             'course_category_model'=>$course_category_model,
             'course'=>$course,
@@ -58,6 +67,7 @@ class CoursesHandlerController extends Controller
             'course_count'=>$this->course_model->getAllCourse([
                 ['deleted_at', null],
             ]),
+            'blogs'=>$blogs
         ];
         return view('front-end.index', $view);
     }

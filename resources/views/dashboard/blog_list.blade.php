@@ -27,7 +27,7 @@
 						<br>
 						<h4 class="text-danger">
 							<div class="pull-right">
-								<button class="btn btn-danger" onclick="confirmBlogPosts(this)">Confirm Blog Post</button>
+								<button class="btn btn-danger" id="confirm_blog_post">Confirm Blog Post</button>
 							</div>
 						</h4>
 					</div>

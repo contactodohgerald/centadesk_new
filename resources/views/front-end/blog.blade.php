@@ -36,36 +36,27 @@
                             </div>
                             <div class="blog-detail">
                                 <div class="entry-title mb-10">
-                                    <a href="{{route('blog-details', $blogs->unique_id )}}">{{$each_blog->blog_title}}</a>
+                                    <a href="{{route('blog-details', $each_blog->unique_id )}}">{{$each_blog->blog_title}}</a>
                                 </div>
                                 <div class="entry-meta mb-10">
                                     <ul class="list-unstyled">
                                         <li><a href="javascript:;"><i class="fa fa-street-view"></i>{{$each_blog->views}}</a></li>
-                                        <li><a href="javascript:;"><i class="fa fa-comment-o"></i> 5</a></li>
+                                        <li><a href="javascript:;"><i class="fa fa-comment-o"></i>{{count($each_blog->blogComments)}}</a></li>
                                         <li><a href="javascript:;"><i class="fa fa-calendar-o"></i>{{$each_blog->created_at->diffForHumans()}}</a></li>
                                     </ul>
                                 </div>
-<!--                                <div class="entry-content">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus fuga laborum totam itaque architecto! Laudantium sed delectus assumenda, doloribus non.</p>
-                                </div>-->
                                 <div class="entry-share d-flex justify-content-between align-items-center">
                                     <div class="entry-button">
-                                        <a href="{{route('blog-details', $blogs->unique_id )}}" class="btn btn-primary btn-sm">Read more</a>
+                                        <a href="{{route('blog-details', $each_blog->unique_id )}}" class="btn btn-primary btn-sm">Read more</a>
                                     </div>
                                     <div class="social">
                                         <strong>Share : </strong>
                                         <ul class="list-unstyled">
                                             <li>
-                                                <a href="#"> <i class="fa fa-facebook"></i> </a>
+                                                <a href="https://facebook.com" target="_blank"> <i class="fa fa-facebook"></i> </a>
                                             </li>
                                             <li>
-                                                <a href="#"> <i class="fa fa-twitter"></i> </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"> <i class="fa fa-pinterest-p"></i> </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"> <i class="fa fa-dribbble"></i> </a>
+                                                <a href="https://twitter.com" target="_blank"> <i class="fa fa-twitter"></i> </a>
                                             </li>
                                         </ul>
                                     </div>

@@ -36,7 +36,7 @@
                         <div class="entry-meta mb-10">
                             <ul class="list-unstyled">
                                 <li><a href="javascript:;"><i class="fa fa-street-view"></i>{{$blog_post->views}}</a></li>
-                                <li><a href="javascript:;"><i class="fa fa-comment-o"></i> 5</a></li>
+                                <li><a href="javascript:;"><i class="fa fa-comment-o"></i>{{count($blog_post->blogComments)}}</a></li>
                                 <li><a href="javascript:;"><i class="fa fa-calendar-o"></i>{{$blog_post->created_at->diffForHumans()}}</a></li>
                             </ul>
                         </div>
@@ -45,7 +45,7 @@
                             <a href="#" class="font-size-24">{{$blog_post->blog_title}}</a>
                         </div>
                         <div class="entry-content">
-                            <p>{!! $blog_post->blog_message !!}}</p>
+                            <p>{!! $blog_post->blog_message !!}</p>
                         </div>
                     </div>
                 </div>
@@ -67,70 +67,20 @@
                 </div>
                 <div class="box">
                     <div class="box-body">
-                        <div class="widget">
-                            <h4 class="mt-0 pb-15 mb-25 bb-1">Share</h4>
-                            <ul class="list-inline mb-0">
-                                <li><a href="#" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-facebook"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-twitter"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-instagram"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="#" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-linkedin"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-youtube"><i class="fa fa-youtube"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-body">
                         <div class="blog-comment">
-                            <h4 class="mt-0 pb-15 mb-25 bb-1">04 Comments</h4>
-                            <div class="comment-1">
-                                <div class="comment-photo">
-                                    <img class="img-fluid" src="../images/front-end-img/avatar/1.jpg" alt="">
-                                </div>
-                                <div class="comment-info">
-                                    <h4 class="theme-color"> Kevin Martin <span>Sep 15, 2020</span></h4>
-                                    <div class="port-post-social float-right">
-                                        <a href="#">Reply</a>
+                            <h4 class="mt-0 pb-15 mb-25 bb-1">{{count($blog_post->blogComments)}} Comments</h4>
+                            @if(count($blog_post->blogComments) > 0)
+                                @foreach($blog_post->blogComments as $hp => $each_blog_comment)
+                                    <div class="comment-1">
+                                        <div class="comment-info">
+                                            <h4 class="theme-color">{{ucfirst($each_blog_comment->user_name)}} <span>{{$each_blog_comment->created_at->diffForHumans()}}</span></h4>
+                                            <p>{{$each_blog_comment->message}}</p>
+                                        </div>
                                     </div>
-                                    <p>Sit amet nibh vulputate cursus a sit amet mauris lorem ipsum dolor sit amet of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio <a href="#">http://themeforest.net</a> Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat </p>
-                                </div>
-                            </div>
-                            <div class="comment-1 comment-2">
-                                <div class="comment-photo">
-                                    <img class="img-fluid" src="../images/front-end-img/avatar/2.jpg" alt="">
-                                </div>
-                                <div class="comment-info">
-                                    <h4 class="theme-color"> Kevin Martin <span>Sep 15, 2020</span></h4>
-                                    <div class="port-post-social float-right">
-                                        <a href="#">Reply</a>
-                                    </div>
-                                    <p>Vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor Lorem ipsum dolor sit amet of Lorem Ipsum. Proin gravida nibh..</p>
-                                </div>
-                            </div>
-                            <div class="comment-1 comment-2">
-                                <div class="comment-photo">
-                                    <img class="img-fluid" src="../images/front-end-img/avatar/3.jpg" alt="">
-                                </div>
-                                <div class="comment-info">
-                                    <h4 class="theme-color"> Kevin Martin <span>Sep 15, 2020</span></h4>
-                                    <div class="port-post-social float-right">
-                                        <a href="#">Reply</a>
-                                    </div>
-                                    <p>Aenean sollicitudin, lorem quis bibendum auctor Lorem ipsum dolor sit amet of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet..</p>
-                                </div>
-                            </div>
-                            <div class="comment-1">
-                                <div class="comment-photo">
-                                    <img class="img-fluid" src="../images/front-end-img/avatar/4.jpg" alt="">
-                                </div>
-                                <div class="comment-info">
-                                    <h4 class="theme-color"> Kevin Martin <span>Sep 15, 2020</span></h4>
-                                    <div class="port-post-social float-right">
-                                        <a href="#">Reply</a>
-                                    </div>
-                                    <p>Bibendum auctor Lorem ipsum dolor sit amet of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris <a href="#">http://themeforest.net</a> Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat </p>
-                                </div>
-                            </div>
+                                @endforeach
+                            @else
+                                <div class="alert alert-success text-center"> No Comment For This Blog at this time</div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -138,33 +88,40 @@
                     <div class="box-body">
                         <div class="widget">
                             <h4 class="mt-0 pb-15 mb-25 bb-1">Leave a Reply</h4>
-                            <form id="contactform" class="form-row">
+                            @if(Session::has('success_message'))
+                                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                                    <i class="fa fa-envelope-o mr-2"></i>
+                                    {{ Session::get('success_message') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            @elseif(Session::has('error_message'))
+                                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                    <i class="fa fa-envelope-o mr-2"></i>
+                                    {{ Session::get('error_message') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            @endif
+                            <form id="contactform" class="form-row" action="{{route('blog-comment', $blog_post->unique_id)}}" method="post">
+                                @csrf
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Website URL">
+                                        <input type="text" name="name" required class="form-control" placeholder="Your Name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Your Name">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Email Adress">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Phone Number">
+                                        <input type="email" name="email" class="form-control" required placeholder="Email Address">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <textarea class="form-control" rows="7" placeholder="message"></textarea>
+                                        <textarea class="form-control" name="message" rows="7" required placeholder="message"></textarea>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-12 col-md-12">
                                     <button name="submit" type="submit" value="Send" class="btn btn-primary"><span>Submit Now</span></button>
                                 </div>
@@ -175,214 +132,98 @@
             </div>
             <div class="col-lg-3 col-md-4 col-12">
                 <div class="side-block px-20 py-10 bg-white">
-                    <div class="widget courses-search-bx placeholdertx mb-10">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <label>Search...</label>
-                                <input name="name" type="text" required="" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget clearfix">
-                        <h4 class="pb-15 mb-15 bb-1">Categories</h4>
-                        <div class="media-list media-list-divided">
-                            <a class="px-0 media media-single" href="#">
-                                <span class="title ml-0">Biology Course </span>
-                                <span class="mx-0 badge badge-secondary-light">125</span>
-                            </a>
-
-                            <a class="px-0 media media-single" href="#">
-                                <span class="title ml-0">Contemporary Art</span>
-                                <span class="mx-0 badge badge-primary-light">124</span>
-                            </a>
-
-                            <a class="px-0 media media-single" href="#">
-                                <span class="title ml-0">Elizabethan Theater</span>
-                                <span class="mx-0 badge badge-info-light">425</span>
-                            </a>
-
-                            <a class="px-0 media media-single" href="#">
-                                <span class="title ml-0">Geometry Course</span>
-                                <span class="mx-0 badge badge-success-light">321</span>
-                            </a>
-
-                            <a class="px-0 media media-single" href="#">
-                                <span class="title ml-0">Informatic Course</span>
-                                <span class="mx-0 badge badge-danger-light">159</span>
-                            </a>
-
-                            <a class="px-0 media media-single" href="#">
-                                <span class="title ml-0">Live Drawing</span>
-                                <span class="mx-0 badge badge-warning-light">452</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="widget clearfix">
-                        <h4 class="pb-15 mb-25 bb-1">Archives</h4>
-                        <ul class="list list-unstyled">
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> November 2020</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> October 2020</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> September 2020</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> August 2020</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> July 2020</a></li>
-                        </ul>
-                    </div>
                     <div class="widget">
                         <h4 class="pb-15 mb-25 bb-1">Tags</h4>
                         <div class="widget-tags">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Bootstrap</a></li>
-                                <li><a href="#">HTML5</a></li>
-                                <li><a href="#">Wordpress</a></li>
-                                <li><a href="#">CSS3</a></li>
-                                <li><a href="#">Creative</a></li>
-                                <li><a href="#">Multipurpose</a></li>
-                                <li><a href="#">Bootstrap</a></li>
-                                <li><a href="#">HTML5</a></li>
-                                <li><a href="#">Wordpress</a></li>
-                            </ul>
+                            @if(count($blog_post->blog_post_tag) > 0)
+                                <ul class="list-unstyled">
+                                    @foreach($blog_post->blog_post_tag as $wer => $message)
+                                        <li><a href="#">{{$message->tag_name}}</a></li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </div>
-                    </div>
-                    <div class="widget">
-                        <h4 class="pb-15 mb-25 bb-1">Meta</h4>
-                        <ul class="list list-unstyled">
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> Log in</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> Entries RSS</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> Comments RSS </a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> Online</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> WordPress.org</a></li>
-                        </ul>
                     </div>
                     <div class="widget">
                         <h4 class="pb-15 mb-25 bb-1">Recent Posts </h4>
-                        <div class="recent-post clearfix">
-                            <div class="recent-post-image">
-                                <img class="img-fluid bg-primary-light" src="../images/front-end-img/courses/cor-logo-1.png" alt="">
-                            </div>
-                            <div class="recent-post-info">
-                                <a href="#">Curabitur id scelerisque diam. Pellentesque ut lectus arcu.</a>
-                                <span><i class="fa fa-calendar-o"></i> September 30, 2020</span>
-                            </div>
-                        </div>
-                        <div class="recent-post clearfix">
-                            <div class="recent-post-image">
-                                <img class="img-fluid bg-primary-light" src="../images/front-end-img/courses/cor-logo-5.png" alt="">
-                            </div>
-                            <div class="recent-post-info">
-                                <a href="#">Curabitur id scelerisque diam. Pellentesque ut lectus arcu.</a>
-                                <span><i class="fa fa-calendar-o"></i> September 30, 2020</span>
-                            </div>
-                        </div>
-                        <div class="recent-post clearfix">
-                            <div class="recent-post-image">
-                                <img class="img-fluid bg-primary-light" src="../images/front-end-img/courses/cor-logo-4.png" alt="">
-                            </div>
-                            <div class="recent-post-info">
-                                <a href="#">Curabitur id scelerisque diam. Pellentesque ut lectus arcu.</a>
-                                <span><i class="fa fa-calendar-o"></i> September 30, 2020</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget">
-                        <h4 class="pb-15 mb-25 bb-1">Newsletter</h4>
-                        <div class="widget-newsletter">
-                            <div class="newsletter-icon">
-                                <i class="fa fa-envelope-o"></i>
-                            </div>
-                            <div class="newsletter-content">
-                                <i>Fusce tincidunt, metus at dignissim fringilla, lorem velit posuere mi, sed pretium turpis leo ac metus. Aenean sit amet sapien eget eros </i>
-                            </div>
-                            <div class="newsletter-form mt-20">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Name">
+                        @if(count($recentPosts) > 0)
+                            @foreach($recentPosts as $r => $each_recent_post)
+                                @if($r == 10)
+                                    @break
+                                @endif
+                                <div class="recent-post clearfix">
+                                    <div class="recent-post-image">
+                                        <img class="img-fluid bg-primary-light" src="{{asset('storage/blog_image/'.$each_recent_post->blog_image)}}" alt="{{env('APP_NAME')}}">
+                                    </div>
+                                    <div class="recent-post-info">
+                                        <a href="{{route('blog-details', $each_recent_post->unique_id )}}">{{$each_recent_post->blog_title}}</a>
+                                        <span><i class="fa fa-calendar-o"></i>{{$each_recent_post->created_at->diffForHumans()}}</span>
+                                    </div>
                                 </div>
-                                <a class="btn btn-primary btn-block" href="#">Submit</a>
-                            </div>
-                        </div>
+                            @endforeach
+                        @else
+                            <div class="alert alert-success text-center">No Blog Post is Available at this time, Please check back at a later time</div>
+                        @endif
                     </div>
+
                     <div class="widget">
                         <h4 class="pb-15 mb-25 bb-1">Testimonials</h4>
                         <div class="owl-carousel" data-nav-dots="false" data-items="1" data-md-items="1" data-sm-items="1" data-xs-items="1" data-xx-items="1">
-                            <div class="item">
-                                <div class="testimonial-widget">
-                                    <div class="testimonial-content">
-                                        <p>In odio metus, porta vitae neque vitae, faucibus viverra orci. Quisque in lorem aliquam, ullamcorper turpis a, aliquam dui. In accumsan aliquam viverra.</p>
-                                    </div>
-                                    <div class="testimonial-info mt-20">
-                                        <div class="testimonial-avtar">
-                                            <img class="img-fluid" src="../images/front-end-img/avatar/1.jpg" alt="">
-                                        </div>
-                                        <div class="testimonial-name">
-                                            <strong>Johen Doe</strong>
-                                            <span>Project Manager</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-widget">
-                                    <div class="testimonial-content">
-                                        <p>Morbi condimentum leo eu lacinia accumsan. Phasellus cursus rhoncus elit, mattis convallis sapien efficitur non phasellus et erat sapien phasellus. </p>
-                                    </div>
-                                    <div class="testimonial-info mt-20">
-                                        <div class="testimonial-avtar">
-                                            <img class="img-fluid" src="../images/front-end-img/avatar/2.jpg" alt="">
-                                        </div>
-                                        <div class="testimonial-name">
-                                            <strong>Johen Doe</strong>
-                                            <span>Design</span>
+                            @if(count($testimonys) > 0)
+                                @foreach($testimonys as $kk => $each_test)
+                                    <div class="item">
+                                        <div class="testimonial-widget">
+                                            <div class="testimonial-content">
+                                                <p>{{$each_test->message}} </p>
+                                            </div>
+                                            <div class="testimonial-info mt-20">
+                                                <div class="testimonial-name">
+                                                    <strong>{{$each_test->user_name}}</strong>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-widget">
-                                    <div class="testimonial-content">
-                                        <p>In odio metus, porta vitae neque vitae, faucibus viverra orci. Quisque in lorem aliquam, ullamcorper turpis a, aliquam dui. In accumsan aliquam viverra.</p>
-                                    </div>
-                                    <div class="testimonial-info mt-20">
-                                        <div class="testimonial-avtar">
-                                            <img class="img-fluid" src="../images/front-end-img/avatar/3.jpg" alt="">
-                                        </div>
-                                        <div class="testimonial-name">
-                                            <strong>Johen Doe</strong>
-                                            <span>Project Manager</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="testimonial-widget">
-                                    <div class="testimonial-content">
-                                        <p>Morbi condimentum leo eu lacinia accumsan. Phasellus cursus rhoncus elit, mattis convallis sapien efficitur non phasellus et erat sapien phasellus. </p>
-                                    </div>
-                                    <div class="testimonial-info mt-20">
-                                        <div class="testimonial-avtar">
-                                            <img class="img-fluid" src="../images/front-end-img/avatar/4.jpg" alt="">
-                                        </div>
-                                        <div class="testimonial-name">
-                                            <strong>Johen Doe</strong>
-                                            <span>Design</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="widget mb-10">
                         <h4 class="pb-15 mb-25 bb-1">Quick contact</h4>
-                        <form class="gray-form">
+                        @if(Session::has('success_message'))
+                            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                                <i class="fa fa-envelope-o mr-2"></i>
+                                {{ Session::get('success_message') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        @elseif(Session::has('error_message'))
+                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                <i class="fa fa-envelope-o mr-2"></i>
+                                {{ Session::get('error_message') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        @endif
+                        <form class="gray-form" action="{{route('contact-mail')}}" method="post">
+                                @csrf
                             <div class="form-group">
-                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Name">
+                                <input type="text" name="full_name" class="form-control" id="full_name" placeholder="Full Name (Optional)">
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" id="exampleInputphone" placeholder="Email">
+                                <input type="email" name="email" required class="form-control" id="email" placeholder="Email">
                             </div>
-
                             <div class="form-group">
-                                <textarea class="form-control" rows="4" placeholder="message"></textarea>
+                                <input type="text" name="phone" required class="form-control" id="phone" placeholder="Phone (Optional)">
                             </div>
-                            <a class="btn btn-primary btn-block" href="#">Submit</a>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="subject" required placeholder="Subject">
+                            </div>
+                            <div class="form-group">
+                                <textarea name="message" rows="4" class="form-control" required placeholder="Message"></textarea>
+                            </div>
+                            <button class="btn btn-primary btn-block" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
