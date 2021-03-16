@@ -20,8 +20,8 @@ class cryptocurrencyController extends Controller
     use appFunction, Generics;
 
     private $blockchain_api_v2_key = '0b9da7ee-b055-42fc-ac3f-1872f7641577';
-    private $call_back_url = 'https://centadesk.com';
     private $crypto_compare_api_key = '9f84f53a067dd8d02d95feb9fef27ba64208ef313e0c7367a8e7f2d49f5866e7';
+    private $blockchain_api_secrete = '9f055-42fc-ac3f-1872f9f5866e7';
 
     // old xpub6CiHKyu1wfr4WYXUv9amvGUErgKpMGtc8qmKFakjMbVK8EctZihZGpEA9ybLusoyUVg7PRrwy3DMN4Gxu2EiwvF2boBTHyLy9kqcvwSmm6V
 
@@ -29,12 +29,14 @@ class cryptocurrencyController extends Controller
 
 
 
-    function __construct(AppSettings $appSettings, TransactionModel $transactionModel, PaymentAddressController $PaymentAddressController)
+    function __construct(AppSettings $appSettings, TransactionModel $transactionModel, PaymentAddressController $PaymentAddressController, User $User)
     {
         $this->middleware('auth');
         $this->appSettings = $appSettings;
         $this->transactionModel = $transactionModel;
         $this->PaymentAddressController = $PaymentAddressController;
+        $this->User = $User;
+        // User
     }
 
     public function payment_gateway($id)
@@ -67,11 +69,11 @@ class cryptocurrencyController extends Controller
      */
     public function gen_payment_address(Request $request, $txn_id)
     {
+        $callback_url = 'https://centadesk.com/blockchain/callback?txn_id=' . $txn_id . '&secret=' . $this->blockchain_api_secrete;
         // Get the account xpub.
         $app_settings = $this->appSettings->getSingleModel();
         $app_xpub = $app_settings['account_xpub'];
 
-        $callback_url = $this->call_back_url;
         $api_key = $this->blockchain_api_v2_key;
         try {
             if (empty($txn_id)) {
@@ -91,10 +93,7 @@ class cryptocurrencyController extends Controller
 
             // check if response contains a value
             if (empty($response)) {
-                $error = [
-                    'errors' => [$this->errorMsgs(15)['msg']],
-                ];
-                return ['errors' => $error, 'status' => false];
+                throw new Exception($this->errorMsgs(15)['msg']);
             }
 
 
@@ -155,8 +154,7 @@ class cryptocurrencyController extends Controller
             $address = $this->gen_payment_address($request, $txn_id);
 
             if ($address['status'] === false) {
-                // return response()->json($address);
-                throw new Exception($address['errors']['errors']);
+                return response()->json($address);
             }
 
             $response = $this->api_call('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD&api_key=' . $this->crypto_compare_api_key);
@@ -201,7 +199,7 @@ class cryptocurrencyController extends Controller
         }
     }
     /**
-     * Function to convert crypto_compare response to crypto equivalent.
+     * Function to convert crypto_compare response from usd to crypto equivalent.
      *
      * @return numeric
      */
@@ -212,13 +210,81 @@ class cryptocurrencyController extends Controller
         $amt_in_coin = $amt_in_usd / $equiv;
         return $amt_in_coin;
     }
+    /**
+     * Function to convert crypto_compare response.
+     *
+     * @return numeric
+     */
+    public function convert_to($amt_in_usd, $from, $to)
+    {
+        $response = $this->api_call('https://min-api.cryptocompare.com/data/price?fsym=' . $to . '&tsyms=' . $from . '&api_key=' . $this->crypto_compare_api_key);
+        // the api returns the equivalent of 1 of the currency
+        if (!$response) {
+            return;
+        }
+        $equiv = $response[$to];
+        $amt_in_coin = $amt_in_usd / $equiv;
+        return $amt_in_coin;
+    }
+    public function btc_to_satoshi($btc)
+    {
+        $satoshi_equiv = $btc / 0.00000001;
+        return $satoshi_equiv;
+    }
+
+    public function satoshi_to_btc($satoshi)
+    {
+        $btc_equiv = $satoshi * 0.00000001;
+        return $btc_equiv;
+    }
 
     public function confirm_payment()
     {
-        /*
-        confirm the transaction id
-        change transaction status to confirmed
-        top up the balance in the user table
-        */
+        $real_secret = $this->blockchain_api_secrete;
+
+        if ($_GET['secret'] !== $real_secret) {
+            return 'error';
+        }
+
+        $txn_id = $_GET['txn_id'];
+        $transaction_hash = $_GET['transaction_hash'];
+        $value_in_satoshi = $_GET['value'];     // blockchain sends back the value sent in satoshi equiv.
+        $value_in_btc = $this->satoshi_to_btc($value_in_satoshi);
+
+        //Commented out to test, uncomment when live
+        if ($_GET['test'] == true) {
+            return 'error';
+        }
+
+        $transaction = TransactionModel::find($txn_id);
+        if (!$transaction) {
+            return 'error';
+        }
+        // convert btc callback reponse to usd
+        $amt_in_usd = $this->convert_to($value_in_btc, 'BTC', 'USD');
+        if (empty($amt_in_usd)) {
+            return $this->errorMsgs(15)['msg'];
+        }
+
+        // update transaction details and confirm
+        $transaction->amount = $amt_in_usd;
+        $transaction->amount_in_btc = $value_in_btc;
+        $transaction->status = 'confirmed';
+        $transaction->btc_transaction_hash = $transaction_hash;
+
+        if (!$transaction->save()) {
+            return $this->errorMsgs(14)['msg'];
+        }
+        // update user balance
+        $user = $this->User->getOneModel($transaction->user_unique_id);
+        $current_balance = $user->balance;
+        $new_balance = $current_balance + $amt_in_usd;
+        $user->balance = $new_balance;
+
+        if ($user->save()) {
+            echo "*ok*";
+        } else {
+            return $this->errorMsgs(14)['msg'];
+        }
     }
 }

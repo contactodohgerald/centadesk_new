@@ -70,7 +70,7 @@
                                                                     <label>Title*</label>
                                                                     <div class="ui left icon input swdh19">
                                                                         <input class="prompt srch_explore" type="text" placeholder="Enter your course title" name="title" value="">
-                                                                        <div class="badge_num">15</div>
+                                                                        <div class="badge_num">40</div>
                                                                         <div class="err_title error_displayer"></div>
                                                                     </div>
                                                                 </div>
@@ -92,7 +92,7 @@
                                                                     <label>Very Short Caption*</label>
                                                                     <div class="ui left icon input swdh19">
                                                                         <input class="prompt srch_explore" type="text" placeholder="Summarize in a sentence" name="caption">
-                                                                        <div class="badge_num2">15</div>
+                                                                        <div class="badge_num2">100</div>
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -772,14 +772,14 @@ i.icon1 {
     overflow: hidden;
 }
 
-.stream_bg p {
+/* .stream_bg p {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     color: #686f7a;
     display: inline-block;
     text-align: center;
 	position: relative;
-}
+} */
 
 .stream_bg p span {
     width: 6px;
