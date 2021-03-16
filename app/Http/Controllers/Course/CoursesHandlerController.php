@@ -47,6 +47,17 @@ class CoursesHandlerController extends Controller
             'course'=>$course,
             'new_course'=>$new_course,
             'instructors'=>$instructors,
+            'instructors_count'=>$this->user->getAllUsers([
+                ['status', 'active'],
+                ['user_type', 'teacher'],
+            ]),
+            'student_count'=>$this->user->getAllUsers([
+                ['status', 'active'],
+                ['user_type', 'student'],
+            ]),
+            'course_count'=>$this->course_model->getAllCourse([
+                ['deleted_at', null],
+            ]),
         ];
         return view('front-end.index', $view);
     }

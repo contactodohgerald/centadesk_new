@@ -1,9 +1,11 @@
+@php
+    $appSettings = new \App\Model\AppSettings();
+    $site_logo = $appSettings->getSingleModel();
+@endphp
 @php $pageTitle = 'Login Area'; @endphp
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- Mirrored from gambolthemes.net/html-items/cursus_demo_f12/sign_in.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 18 Aug 2020 17:44:30 GMT -->
 @include('layouts.head_auth')
 
 <body>
@@ -14,10 +16,10 @@
             <div class="col-lg-12">
                 <div class="main_logo25" id="logo">
                     <a href="/">
-                        <img src="{{asset('dashboard/images/logo.svg')}}" alt="">
+                        <img src="/storage/site_logo/{{ $site_logo->site_logo }}" alt="{{env('APP_NAME')}}">
                     </a>
                     <a href="/">
-                        <img class="logo-inverse" src="{{asset('dashboard/images/ct_logo.svg')}}" alt="">
+                        <img class="logo-inverse" src="/storage/site_logo/{{ $site_logo->site_logo }}}" alt="{{env('APP_NAME')}}">
                     </a>
                 </div>
             </div>

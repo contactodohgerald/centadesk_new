@@ -420,7 +420,7 @@
                                         <a href="https://facebook.com/{{ $each_instructor->facebook }}" target="_blank" class="btn btn-circle mb-5 btn-facebook"><i class="fa fa-facebook"></i></a>
                                         <a href="https://twitter.com/{{ $each_instructor->twitter }}" target="_blank" class="btn btn-circle mb-5 btn-twitter"><i class="fa fa-twitter"></i></a>
                                         <a href="https://www.youtube.com/{{ $each_instructor->youtube }}" target="_blank" class="btn btn-circle mb-5 btn-youtube"><i class="fa fa-youtube"></i></a>
-                                        <a href="https://www.linkedin.com/{{ $course->user->linkedin }}" target="_blank" class="btn btn-circle mb-5 btn-linkedin"><i class="fa fa-linkedin"></i></a>
+                                        <a href="https://www.linkedin.com/{{ $each_instructor->linkedin }}" target="_blank" class="btn btn-circle mb-5 btn-linkedin"><i class="fa fa-linkedin"></i></a>
                                     </div>
                                     <h3 class="my-10"><a href="#">{{ucfirst($each_instructor->name)}} {{ucfirst($each_instructor->last_name)}}</a></h3>
                                     <h6 class="user-info mt-0 mb-10 text-fade">{{ucfirst($each_instructor->professonal_heading)}}</h6>
@@ -443,40 +443,31 @@
 <section class="py-50 bg-img countnm-bx" style="background-image: url({{asset('front-end/images/front-end-img/background/bg-3.jpg')}})" data-overlay="5" data-aos="fade-up">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-12">
+            <div class="col-lg-4 col-md-4 col-12">
                 <div class="text-center">
                     <div class="w-80 h-80 l-h-100 rounded-circle b-1 border-white text-center mx-auto">
                         <span class="text-white font-size-40 icon-User"><span class="path1"></span><span class="path2"></span></span>
                     </div>
-                    <h1 class="countnm my-10 text-white font-weight-300">5428</h1>
-                    <div class="text-uppercase text-white">Teachers</div>
+                    <h1 class="countnm my-10 text-white font-weight-300">{{count($instructors_count)}}</h1>
+                    <div class="text-uppercase text-white">Instructors</div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-12">
+            <div class="col-lg-4 col-md-4 col-12">
                 <div class="text-center">
                     <div class="w-80 h-80 l-h-100 rounded-circle b-1 border-white text-center mx-auto">
                         <span class="text-white font-size-40 icon-Book"></span>
                     </div>
-                    <h1 class="countnm my-10 text-white font-weight-300">120</h1>
+                    <h1 class="countnm my-10 text-white font-weight-300">{{count($course_count)}}</h1>
                     <div class="text-uppercase text-white">Courses</div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-12">
+            <div class="col-lg-4 col-md-4 col-12">
                 <div class="text-center">
                     <div class="w-80 h-80 l-h-100 rounded-circle b-1 border-white text-center mx-auto">
                         <span class="text-white font-size-40 icon-Group"><span class="path1"></span><span class="path2"></span></span>
                     </div>
-                    <h1 class="countnm my-10 text-white font-weight-300">7485</h1>
+                    <h1 class="countnm my-10 text-white font-weight-300">{{count($student_count)}}</h1>
                     <div class="text-uppercase text-white">Student</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-12">
-                <div class="text-center">
-                    <div class="w-80 h-80 l-h-100 rounded-circle b-1 border-white text-center mx-auto">
-                        <span class="text-white font-size-40 icon-Globe"><span class="path1"></span><span class="path2"></span></span>
-                    </div>
-                    <h1 class="countnm my-10 text-white font-weight-300">100</h1>
-                    <div class="text-uppercase text-white">Country</div>
                 </div>
             </div>
         </div>

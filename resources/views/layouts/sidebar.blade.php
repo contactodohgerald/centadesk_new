@@ -96,18 +96,6 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                         <span class="menu--label">Explore</span>
                     </a>
                 </li>
-                {{-- <li class="menu--item">
-                    <a href="{{route('saved-course')}}" class="menu--link <?php print @$saveCourse;?>" title="Saved Courses">
-                        <i class="uil uil-heart-alt menu--icon"></i>
-                        <span class="menu--label">Saved Courses</span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="{{route('enrolled_course')}}" class="menu--link <?php print @$enrolledCourse;?>" title="Saved Courses">
-                        <i class="uil uil-heart-alt menu--icon"></i>
-                        <span class="menu--label">Enrolled Courses</span>
-                    </a>
-                </li> --}}
                 <li class="menu--item menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$live_stream;?>" title="Live Stream">
                         <i class='uil uil-kayak menu--icon'></i>
@@ -115,10 +103,10 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
-                            <a href="/live_stream/create" class="sub_menu--link">Create</a>
+                            <a href="{{route('create_live')}}" class="sub_menu--link">Create</a>
                         </li>
                         <li class="sub_menu--item">
-                            <a href="/live_stream/all" class="sub_menu--link">View All</a>
+                            <a href="{{route('show_live_stream')}}" class="sub_menu--link">View All</a>
                         </li>
                     </ul>
                 <li class="menu--item">
@@ -196,22 +184,39 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
         <div class="left_section pt-2">
             <ul>
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                <li class="menu--item">
-                    <a href="{{route('complain_list')}}" class="menu--link <?php print @$Complain;?>" title="Complains">
-                        <i class='uil uil-auto-flash menu--icon'></i>
-                        <span class="menu--label">Complains <span class="noti_count">{{$complains->count()}}</span></span>
-                    </a>
-                </li>
-                <li class="menu--item">
-                    <a href="{{route('verify_kyc')}}" class="menu--link <?php print @$KYC;?>" title="KYC Verification">
-                        <i class='uil uil-comment-alt-verify menu--icon'></i>
-                        <span class="menu--label">KYC Verifications <span class="noti_count">{{$verifications_count->count()}}</span></span>
-                    </a>
-                </li>
+                    <li class="menu--item  menu--item__has_sub_menu">
+                        <label class="menu--link <?php print @$blogs;?>" title="Blog Area">
+                            <i class='uil uil-newspaper menu--icon'></i>
+                            <span class="menu--label">Blog Area</span>
+                        </label>
+                        <ul class="sub_menu">
+                            <li class="sub_menu--item">
+                                <a href="{{route('create-blog-tag')}}" class="sub_menu--link">Create Blog Tag</a>
+                            </li>
+                            <li class="sub_menu--item">
+                                <a href="{{route('create-blog')}}" class="sub_menu--link">Add New Blog</a>
+                            </li>
+                            <li class="sub_menu--item">
+                                <a href="{{route('blog-list')}}" class="sub_menu--link">Blog List</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu--item">
+                        <a href="{{route('complain_list')}}" class="menu--link <?php print @$Complain;?>" title="Complains">
+                            <i class='uil uil-auto-flash menu--icon'></i>
+                            <span class="menu--label">Complains <span class="noti_count">{{$complains->count()}}</span></span>
+                        </a>
+                    </li>
+                    <li class="menu--item">
+                        <a href="{{route('verify_kyc')}}" class="menu--link <?php print @$KYC;?>" title="KYC Verification">
+                            <i class='uil uil-comment-alt-verify menu--icon'></i>
+                            <span class="menu--label">KYC Verifications <span class="noti_count">{{$verifications_count->count()}}</span></span>
+                        </a>
+                    </li>
                 @endif
                 <li class="menu--item  menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$Setting;?>" title="Setting">
-                        <i class='uil uil-cog menu--icon'></i>
+                        <i class='uil uil-cloud-set menu--icon'></i>
                         <span class="menu--label">Setting </span>
                     </label>
                     <ul class="sub_menu">
@@ -219,9 +224,12 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                             <a href="{{route('main_settings_page')}}" class="sub_menu--link">Account </a>
                         </li>
                         @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                        <li class="sub_menu--item">
-                            <a href="{{route('app_settings_page')}}" class="sub_menu--link">System </a>
-                        </li>
+                            <li class="sub_menu--item">
+                                <a href="{{route('app_settings_page')}}" class="sub_menu--link">System </a>
+                            </li>
+                            <li class="sub_menu--item">
+                            <a href="{{route('add-testimonies')}}" class="sub_menu--link">Add Testimonies </a>
+                             </li>
                         @endif
                     </ul>
                 </li>

@@ -33,9 +33,7 @@ $disLikeColor = '';
             </div>
         </div>
     </div>
-</div>
-<!-- Video Model End -->
-
+    <!-- Video Model End -->
 	<!-- Body Start -->
 		<div class="wrapper _bg4586">
 			<div class="_215b01">
@@ -373,6 +371,7 @@ $disLikeColor = '';
                                                         </div>
                                                         <div class="_rate002">Course Rating</div>
                                                     </div>
+                                                    @endforeach
                                                     <div class="_rate003">
                                                         <div class="_rate004">
                                                             <div class="progress progress1">
@@ -441,6 +440,7 @@ $disLikeColor = '';
                                                         </div>
                                                     </div>
                                                 </div>
+                                            @endif
                                             </div>
                                             <div class="col-lg-7">
                                                 <div class="review_right">
@@ -536,4 +536,5 @@ $disLikeColor = '';
         </div>
         <!-- Body End -->
 
-        @include('layouts.e_script')
+
+    @include('layouts.e_script')
