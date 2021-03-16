@@ -3,6 +3,9 @@
 $categories = new \App\course_category_model;
 $categories_list = $categories->getAllCategories();
 
+$appSettings = new \App\Model\AppSettings();
+$site_logo = $appSettings->getSingleModel();
+
 @endphp
     <!-- ajax loader -->
     <div style="display: none;" id="the_load_screen">
@@ -24,10 +27,10 @@ $categories_list = $categories->getAllCategories();
     </button>
     <div class="main_logo" id="logo">
         <a href="/">
-            <img src="{{asset('dashboard/images/logo.svg')}}" alt="">
+            <img src="/storage/site_logo/{{ $site_logo->site_logo }}" alt="{{env('APP_NAME')}}">
         </a>
         <a href="/">
-            <img class="logo-inverse" src="{{asset('dashboard/images/ct_logo.svg')}}" alt="">
+            <img class="logo-inverse" src="/storage/site_logo/{{ $site_logo->site_logo }}" alt="{{env('APP_NAME')}}">
         </a>
     </div>
     <div class="top-category">

@@ -26,22 +26,11 @@ $users = auth()->user();
 								<li class="nav-item">
 									<a class="nav-link active" id="pills-account-tab" data-toggle="pill" href="#pills-account" role="tab" aria-selected="true">Profile</a>
 								</li>
-<!--								<li class="nav-item">
-									<a class="nav-link" id="pills-preferred-currency-tab" data-toggle="pill" href="#pills-preferred-currency" role="tab" aria-selected="false">Preferred Currency</a>
-								</li>-->
 								<li class="nav-item">
 									<a class="nav-link" id="pills-bank-account-tab" data-toggle="pill" href="#pills-bank-account" role="tab" aria-selected="false">Bank Account</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" id="pills-bitcoin-wallet-tab" data-toggle="pill" href="#pills-bitcoin-wallet" role="tab" aria-selected="false">Bitcoin Wallet</a>
-								</li>
-                                @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-								<li class="nav-item">
-									<a class="nav-link" id="pills-privacy-tab" data-toggle="pill" href="#pills-privacy" role="tab" aria-selected="false">Enrollment</a>
-								</li>
-                                @endif
-								<li class="nav-item">
-									<a class="nav-link" id="pills-closeaccount-tab" data-toggle="pill" href="#pills-closeaccount" role="tab" aria-selected="false">Close Account</a>
 								</li>
 							</ul>
 						</div>
@@ -234,36 +223,6 @@ $users = auth()->user();
 									<button class="save_btn update_profile_btn" type="submit">Save Changes</button>
 								</div>
 							</div>
-<!--							<div class="tab-pane fade" id="pills-preferred-currency" role="tabpanel" aria-labelledby="pills-preferred-currency-tab">
-								<div class="account_setting">
-									<form action="{{route('update_user_currency' )}}" method="POST">
-										@csrf
-										<div class="basic_profile">
-											<div class="basic_form">
-												<div class="nstting_content">
-													<div class="row">
-														<div class="col-lg-6">
-															<div class="ui search focus mt-30 lbel25">
-																<label for="preferred_currency">Select Preferred Currency</label>
-															</div>
-															<select name="preferred_currency" id="preferred_currency" class="ui hj145 dropdown cntry152 prompt srch_explore">
-																<option value="">Please Select</option>
-																@foreach($currencyRatesModel as $eachCurrencyRatesModel)
-																	@if($eachCurrencyRatesModel->currency_name == null || $eachCurrencyRatesModel->currency_name === '')
-																		@break
-																	@endif
-																	<option {{($eachCurrencyRatesModel->id == auth()->user()->preferred_currency)?'selected':''}} value="{{$eachCurrencyRatesModel->id}}">{{$eachCurrencyRatesModel->currency_name}} ({{$eachCurrencyRatesModel->country_name}})</option>
-																@endforeach
-															</select>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<button class="save_btn" type="submit">Save Changes</button>
-									</form>
-								</div>
-							</div>-->
 							<div class="tab-pane fade" id="pills-bank-account" role="tabpanel" aria-labelledby="pills-bank-account-tab">
 								<div class="account_setting">
 									<form action="{{route('update_bank_account' )}}" method="POST">
@@ -355,31 +314,6 @@ $users = auth()->user();
                                                     </div>
                                                 </div>
 									<button class="save_btn" type="submit">Save Changes</button>
-								</div>
-							</div>
-							<div class="tab-pane fade" id="pills-api" role="tabpanel" aria-labelledby="pills-api-tab">
-								<div class="account_setting">
-									<h4>Affiliate API</h4>
-									<p>The Cursus Affiliate API exposes functionalities of Cursus to help developers build client applications and integrations with Cursus. <br>To see more details, please visit <a href="#">Cursus Affiliate API</a></p>
-								</div>
-								<button class="api_btn">Request Affiliate API Client</button>
-								<div class="nt_apt"><i class="uil uil-info-circle"></i> You don't have any API clients yet.</div>
-							</div>
-							<div class="tab-pane fade" id="pills-closeaccount" role="tabpanel" aria-labelledby="pills-closeaccount-tab">
-								<div class="account_setting">
-									<h4>Close account</h4>
-									<p><strong>Warning:</strong> If you close your account, you will be unsubscribed from all your 5 courses, and will lose access forever.</p>
-								</div>
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="ui search focus mt-30">
-											<div class="ui left icon input swdh11 swdh19">
-												<input class="prompt srch_explore" type="password" name="yourassword" id="id_yourpassword" required="" maxlength="64" placeholder="Enter Your Password">
-											</div>
-											<div class="help-block">Are you sure you want to close your account?</div>
-										</div>
-										<button class="save_payout_btn mbs20" type="submit">Close Account</button>
-									</div>
 								</div>
 							</div>
 						</div>

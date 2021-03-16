@@ -105,15 +105,6 @@
                                                                     <h4><i class="uil uil-dollar-sign-alt"></i>Pricing</h4>
                                                                 </div>
                                                             </div>
-                                                         {{--   <div class="col-lg-2 col-md-3 col-sm-6">
-                                                                <div class="mt-30 lbel25">
-                                                                    <label>Preferred Currency</label>
-                                                                </div>
-                                                                <select class="ui hj145 dropdown cntry152 prompt srch_explore">
-                                                                    <option value="">USD</option>
-                                                                    <option value="6">INR</option>
-                                                                </select>
-                                                            </div>--}}
                                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                                 <div class="mt-30 lbel25">
                                                                     <label>Select*</label>
