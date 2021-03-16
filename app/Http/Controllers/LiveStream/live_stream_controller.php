@@ -36,6 +36,27 @@ class live_stream_controller extends Controller
     }
 
     /**
+     *  Show the page for viewing live stream details.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function live_stream_details($id)
+    {
+        $stream = live_stream_model::find($id);
+        $condition = [
+            ['deleted_at', null],
+            ['status', 'live'],
+        ];
+        $live_streams = $this->live_stream->get_all($condition);
+        $view = [
+            'stream' => $stream,
+            'live_streams' => $live_streams,
+        ];
+        // return $view;
+        return view('dashboard.live_stream_details', $view);
+    }
+
+    /**
      * Display form for editing live stream.
      *
      * @param string $id
@@ -115,9 +136,13 @@ class live_stream_controller extends Controller
                 throw new Exception('This is not a valid request.');
             }
             $validator = Validator::make($request->all(), [
-                'title' => 'required|string|max:38|unique:live_streams_tb,title',
+                'title' => 'required|string|max:40|unique:live_streams_tb,title',
                 'meeting_url' => 'required|string',
                 'status' => 'required|string',
+                'description' => 'required|string',
+                'passcode' => 'string',
+                'privacy' => 'required|string',
+                'software' => 'required|string',
                 'date_to_start' => 'required',
                 'time_to_start' => 'required',
             ]);
@@ -129,6 +154,10 @@ class live_stream_controller extends Controller
             $title = $request->input('title');
             $meeting_url = $request->input('meeting_url');
             $status = $request->input('status');
+            $description = $request->input('description');
+            $passcode = $request->input('passcode');
+            $privacy = $request->input('privacy');
+            $software = $request->input('software');
             $date_to_start = $request->input('date_to_start');
             $time_to_start = $request->input('time_to_start');
             $user_id = $user['unique_id'];
@@ -140,6 +169,10 @@ class live_stream_controller extends Controller
                 'title' => $title,
                 'status' => $status,
                 'meeting_url' => $meeting_url,
+                'description' => $description,
+                'passcode' => $passcode,
+                'privacy' => $privacy,
+                'software' => $software,
                 'date_to_start' => $date_to_start,
                 'time_to_start' => $time_to_start,
             ]);
@@ -174,9 +207,13 @@ class live_stream_controller extends Controller
                 throw new Exception('This is not a valid request.');
             }
             $validator = Validator::make($request->all(), [
-                'title' => 'required|string|max:38',
+                'title' => 'required|string|max:40',
                 'meeting_url' => 'required|string',
                 'status' => 'required|string',
+                'description' => 'required|string',
+                'passcode' => 'string',
+                'privacy' => 'required|string',
+                'software' => 'required|string',
                 'date_to_start' => 'required',
                 'time_to_start' => 'required',
             ]);
@@ -188,6 +225,10 @@ class live_stream_controller extends Controller
             $title = $request->input('title');
             $meeting_url = $request->input('meeting_url');
             $status = $request->input('status');
+            $description = $request->input('description');
+            $passcode = $request->input('passcode');
+            $privacy = $request->input('privacy');
+            $software = $request->input('software');
             $date_to_start = $request->input('date_to_start');
             $time_to_start = $request->input('time_to_start');
 
@@ -196,6 +237,10 @@ class live_stream_controller extends Controller
             $live_stream->title = $title;
             $live_stream->meeting_url = $meeting_url;
             $live_stream->status = $status;
+            $live_stream->description = $description;
+            $live_stream->passcode = $passcode;
+            $live_stream->privacy = $privacy;
+            $live_stream->software = $software;
             $live_stream->date_to_start = $date_to_start;
             $live_stream->time_to_start = $time_to_start;
             $updated = $live_stream->save();

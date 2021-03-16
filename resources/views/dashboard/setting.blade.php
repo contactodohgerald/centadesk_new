@@ -214,6 +214,28 @@ $users = auth()->user();
                                                                     <div class="help-block">Enter your Youtube Username.</div>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon labeled input swdh11 swdh31">
+                                                                        <div class="ui label lb12">
+                                                                            https://www.instagram.com/
+                                                                        </div>
+                                                                        <input class="prompt srch_explore" type="text" name="instagram" value="{{ $user->instagram }}" placeholder="Instagram Profile">
+                                                                    </div>
+                                                                    <div class="help-block">Enter your Instagram Username.</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <div class="ui search focus mt-30">
+                                                                    <div class="ui left icon labeled input swdh11 swdh31">
+                                                                        <div class="ui label lb12">
+                                                                            https://www.whatsapp.com/
+                                                                        </div>
+                                                                        <input class="prompt srch_explore" type="text" name="whatsapp" value="{{ $user->whatsapp }}" placeholder="Whatsapp Number">
+                                                                    </div>
+                                                                    <div class="help-block">Enter your Whatsapp number.</div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

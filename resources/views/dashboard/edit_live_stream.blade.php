@@ -45,25 +45,65 @@ $live = 'active';
                                                     <input class="_dlor1" type="text" name="meeting_url" placeholder="Paste in the link to your live stream" value="{{ $live_stream->meeting_url }}">
                                                 </div>
                                                 <div class="group-form">
-                                                    <label>Status<span class="text-danger">*</span></label>
-                                                    <select name="status" class="ui hj145 dropdown cntry152 prompt srch_explore">
-                                                        <option value="">Is your live stream currently live?</option>
-                                                        <option @if ($live_stream->status == "live")
-                                                            selected="selected"
-                                                            @else @endif value="live">
-                                                            Live
-                                                        </option>
-                                                        <option @if ($live_stream->status == "pending")
-                                                            selected="selected"
-                                                            @else @endif value="pending">
-                                                            Pending
-                                                        </option>
-                                                        <option @if ($live_stream->status == "done")
-                                                            selected="selected"
-                                                            @else @endif value="done">
-                                                            Done
-                                                        </option>
-                                                    </select>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                    <label>Streaming Software<span class="text-danger">*</span></label>
+                                                    <input class="_dlor1" type="text" name="software" placeholder="What software will you use" value="{{ $live_stream->software }}">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                    <label>Passcode</label>
+                                                    <input class="_dlor1" type="text" name="passcode" placeholder="" value="{{ $live_stream->passcode }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="group-form">
+                                                    <label>Description<span class="text-danger">*</span></label>
+
+                                                    <div class="ui search focus">
+                                                        <div class="ui form swdh30">
+                                                            <div class="field">
+                                                                <textarea rows="5" name="description" placeholder="Give a short description about what the live stream is about...">{{ $live_stream->description }}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="group-form">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label>Status<span class="text-danger">*</span></label>
+                                                            <select name="status" class="ui hj145 dropdown cntry152 prompt srch_explore">
+                                                                <option value="">Is your live stream currently live?</option>
+                                                                <option @if ($live_stream->status == "live")
+                                                                    selected="selected"
+                                                                    @else @endif value="live">
+                                                                    Live
+                                                                </option>
+                                                                <option @if ($live_stream->status == "pending")
+                                                                    selected="selected"
+                                                                    @else @endif value="pending">
+                                                                    Pending
+                                                                </option>
+                                                                <option @if ($live_stream->status == "done")
+                                                                    selected="selected"
+                                                                    @else @endif value="done">
+                                                                    Done
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Privacy<span class="text-danger">*</span></label>
+                                                            <select name="privacy" class="ui hj145 dropdown cntry152 prompt srch_explore">
+                                                                <option value="">Is your live stream for everyone?</option>
+                                                                <option @if ($live_stream->privacy == "public")
+                                                                    selected="selected"
+                                                                    @else @endif value="public">Public</option>
+                                                                <option @if ($live_stream->privacy == "private")
+                                                                    selected="selected"
+                                                                    @else @endif value="private">Private</option>
+                                                            </select>
+                                                        </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="group-form">
                                                     <div class="row">
