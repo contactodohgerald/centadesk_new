@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
 use App\Model\BlogModel;
+use App\Model\BlogPostComment;
 use App\Model\BlogTagModel;
+use App\Model\TestimonyModel;
 use App\Traits\Generics;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,10 +15,13 @@ class BlogController extends Controller
 {
     //
     use Generics;
-    function __construct(BlogTagModel $blogTagModel, BlogModel $blogModel){
-        $this->middleware('auth',  ['except' => ['storeBlogTags', 'storeBlog']]);
+    function __construct(
+        BlogTagModel $blogTagModel, BlogModel $blogModel, TestimonyModel $testimonyModel
+    ){
+        $this->middleware('auth',  ['except' => ['storeBlogTags', 'storeBlog', 'confirmBlogPost', 'blogPostComment']]);
         $this->blogTagModel = $blogTagModel;
         $this->blogModel = $blogModel;
+        $this->testimonyModel = $testimonyModel;
     }
 
     public function createBlogTagInterface(){
@@ -28,10 +33,11 @@ class BlogController extends Controller
             $blog_post = $this->blogModel->getSingleBlogPost([
                 ['unique_id', $unique_id],
             ]);
+            $blog_post->views += 1;
+            $blog_post->save();
+
             $tags = explode(',', $blog_post->tag_unique_id);
-
             $arra = [];
-
             foreach ($tags as $yy => $each_tags){
                 $blog_tag = $this->blogTagModel->getSingleBlogTags([
                     ['unique_id', $each_tags]
@@ -39,10 +45,22 @@ class BlogController extends Controller
 
                 array_push($arra, $blog_tag);
             }
-
             $blog_post->blog_post_tag = $arra;
+            $blog_post->blogComments;
 
-            return view('front-end.blog_details', ['blog_post'=>$blog_post]);
+            $blogs = $this->blogModel->getAllBlogPost([
+                ['status', 'confirmed'],
+            ]);
+
+            $testimonys = $this->testimonyModel->getAllTestimony();
+
+            $view = [
+                'blog_post'=>$blog_post,
+                'recentPosts'=>$blogs,
+                'testimonys'=>$testimonys,
+            ];
+
+            return view('front-end.blog_details', $view);
         }
     }
 
@@ -171,26 +189,62 @@ class BlogController extends Controller
             }
 
             $dataArray = explode('|', $request->dataArray);
-return response()->json($dataArray);
+
             foreach ($dataArray as $eachDataArray) {
 
-                //update the withdrawal status to confirmed
-                $withdrawalDetails = $this->transactionModel->selectSingleTransactionModel($eachDataArray);
-                $withdrawalDetails->status = 'confirmed';
-                $withdrawalDetails->save();
-
-                $withdrawalDetails->users;
-
-                $withdrawalDetails->users->balance = $withdrawalDetails->users->balance - $withdrawalDetails->amount;
-                $withdrawalDetails->users->save();
+                //update the blog post status to confirmed
+                $blogPost = $this->blogModel->getSingleBlogPost([
+                    ['unique_id', $eachDataArray]
+                ]);
+                $blogPost->status = 'confirmed';
+                $blogPost->save();
             }
-            return response()->json(['error_code' => 0, 'success_statement' => 'Selected Withdrawals have been marked as paid']);
+            return response()->json(['error_code' => 0, 'success_statement' => 'Selected Blog Post was confirmed Successfully']);
             // return ['error_code'=>1, 'error_message'=>'An error occurred, please try again'];
 
         } catch (Exception $exception) {
 
             $error = $exception->getMessage();
             return response()->json(['error_code' => 1, 'error_message' => ['general_error' => [$error]]]);
+
+        }
+    }
+
+    protected function Validators($request){
+
+        $this->validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'message' => 'required',
+        ]);
+
+    }
+    public function blogPostComment(Request $request, $unique_id = null){
+        try {
+
+            $this->Validators($request);//validate fields
+
+            if ($unique_id != null){
+
+                $uniqueId = $this->createUniqueId('blog_post_comments', 'unique_id');
+                $comment = new BlogPostComment();
+
+                $comment->unique_id = $uniqueId;
+                $comment->blog_unique_id = $unique_id;
+                $comment->user_name = $request->name;
+                $comment->user_email = $request->email;
+                $comment->message = $request->message;
+
+                if ($comment->save()){
+                    return redirect('/blog-details/'.$unique_id)->with('success_message', 'Comment was made successfully');
+                }else{
+                    return redirect('/blog-details/'.$unique_id)->with('error_message', 'An Error occurred, Please try Again Later');
+                }
+            }
+
+        } catch (Exception $exception) {
+            $errorsArray = $exception->getMessage();
+            return  redirect('/blog-details/'.$unique_id)->with('error_message', $errorsArray);
 
         }
     }

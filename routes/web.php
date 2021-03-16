@@ -133,6 +133,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/blog-list', [BlogController::class, 'blogPostList'])->name('blog-list');
 
     Route::get('/blog-details/{unique_id?}',[BlogController::class,'blogDetailsInterface'])->name('blog-details');
+    Route::post('/blog-comment/{unique_id?}',[BlogController::class,'blogPostComment'])->name('blog-comment');
 });
 
 

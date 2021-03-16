@@ -13,6 +13,10 @@ class BlogModel extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public function blogComments(){
+        return $this->hasMany('App\Model\BlogPostComment', 'blog_unique_id');
+    }
+
     function getAllBlogPost($condition, $id = 'id', $desc = 'desc'){
         return BlogModel::where($condition)->orderBy($id, $desc)->get();
     }

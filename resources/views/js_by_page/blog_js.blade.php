@@ -1,13 +1,13 @@
 <script>
     $(document).ready(function () {
-        bringoutSelect2('.tags-select2', 10, 'Please Select');
+        //bringoutSelect2('.tags-select2', 10, 'Please Select');
 
         // initialize tinymce text editor
-        tinymce.init({
-            selector: 'textarea#message',
-            plugins: ['link preview anchor'],
-            height: 400,
-        });
+        // tinymce.init({
+        //     selector: 'textarea#message',
+        //     plugins: ['link preview anchor'],
+        //     height: 400,
+        // });
 
         $('.btn_add').click(function(e) {
             e.preventDefault();
@@ -96,10 +96,11 @@
             }
         });
 
-        async function confirmBlogPosts(a) {
+        $("#confirm_blog_post").click(async function confirmBlogPosts(a) {
+            a.preventDefault();
             let retVal = confirm('Do you wish to continue?');
             if(retVal === true){
-                $(a).text('Loading.....').attr({'disabled':true});
+                $(this).text('Loading.....').attr({'disabled':true});
                 let selected = $(".smallCheckBox");
                 let dataArray = [];
                 for(let i = 0; i < selected.length; i++){
@@ -109,14 +110,15 @@
                     }
                 }
                 if(dataArray.length == 0){
-                    $(a).text('Confirm Blog Post').attr({'disabled':false});
+                    $(this).text('Confirm Blog Post').attr({'disabled':false});
                     errorDisplay('Please select at least one blog post to continue');
                     return;
                 }
+
                 let postData = await postRequest(baseUrl+'api/confirmBlogPost', {dataArray:dataArray.join('|')});
                 let {error_code, success_statement, error_message} = postData;
                 if(error_code == 0){
-                    $(a).text('Confirm Blog Post').attr({'disabled':false});
+                    $(this).text('Confirm Blog Post').attr({'disabled':false});
                     showValidatorToaster(success_statement, 'success');
                     setTimeout(function () {
                         location.reload();
@@ -127,6 +129,6 @@
                 }
             }
 
-        }
+        });
     });
 </script>

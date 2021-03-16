@@ -68,8 +68,12 @@ class RouteController extends Controller
 
     public function blogPage(){
         $blogs = $this->blogModel->getAllBlogPost([
-            ['status', 'confirm'],
+            ['status', 'confirmed'],
         ]);
+        foreach ($blogs as $each_blog_post){
+            $each_blog_post->blogComments;
+        }
+
         return view('front-end.blog', ['blogs'=>$blogs]);
     }
 
@@ -97,12 +101,12 @@ class RouteController extends Controller
 
             $this->contactUsMailSend('Notification', $data['subject'], $data['phone'],  $data['email'], $data['full_name'], $data['message'], env('APP_NAME'), $this->base_url, $adminEmail->company_email_2);
 
-            return redirect('/contact')->with('success_message', 'Mail Was Sent Successfully');
+            return back()->with('success_message', 'Mail Was Sent Successfully');
 
         } catch (Exception $exception) {
 
             $errorsArray = $exception->getMessage();
-            return  redirect('contact')->with('error_message', $errorsArray);
+            return  back()->with('error_message', $errorsArray);
         }
     }
 }
