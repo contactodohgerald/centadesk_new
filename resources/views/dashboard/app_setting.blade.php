@@ -28,6 +28,9 @@ $Setting = 'active';
                                 <li class="nav-item">
                                     <a class="nav-link" id="pills-privacy-tab" data-toggle="pill" href="#pills-privacy" role="tab" aria-selected="false">Enrollment</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-site-logo-tab" data-toggle="pill" href="#pills-site-logo" role="tab" aria-selected="false">Site Logo</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="tab-content" id="pills-tabContent">
@@ -171,7 +174,6 @@ $Setting = 'active';
                                     </form>
                                 </div>
                             </div>
-
                             <div class="tab-pane fade" id="pills-privacy" role="tabpanel" aria-labelledby="pills-privacy-tab">
                                 <div class="account_setting">
                                     {{-- <h4>Enrollment</h4> --}}
@@ -193,6 +195,38 @@ $Setting = 'active';
                                     <button class="save_btn enroll_percent_btn" type="submit">Save Changes</button>
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="pills-site-logo" role="tabpanel" aria-labelledby="pills-site-logo-tab-tab">
+                                <div class="account_setting">
+                                    <div class="basic_profile">
+                                        <div class="basic_ptitle">
+                                            <h4>Site Logo</h4>
+                                        </div>
+                                        <div class="basic_form">
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <div class="row mt-30">
+                                                        <div class="col-lg-3">
+                                                            <div style="width: 100%;" class="view_img_left">
+                                                                <div class="view__img">
+                                                                    <img id="thumbnail_cover_img" class="round_img" src="/storage/site_logo/{{ $appSettings->site_logo }}" width="150px" height="160px">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-9 col-xl-6">
+                                                            <form class="site_logo_form">
+                                                                @csrf
+                                                                <span class="btn btn-default img-span">Choose Image</span>
+                                                                <input type="file" id="site_logo" name="site_logo" class="upload-img-form">
+                                                                <button class="save_btn upload_img_btn" type="submit">Update Logo</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -208,13 +242,6 @@ $Setting = 'active';
 
     <script>
         $(document).ready(function () {
-            // $('.delete_course_modal').click(function(e) {
-            //     e.preventDefault();
-            //     append_id('delete_course_id', '.delete_course_form', '#delete_course_modal', this)
-            //     $('#delete_course_modal').modal('toggle');
-            // });
-
-
         $('.enroll_percent_btn').click(async function(e) {
             e.preventDefault();
             let enroll_percent_form = $('.enroll_percent_form').serializeArray();
@@ -224,6 +251,24 @@ $Setting = 'active';
             // return;
             validator(returned,'/app_settings_page');
         });
+
+            $('.upload_img_btn').click(async function (e) {
+                e.preventDefault();
+                let data = [];
+                let user_img = $('#site_logo').prop('files')[0];
+                let user_img_form = $('.site_logo_form').serializeArray();
+                let img_data = {name:"site_logo", value:user_img};
+
+                user_img_form.forEach(e => {
+                    data.push(e);
+                });
+                data.push(img_data);
+                // console.log(data);return;
+                let form_data = set_form_data(data);
+                let returned = await ajaxRequest('site_logo', form_data);
+                // console.log(returned);return;
+                validator(returned, 'app_settings_page');
+            });
 
         });
     </script>

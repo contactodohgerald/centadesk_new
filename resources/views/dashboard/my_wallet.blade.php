@@ -323,6 +323,8 @@ $users = auth()->user();
 <script>
     $(document).ready(function() {
 
+        $('#btc_topup_modal').modal({ backdrop: 'static', keyboard: false });
+
         $('.btc_topup_modal').click(function(e) {
             e.preventDefault();
             // append_id('btc_topup_id', '.btc_topup_form', '#btc_topup_modal', this)

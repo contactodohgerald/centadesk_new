@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Blog\BlogController;
 use App\Http\Controllers\Course\courseController;
 use App\Http\Controllers\Like\LikesController;
 use App\Http\Controllers\Review\InstructorsReviewController;
@@ -61,6 +62,13 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     //
     Route::post('/KYCVerificationHandler', [KYCVerificationController::class, 'KYCVerificationHandler'])->name('KYCVerificationHandler');
+
+    //blog tags
+    Route::post('/store-blog-tags', [BlogController::class, 'storeBlogTags'])->name('store-blog-tags');
+    Route::post('/addNewBlog', [BlogController::class, 'storeBlog'])->name('addNewBlog');
+    Route::post('/confirmBlogPost', [BlogController::class, 'confirmBlogPost'])->name('confirmBlogPost');
+
+
 
     //instructors comment
     Route::post('/createInstructorComment', [InstructorsReviewController::class, 'createInstructorComment'])->name('createInstructorComment');

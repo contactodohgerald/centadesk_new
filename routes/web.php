@@ -1,9 +1,11 @@
 <?php
 
 
+use App\Http\Controllers\Blog\BlogController;
 use App\Http\Controllers\Course\CoursesHandlerController;
 use App\Http\Controllers\Route\RouteController;
 use App\Http\Controllers\Subscribe\SubscribeController;
+use App\Http\Controllers\Testmony\TestimoniesController;
 use App\Http\Controllers\Users\GeneralUserController;
 use App\Http\Controllers\VerifyKYC\KYCVerificationController;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +57,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/show-csrf', 'HomeController@showToken');
 Route::get('/clear-cache', 'HomeController@clear_cache');
 
+Auth::routes(['verify' => true]);
+/*//verify email address
+Route::get('/email/verify', [VerificationController::class, 'showNotice'])->middleware(['auth'])->name('verification.notice'); //verification.notice*/
+
 Route::group(['middleware' => 'web'], function () {
     // courses
     Route::get('/create-course', [courseController::class, 'index']);
@@ -71,6 +77,7 @@ Route::group(['middleware' => 'web'], function () {
     // Live stream
     Route::get('/live_stream/create', [live_stream_controller::class, 'create_live'])->name('create_live');
     Route::get('/live_stream/all', [live_stream_controller::class, 'show']);
+    Route::get('/live_stream/all', [live_stream_controller::class, 'show_live_stream'])->name('show_live_stream');
     Route::get('/live_stream/edit/{id}', [live_stream_controller::class, 'update_page']);
     Route::get('/explore/live_streams', [live_stream_controller::class, 'explore_live_streams']);
     Route::get('/live_stream/details/{id}', [live_stream_controller::class, 'live_stream_details'])->name('stream_details');
@@ -102,9 +109,13 @@ Route::group(['middleware' => 'web'], function () {
 });
 Route::group(['middleware' => 'web'], function () {
     // front side web routes
-    Route::get('/about', [RouteController::class, 'aboutUsPage'])->name('about');
-    Route::get('/contact', [RouteController::class, 'contactUsPage'])->name('contact');
-    Route::get('/faq', [RouteController::class, 'faqPage'])->name('faq');
+    Route::get('/about',[RouteController::class,'aboutUsPage'])->name('about');
+    Route::get('/contact',[RouteController::class,'contactUsPage'])->name('contact');
+    Route::get('/faq',[RouteController::class,'faqPage'])->name('faq');
+    Route::get('/blog',[RouteController::class,'blogPage'])->name('blog');
+    Route::get('/how-it-work',[RouteController::class,'howItWorksPage'])->name('how-it-work');
+    Route::post('/contact-mail',[RouteController::class,'contactUsMail'])->name('contact-mail');
+
 });
 
 
@@ -113,6 +124,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::post('/personal-details', [UserController::class, 'update_user_details']);
     Route::post('/profile/photo', [UserController::class, 'upload_cover_photo']);
+});
+
+Route::group(['middleware' => 'web'], function () {
+    // user routes
+    Route::get('/create-blog-tag', [BlogController::class, 'createBlogTagInterface'])->name('create-blog-tag');
+    Route::get('/create-blog', [BlogController::class, 'createBlogInterface'])->name('create-blog');
+    Route::get('/blog-list', [BlogController::class, 'blogPostList'])->name('blog-list');
+
+    Route::get('/blog-details/{unique_id?}',[BlogController::class,'blogDetailsInterface'])->name('blog-details');
+    Route::post('/blog-comment/{unique_id?}',[BlogController::class,'blogPostComment'])->name('blog-comment');
 });
 
 
@@ -136,16 +157,16 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 Route::group(['middleware' => 'web'], function () {
+    // Testimonies
+    Route::get('/testimonies', [TestimoniesController::class, 'showTestimonies'])->name('testimonies');
+    Route::get('/add-testimonies', [TestimoniesController::class, 'createTestimony'])->name('add-testimonies');
+    Route::post('/store-testimonies', [TestimoniesController::class, 'storeNewTestimony'])->name('store-testimonies');
+});
+
+Route::group(['middleware' => 'web'], function () {
     // Subscribe
     Route::get('/browse_subscribers', [SubscribeController::class, 'browseSubscribers'])->name('browse_subscribers');
 });
-
-
-Auth::routes(['verify' => true]);
-
-//verify email address
-Route::get('/email/verify', [VerificationController::class, 'showNotice'])->middleware(['auth'])->name('verification.notice'); //verification.notice
-
 
 //email verification handler
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verifyEmailHandler'])->middleware(['auth', 'signed'])->name('verification.verify');
@@ -191,6 +212,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/app_settings_page', [AppSettingsController::class, 'appSettings'])->name('app_settings_page');
     Route::post('/update_app_settings/{unique_id}', [AppSettingsController::class, 'updateAppSettings'])->name('update_app_settings');
     Route::post('/update_course_percent', [AppSettingsController::class, 'update_enrollment_percentage']);
+    Route::post('/site_logo', [AppSettingsController::class, 'updateSiteLogo'])->name('site_logo');
 });
 
 Route::group(['middleware' => 'web'], function () {

@@ -141,4 +141,47 @@ class AppSettingsController extends Controller
             return response()->json(["errors" => $error, 'status' => false]);
         }
     }
+
+    public function updateSiteLogo(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $site_logos = null;
+        $app_settings = $this->appSettings->getSingleModel();
+        try {
+            $validator = Validator::make($request->all(), [
+                'site_logo' => 'required|file|image|mimes:jpeg,png,gif|max:4048',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors(), 'status' => false]);
+            }
+
+            //code for remove old file
+            if ($app_settings->site_logo !== null) {
+                if(file_exists(storage_path('app/public/site_logo/') . $app_settings->site_logo)){
+                    $file_old = storage_path('app/public/site_logo/') . $app_settings->site_logo;
+                    unlink($file_old);
+                }
+            }
+            if ($request->hasFile('site_logo')) {
+                $file = $request->file('site_logo');
+                $site_logos = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+                $file->storeAs('public/site_logo', $site_logos);
+            }
+            $app_settings->site_logo = $site_logos;
+
+            if ($app_settings->save()) {
+                $error = 'Site Logo Updated Successfully!';
+                return response()->json(["message" => $error, 'status' => true]);
+            } else {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            }
+
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
+        }
+    }
 }

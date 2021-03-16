@@ -433,7 +433,7 @@ class UserController extends Controller
         }catch (Exception $exception){
 
             $errorsArray = $exception->getMessage();
-            return  redirect('kyc_verification')->with('error_message', $errorsArray);
+            return  redirect('/kyc_verification')->with('error_message', $errorsArray);
 
         }
 

@@ -30,6 +30,9 @@
 <!-- Snackbar toaster -->
 
 <script src="{{asset('dashboard/custom/Basic-function.js')}}"></script>
+<script src="{{asset('select2/dist/js/select2.min.js')}}"></script>
+<script src="{{asset('summernote/summernote.min.js')}}"></script>
+<script src="{{asset('summernote/summernote-active.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 <script src="{{asset('toast/jquery.toast.js')}}"></script>
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
@@ -45,25 +48,6 @@
     }
 
     $(document).ready(function() {
-        // showErrors();
-
-        // toastr.options = {
-        //     "closeButton": false,
-        //     "debug": false,
-        //     "newestOnTop": false,
-        //     "progressBar": false,
-        //     "positionClass": "toast-top-right",
-        //     "preventDuplicates": false,
-        //     "onclick": null,
-        //     "showDuration": "300",
-        //     "hideDuration": "1000",
-        //     "timeOut": "5000",
-        //     "extendedTimeOut": "1000",
-        //     "showEasing": "swing",
-        //     "hideEasing": "linear",
-        //     "showMethod": "show",
-        //     "hideMethod": "fadeOut"
-        // }
         $('#add-course-tab').steps({
             // onFinish: function() {
             //     // alert('Wizard Completed');
@@ -142,7 +126,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" onclick="removeModalMains()">Close</button>
                     <button type="submit" class="btn btn-primary">Proceed</button>
                 </div>
             </form>
