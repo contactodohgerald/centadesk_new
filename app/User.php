@@ -8,15 +8,15 @@ use App\Model\Previledges;
 use App\Model\RolesModel;
 use App\Model\UserTypesModel;
 use App\Traits\Generics;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 
-class User extends Authenticatable implements MustVerifyEmail
-{
-    use Notifiable, Generics;
+class User extends Authenticatable implements MustVerifyEmail{
+    use Notifiable;
+    use Generics;
 
     //
     use SoftDeletes;

@@ -22,7 +22,6 @@
     function postRequest(url, params){
 
         return new Promise(function (resolve, reject) {
-//alert($('meta[name="csrf-token"]').attr('content'))
             $.ajaxSetup({
                 headers:{
                     'Source': "api",
@@ -56,6 +55,41 @@
         });
     }
 
+    function  postRequestData(url, params) {
+
+        return new  Promise(function (resolve, reject) {
+            $.ajax({
+                url: url,
+                dataType: 'text',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: params,
+                type: 'post',
+                beforeSend: function (event, files, index, xhr, handler, callBack) {
+                    $.ajax({
+                        async: false,
+                        url: url // add path
+                    });
+                },
+                success: function(response){
+                    resolve(response);
+                },
+                error: function (error) {
+                    reject(error);
+                }
+            });
+        })
+    }
+
+    function summerNote(selector, value){
+        $(selector).summernote({
+            placeholder: value,
+            tabsize: 1,
+            height: 400
+        });
+    }
+
     function showValidatorToaster(message, type_of_toast) {
         loader_set();
         if (type_of_toast === 'success') {
@@ -70,6 +104,13 @@
             throw_snackbar(message, 'error');
             // window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+    }
+
+    function bringOutSelect2(value, num, label) {
+        return $(value).select2({
+            placeholder: label,
+            maximumSelectionLength: num
+        });
     }
 
     function showSuccessToaster(message, tooastType) {
@@ -197,6 +238,11 @@
 
     function bringOutModalMain(value) {
         $(value).modal('show');
+        $(value).modal({ backdrop: 'static', keyboard: false });
+    }
+
+    function removeModalMains() {
+        $('#myModal .close').css('display','none');
     }
 
     function addUniqueIdToInputField(a){
@@ -353,6 +399,12 @@
     @include('js_by_page.profile_js')
 @endif
 
+{{--blog,--}}
+@php $view_blog = ['create-blog-tag', 'create-blog', 'blog-list'];  @endphp
+@php $currentPageName = Request::segment(1); @endphp
+@if(in_array($currentPageName, $view_blog))
+    @include('js_by_page.blog_js')
+@endif
 <style>
     label, label > select, label > input, #myTable_info{
         color:white !important

@@ -1,3 +1,7 @@
+@php
+    $appSettings = new \App\Model\AppSettings();
+    $site_logo = $appSettings->getSingleModel();
+@endphp
 <body class="theme-primary">
 
 <!-- The social media icon bar -->
@@ -25,20 +29,6 @@
                 <div class="col-lg-6 col-12 xs-mb-10">
                     <div class="topbar-call text-center text-lg-right topbar-right">
                         <ul class="list-inline d-lg-flex justify-content-end">
-<!--                            <li class="mr-10 pl-10 lng-drop">
-                                <select class="header-lang-bx selectpicker">
-                                    <option>USD</option>
-                                    <option>EUR</option>
-                                    <option>GBP</option>
-                                    <option>INR</option>
-                                </select>
-                            </li>
-                            <li class="mr-10 pl-10 lng-drop">
-                                <select class="header-lang-bx selectpicker">
-                                    <option data-icon="flag-icon flag-icon-us">Eng USA</option>
-                                    <option data-icon="flag-icon flag-icon-gb">Eng UK</option>
-                                </select>
-                            </li>-->
                             @if (Route::has('login'))
                                 <div class="top-right links">
                                     @auth
@@ -68,7 +58,7 @@
     <nav hidden class="nav-white nav-transparent">
         <div class="nav-header">
             <a href="/" class="brand">
-                <img src="{{asset('front-end/images/logo-light-text2.png')}}" alt="{{env('APP_NAME')}}"/>
+                <img src="/storage/site_logo/{{ $site_logo->site_logo }}" alt="{{env('APP_NAME')}}"/>
             </a>
             <button class="toggle-bar">
                 <span class="ti-menu"></span>
@@ -81,9 +71,6 @@
             <li class="<?php print @$about?>">
                 <a href="{{route('about')}}">About Us</a>
             </li>
-            <li>
-                <a href="{{route('faq')}}">Career</a>
-            </li>
             <li class="dropdown <?php print @$courses?>">
                 <a href="#">Courses</a>
                 <ul class="dropdown-menu">
@@ -91,17 +78,14 @@
                     <li><a href="{{route('categories')}}">Categories</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="{{route('faq')}}">Testimonies</a>
+            <li class="<?php print @$testimonies?>">
+                <a href="{{route('testimonies')}}">Testimonies</a>
             </li>
-            <li>
-                <a href="{{route('faq')}}">Gallery(Events)</a>
+            <li class="<?php print @$how_it_work?>">
+                <a href="{{route('how-it-work')}}">How it works</a>
             </li>
-            <li>
-                <a href="{{route('faq')}}">How it works</a>
-            </li>
-            <li>
-                <a href="{{route('faq')}}">Blog</a>
+            <li  class="<?php print @$blog?>">
+                <a href="{{route('blog')}}">Blog</a>
             </li>
             <li class="<?php print @$faq?>">
                 <a href="{{route('faq')}}">FAQs</a>
