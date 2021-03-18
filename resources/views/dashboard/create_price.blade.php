@@ -44,7 +44,7 @@
 									<div class="row  mt-5">
 									<div class="col-lg-12">
 										<div class="ui search focus mt-30">
-											<label for="title">Title</label>
+											<label class="text-dark night-text" for="title">Title</label>
 											<div class="ui left icon input swdh11 swdh19">
 												<input class="prompt srch_explore" type="text" name="title" id="title" maxlength="20" required placeholder="Enter Title">
 												<i class="uil uil-desert icon icon2"></i>
@@ -54,7 +54,7 @@
 									</div>
 									<div class="col-lg-12">
 										<div class="ui search focus mt-30">
-											<label for="amount">Amount ({{auth()->user()->getBalanceForView()['data']['currency']}})</label>
+											<label class="text-dark night-text" for="amount">Amount ({{auth()->user()->getBalanceForView()['data']['currency']}})</label>
 											<div class="ui left icon input swdh11 swdh19">
 												<input class="prompt srch_explore" type="number" name="amount" id="amount" required placeholder="Enter Amount In ({{auth()->user()->getBalanceForView()['data']['currency']}})">
 												<i class="uil uil-money-bill icon icon2"></i>

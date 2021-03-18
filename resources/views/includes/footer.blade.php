@@ -1,3 +1,7 @@
+@php
+    $appSettings = new \App\Model\AppSettings();
+    $site_logo = $appSettings->getSingleModel();
+@endphp
 <footer class="footer_three">
     <div class="footer-top bg-dark3 pt-50">
         <div class="container">
@@ -6,7 +10,7 @@
                     <div class="widget">
                         <h4 class="footer-title">About</h4>
                         <hr class="bg-primary mb-10 mt-0 d-inline-block mx-auto w-60">
-                        <p class="text-capitalize mb-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis exercitation ullamco laboris<br><br>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p>
+                        <p class="text-capitalize mb-20">{{env('APP_NAME')}} is an online academic platform that consists of various sections to help users fit perfectly into the system based on their various knowledge bases and interest. The system was design to connect students with skill teacher/tutors in different works of life. Everyone is invited be you a hairstylist, artist, or tech person as long as you can transfer your knowledge to another person using the platform.</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-12">
@@ -14,9 +18,9 @@
                         <h4 class="footer-title">Contact Info</h4>
                         <hr class="bg-primary mb-10 mt-0 d-inline-block mx-auto w-60">
                         <ul class="list list-unstyled mb-30">
-                            <li> <i class="fa fa-map-marker"></i> 123, Lorem Ipsum, Dummy City,<br>FL-12345 USA</li>
-                            <li> <i class="fa fa-phone"></i> <span>+(1) 123-878-1649 </span><br><span>+(1) 123-878-1649 </span></li>
-                            <li> <i class="fa fa-envelope"></i> <span>info@EduAdmin.com </span><br><span>support@EduAdmin.com </span></li>
+                            <li> <i class="fa fa-map-marker"></i>{{$site_logo->company_address}}</li>
+                            <li> <i class="fa fa-phone"></i> <span>{{$site_logo->company_phone_1}} </span><br><span>{{$site_logo->whatsApp_phone}} </span></li>
+                            <li> <i class="fa fa-envelope"></i> <span>{{$site_logo->company_email_1}}</span><br><span>{{$site_logo->company_email_2}}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -42,25 +46,6 @@
                 </div>
                 <div class="col-lg-3 col-12">
                     <div class="widget">
-                        <h4 class="footer-title">Accept Card Payments</h4>
-                        <hr class="bg-primary mb-10 mt-0 d-inline-block mx-auto w-60">
-                        <ul class="payment-icon list-unstyled d-flex gap-items-1">
-                            <li class="pl-0">
-                                <a href="javascript:;"><i class="fa fa-cc-amex" aria-hidden="true"></i></a>
-                            </li>
-                            <li>
-                                <a href="javascript:;"><i class="fa fa-cc-visa" aria-hidden="true"></i></a>
-                            </li>
-                            <li>
-                                <a href="javascript:;"><i class="fa fa-credit-card-alt" aria-hidden="true"></i></a>
-                            </li>
-                            <li>
-                                <a href="javascript:;"><i class="fa fa-cc-mastercard" aria-hidden="true"></i></a>
-                            </li>
-                            <li>
-                                <a href="javascript:;"><i class="fa fa-cc-paypal" aria-hidden="true"></i></a>
-                            </li>
-                        </ul>
                         <h4 class="footer-title mt-20">Newsletter</h4>
                         <hr class="bg-primary mb-4 mt-0 d-inline-block mx-auto w-60">
                         <div class="mb-20">
@@ -84,10 +69,10 @@
                 <a href="/" class="btn btn-link">Home</a>
                 <a href="{{route('about')}}" class="btn btn-link">About Us</a>
                 <a href="{{route('faq')}}" class="btn btn-link">FAQs</a>
-                <a href="#" class="btn btn-link">Blog</a>
+                <a href="{{route('blog')}}" class="btn btn-link">Blog</a>
                 <a href="{{route('contact')}}" class="btn btn-link">Contact Us</a>
-                <a href="#" class="btn btn-link">Privacy Policy</a>
-                <a href="#" class="btn btn-link">Terms Of Conditions</a>
+                <a href="{{route('privacy-policy')}}" class="btn btn-link">Privacy Policy</a>
+                <a href="{{route('terms-of-use')}}" class="btn btn-link">Terms Of Use</a>
             </div>
         </div>
     </div>
@@ -98,10 +83,10 @@
                 <div class="col-md-6 mt-md-0 mt-20">
                     <div class="social-icons">
                         <ul class="list-unstyled d-flex gap-items-1 justify-content-md-end justify-content-center">
-                            <li><a href="#" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-facebook"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-twitter"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-linkedin"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-youtube"><i class="fa fa-youtube"></i></a></li>
+                            <li><a href="https://facebook.com/{{ $site_logo->facebook_url }}" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://twitter.com/{{ $site_logo->twitter_url }}" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="https://instagram.com/{{ $site_logo->instagram_url }}" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-instagram"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="https://www.youtube.com/{{ $site_logo->youtube_url }}" class="waves-effect waves-circle btn btn-social-icon btn-circle btn-youtube"><i class="fa fa-youtube"></i></a></li>
                         </ul>
                     </div>
                 </div>

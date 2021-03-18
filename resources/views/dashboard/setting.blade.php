@@ -259,7 +259,7 @@ $users = auth()->user();
 														<div class="row">
 															<div class="col-lg-12">
 																<div class="ui search focus mt-30 lbel25">
-																	<label for="bank_code">Select Bank</label>
+																	<label class="text-dark night-text" for="bank_code">Select Bank</label>
 																</div>
 																<select name="bank_code" id="bank_code" class="ui hj145 dropdown cntry152 prompt srch_explore">
 																	<option value="">Select</option>
@@ -270,7 +270,7 @@ $users = auth()->user();
 															</div>
 															<div class="col-lg-6">
 																<div class="ui search focus mt-30">
-																	<label for="account_name">Bank Account Name</label>
+																	<label class="text-dark night-text" for="account_name">Bank Account Name</label>
 																	<div class="ui left icon input swdh11 swdh19">
 																		<input class="prompt srch_explore" type="text" name="account_name" id="account_name" required placeholder="Enter Bank Account Name" value="{{$user->account_name}}">
 																		<i class="uil uil-money-bill icon icon2"></i>
@@ -279,7 +279,7 @@ $users = auth()->user();
 															</div>
 															<div class="col-lg-6">
 																<div class="ui search focus mt-30">
-																	<label for="bank_account">Bank Account Number</label>
+																	<label class="text-dark night-text" for="bank_account">Bank Account Number</label>
 																	<div class="ui left icon input swdh11 swdh19">
 																		<input class="prompt srch_explore" type="number" name="bank_account" id="bank_account" required placeholder="Enter Bank Number" value="{{$user->account_number}}">
 																		<i class="uil uil-money-withdraw icon icon2"></i>
@@ -327,7 +327,7 @@ $users = auth()->user();
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="ui search focus">
-                                                            <label for="bit_coin_wallet">Course Enrollment Percentage</label>
+                                                            <label class="text-dark night-text" for="bit_coin_wallet">Course Enrollment Percentage</label>
                                                             <div class="ui left icon input swdh11 swdh19">
                                                                 <input class="prompt srch_explore" type="number" name="enrollment_percentage" id="wallet" placeholder="Enter percentage to pay teachers" value="">
                                                                 <i class="uil uil-receipt icon icon2"></i>

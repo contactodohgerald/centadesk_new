@@ -24,7 +24,7 @@
 							<div class="col-lg-8 offset-2">
                                 <div class="row  mt-5">
                                     <div class="col-lg-12">
-                                        <label for="tags">Blog Tags</label>
+                                        <label class="text-dark night-text" for="tags">Blog Tags</label>
                                         <select name="tags" class="ui hj145 dropdown cntry152 prompt srch_explore tags-select2" id="tags" >
                                             @if(count($blogTagModel) > 0)
                                                 @foreach($blogTagModel as $gg => $each_tags)
@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="ui search focus mt-30">
-                                            <label for="title">Title</label>
+                                            <label class="text-dark night-text" for="title">Title</label>
                                             <div class="ui left icon input swdh11 swdh19">
                                                 <input class="prompt srch_explore" type="text" name="title" id="title" maxlength="30" required placeholder="Enter Title">
                                                 <i class="uil uil-desert icon icon2"></i>
@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="course_des_textarea mt-30 lbel25">
-                                            <label for="message">Blog Message*</label>
+                                            <label class="text-dark night-text" for="message">Blog Message*</label>
                                             <div class="course_des_bg">
                                                 <div class="textarea_dt">
                                                     <div class="ui form swdh339">

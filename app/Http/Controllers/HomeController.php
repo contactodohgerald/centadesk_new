@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\course_model;
 use App\Model\Review;
+use App\Model\courseEnrollment;
 use App\User;
 use Illuminate\Http\Request;
 use App\Model\live_stream_model;
@@ -16,13 +17,15 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(live_stream_model $live_stream, course_model $course_model, Review $review, User $user)
-    {
+    public function __construct(
+        live_stream_model $live_stream, course_model $course_model, Review $review, User $user, courseEnrollment $courseEnrollment
+    ){
         $this->middleware('auth');
         $this->live_stream = $live_stream;
         $this->course_model = $course_model;
         $this->review = $review;
         $this->user = $user;
+        $this->courseEnrollment = $courseEnrollment;
     }
 
     /**
@@ -73,8 +76,12 @@ class HomeController extends Controller
                 ['user_id', $each_instructors->unique_id],
             ];
             $course_model = $this->course_model->getAllCourse($conditions);
-
             $each_instructors->count_course = $course_model->count();
+
+            $enrolled = $this->courseEnrollment->getAllEnrolls([
+                ['course_creator', '=', $each_instructors->unique_id]
+            ]);
+            $each_instructors->enrolled_users = $enrolled->count();
         }
 
         $view = [

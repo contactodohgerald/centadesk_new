@@ -44,7 +44,7 @@
 									<div class="row  mt-5">
 									<div class="col-lg-12">
 										<div class="ui search focus mt-30">
-											<label for="name">Category Name</label>
+											<label class="text-dark night-text" for="name">Category Name</label>
 											<div class="ui left icon input swdh11 swdh19">
 												<input class="prompt srch_explore" type="text" name="name" id="name" maxlength="30" required placeholder="Enter Category Name">
 												<i class="uil uil-desert icon icon2"></i>
@@ -56,7 +56,7 @@
 										<div class="ui search focus mt-30">
 											<div class="ui form swdh30">
 												<div class="field">
-													<label for="description">Description</label>
+													<label class="text-dark night-text" for="description">Description</label>
 													<textarea required rows="8" name="description" id="description" placeholder="Write a little description the course category"></textarea>
 												</div>
 											</div>
