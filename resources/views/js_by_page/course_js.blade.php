@@ -288,4 +288,39 @@
         }
     }
 
+    async function deleteCourse(a) {
+        let retVal = confirm('Do you wish to continue?');
+        if(retVal === true){
+            $(a).text('Loading.....').attr({'disabled':true});
+            let selected = $(".smallCheckBox");
+            let dataArray = [];
+            for(let i = 0; i < selected.length; i++){
+                if($(selected[i]).is(':checked')){
+
+                    dataArray.push($(selected[i]).val());
+                }
+            }
+
+            if(dataArray.length == 0){
+                $(a).text('Delete Courses').attr({'disabled':false});
+                errorDisplay('Please select at least one course to delete');
+                return;
+            }
+
+            let postData = await postRequest(baseUrl+'api/delete-course', {dataArray:dataArray.join('|')});
+            let {error_code, success_statement, error_message} = postData;
+            if(error_code == 0){
+                $(a).text('Delete Courses').attr({'disabled':false});
+                showValidatorToaster(success_statement, 'success');
+                setTimeout(function () {
+                    location.reload();
+                }, 2000)
+            }else{
+                $(a).text('Delete Courses').attr({'disabled':false});
+                showValidatorToaster(error_message, 'warning');
+            }
+        }
+
+    }
+
 </script>

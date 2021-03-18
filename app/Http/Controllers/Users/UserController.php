@@ -10,6 +10,7 @@ use App\Model\InstructorReviewLike;
 use App\Model\InstructorsReview;
 use App\Model\KycVerification;
 use App\Model\Subscribe;
+use App\Model\courseEnrollment;
 use App\Traits\Generics;
 use App\Traits\SendMail;
 use App\Traits\UsersArray;
@@ -25,7 +26,7 @@ class UserController extends Controller
     use appFunction, SendMail, Generics, UsersArray;
 
     function __construct(
-        KycVerification $kycVerification, AppSettings $appSettings, course_model $course_model, Subscribe $subscribe, InstructorReviewLike $instructorReviewLike, InsrtuctorReviewReply $instructorReviewReply, InstructorsReview $instructorsReview
+        KycVerification $kycVerification, AppSettings $appSettings, course_model $course_model, Subscribe $subscribe, InstructorReviewLike $instructorReviewLike, InsrtuctorReviewReply $instructorReviewReply, InstructorsReview $instructorsReview, courseEnrollment $courseEnrollment
     ){
         $this->middleware('auth');
         $this->kycVerification = $kycVerification;
@@ -35,6 +36,7 @@ class UserController extends Controller
         $this->instructorReviewLike = $instructorReviewLike;
         $this->instructorsReview = $instructorsReview;
         $this->instructorReviewReply = $instructorReviewReply;
+        $this->courseEnrollment = $courseEnrollment;
     }
     /**
      * Function to display teacher profile page.
@@ -68,14 +70,17 @@ class UserController extends Controller
         $user->subscribe = $subscribe;
 
         foreach ($user->subscribe as $each_subscribe){
-
             $each_subscribe->users;
-
             $conditions = [
                 ['user_id',  $each_subscribe->users->unique_id]
             ];
             $course_model = $this->course_model->getAllCourse($conditions);
             $each_subscribe->count_course = count($course_model);
+
+            $enrolled = $this->courseEnrollment->getAllEnrolls([
+                ['course_creator', '=', $each_subscribe->unique_id]
+            ]);
+            $each_subscribe->enrolled_users = $enrolled->count();
         }
 
         $query = [
@@ -128,6 +133,11 @@ class UserController extends Controller
 
         $array_of_subscribers = $this->returnArrayForSubscribeUsers($user->unique_id);
         $user->array_of_subscribers = $array_of_subscribers;
+
+        $enrolled = $this->courseEnrollment->getAllEnrolls([
+            ['course_creator', '=', $user->unique_id]
+        ]);
+        $user->enrolled_users = $enrolled->count();
 
         return view('dashboard.profile', ['user'=>$user]);
     }

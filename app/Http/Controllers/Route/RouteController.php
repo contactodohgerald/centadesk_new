@@ -109,4 +109,12 @@ class RouteController extends Controller
             return  back()->with('error_message', $errorsArray);
         }
     }
+
+    public function termsOfUsePage(){
+        return view('front-end.terms_of_use');
+    }
+
+    public function privacyPolicy(){
+        return view('front-end.privacy-policy');
+    }
 }

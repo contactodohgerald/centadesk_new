@@ -60,7 +60,7 @@
                                                 <li><a href="https://www.youtube.com/{{ $each_instructors->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
                                             </ul>
                                             <div class="tut1250">
-                                                <span class="vdt15">100K Students</span>
+                                                <span class="vdt15">{{$each_instructors->enrolled_users}} Students</span>
                                                 <span class="vdt15">{{$each_instructors->count_course}} Courses</span>
                                             </div>
                                         </div>

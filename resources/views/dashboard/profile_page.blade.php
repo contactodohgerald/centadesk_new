@@ -49,7 +49,7 @@
 										<li>
 											<div class="_ttl121">
 												<div class="_ttl122">Enrollments</div>
-												<div class="_ttl123">612K</div>
+												<div class="_ttl123">{{$user->enrolled_users}}</div>
 											</div>
 										</li>
 										<li>
@@ -293,7 +293,7 @@
                                                                     <li> <button class="sbbc145" onclick="subscribeTOTeacher(this, '{{auth()->user()->unique_id}}', '{{$each_subscribe->users->unique_id}}')">{{$subscribe_text}} <i class="uil uil-{{($subscribe_text === 'Subscribed')?'check-circle':''}}"></i></button></li>
                                                                 </ul>
                                                                 <div class="tut1250">
-                                                                    <span class="vdt15">100K Students</span>
+                                                                    <span class="vdt15">{{$each_subscribe->enrolled_users}} Students</span>
                                                                     <span class="vdt15">{{$each_subscribe->course_count}} Courses</span>
                                                                 </div>
                                                             @endif

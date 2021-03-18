@@ -36,28 +36,28 @@ $live = 'active';
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $live_stream->unique_id }}">
                                                 <div class="group-form">
-                                                    <label>Stream Caption<span class="text-danger">*</span></label>
+                                                    <label class="text-dark night-text">Stream Caption<span class="text-danger">*</span></label>
                                                     <input class="_dlor1" type="text" name="title" placeholder="Short caption about the theme of your stream" value="{{ $live_stream->title }}">
                                                     {{-- <button class="_6tf7s" type="submit" value="1">Copy</button> --}}
                                                 </div>
                                                 <div class="group-form">
-                                                    <label>Stream URL<span class="text-danger">*</span></label>
+                                                    <label class="text-dark night-text">Stream URL<span class="text-danger">*</span></label>
                                                     <input class="_dlor1" type="text" name="meeting_url" placeholder="Paste in the link to your live stream" value="{{ $live_stream->meeting_url }}">
                                                 </div>
                                                 <div class="group-form">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                    <label>Streaming Software<span class="text-danger">*</span></label>
+                                                    <label class="text-dark night-text">Streaming Software<span class="text-danger">*</span></label>
                                                     <input class="_dlor1" type="text" name="software" placeholder="What software will you use" value="{{ $live_stream->software }}">
                                                         </div>
                                                         <div class="col-md-6">
-                                                    <label>Passcode</label>
+                                                    <label class="text-dark night-text">Passcode</label>
                                                     <input class="_dlor1" type="text" name="passcode" placeholder="" value="{{ $live_stream->passcode }}">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="group-form">
-                                                    <label>Description<span class="text-danger">*</span></label>
+                                                    <label class="text-dark night-text">Description<span class="text-danger">*</span></label>
 
                                                     <div class="ui search focus">
                                                         <div class="ui form swdh30">
@@ -70,7 +70,7 @@ $live = 'active';
                                                 <div class="group-form">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <label>Status<span class="text-danger">*</span></label>
+                                                            <label class="text-dark night-text">Status<span class="text-danger">*</span></label>
                                                             <select name="status" class="ui hj145 dropdown cntry152 prompt srch_explore">
                                                                 <option value="">Is your live stream currently live?</option>
                                                                 <option @if ($live_stream->status == "live")
@@ -91,7 +91,7 @@ $live = 'active';
                                                             </select>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label>Privacy<span class="text-danger">*</span></label>
+                                                            <label class="text-dark night-text">Privacy<span class="text-danger">*</span></label>
                                                             <select name="privacy" class="ui hj145 dropdown cntry152 prompt srch_explore">
                                                                 <option value="">Is your live stream for everyone?</option>
                                                                 <option @if ($live_stream->privacy == "public")
@@ -108,11 +108,11 @@ $live = 'active';
                                                 <div class="group-form">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <label>Date Scheduled<span class="text-danger">*</span> </label>
+                                                            <label class="text-dark night-text">Date Scheduled<span class="text-danger">*</span> </label>
                                                             <input class="_dlor1" type="date" name="date_to_start" placeholder="Paste in the link to your live stream" value="{{ $live_stream->date_to_start }}">
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label>Time To Start<span class="text-danger">*</span> </label>
+                                                            <label class="text-dark night-text">Time To Start<span class="text-danger">*</span> </label>
                                                             <input class="_dlor1" type="time" name="time_to_start" placeholder="Paste in the link to your live stream" value="{{ $live_stream->time_to_start }}">
                                                             <button class="_6tf7s" type="" value="1">GMT+1</button>
                                                         </div>

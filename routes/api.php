@@ -41,6 +41,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('/confirm_withdrawal_payment', [TransactionController::class, 'markWithdrawalsAsPaid'])->name('confirm_withdrawal_payment');
 
     Route::post('/activateCoursesStatus', [courseController::class, 'activateCoursesStatus'])->name('activateCoursesStatus');
+    Route::post('/delete-course', [courseController::class, 'deleteCourses'])->name('delete-course');
 
     //save course
     Route::post('/saveCourse', [SaveCourseController::class, 'saveCourse'])->name('saveCourse');
