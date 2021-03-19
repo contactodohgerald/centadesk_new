@@ -153,6 +153,9 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
+                            <a href="{{route('all_users')}}" class="sub_menu--link">All</a>
+                        </li>
+                        <li class="sub_menu--item">
                             <a href="{{route('all_students')}}" class="sub_menu--link">Students</a>
                         </li>
                         <li class="sub_menu--item">

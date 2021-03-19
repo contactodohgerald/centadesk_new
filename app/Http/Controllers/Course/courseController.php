@@ -526,4 +526,39 @@ class courseController extends Controller
 
         return view('dashboard.explore_categories', ['course'=>$course, 'course_category_model'=>$course_category_model]);
     }
+
+    public function set_bestseller(string $id)
+    {
+        try {
+            if (!$id) {
+                throw new Exception($this->errorMsgs(15)['msg']);
+            }
+            $Course = course_model::find($id);
+            if ($Course->is_bestseller == 'yes') {
+                $Course->is_bestseller = 'no';
+                $error = 'Course is no longer a Bestseller!';
+
+            } elseif ($Course->is_bestseller == 'no') {
+                $Course->is_bestseller = 'yes';
+                $error = 'Course is now a Bestseller!';
+
+            }
+
+            $updated = $Course->save();
+            if (!$updated) {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            } else {
+                return response()->json(["message" => $error, 'status' => true]);
+            }
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
+        }
+
+    }
+
 }

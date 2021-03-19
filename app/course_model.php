@@ -27,7 +27,7 @@ class course_model extends Model
      *
      * @var array
      */
-    protected $fillable = ['unique_id', 'category_id','user_id', 'name', 'description', 'cover_image', 'intro_video', 'pricing','short_caption','course_urls','status','ratings','views','like','shares'];
+    protected $fillable = ['unique_id', 'category_id','user_id', 'name', 'description', 'cover_image', 'intro_video', 'pricing','short_caption','course_urls','status','ratings','views','like','shares','is_bestseller'];
 
 
     /**

@@ -46,7 +46,8 @@ class User extends Authenticatable implements MustVerifyEmail{
         'linkedin',
         'youtube',
         'instagram',
-        'whatsapp'
+        'whatsapp',
+        'verified_badge'
     ];
 
     /**

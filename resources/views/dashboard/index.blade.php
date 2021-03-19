@@ -260,9 +260,11 @@ $home = 'active';
                                         <a href="{{route('view_course', $each_course->unique_id )}}" class="fcrse_img">
                                             <img src="{{asset($link.'course-img/'.$each_course->cover_image)}}" alt="{{env('APP_NAME')}}">
                                             <div class="course-overlay">
-                                                <!--                                                            <div class="badge_seller">Bestseller</div>-->
+                                                @if ($each_course->is_bestseller == 'yes')
+                                                <div class="badge_seller">Bestseller</div>
+                                                @endif
                                                 <div class="crse_reviews">
-                                                    <i class='uil uil-star'></i>{{$each_course->count_review}}
+                                                    <i class="uil uil-star"></i>{{$each_course->count_review}}
                                                 </div>
                                                 <span class="play_btn1"><i class="uil uil-play"></i></span>
                                                 <div class="crse_timer font-poppins">
@@ -312,9 +314,11 @@ $home = 'active';
                                         <div class="tutor_content_dt">
                                             <div class="tutor150">
                                                 <a href="{{route('view_profile', $each_instructors->unique_id )}}" class="tutor_name font-poppins text-capitalize">{{$each_instructors->name}} {{$each_instructors->last_name}}</a>
-                                                <div class="mef78" title="Verify">
-                                                    <i class="uil uil-check-circle"></i>
+                                                @if ($each_instructors->verified_badge == 'yes')
+                                                <div class="mef78" title="Verified">
+                                                    <i class='uil uil-check-circle'></i>
                                                 </div>
+                                                @endif
                                             </div>
                                             <div class="tutor_cate font-poppins text-capitalize">{{ $each_instructors->professonal_heading }}
                                                 @if ($each_instructors->professonal_heading)
@@ -348,10 +352,12 @@ $home = 'active';
                             </div>
                             <div class="tutor_content_dt">
                                 <div class="tutor150">
-                                    <a href="{{ route('profile')}}" class="tutor_name font-poppins">{{ $users->name }} {{ $users->last_name }}</a>
-                                    <div class="mef78" title="Verify">
-                                        <i class="uil uil-check-circle"></i>
+                                    <a href="{{ route('profile')}}" class="tutor_name font-poppins text-capitalize">{{ $users->name }} {{ $users->last_name }}</a>
+                                    @if ($users->verified_badge == 'yes')
+                                    <div class="mef78" title="Verified">
+                                        <i class='uil uil-check-circle'></i>
                                     </div>
+                                    @endif
                                 </div>
                                 <div class="tutor_cate text-capitalize font-poppins">{{ $user->professonal_heading }}
                                     @if ($user->professonal_heading)

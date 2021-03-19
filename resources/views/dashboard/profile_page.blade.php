@@ -145,13 +145,15 @@
 														<a href="{{route('view_course', $e->unique_id )}}" class="fcrse_img">
 															<img src="{{asset($link.'/course-img/'.$e->cover_image)}}" width="218.5px" height="122.91">
 															<div class="course-overlay">
-																<div class="badge_seller">Bestseller</div>
-																<div class="crse_reviews">
-																	<i class="uil uil-star"></i>4.5
-																</div>
+                                                                @if ($e->is_bestseller == 'yes')
+                                                                <div class="badge_seller">Bestseller</div>
+                                                                @endif
+                                                                <div class="crse_reviews">
+                                                                    <i class="uil uil-star"></i>{{$e->count_review}}
+                                                                </div>
 																<span class="play_btn1"><i class="uil uil-play"></i></span>
-																<div class="crse_timer">
-																	25 hours
+																<div class="crse_timer font-poppins">
+																	{{$e->created_at->diffForHumans()}}
 																</div>
 															</div>
 														</a>
@@ -167,7 +169,7 @@
 																<span class="vdt14">{{$e->created_at->diffForHumans()}}</span>
 															</div>
 															<a href="{{route('view_course', $e->unique_id )}}" class="crse14s">{{ $e->name}}</a>
-                                                            <a href="javascript:;" class="crse-cate">{{$e->category->name}}</a>
+                                                            <a href="javascript:;" class="crse-cate font-poppins">{{$e->category->name}}</a>
 															<div class="auth1lnkprce">
 																<p class="cr1fot text-capitalize">By <a href="#">{{ $e->user->name }} {{ $e->user->last_name }}</a></p>
 																<div class="prce142">{{auth()->user()->getAmountForView($e->price->amount)['data']['currency'] }} {{number_format(auth()->user()->getAmountForView($e->price->amount)['data']['amount'])}}</div>

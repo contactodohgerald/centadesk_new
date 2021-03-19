@@ -76,8 +76,8 @@ Route::group(['middleware' => 'web'], function () {
 Route::group(['middleware' => 'web'], function () {
     // Live stream
     Route::get('/live_stream/create', [live_stream_controller::class, 'create_live'])->name('create_live');
-    Route::get('/live_stream/all', [live_stream_controller::class, 'show']);
-    Route::get('/live_stream/all', [live_stream_controller::class, 'show_live_stream'])->name('show_live_stream');
+    Route::get('/live_stream/all', [live_stream_controller::class, 'show'])->name('show_live_stream');
+    // Route::get('/live_stream/all', [live_stream_controller::class, 'show_live_stream'])->name('show_live_stream');
     Route::get('/live_stream/edit/{id}', [live_stream_controller::class, 'update_page']);
     Route::get('/explore/live_streams', [live_stream_controller::class, 'explore_live_streams']);
     Route::get('/live_stream/details/{id}', [live_stream_controller::class, 'live_stream_details'])->name('stream_details');
@@ -102,6 +102,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/courses/enrolled', [CourseEnrollmentController::class, 'my_enrolled_courses'])->name('enrolled_course');
     Route::get('/course/checkout/{id}', [CourseEnrollmentController::class, 'enroll_cart'])->name('checkout');
     Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
+    Route::post('/bestseller/{id}', [courseController::class, 'set_bestseller']);
 
     Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
     Route::post('/delete-enroll/{id}', [CourseEnrollmentController::class, 'soft_delete']);
@@ -229,6 +230,9 @@ Route::group(['middleware' => 'web'], function () {
     //users
     Route::get('/all_students', [AdminController::class, 'showAllStudents'])->name('all_students');
     Route::get('/all_instructor', [AdminController::class, 'showAllInstructor'])->name('all_instructor');
+    Route::get('/all_users', [AdminController::class, 'show_all_users'])->name('all_users');
+
+    Route::post('/set_badge/{id}', [AdminController::class, 'set_user_verify_badge']);
 });
 
 Route::group(['middleware' => 'web'], function () {

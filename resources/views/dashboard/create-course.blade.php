@@ -70,7 +70,7 @@
                                                                     <label>Title*</label>
                                                                     <div class="ui left icon input swdh19">
                                                                         <input class="prompt srch_explore" type="text" placeholder="Enter your course title" name="title" value="">
-                                                                        <div class="badge_num">40</div>
+                                                                        <div class="badge_num font-poppins">40</div>
                                                                         <div class="err_title error_displayer"></div>
                                                                     </div>
                                                                 </div>
@@ -92,7 +92,7 @@
                                                                     <label>Very Short Caption*</label>
                                                                     <div class="ui left icon input swdh19">
                                                                         <input class="prompt srch_explore" type="text" placeholder="Summarize in a sentence" name="caption">
-                                                                        <div class="badge_num2">100</div>
+                                                                        <div class="badge_num2 font-poppins">100</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -125,19 +125,19 @@
                                     <div class="step-tab-panel step-tab-location" id="tab_step2">
                                         <div class="tab-from-content">
                                             <div class="title-icon">
-                                                <h3 class="title"><i class="uil uil-film"></i>Course Content</h3>
+                                                <h3 class="title"><i class="uil uil-film"></i>Detailed Description</h3>
                                             </div>
                                             <div class="course__form">
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="extra_info">
-                                                            <h4 class="part__title">New Course Content</h4>
+                                                            <h4 class="part__title font-poppins">Describe what students will learn from your course, in details.</h4>
                                                         </div>
                                                         <div class="view_info10">
                                                             <div class="row">
                                                                 <div class="col-lg-12 col-md-12">
                                                                     <div class="course_des_textarea mt-30 lbel25">
-                                                                        <label>Description*</label>
+                                                                        {{-- <label>Description*</label> --}}
                                                                         <div class="course_des_bg">
                                                                             <div class="textarea_dt">
                                                                                 <div class="ui form swdh339">
@@ -208,13 +208,13 @@
                                     <div class="step-tab-panel step-tab-amenities" id="tab_step4">
                                         <div class="tab-from-content">
                                             <div class="title-icon">
-                                                <h3 class="title"><i class="uil uil-file-copy-alt"></i>Extra Information</h3>
+                                                <h3 class="title"><i class="uil uil-file-copy-alt"></i>Download URL's</h3>
                                             </div>
                                             <div class="course__form">
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="extra_info">
-                                                            <h4 class="part__title">Captions</h4>
+                                                            <h4 class="part__title font-poppins">Enter the download urls for your course. When users click the link, it directs them to download the course.</h4>
                                                         </div>
                                                         <div class="view_info10">
                                                             <div class="row">

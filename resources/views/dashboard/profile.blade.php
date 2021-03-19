@@ -141,9 +141,11 @@ $profile = 'active';
                                                         <a href="{{route('view_course', $e->unique_id )}}" class="fcrse_img">
                                                             <img src="{{asset($link.'/course-img/'.$e->cover_image)}}" width="218.5px" height="122.91">
                                                             <div class="course-overlay">
-                                                                <div class="badge_seller font-poppins">Bestseller</div>
+                                                                @if ($e->is_bestseller == 'yes')
+                                                                <div class="badge_seller">Bestseller</div>
+                                                                @endif
                                                                 <div class="crse_reviews">
-                                                                    <i class="uil uil-star"></i>4.5
+                                                                    <i class="uil uil-star"></i>{{$e->count_review}}
                                                                 </div>
                                                                 <span class="play_btn1"><i class="uil uil-play"></i></span>
                                                                 <div class="crse_timer">
