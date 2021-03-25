@@ -67,7 +67,7 @@ $users = auth()->user();
 							</ul>
 							<div class="tab-content" id="pills-tabContent">
 								<div class="tab-pane fade show active" id="pills-my-courses" role="tabpanel">
-									<div class="table-responsive mt-30">
+									<div class="table table-responsive mt-30">
 										<table class="table ucp-table">
 											<thead class="thead-s">
 												<tr>
@@ -78,10 +78,11 @@ $users = auth()->user();
 													</th>
 													@endif
 													<th class="text-center" scope="col">Title</th>
-													<th class="text-center" scope="col">Publish Date</th>
-													<th class="text-center" scope="col">Like</th>
-													<th class="text-center" scope="col">Views</th>
 													<th class="text-center" scope="col">Category</th>
+													<th class="text-center" scope="col">Publish Date</th>
+													<th class="text-center" scope="col">Views</th>
+													<th class="text-center" scope="col">Likes</th>
+                                                    <th class="text-center" scope="col">Best Seller</th>
 													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
 													<th class="text-center" scope="col">User's Name</th>
 													<th class="text-center" scope="col">User's Email</th>
@@ -101,18 +102,29 @@ $users = auth()->user();
 													</td>
 													@endif
 													<td class="text-center">{{ $e->name }}</td>
+													<td class="text-center"><a href="#">{{ $e->category->name }}</a></td>
 													<td class="text-center">{{ $e->created_at }}</td>
 													<td class="text-center">{{ $e->views }}</td>
 													<td class="text-center">{{ $e->likes }}</td>
-													<td class="text-center"><a href="#">{{ $e->category->name }}</a></td>
+													<td class="text-center">
+                                                        @if ($e->is_bestseller == 'yes')
+														<p class="text-success">Yes</p>
+                                                        @else
+														<p class="text-danger">No</p>
+                                                        @endif
+													</td>
 													@if(auth()->user()->privilegeChecker('view_restricted_roles'))
 													<td class="text-center">{{ $e->user->name }} {{ $e->user->last_name }}</td>
 													<td class="text-center">{{ $e->user->email }}</td>
 													@endif
 													<td class="text-center text-capitalize"><b class="course_active">{{ $e->status }}</b></td>
 													<td class="text-center">
-                                                        <a href="/view_course/{{ $e->unique_id }}" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
+                                                        <a href="/view_course/{{ $e->unique_id }}" title="View" class="cursor-pointer gray-s"><i class="uil uil-adjust"></i></a>
 														<a href="/edit-course/{{ $e->unique_id }}" title="Edit" class="cursor-pointer gray-s"><i class="uil uil-edit-alt"></i></a>
+
+														<a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s delete_course_modal"><i class="uil uil-trash-alt"></i></a>
+														<a id="{{ $e->unique_id }}" title="Set Bestseller" class="cursor-pointer gray-s set_bestseller_modal"><i class="uil uil-thumbs-up"></i></a>
+
 													</td>
                                                 </tr>
                                                 @endforeach
@@ -153,12 +165,59 @@ $users = auth()->user();
                 </div>
             </div>
         </div>
+
+        <div class="modal zoomInUp " id="set_bestseller_modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <h4>Set Badge?</h4>
+                    </div>
+                    <form class="set_bestseller_form">
+                        @csrf
+                        <div class="modal-body">
+                            <p class="text-danger">By clicking continue, the bestseller status of this course will change! </p>
+                        </div>
+                    </form>
+                    <div class="modal-footer no-border">
+                        <div class="text-right">
+                            <button class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+                            <button class="btn btn-primary btn-sm set_bestseller_btn" data-dismiss="modal">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Body End -->
 
         @include('layouts.e_script')
 
         <script>
             $(document).ready(function () {
+
+                // set best seller starts
+
+
+            $('.set_bestseller_modal').click(function(e) {
+                e.preventDefault();
+                append_id('set_bestseller_id', '.set_bestseller_form', '#set_bestseller_modal', this)
+                $('#set_bestseller_modal').modal('toggle');
+            });
+
+
+            $('.set_bestseller_btn').click(async function(e) {
+                e.preventDefault();
+                let set_bestseller_form = $('.set_bestseller_form').serializeArray();
+                let form_data = set_form_data(set_bestseller_form);
+                let returned = await ajaxRequest('/bestseller/'+set_bestseller_form[1].value, form_data);
+                // console.log(returned);
+                // return;
+                validator(returned, '/view-courses');
+            });
+
+
+                // set bestseller ends
+
+
                 $('.delete_course_modal').click(function(e) {
                     e.preventDefault();
                     append_id('delete_course_id', '.delete_course_form', '#delete_course_modal', this)

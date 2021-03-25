@@ -47,12 +47,14 @@
                                         </div>
                                                 <div class="tutor_content_dt">
                                             <div class="tutor150">
-                                                <a href="{{route('view_profile', $each_instructors->unique_id )}}" class="tutor_name">{{$each_instructors->name}} {{$each_instructors->last_name}}</a>
-                                                <div class="mef78" title="Verify">
-                                                    <i class="uil uil-check-circle"></i>
+                                                <a href="{{route('view_profile', $each_instructors->unique_id )}}" class="tutor_name text-capitalize font-poppins">{{$each_instructors->name}} {{$each_instructors->last_name}}</a>
+                                                @if ($each_instructors->verified_badge == 'yes')
+                                                <div class="mef78" title="Verified">
+                                                    <i class='uil uil-check-circle'></i>
                                                 </div>
+                                                @endif
                                             </div>
-                                            <div class="tutor_cate">{{$each_instructors->professonal_heading}}</div>
+                                            <div class="tutor_cate font-poppins">{{$each_instructors->professonal_heading}}</div>
                                             <ul class="tutor_social_links">
                                                 <li><a href="https://facebook.com/{{ $each_instructors->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
                                                 <li><a href="https://twitter.com/{{ $each_instructors->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
