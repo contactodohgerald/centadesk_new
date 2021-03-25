@@ -237,11 +237,36 @@ Route::group(['middleware' => 'verified'], function(){
 });
 
 
+Route::group(['middleware' => 'web'], function () {
+    // Live stream
+    Route::get('/live_stream/create', [live_stream_controller::class, 'create_live'])->name('create_live');
+    Route::get('/live_stream/all', [live_stream_controller::class, 'show'])->name('show_live_stream');
+    // Route::get('/live_stream/all', [live_stream_controller::class, 'show_live_stream'])->name('show_live_stream');
+    Route::get('/live_stream/edit/{id}', [live_stream_controller::class, 'update_page']);
+    Route::get('/explore/live_streams', [live_stream_controller::class, 'explore_live_streams']);
+    Route::get('/live_stream/details/{id}', [live_stream_controller::class, 'live_stream_details'])->name('stream_details');
+
+    Route::post('/live/create', [live_stream_controller::class, 'create']);
+    Route::post('/live/edit', [live_stream_controller::class, 'update']);
+    Route::post('/delete-live/{id}', [live_stream_controller::class, 'soft_delete']);
+});
 
 
 
 
-//front end routes
+
+Route::group(['middleware' => 'web'], function () {
+    // Enroll in course
+    Route::get('/courses/enrolled', [CourseEnrollmentController::class, 'my_enrolled_courses'])->name('enrolled_course');
+    Route::get('/course/checkout/{id}', [CourseEnrollmentController::class, 'enroll_cart'])->name('checkout');
+    Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
+    Route::post('/bestseller/{id}', [courseController::class, 'set_bestseller']);
+
+    Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
+    Route::post('/delete-enroll/{id}', [CourseEnrollmentController::class, 'soft_delete']);
+    Route::post('/delete-batch', [CourseEnrollmentController::class, 'batch_soft_Delete']);
+});
+
 Route::group(['middleware' => 'web'], function () {
     // front side web routes
     Route::get('/about',[RouteController::class,'aboutUsPage'])->name('about');
@@ -300,6 +325,43 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 Route::group(['middleware' => 'web'], function () {
+
+    //create Price For Course
+    Route::get('/create_price', [priceController::class, 'create'])->name('create_price');
+    Route::post('/store_price', [priceController::class, 'store'])->name('store_price');
+    Route::get('/view_price', [priceController::class, 'index'])->name('view_price');
+});
+
+Route::group(['middleware' => 'web'], function () {
+    //system settings
+    Route::get('/main_settings_page', [AppSettingsController::class, 'mainSettings'])->name('main_settings_page');
+    Route::get('/app_settings_page', [AppSettingsController::class, 'appSettings'])->name('app_settings_page');
+    Route::post('/update_app_settings/{unique_id}', [AppSettingsController::class, 'updateAppSettings'])->name('update_app_settings');
+    Route::post('/update_course_percent', [AppSettingsController::class, 'update_enrollment_percentage']);
+    Route::post('/site_logo', [AppSettingsController::class, 'updateSiteLogo'])->name('site_logo');
+});
+
+Route::group(['middleware' => 'web'], function () {
+    //update currency
+    Route::post('/update_user_currency', [CurrencyRateController::class, 'updateUserPreferredCurrency'])->name('update_user_currency');
+});
+
+Route::group(['middleware' => 'web'], function () {
+    //saved courses
+    Route::get('/saved-course', [SaveCourseController::class, 'getAllSavedCourse'])->name('saved-course');
+});
+
+Route::group(['middleware' => 'web'], function () {
+    //users
+    Route::get('/all_students', [AdminController::class, 'showAllStudents'])->name('all_students');
+    Route::get('/all_instructor', [AdminController::class, 'showAllInstructor'])->name('all_instructor');
+    Route::get('/all_users', [AdminController::class, 'show_all_users'])->name('all_users');
+
+    Route::post('/set_badge/{id}', [AdminController::class, 'set_user_verify_badge']);
+});
+
+Route::group(['middleware' => 'web'], function () {
+
     //users
     Route::get('/complain_page', [ComplainController::class, 'complainPage'])->name('complain_page');
     Route::post('/create_complain', [ComplainController::class, 'createComplain'])->name('create_complain');

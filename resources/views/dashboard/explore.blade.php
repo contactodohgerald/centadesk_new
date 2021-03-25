@@ -66,7 +66,9 @@ $explore= 'active';
                                         <a href="{{route('view_course', $each_course->unique_id )}}" class="fcrse_img">
                                             <img src="{{asset($link.'course-img/'.$each_course->cover_image)}}" alt="{{env('APP_NAME')}}" width="218.5px" height="122.91">
                                             <div class="course-overlay">
-<!--                                                <div class="badge_seller">Bestseller</div>-->
+                                                @if ($each_course->is_bestseller == 'yes')
+                                                <div class="badge_seller">Bestseller</div>
+                                                @endif
                                                 <div class="crse_reviews">
                                                     <i class="uil uil-star"></i>{{$each_course->count_review}}
                                                 </div>

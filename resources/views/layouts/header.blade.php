@@ -107,9 +107,11 @@ $site_logo = $appSettings->getSingleModel();
                             <div class="pd_content">
                                 <div class="rhte85">
                                     <h6 class="text-capitalize">{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
+                                    @if (auth()->user()->verified_badge == 'yes')
                                     <div class="mef78" title="Verified">
                                         <i class='uil uil-check-circle'></i>
                                     </div>
+                                    @endif
                                 </div>
                                 <span>{{auth()->user()->email}}</span>
                             </div>

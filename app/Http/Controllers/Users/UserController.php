@@ -26,7 +26,14 @@ class UserController extends Controller
     use appFunction, SendMail, Generics, UsersArray;
 
     function __construct(
-        KycVerification $kycVerification, AppSettings $appSettings, course_model $course_model, Subscribe $subscribe, InstructorReviewLike $instructorReviewLike, InsrtuctorReviewReply $instructorReviewReply, InstructorsReview $instructorsReview, courseEnrollment $courseEnrollment
+        KycVerification $kycVerification, 
+       AppSettings $appSettings, 
+      course_model $course_model, 
+      Subscribe $subscribe, 
+      InstructorReviewLike $instructorReviewLike,
+      InsrtuctorReviewReply $instructorReviewReply, 
+      InstructorsReview $instructorsReview, 
+      courseEnrollment $courseEnrollment
     ){
         $this->middleware('auth');
         $this->kycVerification = $kycVerification;
@@ -38,6 +45,7 @@ class UserController extends Controller
         $this->instructorReviewReply = $instructorReviewReply;
         $this->courseEnrollment = $courseEnrollment;
     }
+
     /**
      * Function to display teacher profile page.
      *
@@ -53,14 +61,13 @@ class UserController extends Controller
         $course_model = $this->course_model->getAllCourse($condition);
         $user->courses = $course_model;
 
-        foreach ($user->courses as $each_course){
+        foreach ($user->courses as $each_course) {
 
             $each_course->user;
 
             $each_course->price;
 
             $each_course->category;
-
         }
 
         $conditions = [
@@ -69,7 +76,9 @@ class UserController extends Controller
         $subscribe = $this->subscribe->getAllSubscribers($conditions);
         $user->subscribe = $subscribe;
 
+
         foreach ($user->subscribe as $each_subscribe){
+
             $each_subscribe->users;
             $conditions = [
                 ['user_id',  $each_subscribe->users->unique_id]
@@ -88,7 +97,7 @@ class UserController extends Controller
         ];
         $instructors = $this->instructorsReview->getAllInstructorReview($query);
         $user->comments_for_instructor = $instructors;
-        foreach ($user->comments_for_instructor as $each_instructor_comment){
+        foreach ($user->comments_for_instructor as $each_instructor_comment) {
             $each_instructor_comment->users;
 
             $likes_query = [
@@ -112,7 +121,7 @@ class UserController extends Controller
 
             $each_instructor_comment->each_instructor_comments = $instructorReviewReply;
 
-            foreach ($each_instructor_comment->each_instructor_comments as $comment){
+            foreach ($each_instructor_comment->each_instructor_comments as $comment) {
                 $comment->users;
                 $likes_query = [
                     ['main_review_id', $comment->unique_id],
@@ -127,7 +136,6 @@ class UserController extends Controller
                 ];
                 $likes = $this->instructorReviewLike->getAllInstructorReviewLike($likes_query);
                 $comment->comment_reply_dislikes = $likes;
-
             }
         }
 
@@ -140,6 +148,7 @@ class UserController extends Controller
         $user->enrolled_users = $enrolled->count();
 
         return view('dashboard.profile', ['user'=>$user]);
+
     }
 
     protected function Validator($request)
@@ -284,19 +293,19 @@ class UserController extends Controller
         $user = $request->user();
 
         try {
-                $validator = Validator::make($request->all(), [
-                    'profile_img' => 'required|file|image|mimes:jpeg,png,gif|max:4048',
-                ]);
-                if ($validator->fails()) {
-                    return response()->json(['errors' => $validator->errors(), 'status' => false]);
-                }
+            $validator = Validator::make($request->all(), [
+                'profile_img' => 'required|file|image|mimes:jpeg,png,gif|max:4048',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors(), 'status' => false]);
+            }
 
-                $cover_img = $request->file('profile_img');
-                $img_name = $this->gen_file_name($user, 'profile-photo', $cover_img);
-                $upload_img = $cover_img->storeAs(
-                    'public/profile',
-                    $img_name
-                );
+            $cover_img = $request->file('profile_img');
+            $img_name = $this->gen_file_name($user, 'profile-photo', $cover_img);
+            $upload_img = $cover_img->storeAs(
+                'public/profile',
+                $img_name
+            );
 
             $user = User::find($user->unique_id);
             $prev_file_name = $user['profile_image'];
@@ -306,14 +315,13 @@ class UserController extends Controller
             if (!$updated) {
                 throw new Exception($this->errorMsgs(14)['msg']);
             } else {
-                if($prev_file_name !== 'avatar.png'){
-                    unlink('storage/profile/'.$prev_file_name);
+                if ($prev_file_name !== 'avatar.png') {
+                    unlink('storage/profile/' . $prev_file_name);
                 }
 
                 $error = 'Profile Image Updated!';
                 return response()->json(["message" => $error, 'status' => true]);
             }
-
         } catch (Exception $e) {
 
             $error = $e->getMessage();
@@ -322,27 +330,28 @@ class UserController extends Controller
             ];
             return response()->json(["errors" => $error, 'status' => false]);
         }
-
     }
 
-    function uploadUserCAC(){
+    function uploadUserCAC()
+    {
 
         return view('dashboard.upload_cac');
     }
 
-    protected function Validators($request){
+    protected function Validators($request)
+    {
 
         $this->validator = Validator::make($request->all(), [
             'cac_passport' => 'required|mimes:jpg,jpeg,png|max:3000',
             'cac_files' => 'required|mimes:jpg,jpeg,png,pdf,doc|max:6000',
         ]);
-
     }
 
-    function uploadCACFiles(Request $request){
+    function uploadCACFiles(Request $request)
+    {
         $user = Auth::user();
-        try{
-            $this->Validators($request);//validate fields
+        try {
+            $this->Validators($request); //validate fields
 
             $condition = [
                 ['user_unique_id', $user->unique_id],
@@ -350,14 +359,14 @@ class UserController extends Controller
 
             $kycVerification = $this->kycVerification->getAllKycVerification($condition);
 
-            if (count($kycVerification) > 0){
+            if (count($kycVerification) > 0) {
 
 
-                foreach ($kycVerification as $each_kycVerification){
+                foreach ($kycVerification as $each_kycVerification) {
 
                     //code for remove old file
                     if ($each_kycVerification->passport_cac !== null) {
-                        if(file_exists(storage_path('app/public/cac_passport/') . $user->passport_cac)){
+                        if (file_exists(storage_path('app/public/cac_passport/') . $user->passport_cac)) {
                             $file_old = storage_path('app/public/cac_passport/') . $user->passport_cac;
                             unlink($file_old);
                         }
@@ -369,7 +378,7 @@ class UserController extends Controller
                     }
 
                     if ($each_kycVerification->file_cac !== null) {
-                        if(file_exists(storage_path('app/public/cac_files/') . $user->file_cac)){
+                        if (file_exists(storage_path('app/public/cac_files/') . $user->file_cac)) {
                             $file_olds = storage_path('app/public/cac_files/') . $user->file_cac;
                             unlink($file_olds);
                         }
@@ -384,22 +393,22 @@ class UserController extends Controller
                     $each_kycVerification->file_cac = $cac_files;
                     $each_kycVerification->status = 'pending';
 
-                    if ($each_kycVerification->save()){
+                    if ($each_kycVerification->save()) {
 
                         $adminEmail = $this->appSettings->getSingleModel();
 
-                        $full_name = $user->name.' '.$user->last_name;
+                        $full_name = $user->name . ' ' . $user->last_name;
 
-                        $message = 'Hi Adnin, am '.$full_name.' by name. I re-uploaded my form of verification for KYC verification, Please treat it with all urgency. Thank you';
+                        $message = 'Hi Adnin, am ' . $full_name . ' by name. I re-uploaded my form of verification for KYC verification, Please treat it with all urgency. Thank you';
 
                         $this->sendAdminEmailForAccountResolve('KYC Verification', $message, env('APP_NAME'), $this->base_url, $adminEmail->company_email_2);
 
                         return redirect('/kyc_verification')->with('success_message', 'CAC Upload was made successfully');
-                    }else{
+                    } else {
                         return redirect('/kyc_verification')->with('error_message', 'An Error occurred, Please try Again Later');
                     }
                 }
-            }else{
+            } else {
 
                 if ($request->hasFile('cac_passport')) {
                     $file = $request->file('cac_passport');
@@ -422,30 +431,28 @@ class UserController extends Controller
                 $kycVerifications->user_unique_id = $user->unique_id;
                 $kycVerifications->status = 'pending';
 
-                if ($kycVerifications->save()){
+                if ($kycVerifications->save()) {
 
                     $user->cac_verification_status = 'yes';
                     $user->save();
 
                     $adminEmail = $this->appSettings->getSingleModel();
 
-                    $full_name = $user->name.' '.$user->last_name;
+                    $full_name = $user->name . ' ' . $user->last_name;
 
-                    $message = 'Hi Adnin, am '.$full_name.' by name. I just uploaded my form of verification, Please treat it with all urgency. Thank you';
+                    $message = 'Hi Adnin, am ' . $full_name . ' by name. I just uploaded my form of verification, Please treat it with all urgency. Thank you';
 
                     $this->sendAdminEmailForAccountResolve('KYC Verification', $message, env('APP_NAME'), $this->base_url, $adminEmail->company_email_2);
 
                     return redirect('/kyc_verification')->with('success_message', 'CAC Upload was made successfully');
-                }else{
+                } else {
                     return redirect('/kyc_verification')->with('error_message', 'An Error occurred, Please try Again Later');
                 }
             }
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
 
             $errorsArray = $exception->getMessage();
             return  redirect('/kyc_verification')->with('error_message', $errorsArray);
-
         }
-
     }
 }
