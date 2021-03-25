@@ -58,7 +58,7 @@ $users = auth()->user();
 			<div class="row">
 				<div class="col-12">
 					<div class="back_link">
-						<a href="{{route('view_course', $course->unique_id )}}" class="hde151 font-poppins">Back To Cursus</a>
+						<a href="{{route('view_course', $course->unique_id )}}" class="hde151 font-poppins">Back To {{env('APP_NAME', 'CENTADESK')}}</a>
 						<a href="{{route('view_course', $course->unique_id )}}" class="hde152 font-poppins">Back</a>
 					</div>
 					<div class="ml_item">
@@ -79,7 +79,7 @@ $users = auth()->user();
 											<img src="{{asset(auth()->user()->returnLink().'/profile/'.auth()->user()->profile_image)}}" alt="">
 											<div class="pd_content">
 												<div class="rhte85">
-													<h6>{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
+													<h6 class="text-capitalize">{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
 													<div class="mef78" title="Verify">
 														<i class='uil uil-check-circle'></i>
 													</div>
@@ -163,7 +163,7 @@ $users = auth()->user();
 								</div>
 								<div class="order_dt_section">
 									<div class="order_title">
-										<h2>Total</h2>
+										<h2 class="font-poppins">Total</h2>
 										<div class="order_price5 font-poppins">{{auth()->user()->getAmountForView($course->price->amount)['data']['currency'] }} {{number_format(auth()->user()->getAmountForView($course->price->amount)['data']['amount'])}}</div>
 									</div>
                                     <form action="" class="enroll_form">

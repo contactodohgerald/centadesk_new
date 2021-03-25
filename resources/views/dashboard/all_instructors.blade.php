@@ -16,9 +16,9 @@
 	<!-- Body Start -->
 	<div class="wrapper">
 		<div class="sa4d25">
-			<div class="container-fluid">			
+			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-12">	
+					<div class="col-lg-12">
 						<h2 class="st_title"><i class="uil uil-book-alt"></i>All Instructors</h2>
 					</div>
 				</div>
@@ -111,7 +111,7 @@
 											@endif
 											</tbody>
 										</table>
-									</div>								
+									</div>
 								</div>
 								<div class="tab-pane fade" id="pills-inactive-students" role="tabpanel">
 									<div class="table-responsive mt-30">
@@ -160,6 +160,74 @@
 
 		@include('layouts.footer')
 	</div>
+    <div class="modal zoomInUp " id="delete_all_modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <h4>Remove Courses?</h4>
+                </div>
+                <form class="verify_badge_form">
+                    @csrf
+                    <div class="modal-body">
+                        <p class="text-danger">By clicking continue, this user will recieve a verification badge! </p>
+                    </div>
+                </form>
+                <div class="modal-footer no-border">
+                    <div class="text-right">
+                        <button class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary btn-sm verify_badge_btn" data-dismiss="modal">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- Body End -->
 	<!-- Body End -->
 
 @include('layouts.e_script')
+
+<script>
+    $(document).ready(function () {
+        $('.verify_badge_modal').click(function(e) {
+            e.preventDefault();
+            append_id('verify_badge_id', '.verify_badge_form', '#verify_badge_modal', this)
+            $('#verify_badge_modal').modal('toggle');
+        });
+
+
+    $('.verify_badge_btn').click(async function(e) {
+        e.preventDefault();
+        let verify_badge_form = $('.verify_badge_form').serializeArray();
+        let form_data = set_form_data(verify_badge_form);
+        let returned = await ajaxRequest('/delete-enroll/'+delete_enroll_form[1].value, form_data);
+        // console.log(returned);
+        // return;
+        validator(returned, '/courses/enrolled');
+    });
+
+
+    $('.remove_all').click(async function (e) {
+            e.preventDefault();
+            let students_to_promote_batch = [];
+            let csrf_form = $('.csrf').serializeArray();
+
+            let form_check_box = $('.batch_delete');
+            for (let i = 0; i < form_check_box.length; i++) {
+                    students_to_promote_batch.push(form_check_box[i].value);
+            }
+            csrf_form.push({
+                    name: "students_to_promote_batch",
+                    value: students_to_promote_batch
+                });
+
+            let form_data = set_form_data(csrf_form);
+            // console.log(students_to_promote_batch);return;
+
+            let returned = await ajaxRequest('/delete-batch', form_data);
+            // console.log(response);return;
+            validator(returned, '/courses/enrolled');
+
+        });
+
+    });
+</script>
