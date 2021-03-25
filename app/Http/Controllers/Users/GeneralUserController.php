@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\InsrtuctorReviewReply;
 use App\Model\InstructorReviewLike;
 use App\Model\InstructorsReview;
+use App\Model\courseEnrollment;
 use App\Model\Subscribe;
 use App\Traits\UsersArray;
 use App\User;
@@ -20,7 +21,7 @@ class GeneralUserController extends Controller
     use UsersArray;
 
     function __construct(
-        User $user, course_model $course_model, Subscribe $subscribe, InstructorsReview $instructorsReview, InsrtuctorReviewReply $instructorReviewReply, InstructorReviewLike $instructorReviewLike
+        User $user, course_model $course_model, Subscribe $subscribe, InstructorsReview $instructorsReview, InsrtuctorReviewReply $instructorReviewReply, InstructorReviewLike $instructorReviewLike, courseEnrollment $courseEnrollment
     ){
         $this->user = $user;
         $this->course_model = $course_model;
@@ -28,6 +29,7 @@ class GeneralUserController extends Controller
         $this->instructorsReview = $instructorsReview;
         $this->instructorReviewReply = $instructorReviewReply;
         $this->instructorReviewLike = $instructorReviewLike;
+        $this->courseEnrollment = $courseEnrollment;
     }
 
     public function viewUserGeneral($unique_id){
@@ -62,6 +64,11 @@ class GeneralUserController extends Controller
             ];
             $course_model = $this->course_model->getAllCourse($conditionss);
             $each_subscribe->course_count = count($course_model);
+
+            $enrolled = $this->courseEnrollment->getAllEnrolls([
+                ['course_creator', '=', $each_subscribe->unique_id]
+            ]);
+            $each_subscribe->enrolled_users = $enrolled->count();
         }
 
         $query = [
@@ -114,6 +121,11 @@ class GeneralUserController extends Controller
         $array_of_subscribers = $this->returnArrayForSubscribeUsers($user->unique_id);
         $user->array_of_subscribers = $array_of_subscribers;
 
+        $enrolled = $this->courseEnrollment->getAllEnrolls([
+            ['course_creator', '=', $user->unique_id]
+        ]);
+        $user->enrolled_users = $enrolled->count();
+
         return view('dashboard.profile_page', ['user'=>$user]);
     }
 
@@ -131,8 +143,12 @@ class GeneralUserController extends Controller
                 ['user_id', $each_instructors->unique_id],
             ];
             $course_model = $this->course_model->getAllCourse($conditions);
-
             $each_instructors->count_course = $course_model->count();
+
+            $enrolled = $this->courseEnrollment->getAllEnrolls([
+                ['course_creator', '=', $each_instructors->unique_id]
+            ]);
+            $each_instructors->enrolled_users = $enrolled->count();
         }
 
         return view('dashboard.browse_instructors', ['instructors'=>$instructors]);

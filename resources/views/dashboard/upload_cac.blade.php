@@ -49,21 +49,21 @@
                                     <form method="POST" action="{{route('update_cac_file')}}" enctype="multipart/form-data">
                                         @csrf
                                     <div class="part_input mt-30 lbel25">
-                                        <label>Upload Passport* <small>(jpg, png, jpeg)</small></label>
+                                        <label class="text-dark night-text">Upload Passport* <small>(jpg, png, jpeg)</small></label>
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" id="inputGroupFile07" name="cac_passport" required>
-                                                <label class="custom-file-label" for="inputGroupFile07">No Choose</label>
+                                                <label class="custom-file-label text-dark night-text" for="inputGroupFile07">No Choose</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="part_input mt-30 lbel25">
-                                        <label>Upload Document*  <small>(jpg, png, jpeg, pdf, doc)</small></label>
+                                        <label class="text-dark night-text">Upload Document*  <small>(jpg, png, jpeg, pdf, doc)</small></label>
                                         <div class="alert alert-success text-center">Please provide a means of identification, it could be a Valid National id card, Voters Card, Diver's Licence, International Passport</div>
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" id="inputGroupFile06" name="cac_files" required>
-                                                <label class="custom-file-label" for="inputGroupFile06">No Choose</label>
+                                                <label class="custom-file-label text-dark night-text" for="inputGroupFile06">No Choose</label>
                                             </div>
                                         </div>
                                     </div>

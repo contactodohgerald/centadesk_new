@@ -6,10 +6,10 @@
 
 <!-- The social media icon bar -->
 <div class="icon-bar-sticky">
-    <a href="#" class="waves-effect waves-light btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
-    <a href="#" class="waves-effect waves-light btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
-    <a href="#" class="waves-effect waves-light btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i></a>
-    <a href="#" class="waves-effect waves-light btn btn-social-icon btn-youtube"><i class="fa fa-youtube-play"></i></a>
+    <a href="https://facebook.com/{{ $site_logo->facebook_url }}" class="waves-effect waves-light btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+    <a href="https://twitter.com/{{ $site_logo->twitter_url }}" class="waves-effect waves-light btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
+    <a href="https://instagram.com/{{ $site_logo->instagram_url }}" class="waves-effect waves-light btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i></a>
+    <a href="https://www.youtube.com/{{ $site_logo->youtube_url }}" class="waves-effect waves-light btn btn-social-icon btn-youtube"><i class="fa fa-youtube-play"></i></a>
 </div>
 
 <header class="top-bar">
@@ -21,8 +21,8 @@
                     <div class="topbar-social text-center text-md-left topbar-left">
                         <ul class="list-inline d-md-flex d-inline-block">
 {{--                            <li class="ml-10 pr-10"><a href="#"><i class="text-white fa fa-question-circle"></i> Ask a Question</a></li>--}}
-                            <li class="ml-10 pr-10"><a href="#"><i class="text-white fa fa-envelope"></i> info@EduAdmin.com</a></li>
-                            <li class="ml-10 pr-10"><a href="#"><i class="text-white fa fa-phone"></i> +(1) 123-878-1649</a></li>
+                            <li class="ml-10 pr-10"><a href="mailto:{{$site_logo->company_email_1}}"><i class="text-white fa fa-envelope"></i>{{$site_logo->company_email_1}}</a></li>
+                            <li class="ml-10 pr-10"><a href="phone:{{$site_logo->company_phone_1}}"><i class="text-white fa fa-phone"></i>{{$site_logo->company_phone_1}}</a></li>
                         </ul>
                     </div>
                 </div>

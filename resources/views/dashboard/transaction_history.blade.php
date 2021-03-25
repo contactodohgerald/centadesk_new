@@ -1,9 +1,12 @@
+@php
+    $appSettings = new \App\Model\AppSettings();
+    $site_logo = $appSettings->getSingleModel();
+@endphp
+
 @php $pageTitle = 'Transaction Details Area'; @endphp
         <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- Mirrored from gambolthemes.net/html-items/cursus_demo_f12/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 18 Aug 2020 17:38:47 GMT -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,7 +45,7 @@
                 <div class="invoice_header_main">
                     <div class="invoice_header_item">
                         <div class="invoice_logo">
-                            <a href="{{route('home')}}"><img src="{{asset('dashboard/images/ct_logo.svg')}}" alt=""></a>
+                            <a href="{{route('home')}}"><img src="/storage/site_logo/{{ $site_logo->site_logo }}" alt="{{env('APP_NAME')}}"></a>
                         </div>
                         <p>Transaction Details</p>
                     </div>

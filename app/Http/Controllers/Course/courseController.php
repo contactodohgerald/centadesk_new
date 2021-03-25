@@ -35,7 +35,7 @@ class courseController extends Controller
     function __construct(
         Like $like, course_model $course_model, course_category_model $course_category_model, Review $review, live_stream_model $live_stream_model, SavedCourses $savedCourses, User $user, Subscribe $subscribe, courseEnrollment $courseEnrollment
     ){
-        $this->middleware('auth',  ['except' => ['activateCoursesStatus']]);
+        $this->middleware('auth',  ['except' => ['activateCoursesStatus', 'deleteCourses']]);
         $this->like = $like;
         $this->course_model = $course_model;
         $this->course_category_model = $course_category_model;
@@ -289,8 +289,19 @@ class courseController extends Controller
             ['course_id',$course->unique_id],
         ];
         $enrolls = $this->courseEnrollment->getAllEnrolls($conditions);
-        // return ['course'=>$course, 'enrolls'=> $enrolls];
+        foreach($enrolls as $j){
+            $conditions = [
+                ['user_id', $j->user_enroll->unique_id],
+            ];
+            $course_model = $this->course_model->getAllCourse($conditions);
+            $j->user_enroll->count_course = $course_model->count();
 
+            $enrolled = $this->courseEnrollment->getAllEnrolls([
+                ['course_creator', '=', $j->user_enroll->unique_id]
+            ]);
+            $j->user_enroll->enrolled_users = $enrolled->count();
+        }
+;
         return view('dashboard.view_course', ['course'=>$course, 'enrolls'=> $enrolls]);
     }
 
@@ -451,6 +462,31 @@ class courseController extends Controller
                 'errors' => [$error],
             ];
             return response()->json(["errors" => $error, 'status' => false]);
+        }
+    }
+
+    public function deleteCourses(Request $request)
+    {
+        try {
+
+            $validation = $this->handleValidations($request->all());
+            if ($validation->fails()) {
+                return response()->json(['error_code' => 1, 'error_message' => $validation->messages()]);
+            }
+
+            $dataArray = explode('|', $request->dataArray);
+
+            foreach ($dataArray as $eachDataArray) {
+
+                //update the course status to confirmed
+                $course = $this->course_model->selectSingleCourse($eachDataArray);
+                $course->delete();
+            }
+            return response()->json(['error_code' => 0, 'success_statement' => 'Course Deleted Successfully']);
+        } catch (Exception $exception) {
+
+            $error = $exception->getMessage();
+            return response()->json(['error_code' => 1, 'error_message' => ['general_error' => [$error]]]);
         }
     }
 

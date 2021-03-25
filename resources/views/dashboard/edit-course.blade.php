@@ -68,7 +68,7 @@
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-6">
                                                                 <div class="ui search focus mt-30 lbel25">
-                                                                    <label>Title*</label>
+                                                                    <label class="text-dark night-text">Title*</label>
                                                                     <div class="ui left icon input swdh19">
                                                                         <input class="prompt srch_explore" type="text" placeholder="Enter your course title" name="title" value="{{ $course->name }}">
                                                                         <div class="badge_num">15</div>
@@ -78,7 +78,7 @@
                                                             </div>
                                                             <div class="col-lg-6 col-md-6">
                                                                 <div class="ui search focus mt-30 lbel25">
-                                                                    <label>Category*</label>
+                                                                    <label class="text-dark night-text">Category*</label>
                                                                 </div>
                                                                 <select name="category" class="ui hj145 dropdown cntry152 prompt srch_explore">
 
@@ -93,7 +93,7 @@
 
                                                             <div class="col-lg-12 col-md-12">
                                                                 <div class="ui search focus mt-30 lbel25">
-                                                                    <label>Very Short Caption*</label>
+                                                                    <label class="text-dark night-text">Very Short Caption*</label>
                                                                     <div class="ui left icon input swdh19">
                                                                         <input class="prompt srch_explore" type="text" placeholder="Summarize in a sentence" value="{{ $course->short_caption }}" name="caption">
                                                                         <div class="badge_num2">15</div>
@@ -111,7 +111,7 @@
                                                             </div>
                                                             <div class="col-lg-2 col-md-3 col-sm-6">
                                                                 <div class="mt-30 lbel25">
-                                                                    <label>Preferred Currency</label>
+                                                                    <label class="text-dark night-text">Preferred Currency</label>
                                                                 </div>
                                                                 <select class="ui hj145 dropdown cntry152 prompt srch_explore">
                                                                     <option value="">USD</option>
@@ -120,7 +120,7 @@
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                                 <div class="mt-30 lbel25">
-                                                                    <label>Select*</label>
+                                                                    <label class="text-dark night-text">Select*</label>
                                                                 </div>
                                                                 <select name="pricing" class="ui hj145 dropdown cntry152 prompt srch_explore">
                                                                     <option value="">-- Select Pricing For Course --</option>
@@ -154,7 +154,7 @@
                                                             <div class="row">
                                                                 <div class="col-lg-12 col-md-12">
                                                                     <div class="course_des_textarea mt-30 lbel25">
-                                                                        <label>Description*</label>
+                                                                        <label class="text-dark night-text">Description*</label>
                                                                         <div class="course_des_bg">
                                                                             <div class="textarea_dt">
                                                                                 <div class="ui form swdh339">
@@ -197,7 +197,7 @@
                                                                         <div class="input-group">
                                                                             <div class="custom-file">
                                                                                 <input type="file" class="custom-file-input" id="cover_img">
-                                                                                <label class="custom-file-label" for="inputGroupFile04">Choose File</label>
+                                                                                <label class="custom-file-label text-dark night-text" for="inputGroupFile04">Choose File</label>
                                                                             </div>
                                                                         </div>
                                                                     </div>

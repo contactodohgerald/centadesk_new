@@ -39,7 +39,9 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                 @endif
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
                 <li class="menu--item menu--item__has_sub_menu text-dark night-text">
-                    <label class="menu--link <?php print @$Price;?>" title="Price">
+
+                    <label class="menu--link <?php print @$Price;?> text-dark night-text" title="Price">
+
                         <i class='uil uil-money-bill menu--icon text-dark night-text'></i>
                         <span class="menu--label text-dark night-text">Course Price</span>
                     </label>
@@ -146,10 +148,12 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     </ul>
                 </li>
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                <li class="menu--item  menu--item__has_sub_menu  text-dark night-text">
-                    <label class="menu--link <?php print @$Users;?>" title="Users">
-                        <i class='uil uil-user menu--icon  text-dark night-text'></i>
-                        <span class="menu--label  text-dark night-text">Users</span>
+
+                <li class="menu--item  menu--item__has_sub_menu text-dark night-text">
+                    <label class="menu--link <?php print @$Users;?> text-dark night-text" title="Users">
+                        <i class='uil uil-user menu--icon text-dark night-text'></i>
+                        <span class="menu--label text-dark night-text">Users</span>
+
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
@@ -187,10 +191,10 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
         <div class="left_section pt-2">
             <ul>
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
-                    <li class="menu--item  menu--item__has_sub_menu">
-                        <label class="menu--link <?php print @$blogs;?>" title="Blog Area">
-                            <i class='uil uil-newspaper menu--icon'></i>
-                            <span class="menu--label">Blog Area</span>
+                    <li class="menu--item  menu--item__has_sub_menu text-dark night-text">
+                        <label class="menu--link <?php print @$blogs;?> text-dark night-text" title="Blog Area">
+                            <i class='uil uil-newspaper menu--icon text-dark night-text'></i>
+                            <span class="menu--label text-dark night-text">Blog Area</span>
                         </label>
                         <ul class="sub_menu">
                             <li class="sub_menu--item">
@@ -221,9 +225,6 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                     <label class="menu--link <?php print @$Setting;?> text-dark night-text" title="Setting">
                         <i class='uil uil-cog menu--icon text-dark night-text'></i>
                         <span class="menu--label text-dark night-text">Setting </span>
-                    <label class="menu--link <?php print @$Setting;?>" title="Setting">
-                        <i class='uil uil-cloud-set menu--icon'></i>
-                        <span class="menu--label">Setting </span>
                     </label>
                     <ul class="sub_menu">
                         <li class="sub_menu--item">
@@ -241,10 +242,10 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                 </li>
 
                 @if(auth()->user()->privilegeChecker('view_roles'))
-                <li class="menu--item  menu--item__has_sub_menu">
-                    <label class="menu--link" title="Setting">
-                        <i class='uil uil-cog menu--icon'></i>
-                        <span class="menu--label">Roles Management </span>
+                <li class="menu--item  menu--item__has_sub_menu text-dark night-text">
+                    <label class="menu--link text-dark night-text" title="Setting">
+                        <i class='uil uil-cog menu--icon text-dark night-text'></i>
+                        <span class="menu--label text-dark night-text">Roles Management </span>
                     </label>
                     <ul class="sub_menu">
 

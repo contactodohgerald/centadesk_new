@@ -18,7 +18,7 @@ class BlogController extends Controller
     function __construct(
         BlogTagModel $blogTagModel, BlogModel $blogModel, TestimonyModel $testimonyModel
     ){
-        $this->middleware('auth',  ['except' => ['storeBlogTags', 'storeBlog', 'confirmBlogPost', 'blogPostComment']]);
+        $this->middleware('auth',  ['except' => ['storeBlogTags', 'storeBlog', 'confirmBlogPost', 'blogPostComment', 'blogDetailsInterface']]);
         $this->blogTagModel = $blogTagModel;
         $this->blogModel = $blogModel;
         $this->testimonyModel = $testimonyModel;

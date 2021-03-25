@@ -22887,7 +22887,7 @@ nav {
     display: block;
     position: relative;
     width: 170px;
-    padding: 20px 0px; }
+    padding: 0; }
     nav .brand img {
       width: 100%; }
   nav .menu li a {
@@ -23286,7 +23286,7 @@ nav.nav-core-sticky .wrap-core-nav-list, nav.nav-core-sticky .nav-header {
       margin: 0 auto 0px;
       float: none;
       width: 130px;
-      padding: 20px 0px; }
+      padding: 0; }
     nav .nav-header .toggle-bar {
       font-size: 1.286rem;
       position: absolute;

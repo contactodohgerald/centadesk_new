@@ -41,6 +41,7 @@ $users = auth()->user();
 							@if(auth()->user()->privilegeChecker('view_restricted_roles'))
 								<div class="pull-right">
 									<a class="btn btn-danger" onclick="activateCoursesStatus(this)" href="javascript:;">Confirm Courses Status</a>
+									<a class="btn btn-danger" onclick="deleteCourse(this)" href="javascript:;">Delete Course</a>
 								</div>
 							@endif
 						</h4>
@@ -120,8 +121,10 @@ $users = auth()->user();
 													<td class="text-center">
                                                         <a href="/view_course/{{ $e->unique_id }}" title="View" class="cursor-pointer gray-s"><i class="uil uil-adjust"></i></a>
 														<a href="/edit-course/{{ $e->unique_id }}" title="Edit" class="cursor-pointer gray-s"><i class="uil uil-edit-alt"></i></a>
+
 														<a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s delete_course_modal"><i class="uil uil-trash-alt"></i></a>
 														<a id="{{ $e->unique_id }}" title="Set Bestseller" class="cursor-pointer gray-s set_bestseller_modal"><i class="uil uil-thumbs-up"></i></a>
+
 													</td>
                                                 </tr>
                                                 @endforeach
@@ -222,15 +225,14 @@ $users = auth()->user();
                 });
 
 
-            $('.delete_course_btn').click(async function(e) {
-                e.preventDefault();
-                let delete_course_form = $('.delete_course_form').serializeArray();
-                let form_data = set_form_data(delete_course_form);
-                let returned = await ajaxRequest('/delete-course/'+delete_course_form[1].value, form_data);
-                console.log(returned);
-                // return;
-                validator(returned, '/view-courses');
-            });
+            // $('.delete_course_btn').click(async function(e) {
+            //     e.preventDefault();
+            //     let delete_course_form = $('.delete_course_form').serializeArray();
+            //     let form_data = set_form_data(delete_course_form);
+            //     let returned = await ajaxRequest('/delete-course/'+delete_course_form[1].value, form_data);
+            //     // return;
+            //     validator(returned, '/view-courses');
+            // });
 
             });
         </script>

@@ -49,7 +49,7 @@
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="ui search focus mt-30 lbel25">
-                                                    <label for="full_name">User FullName*</label>
+                                                    <label class="text-dark night-text" for="full_name">User FullName*</label>
                                                     <div class="ui left icon input swdh19">
                                                         <input required class="prompt srch_explore" id="full_name" type="text" placeholder="Enter User FullName" name="full_name">
                                                     </div>
@@ -58,7 +58,7 @@
 
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="course_des_textarea mt-30 lbel25">
-                                                    <label for="message">Testimony Message*</label>
+                                                    <label class="text-dark night-text" for="message">Testimony Message*</label>
                                                     <div class="course_des_bg">
                                                         <div class="textarea_dt">
                                                             <div class="ui form swdh339">
