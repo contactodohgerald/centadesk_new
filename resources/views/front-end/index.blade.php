@@ -63,7 +63,7 @@
                                                     <div class="box-body">
                                                         <div class="text-left">
                                                             <h4 class="box-title">{{ucfirst($each_course->name)}}</h4>
-                                                            <p class="mb-10 text-light font-size-12"><i class="fa fa-calendar mr-5"></i>{{$each_course->	created_at->diffForHumans()}}</p>
+                                                            <p class="mb-10 text-light font-size-12"><i class="fa fa-calendar mr-5"></i>{{$each_course->created_at->diffForHumans()}}</p>
                                                             <p class="box-text">{{ucfirst($each_course->short_caption)}}</p>
                                                             <a href="{{route('course-details', $each_course->unique_id)}}" class="btn btn-outline btn-primary btn-sm">View</a>
                                                         </div>
@@ -114,7 +114,7 @@
     </div>
 </section>
 
-<section class="pt-xl-100 pb-50" data-aos="fade-up">
+<!-- <section class="pt-xl-100 pb-50" data-aos="fade-up">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xl-10 col-12">
@@ -168,9 +168,9 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
-<section class="py-50" data-aos="fade-up">
+<!-- <section class="py-50" data-aos="fade-up">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-7 col-12 text-center">
@@ -197,7 +197,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <section class="py-50 bg-white" data-aos="fade-up">
     <div class="container">
@@ -284,112 +284,34 @@
     </div>
 </section>
 
-<section class="py-50" data-aos="fade-up">
+<section class="pb-50">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-7 col-12 text-center">
-                <h1 class="mb-15">Reviews & Ratings</h1>
-                <hr class="w-100 bg-primary">
+        <div class="row">
+            <div class="col-12">
+                <h2>Course's Reviews</h2>
+                <hr>
             </div>
         </div>
-        <div class="row mt-30">
-            <div class="col-md-3 col-12">
-                <div class="box pull-up">
-                    <div class="box-body">
-                        <div>
-                            <div class="d-flex align-items-center mb-30">
-                                <div class="mr-15">
-                                    <img src="{{asset('front-end/images/front-end-img/avatar/1.jpg')}}" class="avatar avatar-lg rounded10" alt="">
-                                </div>
-                                <div class="d-flex flex-column font-weight-500">
-                                    <a href="#" class="text-dark hover-primary mb-1 font-size-16">Johen Kothari</a>
-                                    <span class="text-fade font-size-12">Software Engineer</span>
-                                </div>
+        
+        <div class="owl-carousel owl-theme" data-nav-arrow="true" data-nav-dots="true" data-items="2" data-md-items="2" data-sm-items="2" data-xs-items="1" data-xx-items="1">
+            @if(count($review) > 0)
+                @foreach($review as $rr => $each_user_review)
+                    <div class="item">
+                        <div class="testimonial-bx">
+                            <div class="testimonial-thumb">
+                                <img src="{{asset('storage/profile/'.$each_user_review->users->profile_image)}}" alt="{{env('APP_NAME')}}">
                             </div>
-                            <p class="mb-25 min-h-120">A great aspect of this course is the student mentors. These people are always there to help, support, and motivate the student to complete modules...</p>
-                            <div class="d-flex align-items-center">
-                                <a href="#">
-                                    <i class="mr-15 fa fa-linkedin-square"></i>
-                                    <span>Detailed Review</span>
-                                </a>
+                            <div class="testimonial-info">
+                                <h4 class="name">{{ucfirst($each_user_review->users->name)}} {{ucfirst($each_user_review->users->last_name)}}</h4>
+                            </div>
+                            <div class="testimonial-content">
+                                <p class="font-size-16">{{$each_user_review->review_message}}</p>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-12">
-                <div class="box pull-up">
-                    <div class="box-body">
-                        <div>
-                            <div class="d-flex align-items-center mb-30">
-                                <div class="mr-15">
-                                    <img src="{{asset('front-end/images/front-end-img/avatar/2.jpg')}}" class="avatar avatar-lg rounded10" alt="">
-                                </div>
-                                <div class="d-flex flex-column font-weight-500">
-                                    <a href="#" class="text-dark hover-primary mb-1 font-size-16">Johen doe</a>
-                                    <span class="text-fade font-size-12">Vice President</span>
-                                </div>
-                            </div>
-                            <p class="mb-25 min-h-120">This course actually helped me move from being a general manager to vice president. The content was exciting. I actually implemented what I learnt through case...</p>
-                            <div class="d-flex align-items-center">
-                                <a href="#">
-                                    <i class="mr-15 fa fa-linkedin-square"></i>
-                                    <span>Detailed Review</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-12">
-                <div class="box pull-up">
-                    <div class="box-body">
-                        <div>
-                            <div class="d-flex align-items-center mb-30">
-                                <div class="mr-15">
-                                    <img src="{{asset('front-end/images/front-end-img/avatar/3.jpg')}}" class="avatar avatar-lg rounded10" alt="">
-                                </div>
-                                <div class="d-flex flex-column font-weight-500">
-                                    <a href="#" class="text-dark hover-primary mb-1 font-size-16">Anshu Srivastav</a>
-                                    <span class="text-fade font-size-12">Research Assistant</span>
-                                </div>
-                            </div>
-                            <p class="mb-25 min-h-120">Group case studies really give a sense of teamwork, as it happens in regular classroom studies. It teaches us coordination and right attitude as a team...</p>
-                            <div class="d-flex align-items-center">
-                                <a href="#">
-                                    <i class="mr-15 fa fa-linkedin-square"></i>
-                                    <span>Detailed Review</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-12">
-                <div class="box pull-up">
-                    <div class="box-body">
-                        <div>
-                            <div class="d-flex align-items-center mb-30">
-                                <div class="mr-15">
-                                    <img src="{{asset('front-end/images/front-end-img/avatar/4.jpg')}}" class="avatar avatar-lg rounded10" alt="">
-                                </div>
-                                <div class="d-flex flex-column font-weight-500">
-                                    <a href="#" class="text-dark hover-primary mb-1 font-size-16">Mical Doe</a>
-                                    <span class="text-fade font-size-12">Analyst</span>
-                                </div>
-                            </div>
-                            <p class="mb-25 min-h-120">It doesn’t matter what your previous working background is, as everything is taught from the basics.</p>
-                            <div class="d-flex align-items-center">
-                                <a href="#">
-                                    <i class="mr-15 fa fa-linkedin-square"></i>
-                                    <span>Detailed Review</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                @endforeach
+            @endif
+        </div>                
     </div>
 </section>
 

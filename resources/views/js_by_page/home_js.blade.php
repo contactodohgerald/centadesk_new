@@ -1,27 +1,19 @@
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<!--<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>-->
-<script src="https://www.gstatic.com/firebasejs/7.13.2/firebase.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
-
 <script>
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
-        apiKey: "AIzaSyCEgCLRwhOGVHEBK2h-3T9_Oo5S2Mxz2Ps",
-        authDomain: "centadesk-c7f3e.firebaseapp.com",
-        projectId: "centadesk-c7f3e",
-        storageBucket: "centadesk-c7f3e.appspot.com",
-        messagingSenderId: "138970709402",
-        appId: "1:138970709402:web:eabc07ae6c5085fcc2ce23",
-        measurementId: "G-1W8LNZ601C"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    const messaging = firebase.messaging();
+    // var firebaseConfig = {
+    //     apiKey: "AIzaSyCEgCLRwhOGVHEBK2h-3T9_Oo5S2Mxz2Ps",
+    //     authDomain: "centadesk-c7f3e.firebaseapp.com",
+    //     projectId: "centadesk-c7f3e",
+    //     storageBucket: "centadesk-c7f3e.appspot.com",
+    //     messagingSenderId: "138970709402",
+    //     appId: "1:138970709402:web:eabc07ae6c5085fcc2ce23",
+    //     measurementId: "G-1W8LNZ601C"
+    // };
+    // // Initialize Firebase
+    // firebase.initializeApp(firebaseConfig);
+    // firebase.analytics();
+    // const messaging = firebase.messaging();
 
     if (Notification.permission === "denied" || Notification.permission === 'default') {
 
