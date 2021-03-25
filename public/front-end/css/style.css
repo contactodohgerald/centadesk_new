@@ -22896,14 +22896,14 @@ nav {
     margin-left: 15px;
     margin-right: 15px;
     text-decoration: none;
-    color: #172b4c;
+    color: #007f00;
     text-transform: uppercase;
     border-bottom: 1px solid transparent; }
     nav .menu li a:hover {
-      color: #ee1044; }
+      color: #007f00; }
   nav .menu li.active > a {
-    color: #ee1044;
-    border-bottom: 1px solid #ee1044; }
+    color: #007f00;
+    border-bottom: 1px solid #007f00; }
   nav .menu .megamenu-content li a {
     text-transform: capitalize;
     font-size: 1rem;
@@ -22912,9 +22912,9 @@ nav {
   nav.nav-white.nav-transparent .menu li a {
     color: #ffffff; }
     nav.nav-white.nav-transparent .menu li a:hover {
-      color: #ee1044; }
+      color: #007f00; }
   nav.nav-white.nav-transparent .menu li.active > a {
-    color: #ee1044 !important; }
+    color: #007f00 !important; }
   nav.nav-white.nav-transparent ul.attributes li a {
     color: #ffffff; }
     nav.nav-white.nav-transparent ul.attributes li a:hover {

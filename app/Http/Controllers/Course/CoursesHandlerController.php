@@ -51,6 +51,14 @@ class CoursesHandlerController extends Controller
             $each_blog_post->blogComments;
         }
 
+        $review = $this->review->getAllReviews([
+            ['deleted_at', null]
+        ]);
+
+        foreach($review as $each_user_review){
+            $each_user_review->users;
+        }
+
         $view = [
             'course_category_model'=>$course_category_model,
             'course'=>$course,
@@ -67,7 +75,8 @@ class CoursesHandlerController extends Controller
             'course_count'=>$this->course_model->getAllCourse([
                 ['deleted_at', null],
             ]),
-            'blogs'=>$blogs
+            'blogs'=>$blogs,
+            'review'=>$review,
         ];
         return view('front-end.index', $view);
     }

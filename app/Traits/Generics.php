@@ -46,7 +46,7 @@ trait Generics{
         }
     }
 
-//create a unique id
+    //create a unique id
     public function createUniqueId($table_name, $column){
 
         /*$unique_id = Controller::picker();*/

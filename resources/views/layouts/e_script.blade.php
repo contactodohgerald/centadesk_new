@@ -1,3 +1,8 @@
+@php
+$appSettings = new \App\Model\AppSettings();
+$site_logo = $appSettings->getSingleModel();
+
+@endphp
 @include('basic_urls')
 
 @include('modal')
@@ -37,9 +42,24 @@
 <script src="{{asset('toast/jquery.toast.js')}}"></script>
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
-@include('js_files.js_by_page')
 
-<script src="{{asset('js_files/firebase-messaging-sw.js')}}"></script>
+  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+
+   <!-- Add the entire Firebase JavaScript SDK -->
+   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script> -->
+
+  <script src="{{asset('firebase-messaging-sw.js')}}"></script>
+
+@include('js_files.js_by_page')
 
 <script type="text/javascript">
     function closeErrorCarrierBox(a) {
@@ -67,7 +87,6 @@
         }
     });
 </script>
-
 
 <!-- The Modal -->
 <div class="modal logout" id="myModal">
@@ -138,21 +157,21 @@
 <!-- The Modal -->
 <div class="modal notification-access-modal" id="notification-access-modal">
     <div class="modal-dialog">
-        <div class="modal-content" style="background-color: #333 !important;">
+        <div class="modal-content" >
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Allow Push Notification</h4>
+                <h4 class="modal-title text-dark night-text">Allow Push Notification</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6 offset-5">
-                        <img src="{{asset('dashboard/images/logo.svg')}}" alt="">
+                        <img src="/storage/site_logo/{{ $site_logo->site_logo }}" alt="{{env('APP_NAME')}}">
                     </div>
                     <div class="col-md-12 center">
-                        <h4>{{env('APP_NAME')}} would want to send you push notification, so that you could always keep track of your notifications.</h4>
+                        <h4 class="text-dark night-text">{{env('APP_NAME')}} would want to send you push notification, so that you could always keep track of your notifications.</h4>
                     </div>
                 </div>
             </div>

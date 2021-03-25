@@ -6,14 +6,14 @@
     <div class="footer-top bg-dark3 pt-50">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-12">
+                <div class="col-lg-4 col-12">
                     <div class="widget">
                         <h4 class="footer-title">About</h4>
                         <hr class="bg-primary mb-10 mt-0 d-inline-block mx-auto w-60">
                         <p class="text-capitalize mb-20">{{env('APP_NAME')}} is an online academic platform that consists of various sections to help users fit perfectly into the system based on their various knowledge bases and interest. The system was design to connect students with skill teacher/tutors in different works of life. Everyone is invited be you a hairstylist, artist, or tech person as long as you can transfer your knowledge to another person using the platform.</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-12">
+                <div class="col-lg-4 col-12">
                     <div class="widget">
                         <h4 class="footer-title">Contact Info</h4>
                         <hr class="bg-primary mb-10 mt-0 d-inline-block mx-auto w-60">
@@ -24,27 +24,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-12 col-lg-3">
-                    <div class="widget widget_gallery clearfix">
-                        <h4 class="footer-title">Our Gallery</h4>
-                        <hr class="bg-primary mb-10 mt-0 d-inline-block mx-auto w-60">
-                        <ul class="list-unstyled">
-                            <li><img src="{{asset('front-end/images/gallery/thumb/1.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/2.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/3.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/4.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/5.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/6.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/7.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/8.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/9.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/10.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/11.jpg')}}" alt=""></li>
-                            <li><img src="{{asset('front-end/images/gallery/thumb/12.jpg')}}" alt=""></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-12">
+                <div class="col-lg-4 col-12">
                     <div class="widget">
                         <h4 class="footer-title mt-20">Newsletter</h4>
                         <hr class="bg-primary mb-4 mt-0 d-inline-block mx-auto w-60">
