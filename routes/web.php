@@ -254,7 +254,6 @@ Route::group(['middleware' => 'web'], function () {
 
 
 
-
 Route::group(['middleware' => 'web'], function () {
     // Enroll in course
     Route::get('/courses/enrolled', [CourseEnrollmentController::class, 'my_enrolled_courses'])->name('enrolled_course');
@@ -370,5 +369,3 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/activate_account', [ComplainHandleController::class, 'activateUserAccount'])->name('activate_account');
     Route::post('/ignore_request', [ComplainHandleController::class, 'ignoreAccountActivateRequest'])->name('ignore_request');
 });
-
-

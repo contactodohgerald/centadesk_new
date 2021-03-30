@@ -300,6 +300,19 @@ class UserController extends Controller
                 return response()->json(['errors' => $validator->errors(), 'status' => false]);
             }
 
+            $user = User::find($user->unique_id);
+            $prev_file_name = $user->profile_image;
+
+
+            //delete existing file
+            if(file_exists(storage_path('app/public/profile/' . $prev_file_name))){
+
+                if ($prev_file_name !== 'avatar.png') {
+                    unlink(storage_path('app/public/profile/' . $prev_file_name));
+                }
+                
+            }
+
             $cover_img = $request->file('profile_img');
             $img_name = $this->gen_file_name($user, 'profile-photo', $cover_img);
             $upload_img = $cover_img->storeAs(
@@ -307,18 +320,12 @@ class UserController extends Controller
                 $img_name
             );
 
-            $user = User::find($user->unique_id);
-            $prev_file_name = $user['profile_image'];
             $user->profile_image = $img_name;
             $updated = $user->save();
 
             if (!$updated) {
                 throw new Exception($this->errorMsgs(14)['msg']);
             } else {
-                if ($prev_file_name !== 'avatar.png') {
-                    unlink('storage/profile/' . $prev_file_name);
-                }
-
                 $error = 'Profile Image Updated!';
                 return response()->json(["message" => $error, 'status' => true]);
             }

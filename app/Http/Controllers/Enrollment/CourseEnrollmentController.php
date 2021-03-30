@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Enrollment;
 
-use App\course_model;
-use Carbon\Carbon;
+use App\User;
 use Exception;
+use App\Traits\BonusManager;
+use Carbon\Carbon;
+use App\course_model;
 use App\Traits\Generics;
+use App\Model\AppSettings;
 use App\Traits\appFunction;
 use Illuminate\Http\Request;
 use App\Model\courseEnrollment;
 use App\Http\Controllers\Controller;
-use App\Model\AppSettings;
-use App\User;
 
 class CourseEnrollmentController extends Controller
 {
-    use Generics, appFunction;
+    use Generics, appFunction, BonusManager;
 
     public function __construct(
         AppSettings $AppSettings, course_model $course, courseEnrollment $courseEnrollment
@@ -150,7 +151,6 @@ class CourseEnrollmentController extends Controller
                 throw new Exception($this->errorMsgs(14)['msg']);
             }
 
-
             // remove course price from balance and update
             $user_balance = $user_balance - $course_price;
             $user_detail =  User::find($user_id);
@@ -160,8 +160,15 @@ class CourseEnrollmentController extends Controller
             $update_user_balance = $user_detail->save();
 
             if(!$update_user_balance){
+
                 throw new Exception($this->errorMsgs(14)['msg']);
+                
             }else {
+
+                //settle the upliners
+                $uplineReferralId = $user_detail->referred_id;
+                $this->saveBonus($course_price, $uplineReferralId, $unique_id, $user_detail, 'user_referral_id', 'referred_id', [5, 3, 2.6, 2.4, 2.2, 2, 1.8, 1.6, 1.4, 1.2, 1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1], 0, 'bonus');
+
                 $error = 'You\'ve been Enrolled Successfully!';
                 return response()->json(["message" => $error, 'status' => true]);
             }

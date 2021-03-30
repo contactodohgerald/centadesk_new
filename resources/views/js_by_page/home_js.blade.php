@@ -15,15 +15,15 @@
     // firebase.analytics();
     // const messaging = firebase.messaging();
 
-    if (Notification.permission === "denied" || Notification.permission === 'default') {
+    // if (Notification.permission === "denied" || Notification.permission === 'default') {
 
-        setTimeout(function () {
-            bringOutModalMain('.notification-access-modal');
-        }, 5000);
-    }else{
+    //     setTimeout(function () {
+    //         bringOutModalMain('.notification-access-modal');
+    //     }, 5000);
+    // }else{
 
-        document.getElementById('noti_man').style.display = 'none';
-    }
+    //     document.getElementById('noti_man').style.display = 'none';
+    // }
 
     function askPermission() {
 
