@@ -7,6 +7,7 @@ use App\Model\BlogModel;
 use App\Model\BlogPostComment;
 use App\Model\BlogTagModel;
 use App\Model\TestimonyModel;
+use App\course_category_model;
 use App\Traits\Generics;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,12 +17,13 @@ class BlogController extends Controller
     //
     use Generics;
     function __construct(
-        BlogTagModel $blogTagModel, BlogModel $blogModel, TestimonyModel $testimonyModel
+        BlogTagModel $blogTagModel, BlogModel $blogModel, TestimonyModel $testimonyModel, course_category_model $course_category_model
     ){
         $this->middleware('auth',  ['except' => ['storeBlogTags', 'storeBlog', 'confirmBlogPost', 'blogPostComment', 'blogDetailsInterface']]);
         $this->blogTagModel = $blogTagModel;
         $this->blogModel = $blogModel;
         $this->testimonyModel = $testimonyModel;
+        $this->course_category_model = $course_category_model;
     }
 
     public function createBlogTagInterface(){
@@ -46,7 +48,10 @@ class BlogController extends Controller
                 array_push($arra, $blog_tag);
             }
             $blog_post->blog_post_tag = $arra;
+
             $blog_post->blogComments;
+
+            $blog_post->users;
 
             $blogs = $this->blogModel->getAllBlogPost([
                 ['status', 'confirmed'],
@@ -54,13 +59,17 @@ class BlogController extends Controller
 
             $testimonys = $this->testimonyModel->getAllTestimony();
 
+            $course_category_model = $this->course_category_model->getAllCategories();
+
+//return $course_category_model;
             $view = [
                 'blog_post'=>$blog_post,
                 'recentPosts'=>$blogs,
                 'testimonys'=>$testimonys,
+                'course_category_model'=>$course_category_model,
             ];
 
-            return view('front-end.blog_details', $view);
+            return view('front_end.blog-details', $view);
         }
     }
 

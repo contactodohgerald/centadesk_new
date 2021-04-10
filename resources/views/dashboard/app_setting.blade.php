@@ -69,7 +69,7 @@ $Setting = 'active';
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="company_name">Company Name</label>
+                                                                    <label for="company_name" class="text-dark night-text">Company Name</label>
                                                                     <div class="ui left icon input swdh11 swdh19">
                                                                         <input class="prompt srch_explore" type="text" name="company_name" value="{{$appSettings->company_name}}" id="company_name" required>
                                                                     </div>
@@ -77,7 +77,7 @@ $Setting = 'active';
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="company_url">Company Url</label>
+                                                                    <label for="company_url" class="text-dark night-text">Company Url</label>
                                                                     <div class="ui left icon input swdh11 swdh19">
                                                                         <input class="prompt srch_explore" type="url" name="company_url" value="{{$appSettings->company_url}}" id="company_url" required>
                                                                     </div>
@@ -86,7 +86,7 @@ $Setting = 'active';
 
                                                             <div class="col-lg-6">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="company_email_1">Company Email 1</label>
+                                                                    <label for="company_email_1" class="text-dark night-text">Company Email 1</label>
                                                                     <div class="ui left icon input swdh11 swdh19">
                                                                         <input class="prompt srch_explore" type="email" name="company_email_1" value="{{$appSettings->company_email_1}}" id="company_email_1">
                                                                     </div>
@@ -94,7 +94,7 @@ $Setting = 'active';
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="company_email_2">Company Email 2</label>
+                                                                    <label for="company_email_2" class="text-dark night-text">Company Email 2</label>
                                                                     <div class="ui left icon input swdh11 swdh19">
                                                                         <input class="prompt srch_explore" type="email" name="company_email_2" value="{{$appSettings->company_email_2}}" id="company_email_2">
                                                                     </div>
@@ -103,7 +103,7 @@ $Setting = 'active';
 
                                                             <div class="col-lg-6">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="company_phone">Company Phone</label>
+                                                                    <label for="company_phone" class="text-dark night-text">Company Phone</label>
                                                                     <div class="ui left icon input swdh11 swdh19">
                                                                         <input class="prompt srch_explore" type="tel" name="company_phone" value="{{$appSettings->company_phone_1}}" id="company_phone">
                                                                     </div>
@@ -111,7 +111,7 @@ $Setting = 'active';
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="whatsApp">WhatsApp Phone</label>
+                                                                    <label for="whatsApp" class="text-dark night-text">WhatsApp Phone</label>
                                                                     <div class="ui left icon input swdh11 swdh19">
                                                                         <input class="prompt srch_explore" type="tel" name="whatsApp" value="{{$appSettings->whatsApp_phone}}" id="whatsApp">
                                                                     </div>
@@ -120,7 +120,7 @@ $Setting = 'active';
 
                                                             <div class="col-lg-6">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="facebook_url">Facebook Url</label>
+                                                                    <label for="facebook_url" class="text-dark night-text">Facebook Url</label>
                                                                     <div class="ui left icon input swdh11 swdh19">
                                                                         <input class="prompt srch_explore" type="url" name="facebook_url" value="{{$appSettings->facebook_url}}" id="facebook_url">
                                                                     </div>
@@ -128,7 +128,7 @@ $Setting = 'active';
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="twitter_url">Twitter Url</label>
+                                                                    <label for="twitter_url" class="text-dark night-text">Twitter Url</label>
                                                                     <div class="ui left icon input swdh11 swdh19">
                                                                         <input class="prompt srch_explore" type="url" name="twitter_url" value="{{$appSettings->twitter_url}}" id="twitter_url">
                                                                     </div>
@@ -137,7 +137,7 @@ $Setting = 'active';
 
                                                             <div class="col-lg-6">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="instagram_url">Instagram Url</label>
+                                                                    <label for="instagram_url" class="text-dark night-text">Instagram Url</label>
                                                                     <div class="ui left icon input swdh11 swdh19">
                                                                         <input class="prompt srch_explore" type="url" name="instagram_url" value="{{$appSettings->instagram_url}}" id="instagram_url">
                                                                     </div>
@@ -145,7 +145,7 @@ $Setting = 'active';
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="youtube_url">YouTube Url</label>
+                                                                    <label for="youtube_url" class="text-dark night-text">YouTube Url</label>
                                                                     <div class="ui left icon input swdh11 swdh19">
                                                                         <input class="prompt srch_explore" type="url" name="youtube_url" value="{{$appSettings->youtube_url}}" id="youtube_url">
                                                                     </div>
@@ -154,7 +154,7 @@ $Setting = 'active';
 
                                                             <div class="col-lg-12">
                                                                 <div class="ui search focus mt-30">
-                                                                    <label for="company_address">Company Address</label>
+                                                                    <label for="company_address" class="text-dark night-text">Company Address</label>
                                                                     <div class="ui form swdh30">
                                                                         <div class="field">
                                                                             <textarea rows="3" name="company_address" id="company_address">{{$appSettings->company_address}}</textarea>
@@ -183,7 +183,7 @@ $Setting = 'active';
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="ui search focus">
-                                                    <label for="bit_coin_wallet">Course Enrollment Percentage</label>
+                                                    <label for="bit_coin_wallet" class="text-dark night-text">Course Enrollment Percentage</label>
                                                     <div class="ui left icon input swdh11 swdh19">
                                                         <input class="prompt srch_explore" type="number" name="percentage" id="wallet" placeholder="Enter percentage to pay teachers" value="{{$appSettings->enrollment_percentage}}">
                                                         <i class="uil uil-receipt icon icon2"></i>

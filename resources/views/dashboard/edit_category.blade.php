@@ -54,6 +54,24 @@
 									</div>
 									<div class="col-lg-12">
 										<div class="ui search focus mt-30">
+											<label class="text-dark night-text" for="category_icon">Category Icon</label>
+											<div class="ui left icon input swdh11 swdh19">
+												<input class="prompt srch_explore" type="text" name="category_icon" id="category_icon" required placeholder="Enter Category Icon" value="{{$course_category->category_icon}}">
+												<i class="uil uil-desert icon icon2"></i>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="ui search focus mt-30">
+											<label class="text-dark night-text" for="category_image">Category Image</label>
+											<div class="ui left icon input swdh11 swdh19">
+												<input class="prompt srch_explore" type="file" name="category_image" id="category_image">
+												<i class="uil uil-desert icon icon2"></i>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="ui search focus mt-30">
 											<div class="ui form swdh30">
 												<div class="field">
 													<label class="text-dark night-text" for="description">Description</label>

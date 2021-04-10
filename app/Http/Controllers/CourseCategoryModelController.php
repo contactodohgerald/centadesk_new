@@ -53,11 +53,18 @@ class CourseCategoryModelController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:30|unique:course_category_tb,name',
-                'description' => 'required|min:5'
+                'description' => 'required|min:5',
+                'category_icon' => 'required',
             ]);
 
             if ($validator->fails()) {
                 return redirect('/create_category')->with('error_message', $validator->errors());
+            }
+
+            if ($request->hasFile('category_image')) {
+                $file = $request->file('category_image');
+                $category_image = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+                $file->storeAs('public/category_image', $category_image);
             }
 
             $course_category_tb = new course_category_model();
@@ -65,6 +72,8 @@ class CourseCategoryModelController extends Controller
             $unique_id = $this->createUniqueId('course_category_tb', 'unique_id');
             $course_category_tb->unique_id  = $unique_id;
             $course_category_tb->name  = $data['name'];
+            $course_category_tb->category_icon  = $data['category_icon'];
+            $course_category_tb->category_image  = $category_image;
             $course_category_tb->description  = $data['description'];
 
             if ($course_category_tb->save()) {
@@ -136,7 +145,8 @@ class CourseCategoryModelController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:30',
-                'description' => 'required|min:5'
+                'description' => 'required|min:5',
+                'category_icon' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -149,7 +159,26 @@ class CourseCategoryModelController extends Controller
 
             $course_category_tb = $this->category_model->getSingleCategories($condition);
 
+            //code for remove old file
+        
+            if ($request->hasFile('category_image')) {
+                if (file_exists(storage_path('app/public/category_image/') . $course_category_tb->category_image)) {
+                    $file_old = storage_path('app/public/category_image/') . $course_category_tb->category_image;
+                    if($course_category_tb->category_image != 'category_image.jpg'){
+                        unlink($file_old);
+                    }
+                }
+
+                $file = $request->file('category_image');
+                $category_image = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
+                $file->storeAs('public/category_image', $category_image);
+
+                $course_category_tb->category_image  = $category_image;
+            }
+
             $course_category_tb->name  = $data['name'];
+            $course_category_tb->category_icon  = $data['category_icon'];
+            
             $course_category_tb->description  = $data['description'];
 
             if ($course_category_tb->save()) {

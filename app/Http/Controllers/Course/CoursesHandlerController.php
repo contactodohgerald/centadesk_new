@@ -31,6 +31,27 @@ class CoursesHandlerController extends Controller
     public function homePage(){
 
         $course_category_model = $this->course_category_model->getAllCategories();
+        foreach($course_category_model as $each_course_category_model){
+
+            $each_course_category_model->courses;
+
+            $e_course = $each_course_category_model->courses;
+
+            foreach($e_course as $each_course){
+                $each_course->user;
+                $each_course->price;
+
+                $each_course->courseEnrollment;
+
+                $each_course->course_price = $this->getAmountForNotLoggedInUser($each_course->price->amount);
+
+                $each_course->review;
+                $each_course->count_reviews = $this->calculateRatings($each_course->review);
+
+                $each_course->download_url = explode('++', $each_course->course_urls);
+            }
+        }
+       
         $condition = [
             ['status', 'confirmed']
         ];
@@ -49,6 +70,8 @@ class CoursesHandlerController extends Controller
         ]);
         foreach ($blogs as $each_blog_post){
             $each_blog_post->blogComments;
+
+            $each_blog_post->users;
         }
 
         $review = $this->review->getAllReviews([
@@ -58,6 +81,7 @@ class CoursesHandlerController extends Controller
         foreach($review as $each_user_review){
             $each_user_review->users;
         }
+        //return $course_category_model;
 
         $view = [
             'course_category_model'=>$course_category_model,
@@ -78,7 +102,7 @@ class CoursesHandlerController extends Controller
             'blogs'=>$blogs,
             'review'=>$review,
         ];
-        return view('front-end.index', $view);
+        return view('front_end.index', $view);
     }
 
     public function getAllInstructorsList(){
@@ -127,27 +151,53 @@ class CoursesHandlerController extends Controller
             $each_category->courses;
         }
 
-        return view('front-end.category', ['course_category_model'=>$course_category_model]);
+        $view = [
+            'course_category_model'=>$course_category_model,
+        ];
+
+        return view('front_end.categories', $view);
     }
 
     public function getAllCourses(){
         $condition = [
             ['status', 'confirmed'],
         ];
-        $course = $this->course_model->getCourseByPaginate(5, $condition);
+        $course = $this->course_model->getCourseByPaginate(20, $condition);
+        foreach ($course as $each_course){
+            $each_course->user;
+            $each_course->price;
 
-        $course_category_model = $this->course_category_model->getAllCategories();
+            $each_course->courseEnrollment;
 
-        foreach ($course_category_model as $each_category){
-            $each_category->courses;
+            $each_course->course_price = $this->getAmountForNotLoggedInUser($each_course->price->amount);
+
+            $each_course->review;
+            $each_course->count_reviews = $this->calculateRatings($each_course->review);
+
+            $each_course->download_url = explode('++', $each_course->course_urls);
+        }
+
+        $courses_list = $this->course_model->getAllCourseWithLimit($condition);
+        foreach ($courses_list as $each_course_list){
+            $each_course_list->user;
+            $each_course_list->price;
+
+            $each_course_list->courseEnrollment;
+
+            $each_course_list->course_price = $this->getAmountForNotLoggedInUser($each_course_list->price->amount);
+
+            $each_course_list->review;
+            $each_course_list->count_reviews = $this->calculateRatings($each_course_list->review);
+
+            $each_course_list->download_url = explode('++', $each_course_list->course_urls);
         }
 
         $view = [
             'course'=>$course,
-            'course_category_model'=>$course_category_model,
+            'courses_list'=>$courses_list,
         ];
 
-        return view('front-end.list_course', $view);
+        return view('front_end.courses', $view);
     }
 
     public function courseListPage($unique_id = null){
@@ -163,19 +213,41 @@ class CoursesHandlerController extends Controller
                 ['category_id', $unique_id],
                 ['status', 'confirmed'],
             ];
-            $course = $this->course_model->getCourseByPaginate(5, $query);
 
+            $courses_list = $this->course_model->getAllCourseWithLimit($query);
+            $course_category->courses_list = $courses_list;
+            foreach ($course_category->courses_list as $each_course_list){
+                $each_course_list->user;
+                $each_course_list->price;
+
+                $each_course_list->courseEnrollment;
+
+                $each_course_list->course_price = $this->getAmountForNotLoggedInUser($each_course_list->price->amount);
+
+                $each_course_list->review;
+                $each_course_list->count_reviews = $this->calculateRatings($each_course_list->review);
+
+                $each_course_list->download_url = explode('++', $each_course_list->course_urls);
+            }
+
+            $course = $this->course_model->getCourseByPaginate(12, $query);
             $course_category->courses = $course;
 
-            foreach ($course_category->courses as $kk => $each_course){
+            foreach ($course_category->courses as $each_course){
                 $each_course->user;
                 $each_course->price;
+
+                $each_course->courseEnrollment;
 
                 $each_course->course_price = $this->getAmountForNotLoggedInUser($each_course->price->amount);
 
                 $each_course->review;
                 $each_course->count_reviews = $this->calculateRatings($each_course->review);
+
+                $each_course->download_url = explode('++', $each_course->course_urls);
             }
+
+           // return $course_category->courses;
 
             $course_category_model = $this->course_category_model->getAllCategories();
 
@@ -187,7 +259,46 @@ class CoursesHandlerController extends Controller
                 'course_category'=>$course_category,
                 'course_category_model'=>$course_category_model,
             ];
-            return view('front-end.course_list', $view);
+            return view('front_end.course_list', $view);
+        }
+
+    }
+
+    public function teacherCourseListPage($unique_id = null){ 
+
+        if ($unique_id != null){ 
+
+            $condition = [
+                ['unique_id', $unique_id]
+            ];
+            $user = $this->user->getSingleUser($condition);
+
+            $query = [
+                ['user_id', $unique_id],
+                ['status', 'confirmed'],
+            ];
+
+            $course = $this->course_model->getCourseByPaginate(20, $query);
+
+            foreach ($course as $each_course){
+                $each_course->user;
+                $each_course->price;
+
+                $each_course->courseEnrollment;
+
+                $each_course->course_price = $this->getAmountForNotLoggedInUser($each_course->price->amount);
+
+                $each_course->review;
+                $each_course->count_reviews = $this->calculateRatings($each_course->review);
+
+                $each_course->download_url = explode('++', $each_course->course_urls);
+            }
+
+            $view = [
+                'user'=>$user,
+                'course'=>$course,
+            ];
+            return view('front_end.teacher_course_list', $view);
         }
 
     }
@@ -201,7 +312,14 @@ class CoursesHandlerController extends Controller
             $course = $this->course_model->getSingleCourse($condition);
 
             $course->user;
+
+            $course->user->courses;
+
+            $course->user->subscribers;
+            
             $course->price;
+
+            $course->category;
 
             $course->course_price = $this->getAmountForNotLoggedInUser($course->price->amount);
 
@@ -211,6 +329,8 @@ class CoursesHandlerController extends Controller
                 $each_review->users;
             }
 
+            $course->download_url = explode('++', $course->course_urls);
+
             $course->courseEnrollment;
 
             //function that returns an array of users that likes this course and also the course like count
@@ -218,11 +338,33 @@ class CoursesHandlerController extends Controller
             $course->likes = $likes_array['like_count'];
             $course->likes_user_array = $likes_array['like_user_array'];
 
+            $query = [
+                ['user_id', $course->user_id],
+                ['status', 'confirmed'],
+            ];
+            $related_course = $this->course_model->getCourseByPaginate(12, $query);
+            foreach ($related_course as $each_related_course){
+                $each_related_course->user;
+                $each_related_course->price;
+
+                $each_related_course->courseEnrollment;
+
+                $each_related_course->course_price = $this->getAmountForNotLoggedInUser($each_related_course->price->amount);
+
+                $each_related_course->review;
+                $each_related_course->count_reviews = $this->calculateRatings($each_related_course->review);
+
+                $each_related_course->download_url = explode('++', $each_related_course->course_urls);
+            }
+
+            //return $related_course;
+
             $view = [
                 'course'=>$course,
+                'related_course'=>$related_course,
             ];
 
-            return view('front-end.course_details', $view);
+            return view('front_end.course-details', $view);
         }
     }
 }
