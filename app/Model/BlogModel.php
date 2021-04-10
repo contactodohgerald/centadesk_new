@@ -13,6 +13,10 @@ class BlogModel extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public function users(){
+        return $this->belongsTo('App\User', 'user_unique_id');
+    }
+
     public function blogComments(){
         return $this->hasMany('App\Model\BlogPostComment', 'blog_unique_id');
     }
@@ -23,5 +27,11 @@ class BlogModel extends Model
 
     function getSingleBlogPost($condition){
         return BlogModel::where($condition)->first();
+    }
+
+    function getBlogByPaginate($number, $condition = null, $id = 'id', $desc = 'desc'){
+
+        return BlogModel::where($condition)->orderBy($id, $desc)->simplePaginate($number);
+
     }
 }

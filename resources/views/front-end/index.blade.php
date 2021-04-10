@@ -93,7 +93,7 @@
                                                             <div class="box-body">
                                                                 <div class="text-left">
                                                                     <h4 class="box-title">{{ucfirst($each_course->name)}}</h4>
-                                                                    <p class="mb-10 text-light font-size-12"><i class="fa fa-calendar mr-5"></i>{{$each_course->	created_at->diffForHumans()}}</p>
+                                                                    <p class="mb-10 text-light font-size-12"><i class="fa fa-calendar mr-5"></i>{{$each_course->created_at->diffForHumans()}}</p>
                                                                     <p class="box-text">{{ucfirst($each_course->short_caption)}}</p>
                                                                     <a href="{{route('course-details', $each_course->unique_id)}}" class="btn btn-outline btn-primary btn-sm">View</a>
                                                                 </div>
@@ -233,7 +233,7 @@
                                                     <div class="box-body">
                                                         <div class="text-left">
                                                             <h4 class="box-title">{{ucfirst($each_course->name)}}</h4>
-                                                            <p class="mb-10 text-light font-size-12"><i class="fa fa-calendar mr-5"></i>{{$each_course->	created_at->diffForHumans()}}</p>
+                                                            <p class="mb-10 text-light font-size-12"><i class="fa fa-calendar mr-5"></i>{{$each_course->created_at->diffForHumans()}}</p>
                                                             <p class="box-text">{{ucfirst($each_course->short_caption)}}</p>
                                                             <a href="{{route('course-details', $each_course->unique_id)}}" class="btn btn-outline btn-primary btn-sm">View</a>
                                                         </div>

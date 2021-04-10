@@ -51,7 +51,7 @@ class RouteController extends Controller
                 ['deleted_at', null],
             ]),
         ];
-        return view('front-end.about', $view);
+        return view('front_end.about', $view);
     }
 
     public function contactUsPage(){
@@ -59,26 +59,28 @@ class RouteController extends Controller
         $view = [
             'appSettings'=>$appSettings,
         ];
-        return view('front-end.contact', $view);
+        return view('front_end.contact', $view);
     }
 
     public function faqPage(){
-        return view('front-end.faq');
+        return view('front_end.faq');
     }
 
     public function blogPage(){
-        $blogs = $this->blogModel->getAllBlogPost([
+        $blogs = $this->blogModel->getBlogByPaginate(20, [
             ['status', 'confirmed'],
         ]);
         foreach ($blogs as $each_blog_post){
             $each_blog_post->blogComments;
+
+            $each_blog_post->users;
         }
 
-        return view('front-end.blog', ['blogs'=>$blogs]);
+        return view('front_end.blog', ['blogs'=>$blogs]);
     }
 
     public function howItWorksPage(){
-        return view('front-end.how-it-works');
+        return view('front_end.how-it-works');
     }
 
     protected function Validator($request){
@@ -117,4 +119,5 @@ class RouteController extends Controller
     public function privacyPolicy(){
         return view('front-end.privacy-policy');
     }
+    
 }

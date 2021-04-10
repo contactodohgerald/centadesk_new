@@ -19,7 +19,7 @@ class TestimoniesController extends Controller
 
     public function showTestimonies(){
         $testimonys = $this->testimonyModel->getAllTestimony();
-        return view('front-end.testimonies', ['testimonys'=>$testimonys]);
+        return view('front_end.testimonies', ['testimonys'=>$testimonys]);
     }
 
     public function createTestimony(){

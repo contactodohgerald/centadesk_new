@@ -29,6 +29,8 @@ use App\Http\Controllers\Wallet\TransactionController;
 use App\Http\Controllers\CourseCategoryModelController;
 use App\Http\Controllers\SaveCourse\SaveCourseController;
 
+use App\Http\Controllers\Search\SearchResultController;
+
 use App\Http\Controllers\AppSettings\AppSettingsController;
 use App\Http\Controllers\Complain\ComplainHandleController;
 use App\Http\Controllers\Verifications\VerifyBankController;
@@ -286,6 +288,11 @@ Route::group(['middleware' => 'web'], function () {
 
 });
 
+Route::group(['middleware' => 'web'], function () {
+    //search records
+    Route::post('/search', [SearchResultController::class,'searchThroughRecords'])->name('search');
+
+});
 
 
 
@@ -314,13 +321,14 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/edit-course/{id}', [courseController::class, 'update_page'])->name('edit-course');
 
     //front end section
-    Route::get('/', [CoursesHandlerController::class, 'homePage'])->name('/');
+    Route::get('/', [CoursesHandlerController::class, 'homePage'])->name('/'); 
     Route::get('/list-courses', [CoursesHandlerController::class, 'getAllCourses'])->name('list-courses');
     Route::get('/categories', [CoursesHandlerController::class, 'getAllCategories'])->name('categories');
     Route::get('/instructors-list', [CoursesHandlerController::class, 'getAllInstructorsList'])->name('instructors-list');
     Route::get('/instructor-profile/{unique_id?}', [CoursesHandlerController::class, 'getInstructorProfile'])->name('instructor-profile');
     Route::get('/course-list/{unique_id?}', [CoursesHandlerController::class, 'courseListPage'])->name('course-list');
     Route::get('/course-details/{unique_id?}', [CoursesHandlerController::class, 'getCourseDetails'])->name('course-details');
+    Route::get('/instructor-courses/{unique_id?}', [CoursesHandlerController::class, 'teacherCourseListPage'])->name('instructor-courses');
 });
 
 Route::group(['middleware' => 'web'], function () {

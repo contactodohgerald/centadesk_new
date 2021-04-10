@@ -39,7 +39,7 @@
 										</button>
 									</div>
 								@endif
-								<form action="{{route('add_category' )}}" method="POST">
+								<form action="{{route('add_category' )}}" method="POST" enctype="multipart/form-data">
 									@csrf
 									<div class="row  mt-5">
 									<div class="col-lg-12">
@@ -49,6 +49,24 @@
 												<input class="prompt srch_explore" type="text" name="name" id="name" maxlength="30" required placeholder="Enter Category Name">
 												<i class="uil uil-desert icon icon2"></i>
 												<div class="form-control-counter" data-purpose="form-control-counter">30</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="ui search focus mt-30">
+											<label class="text-dark night-text" for="category_icon">Category Icon</label>
+											<div class="ui left icon input swdh11 swdh19">
+												<input class="prompt srch_explore" type="text" name="category_icon" id="category_icon" required placeholder="Enter Category Icon">
+												<i class="uil uil-desert icon icon2"></i>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="ui search focus mt-30">
+											<label class="text-dark night-text" for="category_image">Category Image</label>
+											<div class="ui left icon input swdh11 swdh19">
+												<input class="prompt srch_explore" type="file" name="category_image" id="category_image" required>
+												<i class="uil uil-desert icon icon2"></i>
 											</div>
 										</div>
 									</div>
