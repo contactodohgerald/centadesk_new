@@ -30,7 +30,7 @@ class course_category_model extends Model
     protected $fillable = ['unique_id', 'name', 'description'];
 
     public function courses(){
-        return $this->hasMany('App\course_model', 'category_id');
+        return $this->hasMany('App\course_model', 'category_id')->where('status', 'confirmed');
     }
 
     function getAllCategories($desc = 'desc', $id = 'id'){

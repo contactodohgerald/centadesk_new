@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Traits\FireBaseNotification;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class courseController extends Controller
 {
@@ -127,10 +128,18 @@ class courseController extends Controller
 
             // generate file name
             $img_name = $this->gen_file_name($user, $title, $cover_img);
-            $upload_img = $cover_img->storeAs(
-                'public/course-img',
-                $img_name
-            );
+            
+            $destinationPath = public_path('storage/course-img');
+            $img = Image::make($cover_img->getRealPath());
+            $img->resize(382, 382, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$img_name);
+
+            
+            // $upload_img = $cover_img->storeAs(
+            //     'public/course-img',
+            //     $img_name
+            // );
             // return [$caption];
 
             $new_course = course_model::create([
@@ -354,13 +363,18 @@ class courseController extends Controller
                 if ($validator->fails()) {
                     return response()->json(['errors' => $validator->errors(), 'status' => false]);
                 }
+
+                // generate file name
                 $img_name = $this->gen_file_name($user, $title, $cover_img);
-                $upload_img = $cover_img->storeAs(
-                    'public/course-img',
-                    $img_name
-                );
+
+                $destinationPath = public_path('storage/course-img');
+                $img = Image::make($cover_img->getRealPath());
+                $img->resize(382, 382, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($destinationPath.'/'.$img_name);
+
                 $course->cover_image = $img_name;
-            }
+            } 
 
             $course->name = $title;
             $course->category_id = $category;

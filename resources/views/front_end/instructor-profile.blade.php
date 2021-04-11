@@ -4,7 +4,7 @@ $description = 'Centadesk is an online academic platform that consists of variou
 
 $keyword = 'Website Development, Web Design, Web Site Designer, Android App Development, ICT Training, Web Designers in Nigeria, Computer Training Centers, Website Design Company, Digital Marketing Company, IT Consulting Firms, Nigeria, Web, Website, Content Writing, Advertisement, Branding, Web Hosting, Content Writing,';
 
-$title = 'Courses | Choose course categories. Make money while learning, teaching';
+$title = 'Instructors Profile | Make money while learning';
 @endphp
 
 @include('include.head')
@@ -16,20 +16,61 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
 
    @include('include.navigation')
 
-   <section id="yl-course" class="yl-course-section">
-    <div class="container">
+    <section id="instructor-details" class="instructor-details-section pt-5">
+       <div class="container">
+           <div class="instructor-details-content position-relative">
+               <div class="row">
+                   <div class="col-lg-5">
+                       <div class="instructor-details-img">
+                           <img src="{{asset('storage/profile/'.$users->profile_image)}}" alt="{{ env('APP_NAME') }}">
+                       </div>
+                   </div>
+                   <div class="col-lg-7">
+                       <div class="instructor-details-text">
+                           <div class="instructor-details-text-top clearfix">
+                               <div class="instructor-details-name-social  yl-headline float-left">
+                                   <h3>{{ ucfirst($users->name) }} {{ ucfirst($users->last_name) }}</h3>
+                                   <span>{{ ucfirst($users->professonal_heading) }}</span>
+                                   <div class="instructor-details-social">
+                                       <a href="https://facebook.com/{{ $users->facebook }}"><i class="fab fa-facebook-f"></i></a>
+                                       <a href="https://twitter.com/{{ $users->twitter }}"><i class="fab fa-twitter"></i></a>
+                                       <a href="https://linkedin.com/{{ $users->linkedin }}"><i class="fab fa-linkedin-in"></i></a>
+                                       <a href="https://instagram.com/{{ $users->instagram }}"><i class="fab fa-instagram"></i></a>
+                                   </div>
+                               </div>
+                               <div class="instructor-details-profile float-right">
+                                   <span><i class="fas fa-list-ul"></i> {{ count($users->courses) }} Course</span>
+                                   <span><i class="fas fa-user"></i> {{ count($users->subscribers) }} Students</span>
+                                   <span><i class="fas fa-star"></i><b>4.9</b> (235 review)</span>
+                               </div>
+                           </div>
+                           <div class="instructor-details-content-text pera-content">
+                               <p>{{ $users->description }}</p>
+                               <div class="btn text-center">
+                                   <u><a href="https://centadesk.com/scl/ref={{ $users->user_referral_id }}"> Join {{ ucfirst($users->name) }} {{ ucfirst($users->last_name) }}<i class="fas fa-chevron-right"></i></a></u>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </section>
 
-        <div class="yl-course-top">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="yl-section-title yl-headline">
-                        <h2>All Courses By {{ ucfirst($user->name) }} {{ ucfirst($user->last_name) }}</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
+   <section id="yl-course" class="yl-course-section pt-3 mt-0">
+       <div class="container">
+           <div class="yl-course-top">
+               <div class="row">
+                   <div class="col-lg-12">
+                       <div class="yl-section-title yl-headline">
+                           <h2>Popular Course  by: {{ ucfirst($users->name) }} {{ ucfirst($users->last_name) }}</h2>
+                       </div>
+                   </div>
 
-        <div class="yl-course-filter-wrap">
+               </div>
+           </div>
+           <div class="yl-course-filter-wrap">
+
             <div class="filtr-container-area grid clearfix">
                 <div class="grid-sizer"></div>
                 @if(count($course) > 0)
@@ -47,7 +88,7 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                          <a href="{{ route('course-details', $each_course->unique_id) }}"><i class="fas fa-user"></i> {{ count($each_course->courseEnrollment) }} Students</a>
                                      </div>
                                      <div class="yl-course-tilte-head yl-headline ul-li">
-                                         <h3><a href="{{ route('course-details', $each_course->unique_id) }}">{{ucfirst($each_course->name)}}</a></h3>
+                                         <h3><a href="{{ route('course-details', $each_course->unique_id) }}">{{substr(ucfirst($each_course->name), 0, 40)}} {{ (strlen($each_course->name) > 40 )?'...':''}}</a></h3>
                                          <ul>{{ $each_course->count_reviews }}
                                              @for ($i = 1; $i <= $each_course->count_reviews; $i++)
                                                  <li><i class="fas fa-star"></i></li>
@@ -86,58 +127,12 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                 </ul>
             </div>
 
-        </div>
-        
-    </div>
-</section>
 
-   <section style="border-top: solid 1px black; border-bottom: solid 1px black;" id="yl-feature" class="yl-feature-section pt-4 pb-4">
-       <div class="container">
-           <div class="yl-feature-content">
-               <div class="row justify-content-center wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-
-                   <div class="col-lg-4 col-md-6">
-                       <div class="yl-feature-innerbox position-relative">
-                           <div class="yl-feature-icon float-left">
-                               <i class="flaticon-goal"></i>
-                           </div>
-                           <div class="yl-feature-text yl-headline pera-content">
-                               <h3><a href="{{ route('list-courses') }}">Learn new skills</a></h3>
-                               <p>Earn while learning. With {{ env('APP_NAME') }}, discover a new learning approach.</p>
-                           </div>
-                       </div>
-                   </div>
-
-                   <div class="col-lg-4 col-md-6">
-                       <div class="yl-feature-innerbox position-relative">
-                           <div class="yl-feature-icon float-left">
-                               <i class="flaticon-presentation"></i>
-                           </div>
-                           <div class="yl-feature-text yl-headline pera-content">
-                               <h3><a href="{{ route('register') }}">Be a tutor</a></h3>
-                               <p>Step up your teaching profession. Make extra cash while teaching at ease.</p>
-                           </div>
-                       </div>
-                   </div>
-
-                   <div class="col-lg-4 col-md-6">
-                       <div class="yl-feature-innerbox position-relative">
-                           <div class="yl-feature-icon float-left">
-                               <i class="flaticon-give"></i>
-                           </div>
-                           <div class="yl-feature-text yl-headline pera-content">
-                               <h3><a href="affiliate">Affiliate Earnings</a></h3>
-                               <p>Learn big time. Join our affiliate program and make extra cash.</p>
-                           </div>
-                       </div>
-                   </div>
-
-               </div>
            </div>
        </div>
    </section>
 
+
    @include('include.footer')
         
-   
    @include('include.e_script')

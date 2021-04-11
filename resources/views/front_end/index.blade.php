@@ -121,51 +121,7 @@ $title = 'Centadesk | Teach, Learn and Earn';
        </div>
    </section>
 
-   <section id="yl-feature" class="yl-feature-section">
-      <div class="container">
-         <div class="yl-feature-content">
-            <div class="row justify-content-center wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-
-               <div class="col-lg-4 col-md-6">
-                  <div class="yl-feature-innerbox position-relative">
-                     <div class="yl-feature-icon float-left">
-                        <i class="flaticon-goal"></i>
-                     </div>
-                     <div class="yl-feature-text yl-headline pera-content">
-                        <h3><a href="{{ route('list-courses') }}">Learn new skills</a></h3>
-                        <p>Earn while learning. With {{ env('APP_NAME') }}, discover a new learning approach.</p>
-                     </div>
-                  </div>
-               </div>
-
-               <div class="col-lg-4 col-md-6">
-                  <div class="yl-feature-innerbox position-relative">
-                     <div class="yl-feature-icon float-left">
-                        <i class="flaticon-presentation"></i>
-                     </div>
-                     <div class="yl-feature-text yl-headline pera-content">
-                        <h3><a href="{{ route('register') }}">Be a tutor</a></h3>
-                        <p>Step up your teaching profession. Make extra cash while teaching at ease.</p>
-                     </div>
-                  </div>
-               </div>
-
-                  <div class="col-lg-4 col-md-6">
-                     <div class="yl-feature-innerbox position-relative">
-                        <div class="yl-feature-icon float-left">
-                              <i class="flaticon-give"></i>
-                        </div>
-                        <div class="yl-feature-text yl-headline pera-content">
-                              <h3><a href="affiliate">Affiliate Earnings</a></h3>
-                              <p>Learn big time. Join our affiliate program and make extra cash.</p>
-                        </div>
-                     </div>
-                  </div>
-
-            </div>
-         </div>
-      </div>
-   </section>
+   @include('include.affliate')
 
    <section id="yl-course" class="yl-course-section">
        <div class="container">
@@ -207,7 +163,7 @@ $title = 'Centadesk | Teach, Learn and Earn';
                                     <a href="{{ route('course-details', $each_courses->unique_id) }}"><i class="fas fa-user"></i> {{ count($each_courses->courseEnrollment) }} Students</a>
                                  </div>
                                  <div class="yl-course-tilte-head yl-headline ul-li">
-                                    <h3><a href="{{ route('course-details', $each_courses->unique_id) }}">{{ucfirst($each_courses->name)}}</a></h3>
+                                    <h3><a href="{{ route('course-details', $each_courses->unique_id) }}"> {{substr(ucfirst($each_courses->name), 0, 40)}} {{ (strlen($each_courses->name) > 40 )?'...':''}}</a></h3>
                                     <ul>{{ $each_courses->count_reviews }}
                                        @for ($i = 1; $i <= $each_courses->count_reviews; $i++)
                                        <li><i class="fas fa-star"></i></li>
@@ -220,7 +176,7 @@ $title = 'Centadesk | Teach, Learn and Earn';
                                           <img src="{{asset('storage/profile/'.$each_courses->user->profile_image)}}" alt="{{ env('APP_NAME') }}">
                                     </div>
                                     <div class="yl-c-mentor-text">
-                                          <h4><a href="instructor-profile">{{ ucfirst($each_courses->user->name) }} {{ ucfirst($each_courses->user->last_name) }}</a></h4>
+                                          <h4><a href="{{ route('instructor-profile', $each_courses->user->unique_id) }}">{{ ucfirst($each_courses->user->name) }} {{ ucfirst($each_courses->user->last_name) }}</a></h4>
                                           <span class="btn btn-success btn-sm" {{ ($each_courses->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span>
                                     </div>
                                  </div>
@@ -429,6 +385,9 @@ $title = 'Centadesk | Teach, Learn and Earn';
             <div id="yl-blog-slider-id" class="yl-blog-slide-wrap owl-carousel">
                @if(count($blogs) > 0)
                   @foreach($blogs as $jj => $each_blog)
+                     @if ($jj == 13)
+                        @break
+                     @endif
                      <div class="yl-blog-img-text">
                         <div class="yl-blog-img text-center position-relative">
                            <img src="{{asset('storage/blog_image/'.$each_blog->blog_image)}}" alt="{{env('APP_NAME')}}">
@@ -441,7 +400,7 @@ $title = 'Centadesk | Teach, Learn and Earn';
                               <a href="{{route('blog-details', $each_blog->unique_id )}}"><i class="far fa-user"></i> {{ Str::ucfirst($each_blog->users->name) }} {{ Str::ucfirst($each_blog->users->last_name) }}</a>
                            </div>
                            <div class="yl-blog-title">
-                              <h3><a href="{{route('blog-details', $each_blog->unique_id )}}">{{$each_blog->blog_title}}</a></h3>
+                              <h3><a href="{{route('blog-details', $each_blog->unique_id )}}">{{substr(ucfirst($each_blog->blog_title), 0, 40)}} {{ (strlen($each_blog->blog_title) > 40 )?'...':''}}</a></h3>
                            </div>
                         </div>
                      </div>

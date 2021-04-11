@@ -10,6 +10,7 @@ use App\Http\Controllers\Subscribe\SubscribeController;
 use App\Http\Controllers\Users\GeneralUserController;
 use App\Http\Controllers\VerifyKYC\KYCVerificationController;
 use App\Http\Controllers\Wallet\TransactionController;
+use App\Http\Controllers\Gallery\GalleryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -68,6 +69,10 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('/store-blog-tags', [BlogController::class, 'storeBlogTags'])->name('store-blog-tags');
     Route::post('/addNewBlog', [BlogController::class, 'storeBlog'])->name('addNewBlog');
     Route::post('/confirmBlogPost', [BlogController::class, 'confirmBlogPost'])->name('confirmBlogPost');
+
+    //gallery/events
+    Route::post('/addNewGallery', [GalleryController::class, 'storeGallery'])->name('addNewGallery');
+    Route::post('/deleteGallery', [GalleryController::class, 'deleteGallery'])->name('deleteGallery');
 
 
 

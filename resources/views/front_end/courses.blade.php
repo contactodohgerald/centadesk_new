@@ -48,7 +48,7 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                              <a href="{{ route('course-details', $each_course->unique_id) }}"><i class="fas fa-user"></i> {{ count($each_course->courseEnrollment) }} Students</a>
                                          </div>
                                          <div class="yl-course-tilte-head yl-headline ul-li">
-                                             <h3><a href="{{ route('course-details', $each_course->unique_id) }}">{{ucfirst($each_course->name)}}</a></h3>
+                                             <h3><a href="{{ route('course-details', $each_course->unique_id) }}">{{substr(ucfirst($each_course->name), 0, 40)}} {{ (strlen($each_course->name) > 40 )?'...':''}}</a></h3>
                                              <ul>{{ $each_course->count_reviews }}
                                                  @for ($i = 1; $i <= $each_course->count_reviews; $i++)
                                                      <li><i class="fas fa-star"></i></li>
@@ -61,7 +61,7 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                                  <img src="{{asset('storage/profile/'.$each_course->user->profile_image)}}" alt="{{ env('APP_NAME') }}">
                                              </div>
                                              <div class="yl-c-mentor-text">
-                                                 <h4><a href="instructor-profile">{{ ucfirst($each_course->user->name) }} {{ ucfirst($each_course->user->last_name) }}</a></h4>
+                                                 <h4><a href="{{ route('instructor-profile', $each_course->user->unique_id) }}">{{ ucfirst($each_course->user->name) }} {{ ucfirst($each_course->user->last_name) }}</a></h4>
                                                  <span class="btn btn-success btn-sm" {{ ($each_course->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span>
                                              </div>
                                          </div>
@@ -91,51 +91,7 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
         </div>
     </section>
 
-    <section style="border-top: solid 1px black; border-bottom: solid 1px black;" id="yl-feature" class="yl-feature-section pt-4 pb-4">
-        <div class="container">
-            <div class="yl-feature-content">
-                <div class="row justify-content-center wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
- 
-                    <div class="col-lg-4 col-md-6">
-                        <div class="yl-feature-innerbox position-relative">
-                            <div class="yl-feature-icon float-left">
-                                <i class="flaticon-goal"></i>
-                            </div>
-                            <div class="yl-feature-text yl-headline pera-content">
-                                <h3><a href="{{ route('list-courses') }}">Learn new skills</a></h3>
-                                <p>Earn while learning. With {{ env('APP_NAME') }}, discover a new learning approach.</p>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="col-lg-4 col-md-6">
-                        <div class="yl-feature-innerbox position-relative">
-                            <div class="yl-feature-icon float-left">
-                                <i class="flaticon-presentation"></i>
-                            </div>
-                            <div class="yl-feature-text yl-headline pera-content">
-                                <h3><a href="{{ route('register') }}">Be a tutor</a></h3>
-                                <p>Step up your teaching profession. Make extra cash while teaching at ease.</p>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <div class="col-lg-4 col-md-6">
-                        <div class="yl-feature-innerbox position-relative">
-                            <div class="yl-feature-icon float-left">
-                                <i class="flaticon-give"></i>
-                            </div>
-                            <div class="yl-feature-text yl-headline pera-content">
-                                <h3><a href="affiliate">Affiliate Earnings</a></h3>
-                                <p>Learn big time. Join our affiliate program and make extra cash.</p>
-                            </div>
-                        </div>
-                    </div>
- 
-                </div>
-            </div>
-        </div>
-    </section>
+    @include('include.affliate')
 
     <section id="yl-slider" class="yl-slider-section pt-5 pb-5 mt-3">
         <div class="container">
@@ -159,11 +115,11 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                      </div>
                                      <div class="yl-course-text">
                                          <div class="yl-course-meta">
-                                             <a href="course-details"><i class="fas fa-file"></i>{{ count($each_course_list->download_url) }} Lessons</a>
-                                             <a href="course-details"><i class="fas fa-user"></i> {{ count($each_course_list->courseEnrollment) }} Students</a>
+                                             <a href="{{ route('course-details', $each_course_list->unique_id) }}"><i class="fas fa-file"></i>{{ count($each_course_list->download_url) }} Lessons</a>
+                                             <a href="{{ route('course-details', $each_course_list->unique_id) }}"><i class="fas fa-user"></i> {{ count($each_course_list->courseEnrollment) }} Students</a>
                                          </div>
                                          <div class="yl-course-tilte-head yl-headline ul-li">
-                                             <h3><a href="course-details">{{ucfirst($each_course_list->name)}}</a></h3>
+                                             <h3><a href="{{ route('course-details', $each_course_list->unique_id) }}">{{substr(ucfirst($each_course_list->name), 0, 40)}} {{ (strlen($each_course_list->name) > 40 )?'...':''}}</a></h3>
                                              <ul>{{ $each_course_list->count_reviews }}
                                                  @for ($i = 1; $i <= $each_course_list->count_reviews; $i++)
                                                      <li><i class="fas fa-star"></i></li>
@@ -176,7 +132,7 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                                  <img src="{{asset('storage/profile/'.$each_course_list->user->profile_image)}}" alt="{{ env('APP_NAME') }}">
                                              </div>
                                              <div class="yl-c-mentor-text">
-                                                 <h4><a href="instructor-profile">{{ ucfirst($each_course_list->user->name) }} {{ ucfirst($each_course_list->user->last_name) }}</a></h4>
+                                                 <h4><a href="{{ route('instructor-profile', $each_course_list->user->unique_id) }}">{{ ucfirst($each_course_list->user->name) }} {{ ucfirst($each_course_list->user->last_name) }}</a></h4>
                                                  <span class="btn btn-success btn-sm" {{ ($each_course_list->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span>
                                              </div>
                                          </div>

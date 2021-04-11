@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\priceController;
 use App\Http\Controllers\Users\UserController;
+use App\Http\Controllers\Users\InstructorsControllers;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Roles\RolesController;
 use App\Http\Controllers\LiveStream\live_stream_controller;
@@ -21,6 +22,8 @@ use App\Http\Controllers\LiveStream\live_stream_controller;
 use App\Http\Controllers\Course\courseController;
 use App\Http\Controllers\Roles\AddRolesController;
 use App\Http\Controllers\Roles\UserTypeController;
+
+use App\Http\Controllers\Gallery\GalleryController;
 
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Complain\ComplainController;
@@ -254,6 +257,13 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 
+Route::group(['middleware' => 'web'], function () {
+    // gallery/event area
+    Route::get('/create-gallery', [GalleryController::class, 'createGalleryInterface'])->name('create-gallery');
+    Route::get('/gallery-list', [GalleryController::class, 'galleryList'])->name('gallery-list');
+});
+
+
 
 
 Route::group(['middleware' => 'web'], function () {
@@ -276,12 +286,18 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/how-it-work',[RouteController::class,'howItWorksPage'])->name('how-it-work');
     Route::get('/terms-of-use',[RouteController::class,'termsOfUsePage'])->name('terms-of-use');
     Route::get('/privacy-policy',[RouteController::class,'privacyPolicy'])->name('privacy-policy');
+    Route::get('/affiliate',[RouteController::class,'affiliatePage'])->name('affiliate');
+    Route::get('/career',[RouteController::class,'careerPage'])->name('career');
+    Route::get('/teacher',[RouteController::class,'teacherPage'])->name('teacher');
+    Route::get('/gallery',[RouteController::class,'galleryPage'])->name('gallery');
     Route::post('/contact-mail',[RouteController::class,'contactUsMail'])->name('contact-mail');
 
     //blogs
     Route::get('/blog',[RouteController::class,'blogPage'])->name('blog');
     Route::get('/blog-details/{unique_id?}',[BlogController::class,'blogDetailsInterface'])->name('blog-details');
     Route::post('/blog-comment/{unique_id?}',[BlogController::class,'blogPostComment'])->name('blog-comment');
+
+    Route::get('/instructor-profile/{unique_id?}',[InstructorsControllers::class,'intructorProfilePage'])->name('instructor-profile');
 
     Route::get('/view_profile/{unique_id}', [GeneralUserController::class, 'viewUserGeneral'])->name('view_profile');
     Route::get('/browse_instructor', [GeneralUserController::class, 'browseInstructors'])->name('browse_instructor');
@@ -325,7 +341,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/list-courses', [CoursesHandlerController::class, 'getAllCourses'])->name('list-courses');
     Route::get('/categories', [CoursesHandlerController::class, 'getAllCategories'])->name('categories');
     Route::get('/instructors-list', [CoursesHandlerController::class, 'getAllInstructorsList'])->name('instructors-list');
-    Route::get('/instructor-profile/{unique_id?}', [CoursesHandlerController::class, 'getInstructorProfile'])->name('instructor-profile');
+    //Route::get('/instructor-profile/{unique_id?}', [CoursesHandlerController::class, 'getInstructorProfile'])->name('instructor-profile');
     Route::get('/course-list/{unique_id?}', [CoursesHandlerController::class, 'courseListPage'])->name('course-list');
     Route::get('/course-details/{unique_id?}', [CoursesHandlerController::class, 'getCourseDetails'])->name('course-details');
     Route::get('/instructor-courses/{unique_id?}', [CoursesHandlerController::class, 'teacherCourseListPage'])->name('instructor-courses');

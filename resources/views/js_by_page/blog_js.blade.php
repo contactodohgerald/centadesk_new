@@ -2,12 +2,12 @@
     $(document).ready(function () {
         //bringoutSelect2('.tags-select2', 10, 'Please Select');
 
-        // initialize tinymce text editor
-        // tinymce.init({
-        //     selector: 'textarea#message',
-        //     plugins: ['link preview anchor'],
-        //     height: 400,
-        // });
+        //initialize tinymce text editor
+        tinymce.init({
+            selector: 'textarea#message',
+            plugins: ['link preview anchor'],
+            height: 400,
+        });
 
         $('.btn_add').click(function(e) {
             e.preventDefault();

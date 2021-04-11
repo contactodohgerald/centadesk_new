@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\AppSettings;
 use App\Model\BlogModel;
 use App\Model\TestimonyModel;
+use App\Model\GalleryModel;
 use App\Traits\SendMail;
 use App\User;
 use Illuminate\Http\Request;
@@ -17,13 +18,14 @@ class RouteController extends Controller
     //
     use SendMail;
     function __construct(
-        User $user, TestimonyModel $testimonyModel, course_model $course_model, AppSettings $appSettings, BlogModel $blogModel
+        User $user, TestimonyModel $testimonyModel, course_model $course_model, AppSettings $appSettings, BlogModel $blogModel, GalleryModel $galleryModel
     ){
         $this->user = $user;
         $this->testimonyModel = $testimonyModel;
         $this->course_model = $course_model;
         $this->appSettings = $appSettings;
         $this->blogModel = $blogModel;
+        $this->galleryModel = $galleryModel;
     }
 
     public function aboutUsPage(){
@@ -113,11 +115,39 @@ class RouteController extends Controller
     }
 
     public function termsOfUsePage(){
-        return view('front-end.terms_of_use');
+        return view('front_end.terms');
     }
 
     public function privacyPolicy(){
-        return view('front-end.privacy-policy');
+        return view('front_end.privacy');
+    } 
+    
+    public function affiliatePage(){
+        return view('front_end.affiliate');
+    }
+    
+    public function careerPage(){
+        return view('front_end.career');
+    } 
+    
+    public function teacherPage(){
+        return view('front_end.teacher');
+    } 
+    public function galleryPage(){
+
+        $galleryModel = $this->galleryModel->getGalleryByPaginate(9, [
+            ['status', 'pending'],
+        ]);
+
+        foreach($galleryModel as $each_gallery){
+            $each_gallery->users;
+        }
+
+        $view = [
+            'galleryModel'=>$galleryModel,
+        ];
+
+        return view('front_end.gallery', $view);
     }
     
 }

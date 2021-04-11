@@ -192,6 +192,20 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
             <ul>
                 @if(auth()->user()->privilegeChecker('view_restricted_roles'))
                     <li class="menu--item  menu--item__has_sub_menu text-dark night-text">
+                        <label class="menu--link <?php print @$gallery;?> text-dark night-text" title="Gallery/Event Area">
+                            <i class='uil uil-newspaper menu--icon text-dark night-text'></i>
+                            <span class="menu--label text-dark night-text">Gallery/Event Area</span>
+                        </label>
+                        <ul class="sub_menu">
+                            <li class="sub_menu--item">
+                                <a href="{{route('create-gallery')}}" class="sub_menu--link">Add Gallery/Event</a>
+                            </li>
+                            <li class="sub_menu--item">
+                                <a href="{{route('gallery-list')}}" class="sub_menu--link">Gallery/Event List</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu--item  menu--item__has_sub_menu text-dark night-text">
                         <label class="menu--link <?php print @$blogs;?> text-dark night-text" title="Blog Area">
                             <i class='uil uil-newspaper menu--icon text-dark night-text'></i>
                             <span class="menu--label text-dark night-text">Blog Area</span>
