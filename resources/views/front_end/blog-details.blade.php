@@ -162,7 +162,7 @@ $title = 'Blog Details | Make money while learning, teaching';
                                         </div>
                                         <div class="yl-recent-blog-text">
                                             <span>{{$each_recent_post->created_at->diffForHumans()}}</span>
-                                            <h3><a href="{{route('blog-details', $each_recent_post->unique_id )}}">{{$each_recent_post->blog_title}}</a></h3>
+                                            <h3><a href="{{route('blog-details', $each_recent_post->unique_id )}}">{{substr(ucfirst($each_recent_post->blog_title), 0, 40)}} {{ (strlen($each_recent_post->blog_title) > 40 )?'...':''}}</a></h3>
                                         </div>
                                     </div>
                                 @endforeach

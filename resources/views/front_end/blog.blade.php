@@ -38,8 +38,10 @@ $title = 'Blog Post | Make money while learning';
                                         <a href="javascript:;">{{$each_blog->views}} view</a>
                                     </div>
                                     <div class="yl-blog-title-text-2">
-                                        <h3><a href="{{route('blog-details', $each_blog->unique_id )}}">{{$each_blog->blog_title}}</a>
+                                        <h3><a href="{{route('blog-details', $each_blog->unique_id )}}">{{substr(ucfirst($each_blog->blog_title), 0, 40)}} {{ (strlen($each_blog->blog_title) > 40 )?'...':''}}</a>
                                         </h3>
+                                        @php $taglessBody = strip_tags($each_blog->blog_message); @endphp
+                                        <p>{{substr($taglessBody, 0, 120)}}  {{ (strlen($taglessBody) > 120 )?'...':''}} </p>
                                         <a class="yl-blog-more text-uppercase" href="{{route('blog-details', $each_blog->unique_id )}}">View more <span>+</span></a>
                                     </div>
                                 </div>

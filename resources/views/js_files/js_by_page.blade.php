@@ -406,6 +406,13 @@
 @if(in_array($currentPageName, $view_blog))
     @include('js_by_page.blog_js')
 @endif
+
+{{--gallery,--}}
+@php $gallery = ['create-gallery', 'gallery-list'];  @endphp
+@php $currentPageName = Request::segment(1); @endphp
+@if(in_array($currentPageName, $gallery))
+    @include('js_by_page.gallery_js')
+@endif
 <style>
     label, label > select, label > input, #myTable_info{
         color:white !important

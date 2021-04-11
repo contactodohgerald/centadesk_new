@@ -38,11 +38,11 @@
                     <div class="yl-footer-widget">
                         <div class="yl-footer-newslatter-widget pera-content">
                             <h3 class="widget-title">Links</h3>
-                            <p><a href="affiliate">Affiliate</a></p>
-                            <p><a href="career">Career</a></p>
-                            <p><a href="teacher">Teach on {{ env('APP_NAME') }}</a></p>
+                            <p><a href="{{ route('affiliate') }}">Affiliate</a></p>
+                            <p><a href="{{ route('career') }}">Career</a></p>
+                            <p><a href="{{ route('teacher') }}">Teach on {{ env('APP_NAME') }}</a></p>
                             <p><a href="{{ route('testimonies') }}">Testimonies</a></p>
-                            <p><a href="gallery">Gallery(Events)</a></p>
+                            <p><a href="{{ route('gallery') }}">Gallery(Events)</a></p>
                             <p><a href="{{ route('list-courses') }}">Courses </a></p>
                             <p><a href="{{ route('register') }}">Accounts </a></p>
                             <div class="yl-footer-social ul-li">

@@ -11,6 +11,7 @@ use App\course_category_model;
 use App\Traits\Generics;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class BlogController extends Controller
 {
@@ -61,7 +62,6 @@ class BlogController extends Controller
 
             $course_category_model = $this->course_category_model->getAllCategories();
 
-//return $course_category_model;
             $view = [
                 'blog_post'=>$blog_post,
                 'recentPosts'=>$blogs,
@@ -150,9 +150,15 @@ class BlogController extends Controller
             }
 
             if ($request->hasFile('cover_img')) {
-                $file = $request->file('cover_img');
-                $blog_image = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-                $file->storeAs('public/blog_image', $blog_image);
+
+                $image = $request->file('cover_img');
+                $blog_image = md5($image->getClientOriginalName() . time()).'.'.$image->getClientOriginalExtension();
+             
+                $destinationPath = public_path('storage/blog_image');
+                $img = Image::make($image->getRealPath());
+                $img->resize(382, 382, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($destinationPath.'/'.$blog_image);
             }
 
             $unique_id = $this->createUniqueId('blog_models', 'unique_id');

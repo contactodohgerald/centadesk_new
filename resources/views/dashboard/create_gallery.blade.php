@@ -1,6 +1,6 @@
-﻿@php
-	$pageTitle = 'Create Blog';
-	$blogs = 'active';
+@php
+	$pageTitle = 'Create Gallery/Event';
+	$gallery = 'active';
 @endphp
 @include('layouts.head')
 
@@ -24,16 +24,6 @@
 							<div class="col-lg-8 offset-2">
                                 <div class="row  mt-5">
                                     <div class="col-lg-12">
-                                        <label class="text-dark night-text" for="tags">Blog Tags</label>
-                                        <select name="tags" class="ui hj145 dropdown cntry152 prompt srch_explore tags-select2" id="tags" >
-                                            @if(count($blogTagModel) > 0)
-                                                @foreach($blogTagModel as $gg => $each_tags)
-                                                    <option value="{{$each_tags->unique_id}}">{{$each_tags->tag_name}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-12">
                                         <div class="ui search focus mt-30">
                                             <label class="text-dark night-text" for="title">Title</label>
                                             <div class="ui left icon input swdh11 swdh19">
@@ -51,8 +41,8 @@
                                                 </div>
                                             </div>
                                             <div class="view_img_right">
-                                                <h4>Blog Image</h4>
-                                                <p>Upload your blog image here. It must meet our blog image quality standards to be accepted. Important guidelines: 382x382 pixels; .jpg, .jpeg,. gif, or .png.</p>
+                                                <h4>Gallery/Event Image</h4>
+                                                <p>Upload your gallery image here. It must meet our image quality standards to be accepted. Important guidelines: 382x382 pixels; .jpg, .jpeg,. gif, or .png.</p>
                                                 <div class="upload__input">
                                                     <div class="input-group">
                                                         <div class="custom-file">
@@ -65,24 +55,10 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <div class="course_des_textarea mt-30 lbel25">
-                                            <label class="text-dark night-text" for="message">Blog Message*</label>
-                                            <div class="course_des_bg">
-                                                <div class="textarea_dt">
-                                                    <div class="ui form swdh339">
-                                                        <div class="field">
-                                                            <textarea rows="5" name="message" id="message" placeholder="Enter Message" class="message"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
                                         <div class="divider-1"></div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <button class="save_btn add-new-blog" id="add-new-blogs" type="submit">Save Changes</button>
+                                        <button class="save_btn add-new-gallery" id="add-new-gallery" type="submit">Save Changes</button>
                                     </div>
                                 </div>
 							</div>

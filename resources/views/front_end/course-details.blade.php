@@ -126,7 +126,7 @@ $title = 'Course Details | Choose course categories. Make money while learning, 
                                                        <img src="{{asset('storage/profile/'.$course->user->profile_image)}}" alt="{{ env('APP_NAME') }}">
                                                    </div>
                                                    <div class="cd-course-instructor-text">
-                                                       <h3><a href="#">{{ ucfirst($course->user->name) }} {{ ucfirst($course->user->last_name) }}</a></h3>
+                                                       <h3><a href="{{ route('instructor-profile', $course->user->unique_id) }}">{{ ucfirst($course->user->name) }} {{ ucfirst($course->user->last_name) }}</a></h3>
                                                        <div class="cd-course-instructor-rate d-flex ul-li">
                                                            <ul>
                                                                <li><i class="fas fa-star"></i></li>
@@ -276,7 +276,7 @@ $title = 'Course Details | Choose course categories. Make money while learning, 
                                         <a href="{{ route('course-details', $each_course->unique_id) }}"><i class="fas fa-user"></i> {{ count($each_course->courseEnrollment) }} Students</a>
                                     </div>
                                     <div class="yl-course-tilte-head yl-headline ul-li">
-                                        <h3><a href="{{ route('course-details', $each_course->unique_id) }}">{{ucfirst($each_course->name)}}</a></h3>
+                                        <h3><a href="{{ route('course-details', $each_course->unique_id) }}">{{substr(ucfirst($each_course->name), 0, 40)}} {{ (strlen($each_course->name) > 40 )?'...':''}}</a></h3>
                                         <ul>{{ $each_course->count_reviews }}
                                             @for ($i = 1; $i <= $each_course->count_reviews; $i++)
                                                 <li><i class="fas fa-star"></i></li>
@@ -289,7 +289,7 @@ $title = 'Course Details | Choose course categories. Make money while learning, 
                                             <img src="{{asset('storage/profile/'.$each_course->user->profile_image)}}" alt="{{ env('APP_NAME') }}">
                                         </div>
                                         <div class="yl-c-mentor-text">
-                                            <h4><a href="instructor-profile">{{ ucfirst($each_course->user->name) }} {{ ucfirst($each_course->user->last_name) }}</a></h4>
+                                            <h4><a href="{{ route('instructor-profile', $each_course->user->unique_id) }}">{{ ucfirst($each_course->user->name) }} {{ ucfirst($each_course->user->last_name) }}</a></h4>
                                             <span class="btn btn-success btn-sm" {{ ($each_course->is_bestseller == 'no')?'hidden':'' }}>Bestseller</span>
                                         </div>
                                     </div>
