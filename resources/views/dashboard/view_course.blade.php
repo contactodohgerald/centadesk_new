@@ -88,7 +88,7 @@ $disLikeColor = '';
 											({{count($course->reviews)}} ratings)
 										</div>
 										<div class="_215b05 font-poppins">
-											114,521 students enrolled
+											{{ count($enrolls) }} students enrolled
 										</div>
 										<div class="_215b05 font-poppins">
 											Last updated: {{$course->created_at->diffForHumans()}}
@@ -349,7 +349,7 @@ $disLikeColor = '';
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-7">
-                                                    <div class="review_right">
+                                                    {{-- <div class="review_right">
                                                         <div class="review_right_heading">
                                                             <h3>Reviews</h3>
                                                             <div class="review_search">
@@ -357,7 +357,7 @@ $disLikeColor = '';
                                                                 <button class="rvsrch_btn"><i class='uil uil-search'></i></button>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="review_all120 reviewHold">
                                                         @if(count($course->reviews) > 0)
                                                             @foreach($course->reviews as $key => $each_review)

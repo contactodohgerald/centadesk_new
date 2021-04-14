@@ -91,11 +91,11 @@ $site_logo = $appSettings->getSingleModel();
 <!-- The Modal -->
 <div class="modal logout" id="myModal">
     <div class="modal-dialog">
-        <div class="modal-content" style="background-color: #333 !important;">
+        <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Sign Out</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="myModal" onclick="removeModalMains('.logout')">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
@@ -107,7 +107,7 @@ $site_logo = $appSettings->getSingleModel();
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="removeModalMains('.logout')">Close</button>
                 <a class="btn btn-primary" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Sign Out
                 </a>
@@ -122,12 +122,12 @@ $site_logo = $appSettings->getSingleModel();
 <!-- The Modal -->
 <div class="modal accountTopUp" id="myModal">
     <div class="modal-dialog">
-        <div class="modal-content" style="background-color: #333 !important;">
+        <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Account TopUp</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" onclick="removeModalMains('.accountTopUp')">&times;</button>
             </div>
 
             <form action="{{route('top_up' )}}" method="POST">
@@ -137,7 +137,7 @@ $site_logo = $appSettings->getSingleModel();
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="ui search focus mt-30">
-                                <label for="topUpAmount">Enter Amount In ({{$users->getBalanceForView()['data']['currency']}})</label>
+                                <label for="topUpAmount" class="text-dark night-text">Enter Amount In ({{$users->getBalanceForView()['data']['currency']}})</label>
                                 <input class="form-control" type="number" name="topUpAmount" id="topUpAmount" required placeholder="Enter Amount" autofocus>
                             </div>
                         </div>
@@ -145,11 +145,62 @@ $site_logo = $appSettings->getSingleModel();
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="removeModalMains()">Close</button>
+                    <button type="button" class="btn btn-danger" onclick="removeModalMains('.accountTopUp')">Close</button>
                     <button type="submit" class="btn btn-primary">Proceed</button>
                 </div>
             </form>
 
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal zoomInUp btc_topup_modal" id="btc_topup_modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Enroll for Course?</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="removeModalMains('.btc_topup_modal')">&times;</button>
+            </div>
+            <form class="btc_topup_form">
+                @csrf
+                <div class="modal-body">
+                    <div class="ui search focus mt-30">
+                        <label for="topUpAmount" class="text-dark night-text">Enter Amount In ({{$users->getBalanceForView()['data']['currency']}})</label>
+                        <input class="form-control" type="number" name="topUpAmount" id="topUpAmount" required placeholder="Enter Amount" autofocus>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer no-border">
+                <div class="text-right">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="removeModalMains('.btc_topup_modal')">Close</button>
+                    <button type="submit" class="btn btn-primary btc_topup_btn">Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal zoomInUp enroll_modal" id="enroll_modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Enroll for Course?</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="removeModalMains('.enroll_modal')">&times;</button>
+            </div>
+            <form class="enroll_form">
+                @csrf
+                <div class="modal-body">
+                    <p class="">By clicking continue, your account wallet will be used to pay for this course.</p>
+                </div>
+            </form>
+            <div class="modal-footer no-border">
+                <div class="text-right">
+                    <button class="btn btn-danger btn-sm" data-dismiss="modal" onclick="removeModalMains('.enroll_modal')">Cancel</button>
+                    <button class="btn btn-primary btn-sm enroll_btn" data-dismiss="modal">Continue</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -162,7 +213,7 @@ $site_logo = $appSettings->getSingleModel();
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title text-dark night-text">Allow Push Notification</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" onclick="removeModalMains('.notification-access-modal')">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
@@ -177,7 +228,7 @@ $site_logo = $appSettings->getSingleModel();
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="removeModalMains('.notification-access-modal')">Close</button>
                 <button type="submit" class="btn btn-primary" onclick="updateUserWebFCMKey(this, '{{auth()->user()->unique_id}}')">Grant Permission</button>
             </div>
         </div>

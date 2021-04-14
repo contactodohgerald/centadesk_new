@@ -1,6 +1,10 @@
 @php
 $users = auth()->user();
-	$pageTitle = 'Bitcoin Payment';
+$pageTitle = 'Course Enrollment';
+
+$appSettings = new \App\Model\AppSettings();
+$site_logo = $appSettings->getSingleModel();
+
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -63,8 +67,8 @@ $users = auth()->user();
 					</div>
 					<div class="ml_item">
 						<div class="main_logo main_logo15" id="logo">
-							<a href="{{route('home')}}"><img src="{{ asset('dashboard/images/logo.svg')}}" alt=""></a>
-							<a href="{{route('home')}}"><img class="logo-inverse" src="{{ asset('dashboard/images/ct_logo.svg')}}" alt=""></a>
+							<a href="{{route('home')}}"><img src="/storage/site_logo/{{ $site_logo->site_logo }}" alt="{{ env('APP_NAME') }}"></a>
+							<a href="{{route('home')}}"><img class="logo-inverse" src="/storage/site_logo/{{ $site_logo->site_logo }}" alt="{{ env('APP_NAME') }}"></a>
 						</div>
 					</div>
 					<div class="header_right pr-0">
@@ -181,9 +185,9 @@ $users = auth()->user();
 										</div> --}}
 									</div>
                                     @if ($enrolled == false)
-									<button  class="btn chck-btn22 font-poppins enroll_modal">Enroll</button>
+									<button  class="btn chck-btn22 font-poppins btn-danger" onclick="bringOutModalMain('.enroll_modal')">Enroll</button>
                                     @else
-									<button disabled class="btn chck-btn22 font-poppins enroll_modal">Already Enrolled</button>
+									<button disabled class="btn chck-btn22 btn-primary font-poppins enroll_modal">Already Enrolled</button>
                                     @endif
 								</div>
 						</div>
@@ -194,40 +198,12 @@ $users = auth()->user();
         @include('layouts.footer')
     </div>
 
-    <div class="modal zoomInUp " id="enroll_modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content"  style="background-color: #333 !important;">
-                <div class="modal-header">
-                    <h4>Enroll for Course?</h4>
-                </div>
-                <form class="enroll_form">
-                    @csrf
-                    <div class="modal-body">
-                        <p class="">By clicking continue, your account wallet will be used to pay for this course.</p>
-                    </div>
-                </form>
-                <div class="modal-footer no-border">
-                    <div class="text-right">
-                        <button class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
-                        <button class="btn btn-primary btn-sm enroll_btn" data-dismiss="modal">Continue</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 <!-- Body End -->
 
 @include('layouts.e_script')
 
 <script>
     $(document).ready(function() {
-
-
-        $('.enroll_modal').click(function(e) {
-            e.preventDefault();
-            append_id('enroll_id', '.enroll_form', '#enroll_modal', this)
-            $('#enroll_modal').modal('toggle');
-        });
 
         // process form for creating live stream
         $('.enroll_btn').click(async function(e) {

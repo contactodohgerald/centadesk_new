@@ -84,6 +84,14 @@ class HomeController extends Controller
             $each_instructors->enrolled_users = $enrolled->count();
         }
 
+        $user->courses;
+
+        $user->subscribers;
+
+        $user->enroll_students;
+
+        //return $user;
+
         $view = [
             'live_streams' => $live_streams,
             'user' => $user,

@@ -309,8 +309,7 @@ class courseController extends Controller
                 ['course_creator', '=', $j->user_enroll->unique_id]
             ]);
             $j->user_enroll->enrolled_users = $enrolled->count();
-        }
-;
+        };
         return view('dashboard.view_course', ['course'=>$course, 'enrolls'=> $enrolls]);
     }
 

@@ -19,15 +19,15 @@ $title = 'Centadesk | Teach, Learn and Earn';
    <section id="yl-slider" class="yl-slider-section">
       <div id="yl-main-slider" class="yl-main-slider-wrap owl-carousel">
 
-            <div class="slider-main-item position-relative">
+          <div class="slider-main-item position-relative">
             <div class="slider-main-img img-zooming" data-background="{{ asset('front_end/img/centadesk-online-learning-and-multilevel-platform.jpg')}}"></div>
             <div class="slider-overlay"></div>
             <div class="container">
                <div class="slider-main-text yl-headline pera-content">
-                  <span>Smooth Progression</span>
-                  <h1>Teach, Learn and Earn with {{ env('APP_NAME') }}.
+                  <span style="text-shadow: rgb(0, 0, 0) 1px 1px;">Smooth Progression</span>
+                  <h1 style="text-shadow: rgb(0, 0, 0) 1px 1px;" class="text-white">Teach, Learn and Earn with {{ env('APP_NAME') }}.
                   </h1>
-                  <p class="text-white">Earn big time while learning/teaching the latest skills.</p>
+                  <p class="text-white" style="text-shadow: rgb(0, 0, 0) 1px 1px;">Earn big time while learning/teaching the latest skills.</p>
                   <div class="slider-main-btn">
                      <a href="{{ route('about') }}"><i class="fas fa-user"></i> About us</a>
                      <a href="{{ route('list-courses') }}"><i class="fas fa-cog"></i> Courses</a>
@@ -40,10 +40,10 @@ $title = 'Centadesk | Teach, Learn and Earn';
             <div class="slider-overlay"></div>
             <div class="container">
                <div class="slider-main-text yl-headline pera-content">
-                  <span>Earn in styles</span>
-                  <h1>Become an instructor with {{ env('APP_NAME') }} and start earning.
+                  <span style="text-shadow: rgb(0, 0, 0) 1px 1px;">Earn in styles</span>
+                  <h1 style="text-shadow: rgb(0, 0, 0) 1px 1px;" class="text-white">Become an instructor with {{ env('APP_NAME') }} and start earning.
                   </h1>
-                  <p>The system was design to connect students with skill teacher/tutors in different works of life. Earn big doing what you like.</p>
+                  <p class="text-white" style="text-shadow: rgb(0, 0, 0) 1px 1px;">The system was design to connect students with skill teacher/tutors in different works of life. Earn big doing what you like.</p>
                   <div class="slider-main-btn">
                      <a href="{{ route('register') }}"><i class="fas fa-user"></i> Join Us</a>
                      <a href="{{ route('list-courses') }}"><i class="fas fa-cog"></i> Courses</a>
@@ -56,9 +56,9 @@ $title = 'Centadesk | Teach, Learn and Earn';
             <div class="slider-overlay"></div>
             <div class="container">
                <div class="slider-main-text yl-headline pera-content">
-                  <span>You're one step away</span>
-                  <h1>Use our multi-level system to earn massive income.</h1>
-                  <p class="text-white">Grow with {{ env('APP_NAME') }} by joining our affiliate system. Earn massively when you invite your family and friends to join {{ env('APP_NAME') }}.</p>
+                  <span style="text-shadow: rgb(0, 0, 0) 1px 1px;">You're one step away</span>
+                  <h1 style="text-shadow: rgb(0, 0, 0) 1px 1px;" class="text-white">Use our multi-level system to earn massive income.</h1>
+                  <p class="text-white" style="text-shadow: rgb(0, 0, 0) 1px 1px;">Grow with {{ env('APP_NAME') }} by joining our affiliate system. Earn massively when you invite your family and friends to join {{ env('APP_NAME') }}.</p>
                   <div class="slider-main-btn">
                      <a href="{{ route('how-it-work') }}"><i class="fas fa-user"></i> Become an Agent</a>
                      <a href="{{ route('list-courses') }}"><i class="fas fa-cog"></i> Courses</a>
