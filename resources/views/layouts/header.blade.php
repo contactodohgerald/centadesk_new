@@ -57,9 +57,11 @@ $site_logo = $appSettings->getSingleModel();
     </div>
     <div class="header_right">
         <ul>
+            @if(auth()->user()->privilegeChecker('for_teacher_and_admin'))
             <li>
                 <a href="/create-course" class="upload_btn" title="Create New Course">Create New Course</a>
             </li>
+            @endif
             <li class="ui dropdown">
                 <a href="#" class="option_links" title="Notifications"><i class='uil uil-bell'></i><span class="noti_count">3</span></a>
                 <div class="menu dropdown_mn">

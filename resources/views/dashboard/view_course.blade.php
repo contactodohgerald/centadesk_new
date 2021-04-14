@@ -56,7 +56,7 @@ $disLikeColor = '';
 										<input type="hidden" class="course_unique_id" value="{{$course->unique_id}}">
 										<input type="hidden" class="user_unique_id" value="{{auth()->user()->unique_id}}">
 										<div class="_215b10">
-											<a href="javascript:;" onclick="saveCourse('{{$course->unique_id}}', '{{auth()->user()->unique_id}}')" class="_215b11" title="Save Course">
+											<a href="javascript:;" onclick="saveCourse('{{$course->unique_id}}', '{{auth()->user()->unique_id}}')" class="_215b11 font-poppins" title="Save Course">
                                                 @if (in_array(auth()->user()->unique_id, $course->user_array_hold))
                                                      <?php
                                                     $color = 'danger';
@@ -72,7 +72,7 @@ $disLikeColor = '';
 											</a>
 										</div>
                                         <div class="_215b10">
-                                            <a href="{{route('course-details', $course->unique_id)}}" class="_215b11" title="Share Course">
+                                            <a href="{{route('course-details', $course->unique_id)}}" class="_215b11 font-poppins" title="Share Course">
                                                 <span><i class="uil uil-share-alt"></i></span>Share Course
                                             </a>
                                         </div>
@@ -88,7 +88,7 @@ $disLikeColor = '';
 											({{count($course->reviews)}} ratings)
 										</div>
 										<div class="_215b05 font-poppins">
-											114,521 students enrolled
+											{{ count($course->array_of_enrolled_users) }} students enrolled
 										</div>
 										<div class="_215b05 font-poppins">
 											Last updated: {{$course->created_at->diffForHumans()}}
@@ -97,7 +97,7 @@ $disLikeColor = '';
 											Rate This Course:
                                             <div class="rating-box mt-20" id="rate"></div>
                                         </div>
-                                        <ul class="_215b31">									
+                                        <ul class="_215b31">
                                             <li>
                                                 <button class="btn_buy">
                                                     <a href="{{route('checkout', $course->unique_id) }}">Buy Now</a>
@@ -166,7 +166,10 @@ $disLikeColor = '';
                                 <nav>
                                     <div class="nav nav-tabs tab_crse justify-content-center" id="nav-tab" role="tablist">
                                         <a class="nav-item nav-link active" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-selected="true">About</a>
-                                        <a class="nav-item nav-link" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" aria-selected="false">Course Url's</a>
+                                        {{-- @if ($course->user_is_enrolled == true) --}}
+                                        <a class="nav-item nav-link" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" aria-selected="false">Course Url</a>
+                                        {{-- @endif --}}
+
                                         <a class="nav-item nav-link" id="nav-subscriptions-tab" data-toggle="tab" href="#nav-enrollments" role="tab" aria-selected="false">Enrollments</a>
                                         <a class="nav-item nav-link" id="nav-reviews-tab" data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="false">Reviews</a>
                                     </div>
@@ -192,12 +195,13 @@ $disLikeColor = '';
                                     </div>
                                     <div class="tab-pane fade" id="nav-courses" role="tabpanel">
                                         <div class="crse_content">
-                                            <h3>Course Download Links</h3>
+                                            <h3 class="font-poppins">Course Download Links</h3>
                                             <div class="_112456">
                                                 <ul class="accordion-expand-holder">
-                                                    <li><span class="_fgr123"> {{count($course->course_download_links)}} links</span></li>
+                                                    <li><span class="_fgr123 font-poppins"> {{count($course->course_download_links)}} links</span></li>
                                                 </ul>
                                             </div>
+                                            @if ($course->user_is_enrolled == true)
                                             @if(count($course->course_download_links) > 0)
                                             <div id="accordion" class="ui-accordion ui-widget ui-helper-reset">
                                                 @foreach($course->course_download_links as $each_course_link)
@@ -205,11 +209,23 @@ $disLikeColor = '';
                                                     <div class="section-header-left">
                                                         <span class="section-title-wrapper">
                                                             <i class='uil uil-presentation-play crse_icon'></i>
-                                                            <span class="section-title-text">{{$each_course_link}}</span>
+                                                            <span class="section-title-text font-poppins">{{$each_course_link}}</span>
                                                         </span>
                                                     </div>
                                                 </a>
                                                 @endforeach
+                                            </div>
+                                            @endif
+                                            @else
+                                            <div id="accordion" class="ui-accordion ui-widget ui-helper-reset">
+                                                <a href="" class="accordion-header" target="_blank">
+                                                    <div class="section-header-left">
+                                                        <span class="section-title-wrapper">
+                                                            {{-- <i class='uil uil-presentation-play crse_icon'></i> --}}
+                                                            <span class="section-title-text font-poppins">Course Url will be available once you enroll</span>
+                                                        </span>
+                                                    </div>
+                                                </a>
                                             </div>
                                             @endif
                                         </div>
@@ -217,7 +233,7 @@ $disLikeColor = '';
                                     <div class="tab-pane fade show" id="nav-enrollments" role="tabpanel">
                                         <div class="_htg451">
                                             <div class="_htg452">
-                                                <h3>People enrolled to your course</h3>
+                                                <h3>People enrolled to this course</h3>
                                                 <div class="row">
                                                     @if(count($enrolls) > 0)
                                                     @foreach($enrolls as $e)

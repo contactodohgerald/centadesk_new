@@ -73,33 +73,36 @@ $users = auth()->user();
 								<a href="#" class="opts_account">
 									<img src="{{asset(auth()->user()->returnLink().'/profile/'.auth()->user()->profile_image)}}" alt="">
 								</a>
-								<div class="menu dropdown_account">
-									<div class="channel_my">
-										<div class="profile_link">
-											<img src="{{asset(auth()->user()->returnLink().'/profile/'.auth()->user()->profile_image)}}" alt="">
-											<div class="pd_content">
-												<div class="rhte85">
-													<h6 class="text-capitalize">{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
-													<div class="mef78" title="Verify">
-														<i class='uil uil-check-circle'></i>
-													</div>
-												</div>
-												<span>{{auth()->user()->email}}</span>
-											</div>
-										</div>
+                                <div class="menu dropdown_account">
+                                    <div class="channel_my">
+
+                                        <div class="profile_link">
+                                            <img src="{{asset(auth()->user()->returnLink().'/profile/'.auth()->user()->profile_image)}}" alt="">
+                                            <div class="pd_content">
+                                                <div class="rhte85">
+                                                    <h6 class="text-capitalize">{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>
+                                                    @if (auth()->user()->verified_badge == 'yes')
+                                                    <div class="mef78" title="Verified">
+                                                        <i class='uil uil-check-circle'></i>
+                                                    </div>
+                                                    @endif
+                                                </div>
+                                                <span>{{auth()->user()->email}}</span>
+                                            </div>
+                                        </div>
                                         <a href="{{route('profile')}}" class="dp_link_12">View Profile</a>
-									</div>
-									<div class="night_mode_switch__btn">
-										<a href="#" id="night-mode" class="btn-night-mode">
-											<i class="uil uil-moon"></i> Night mode
-											<span class="btn-night-mode-switch">
-												<span class="uk-switch-button"></span>
-											</span>
-										</a>
-									</div>
+                                    </div>
+                                    <div class="night_mode_switch__btn">
+                                        <a href="#" id="night-mode" class="btn-night-mode font-poppins">
+                                            <i class="uil uil-moon"></i> Night mode
+                                            <span class="btn-night-mode-switch">
+                                                    <span class="uk-switch-button"></span>
+                                                </span>
+                                        </a>
+                                    </div>
                                     <a href="{{route('main_settings_page')}}" class="item channel_item">Account Settings</a>
                                     <a class="item channel_item" href="javascript:void(0)" onclick="bringOutModalMain('.logout')">Sign Out</a>
-								</div>
+                                </div>
 							</li>
 						</ul>
 					</div>
@@ -127,7 +130,7 @@ $users = auth()->user();
 							</div>
 						</div>
 						<div class="title126">
-							<h2>Course Enrollment </h2>
+							<h2 class="font-poppins">Course Enrollment </h2>
 						</div>
 					</div>
 				</div>
@@ -181,9 +184,9 @@ $users = auth()->user();
 										</div> --}}
 									</div>
                                     @if ($enrolled == false)
-									<button  class="btn chck-btn22 font-poppins enroll_modal">Enroll</button>
+									<button  class="btn2 chck-btn22 font-poppins enroll_modal">Enroll</button>
                                     @else
-									<button disabled class="btn chck-btn22 font-poppins enroll_modal">Already Enrolled</button>
+									<button disabled class=" btn2 chck-btn22 font-poppins enroll_modal">Already Enrolled</button>
                                     @endif
 								</div>
 						</div>

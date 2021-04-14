@@ -239,6 +239,8 @@ class courseController extends Controller
      */
     public function showCourses($id = null){
         //
+        $user = auth()->user();
+
         $condition = [
             ['unique_id', $id]
         ];
@@ -301,6 +303,15 @@ class courseController extends Controller
             ]);
             $j->user_enroll->enrolled_users = $enrolled->count();
         }
+        $user_is_enrolled = false;
+
+        foreach($enrolls as $k){
+            if($k->unique_id == $user['unique_id']){
+                $user_is_enrolled = true;
+            }
+        }
+        $course->user_is_enrolled = $user_is_enrolled;
+        // return $course;
 ;
         return view('dashboard.view_course', ['course'=>$course, 'enrolls'=> $enrolls]);
     }
