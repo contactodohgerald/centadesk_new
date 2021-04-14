@@ -348,7 +348,7 @@ $home = 'active';
                     <div class="right_side">
                         <div class="fcrse_2 mb-30">
                             <div class="tutor_img">
-                                <a href="{{ route('profile')}}"><img src="{{asset($link.'/profile/'.$user->profile_image)}}" alt=""></a>
+                                <a href="{{ route('profile')}}"><img src="{{asset('storage/profile/'.$user->profile_image)}}" alt=""></a>
                             </div>
                             <div class="tutor_content_dt">
                                 <div class="tutor150">
@@ -364,19 +364,22 @@ $home = 'active';
                                         |
                                     @endif
                                     {{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span></div>
-                                <ul class="tutor_social_links">
-                                    <li><a href="https://facebook.com/{{ $user->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="https://twitter.com/{{ $user->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="https://www.linkedin.com/{{ $user->linkedin }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
-                                    <li><a href="https://www.youtube.com/{{ $user->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
-                                </ul>
-                                <div class="tut1250">
-                                    <span class="vdt15 font-poppins">615K Students</span>
-                                    <span class="vdt15 font-poppins">12 Courses</span>
-                                </div>
+                                    @if($user->user_type != 'student')
+                                    <ul class="tutor_social_links">
+                                        <li><a href="https://facebook.com/{{ $user->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="https://twitter.com/{{ $user->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="https://www.linkedin.com/{{ $user->linkedin }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
+                                        <li><a href="https://www.youtube.com/{{ $user->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
+                                    </ul>
+                                    <div class="tut1250">
+                                        <span class="vdt15 font-poppins">{{ count($user->enroll_students) }} Students</span>
+                                        <span class="vdt15 font-poppins">{{ count($user->courses) }} Courses</span>
+                                    </div>
+                                @endif
                                 <a href="{{ route('profile')}}" class="prfle12link font-poppins">Go To Profile</a>
                             </div>
                         </div>
+                        @if($user->user_type != 'student')
                         <div class="fcrse_3">
                             <div class="cater_ttle">
                                 <h4 class="font-poppins">Live Streaming</h4>
@@ -390,6 +393,7 @@ $home = 'active';
                                 </div>
                             </div>
                         </div>
+                        @endif
                         {{-- <div class="fcrse_3">
                             <div class="cater_ttle">
                                 <h4>Top Categories</h4>

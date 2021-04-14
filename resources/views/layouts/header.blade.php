@@ -49,17 +49,22 @@ $site_logo = $appSettings->getSingleModel();
     </div>
     <div class="search120">
         <div class="ui search">
-            <div class="ui left icon input swdh10">
-                <input class="prompt srch10" type="text" placeholder="Search for Tuts Videos, Tutors, Tests and more..">
-                <i class='uil uil-search-alt icon icon1'></i>
-            </div>
+            <form action="{{ route('search-result') }}" method="POST">
+                @csrf
+                <div class="ui left icon input swdh10">
+                    <input class="prompt srch10" type="text" name="search_result" required placeholder="Search for Courses, Instructors, more..">
+                    <i class='uil uil-search-alt icon icon1'></i>
+                </div>
+            </form>
         </div>
     </div>
     <div class="header_right">
         <ul>
+            @if (auth()->user()->user_type != 'student')
             <li>
                 <a href="/create-course" class="upload_btn" title="Create New Course">Create New Course</a>
             </li>
+            @endif
             <li class="ui dropdown">
                 <a href="#" class="option_links" title="Notifications"><i class='uil uil-bell'></i><span class="noti_count">3</span></a>
                 <div class="menu dropdown_mn">
@@ -97,13 +102,13 @@ $site_logo = $appSettings->getSingleModel();
             </li>
             <li class="ui dropdown">
                 <a href="#" class="opts_account" title="Account">
-                    <img src="{{asset(auth()->user()->returnLink().'/profile/'.auth()->user()->profile_image)}}" alt="">
+                    <img src="{{asset('storage/profile/'.auth()->user()->profile_image)}}" alt="{{ env('APP_NAME') }}">
                 </a>
                 <div class="menu dropdown_account">
                     <div class="channel_my">
 
                         <div class="profile_link">
-                            <img src="{{asset(auth()->user()->returnLink().'/profile/'.auth()->user()->profile_image)}}" alt="">
+                            <img src="{{asset('storage/profile/'.auth()->user()->profile_image)}}" alt="{{ env('APP_NAME') }}">
                             <div class="pd_content">
                                 <div class="rhte85">
                                     <h6 class="text-capitalize">{{auth()->user()->name}} {{auth()->user()->last_name}}</h6>

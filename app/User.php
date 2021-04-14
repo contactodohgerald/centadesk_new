@@ -74,6 +74,10 @@ class User extends Authenticatable implements MustVerifyEmail{
 
     public function subscribers(){
         return $this->hasMany('App\Model\Subscribe', 'teacher_unique_id');
+    } 
+    
+    public function enroll_students(){
+        return $this->hasMany('App\Model\courseEnrollment', 'user_enrolling');
     }
 
     public function getSingleUser($condition){

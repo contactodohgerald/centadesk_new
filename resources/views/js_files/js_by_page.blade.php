@@ -242,8 +242,13 @@
         $(value).modal({ backdrop: 'static', keyboard: false });
     }
 
-    function removeModalMains() {
-        $('#myModal .close').css('display','none');
+    function bringOutModals(value){
+        $(value).modal('toggle');        
+    }
+
+    function removeModalMains(value) {
+        $(value).modal({ backdrop: 'static'});
+        $(value).modal('hide');
     }
 
     function addUniqueIdToInputField(a){

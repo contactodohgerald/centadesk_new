@@ -21,12 +21,15 @@
                     <div class="col-xl-12 col-lg-8">
                         <div class="section3125">
                             <div class="explore_search">
-                                <div class="ui search focus">
-                                    <div class="ui left icon input swdh11">
-                                        <input class="prompt srch_explore" type="text" placeholder="Search Tutors...">
-                                        <i class="uil uil-search-alt icon icon2"></i>
+                                <form action="{{ route('search-result') }}" method="POST">
+                                    @csrf
+                                    <div class="ui search focus">
+                                        <div class="ui left icon input swdh11">
+                                            <input class="prompt srch_explore" type="text" name="search_result" required placeholder="Search for Courses, Instructors, more..">
+                                            <i class="uil uil-search-alt icon icon2"></i>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -42,7 +45,7 @@
                                             <div class="fcrse_1 mt-30">
                                                 <div class="tutor_img">
                                             <a href="{{route('view_profile', $each_instructors->unique_id )}}">
-                                                <img src="{{asset(auth()->user()->returnLink().'/profile/'.$each_instructors->profile_image)}}" alt="{{env('APP_NAME')}}">
+                                                <img src="{{asset('storage/profile/'.$each_instructors->profile_image)}}" alt="{{env('APP_NAME')}}">
                                             </a>
                                         </div>
                                                 <div class="tutor_content_dt">

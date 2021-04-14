@@ -308,6 +308,8 @@ Route::group(['middleware' => 'web'], function () {
     //search records
     Route::post('/search', [SearchResultController::class,'searchThroughRecords'])->name('search');
 
+    Route::post('/search-result', [SearchResultController::class,'searchThroughRecordsForBackview'])->name('search-result');
+
 });
 
 
