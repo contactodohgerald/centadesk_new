@@ -154,7 +154,7 @@ class BlogController extends Controller
                 $image = $request->file('cover_img');
                 $blog_image = md5($image->getClientOriginalName() . time()).'.'.$image->getClientOriginalExtension();
              
-                $destinationPath = public_path('storage/blog_image');
+                $destinationPath = storage_path('app/public/blog_image');
                 $img = Image::make($image->getRealPath());
                 $img->resize(382, 382, function ($constraint) {
                     $constraint->aspectRatio();

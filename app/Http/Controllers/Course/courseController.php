@@ -129,7 +129,7 @@ class courseController extends Controller
             // generate file name
             $img_name = $this->gen_file_name($user, $title, $cover_img);
             
-            $destinationPath = public_path('storage/course-img');
+            $destinationPath = storage_path('app/public/course-img');
             $img = Image::make($cover_img->getRealPath());
             $img->resize(382, 382, function ($constraint) {
                 $constraint->aspectRatio();
@@ -366,7 +366,7 @@ class courseController extends Controller
                 // generate file name
                 $img_name = $this->gen_file_name($user, $title, $cover_img);
 
-                $destinationPath = public_path('storage/course-img');
+                $destinationPath = storage_path('app/public/course-img');
                 $img = Image::make($cover_img->getRealPath());
                 $img->resize(382, 382, function ($constraint) {
                     $constraint->aspectRatio();

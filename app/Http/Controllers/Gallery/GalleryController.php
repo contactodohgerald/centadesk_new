@@ -62,7 +62,7 @@ class GalleryController extends Controller
                 $image = $request->file('cover_img');
                 $gallery_image = md5($image->getClientOriginalName() . time()).'.'.$image->getClientOriginalExtension();
              
-                $destinationPath = public_path('storage/gallery_image');
+                $destinationPath = storage_path('app/public/gallery_image');
                 $img = Image::make($image->getRealPath());
                 $img->resize(382, 382, function ($constraint) {
                     $constraint->aspectRatio();
