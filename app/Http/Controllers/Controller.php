@@ -11,6 +11,7 @@ class Controller extends BaseController{
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public $base_url = 'http://127.0.0.1:8000';
+    public $site_logo = 'https://centadesk.com/front_end/img/logo-main.png';
     public static $User_id = '';
 
 

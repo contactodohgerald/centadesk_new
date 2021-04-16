@@ -27,7 +27,7 @@ trait Payment{
             "customizations" => array (
                 "title" => env('APP_NAME'),
                 "description" => "Account Top Up",
-                "logo" => $this->base_url."/dashboard/images/logo.svg",
+                "logo" => $this->site_logo,
             ));
 // And then encoded as a json string
         $data_string = json_encode($customer_data);
