@@ -25,6 +25,8 @@ use App\Http\Controllers\Controller;
 use App\Traits\FireBaseNotification;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use App\Events\CourseAddedByTeacher;
+use Illuminate\Support\Facades\Auth;
 
 class courseController extends Controller
 {
@@ -82,6 +84,12 @@ class courseController extends Controller
         ];
         // return $view;
         return view('dashboard.edit-course', $view);
+    }
+
+    public function testEvent(){
+        $user = Auth::user();
+        $message = 'new course was added';
+        event(new CourseAddedByTeacher($user, $message));
     }
 
 
@@ -183,7 +191,10 @@ class courseController extends Controller
                 $notification_details = [$title_, $caption, $pricing];
                 $notification_details_key = ['course_title', 'course_desc', 'pricing'];
 
-                $this->NotificationsHandler($title_, $link, $notification_type, $notification_details, $notification_details_key, $user_to_recieve_notification);
+                event(new CourseAddedByTeacher($user, $title_));
+
+                //$this->NotificationsHandler($title_, $link, $notification_type, $notification_details, $notification_details_key, $user_to_recieve_notification);
+
                 $error = 'Course Created!';
                 return response()->json(["message" => $error, 'status' => true]);
             }
@@ -310,6 +321,7 @@ class courseController extends Controller
             ]);
             $j->user_enroll->enrolled_users = $enrolled->count();
         };
+        //return $course;
         return view('dashboard.view_course', ['course'=>$course, 'enrolls'=> $enrolls]);
     }
 

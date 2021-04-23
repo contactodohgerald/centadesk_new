@@ -334,6 +334,7 @@ Route::post('/email/verification-notification', [VerificationController::class, 
 Route::group(['middleware' => 'web'], function () {
     // Course
     Route::get('/create-course',  [courseController::class, 'index'])->name('create-course');
+    Route::get('/test',  [courseController::class, 'testEvent'])->name('test');
     Route::get('/view-courses',  [courseController::class, 'show'])->name('view-courses');
     Route::get('/view_course/{unique_id?}', [courseController::class, 'showCourses'])->name('view_course');
     Route::get('/edit-course/{id}', [courseController::class, 'update_page'])->name('edit-course');

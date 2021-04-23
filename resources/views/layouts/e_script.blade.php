@@ -42,24 +42,31 @@ $site_logo = $appSettings->getSingleModel();
 <script src="{{asset('toast/jquery.toast.js')}}"></script>
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
-
-  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
-  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
-
-  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
-
-   <!-- Add the entire Firebase JavaScript SDK -->
-   <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase.js"></script>
-
-  <!-- Add Firebase products that you want to use -->
-  <!-- <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script> -->
-
-  <script src="{{asset('firebase-messaging-sw.js')}}"></script>
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
 @include('js_files.js_by_page')
+
+<script>
+
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+// Initiate the Pusher JS library
+var pusher = new Pusher('24295190768a14055e63', {
+   // encrypted: true
+    cluster: 'us2'
+});
+
+// Subscribe to the channel we specified in our Laravel Event
+var channel = pusher.subscribe('course-added');
+
+// Bind a function to a Event (the full Laravel class)
+channel.bind('App\\Events\\CourseAddedByTeacher', function(data) {
+    // this is called when the event notification is received...
+    console.log(JSON.stringify(data));
+});
+
+</script>
 
 <script type="text/javascript">
     function closeErrorCarrierBox(a) {
