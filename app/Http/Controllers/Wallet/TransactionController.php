@@ -196,8 +196,8 @@ class TransactionController extends Controller
             if ($newTransactionDetails) {
 
                 $ipaddress = $this->get_client_ip();
-
-                $pay_with_flutterwave = $this->pay_with_flutterwave($this->base_url . "/confirm_top_up", $inputed_amount, $user_details->email, $user_details->phone, $user_full_name, $unique_id, $user_preferred_currency, $user_details->id, $ipaddress);
+              
+                $pay_with_flutterwave = $this->pay_with_flutterwave($this->base_url. "/confirm_top_up", $inputed_amount, $user_details->email, $user_details->phone, $user_full_name, $unique_id, $user_preferred_currency, $user_details->id, $ipaddress);
 
                 return redirect()->to($pay_with_flutterwave);
             } else {
