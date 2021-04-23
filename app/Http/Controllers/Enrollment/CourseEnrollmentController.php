@@ -162,12 +162,21 @@ class CourseEnrollmentController extends Controller
             if(!$update_user_balance){
 
                 throw new Exception($this->errorMsgs(14)['msg']);
-                
+
             }else {
 
                 //settle the upliners
                 $uplineReferralId = $user_detail->referred_id;
-                $this->saveBonus($course_price, $uplineReferralId, $unique_id, $user_detail, 'user_referral_id', 'referred_id', [5, 3, 2.6, 2.4, 2.2, 2, 1.8, 1.6, 1.4, 1.2, 1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1], 0, 'bonus');
+
+                $bonusArray = [
+                    'zuLKShyeijlyoMX7wWsP151f8b495dec34f5'=>[10, 5, 3, 2.6, 2.2, 2, 1.8, 1.6, 1.4, 1.2, 1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],//normal
+                    '31f3Ibex3rbQuqj3ubaeae463f657bdd8d21'=>[15, 5, 3, 2.6, 2.2, 2, 1.8, 1.6, 1.4, 1.2, 1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],//silver
+                    'yMcRB9jYCtkAYsvnPq8I9cbaada2a9559ec4'=>[20, 5, 3, 2.6, 2.2, 2, 1.8, 1.6, 1.4, 1.2, 1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],//diamond
+                    'NvlSLS84KSYxrz0Sijm7afb1596bd766c184'=>[25, 5, 3, 2.6, 2.2, 2, 1.8, 1.6, 1.4, 1.2, 1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],//golden
+                    'pKnXYM6rIhCS5ldSQm9Cfcebcbee89638a83'=>[35, 5, 3, 2.6, 2.2, 2, 1.8, 1.6, 1.4, 1.2, 1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2],//special
+                ];
+
+                $this->saveBonus($course_price, $uplineReferralId, $unique_id, $user_detail, 'user_referral_id', 'referred_id', 'agent_level_id', $bonusArray, 0, 'bonus');
 
                 $error = 'You\'ve been Enrolled Successfully!';
                 return response()->json(["message" => $error, 'status' => true]);
