@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, shrink-to-fit=9">
     <meta name="description" content="{{env('APP_NAME', 'CENTADESK')}}">
     <meta name="author" content="{{env('APP_NAME', 'CENTADESK')}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{env('APP_NAME', 'CENTADESK')}} - {{$pageTitle}}</title>
 
     <!-- Favicon Icon -->

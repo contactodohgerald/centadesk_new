@@ -46,28 +46,6 @@ $site_logo = $appSettings->getSingleModel();
 
 @include('js_files.js_by_page')
 
-<script>
-
-// Enable pusher logging - don't include this in production
-Pusher.logToConsole = true;
-
-// Initiate the Pusher JS library
-var pusher = new Pusher('24295190768a14055e63', {
-   // encrypted: true
-    cluster: 'us2'
-});
-
-// Subscribe to the channel we specified in our Laravel Event
-var channel = pusher.subscribe('course-added');
-
-// Bind a function to a Event (the full Laravel class)
-channel.bind('App\\Events\\CourseAddedByTeacher', function(data) {
-    // this is called when the event notification is received...
-    console.log(JSON.stringify(data));
-});
-
-</script>
-
 <script type="text/javascript">
     function closeErrorCarrierBox(a) {
         // console.log('yh')
@@ -75,6 +53,9 @@ channel.bind('App\\Events\\CourseAddedByTeacher', function(data) {
     }
 
     $(document).ready(function() {
+
+        getAllNotification(userUniqueId);
+
         $('#add-course-tab').steps({
             // onFinish: function() {
             //     // alert('Wizard Completed');
@@ -93,6 +74,43 @@ channel.bind('App\\Events\\CourseAddedByTeacher', function(data) {
             }
         }
     });
+
+    async function getAllNotification(user_unique_id){
+        let dataHold = '';
+        let returnData = await getRequest(baseUrl+'api/getAllNotification/'+user_unique_id);
+        let {notification_data, error_code} = returnData;
+
+        if (notification_data.length > 0){
+            for (let i = 0; i < notification_data.length; i++){
+                let {title, link, notification_type, notification_details, created_at, users, dates} = notification_data[i];
+
+                dataHold += `
+                    <div class="channel_my item all__noti5">
+                        <div class="profile_link">
+                            <img src="{{ asset('storage/profile/${users.profile_image}') }}" alt="{{ env('APP_NAME') }}">
+                            <div class="pd_content">
+                                <h6>${users.name} ${users.last_name} - ${notification_type}</h6>
+                                <p class="noti__text5">${notification_details}</p>
+                                <span class="nm_time">${dates}</span>
+                            </div>							
+                        </div>							
+                    </div>
+                `;
+
+            }
+        }else {
+            dataHold += `
+                <div class="channel_my item all__noti5">
+                    <div class="profile_link">
+                        <p>NO Notification For Now</p>					
+                    </div>							
+                </div>
+            `;
+        }
+
+        $("#all_msg_bg").html(dataHold);
+
+    }
 </script>
 
 <!-- The Modal -->

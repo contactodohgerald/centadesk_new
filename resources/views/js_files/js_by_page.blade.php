@@ -5,6 +5,93 @@
     const successDisplay = (message) => swal(message, 'successful', 'success');
     const errorDisplay = (message) => swal(message, 'Failed', 'error');
 
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    // Initiate the Pusher JS library
+    var pusher = new Pusher('24295190768a14055e63', {
+        encrypted: true,
+        cluster: 'us2'
+    });
+
+    // Subscribe to the channel we specified in our Laravel Event
+    var channel = pusher.subscribe('course-added');
+
+    // Bind a function to a Event (the full Laravel class)
+    channel.bind('course-added-by-teacher', function(data) {
+        // this is called when the event notification is received...
+        let data_type = JSON.stringify(data);
+        let dataType = JSON. parse(data_type); 
+        let {message} = dataType;
+        if(message == 'Course Uploaded'){
+            getAllNotificationForUser(userUniqueId)
+        }
+       
+    });
+
+    $(document).ready(function() {
+        getAllNotificationForUser(userUniqueId);
+    });
+
+    async function getAllNotificationForUser(user_unique_id){
+        let dataHold = '';
+        let returnData = await getRequest(baseUrl+'api/getAllNotification/'+user_unique_id);
+      
+        let {notification_data, error_code} = returnData;
+
+        var current = 0;
+
+        if (notification_data.length > 0){
+            for (let i = 0; i < notification_data.length; i++){
+                
+                let {unique_id, title, link, notification_type, notification_details, created_at, users, dates, read_status} = notification_data[i];
+
+                if(read_status == 'read'){
+                    continue;
+                }
+
+                dataHold += `
+                    <a href="javascript:;" onclick="readNotificationStatus('${unique_id}', '${user_unique_id}', '${link}')" class="channel_my item">
+                        <div class="profile_link">
+                            <img src="{{ asset('storage/profile/${users.profile_image}') }}" alt="{{ env('APP_NAME') }}">
+                            <div class="pd_content">
+                                <h6>${users.name} ${users.last_name} - ${notification_type}</h6>
+                                <p>${notification_details}</p>
+                                <span class="nm_time">${dates}</span>
+                            </div>
+                        </div>
+                    </a>
+                `;
+                
+                current++;
+
+            }
+            $('.noti_count').html(current);
+        }else {
+            dataHold += `
+                <a href="javascript:;" class="channel_my item">
+                    <div class="profile_link text-center">
+                        <p>No Notification For Now</p>
+                    </div>
+                </a>
+            `;
+
+            $('.noti_count').html(0);
+        }
+
+        $("#notificationHold").before(dataHold);
+
+    }
+
+    async function readNotificationStatus(notifi_id, user_id, link){
+        let postData = await postRequest(baseUrl+'api/addNotificationRead', {userId:user_id, notifiId:notifi_id});
+        console.log(postData); 
+        let {error_code} = postData;
+        if(error_code == 0){
+            window.location.href = `${link}`;
+        }
+    }
+
     async function subscribeTOTeacher(a, userId, teacherId){
 
         $(a).text('Loading.....').attr({'disabled':true});

@@ -29,7 +29,7 @@
                     <li>
                         <div class="header-top-cta-content">
                             <div class="yl-top-cta-icon float-left">
-                                <img src="assets/img/icon/mail.png" alt="">
+                                <img src="{{ asset('front_end/assets/img/icon/mail.png') }}" alt="{{ env('APP_NAME') }}">
                             </div>
                             <div class="yl-top-cta-text float-right yl-headline">
                                 <a href="mailto:{{$site_logo->company_email_1}}">{{$site_logo->company_email_1}}</a>
@@ -40,7 +40,7 @@
                     <li>
                         <div class="header-top-cta-content">
                             <div class="yl-top-cta-icon float-left">
-                                <img src="assets/img/icon/call.png" alt="">
+                                <img src="{{ asset('front_end/assets/img/icon/call.png') }}" alt="{{ env('APP_NAME') }}">
                             </div>
                             <div class="yl-top-cta-text float-right yl-headline">
                                 <a href="tel:{{$site_logo->company_phone_1}}">Requesting a Call:</a>

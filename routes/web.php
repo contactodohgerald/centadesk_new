@@ -25,6 +25,8 @@ use App\Http\Controllers\Roles\UserTypeController;
 
 use App\Http\Controllers\Gallery\GalleryController;
 
+use App\Http\Controllers\Notification\NotificationController;
+
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Complain\ComplainController;
 use App\Http\Controllers\Wallet\WithdrawalController;
@@ -60,6 +62,7 @@ Auth::routes();
 
 Route::get('/show-csrf', 'HomeController@showToken');
 Route::get('/clear-cache', 'HomeController@clear_cache');
+
 
 Auth::routes(['verify' => true]);
 /*//verify email address
@@ -356,6 +359,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/create_price', [priceController::class, 'create'])->name('create_price');
     Route::post('/store_price', [priceController::class, 'store'])->name('store_price');
     Route::get('/view_price', [priceController::class, 'index'])->name('view_price');
+
+});
+
+Route::group(['middleware' => 'web'], function () {
+
+    Route::get('/notification-page', [NotificationController::class, 'notificationPage'])->name('notification-page');
+
 });
 
 Route::group(['middleware' => 'web'], function () {

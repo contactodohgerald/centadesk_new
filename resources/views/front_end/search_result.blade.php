@@ -53,9 +53,11 @@ $title = 'Search Results';
                                                    <h3 class="c-overview-title">({{ count($course) }} Results) - Courses</h3>
                                                    <hr>
                                                    <div class="yl-course-filter-wrap">
-                                                        <div class="filtr-container-area grid clearfix">
-                                                            <div class="grid-sizer"></div>
+                                                       
                                                             @if(count($course) > 0)
+                                                            <div class="filtr-container-area grid clearfix">
+                                                                <div class="grid-sizer"></div>
+
                                                                 @foreach ($course as $each_course)
                                                                     <div class="grid-item grid-size-25 business design health">
                                                                         <div class="yl-course-img-text">
@@ -91,6 +93,18 @@ $title = 'Search Results';
                                                                         </div>
                                                                     </div>
                                                                 @endforeach
+
+                                                            </div>
+                                                            <div class="yl-course-pagination clearfix text-center ul-li mt-5">
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="{{$course->nextPageUrl()}}">Nxt</a>
+                                                                        <a href="#">{{$course->currentPage()}}</a>
+                                                                        <a href="{{$course->previousPageUrl()}}">Prv</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+
                                                             @else
                                                                 <div class="col-lg-12 mb-5">
                                                                     <div class="alert alert-success text-center">
@@ -99,16 +113,7 @@ $title = 'Search Results';
                                                                 </div>
                                                             @endif
                                         
-                                                        </div>
-                                                        <div class="yl-course-pagination clearfix text-center ul-li mt-5">
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="{{$course->nextPageUrl()}}">Nxt</a>
-                                                                    <a href="#">{{$course->currentPage()}}</a>
-                                                                    <a href="{{$course->previousPageUrl()}}">Prv</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                       
                                                     </div>
                                                </div>
                                            </div>
@@ -193,8 +198,9 @@ $title = 'Search Results';
                                                <hr>
                                               
                                                <div class="blog-feed-content-wrap">
-                                                    <div class="row justify-content-center">
+                                                    
                                                     @if(count($blogs) > 0)
+                                                    <div class="row justify-content-center">
                                                         @foreach($blogs as $each_blog)
                                                             <div class="col-lg-4 col-md-6">
                                                                 <div class="yl-blog-img-text-2 yl-headline pera-content">
@@ -220,13 +226,6 @@ $title = 'Search Results';
                                                                 </div>
                                                             </div>
                                                         @endforeach
-                                                    @else
-                                                        <div class="col-lg-12">
-                                                            <div class="alert alert-success text-center">
-                                                                <h2>No Seach Result Was Returned</h2>
-                                                            </div>
-                                                        </div>
-                                                    @endif
                                                     </div>
                                                     <div class="yl-course-pagination clearfix text-center ul-li">
                                                         <ul>
@@ -237,6 +236,14 @@ $title = 'Search Results';
                                                             </li>
                                                         </ul>
                                                     </div>
+                                                    @else
+                                                        <div class="col-lg-12">
+                                                            <div class="alert alert-success text-center">
+                                                                <h2>No Seach Result Was Returned</h2>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                   
                                                 </div>
                                            </div>
                                        </div>
