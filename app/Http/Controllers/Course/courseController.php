@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use App\course_category_model;
 use App\Model\courseEnrollment;
 use App\Model\live_stream_model;
+use App\Model\Notification;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Traits\FireBaseNotification;
@@ -27,6 +28,7 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use App\Events\CourseAddedByTeacher;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class courseController extends Controller
 {
@@ -85,14 +87,6 @@ class courseController extends Controller
         // return $view;
         return view('dashboard.edit-course', $view);
     }
-
-    public function testEvent(){
-        $user = Auth::user();
-        $message = 'new course was added';
-        event(new CourseAddedByTeacher($user, $message));
-    }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -180,20 +174,21 @@ class courseController extends Controller
                     array_push($user_array, $user_object);
 
                 }
+                
+                $notification = new Notification();
+                $uniqueId = $this->createUniqueId('notifications', 'unique_id');
 
-                $title_ = 'A New Course titled '.$title.' Was Just Uploaded, by '.$user->name.' '.$user->last_name;
+                $notification->unique_id = $uniqueId;
+                $notification->user_unique_id = $user->unique_id;
+                $notification->title = $title;
+                $notification->link = env('APP_URL').'/view_course/'.$unique_id;
+                $notification->notification_type = 'Course Upload';
+                $notification->notification_details = 'A New Course titled '.$title.' Was Just Uploaded, by '.$user->name.' '.$user->last_name;
 
-                $link = 'htpps://centadesk.com';
+                $notification->save();
 
-                $notification_type = 'Course Upload';
-
-                $user_to_recieve_notification = $user_array;
-                $notification_details = [$title_, $caption, $pricing];
-                $notification_details_key = ['course_title', 'course_desc', 'pricing'];
-
-                event(new CourseAddedByTeacher($user, $title_));
-
-                //$this->NotificationsHandler($title_, $link, $notification_type, $notification_details, $notification_details_key, $user_to_recieve_notification);
+                $message = 'Course Uploaded';
+                event(new CourseAddedByTeacher($message));  
 
                 $error = 'Course Created!';
                 return response()->json(["message" => $error, 'status' => true]);
@@ -206,6 +201,11 @@ class courseController extends Controller
             ];
             return response()->json(["errors" => $error, 'status' => false]);
         }
+    }
+
+    public function testEvent(){
+        $message = 'Course Uploaded';
+        event(new CourseAddedByTeacher($message)); 
     }
 
     /**

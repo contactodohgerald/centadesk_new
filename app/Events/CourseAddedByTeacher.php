@@ -10,11 +10,9 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CourseAddedByTeacher
+class CourseAddedByTeacher implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $teacher;
 
     public $message;
 
@@ -23,10 +21,9 @@ class CourseAddedByTeacher
      *
      * @return void
      */
-    public function __construct($teacher, $message)
+    public function __construct($message)
     {
         //
-        $this->teacher = $teacher;
         $this->message  = $message;
     }
 
@@ -37,6 +34,12 @@ class CourseAddedByTeacher
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('course-added');
+        return new Channel('course-added');
     }
+
+    public function broadcastAs()
+    {
+        return 'course-added-by-teacher';
+    }
+    
 }

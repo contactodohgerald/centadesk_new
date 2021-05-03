@@ -255,7 +255,7 @@ $title = 'Centadesk | Teach, Learn and Earn';
                <div class="yl-testimonial-content">
                   <div id="yl-testimonial-slide" class="yl-testimonial-area owl-carousel">
                      <div class="yl-testimonial-item-wrap pera-content yl-headline">
-                        <p>“It’s a 5/5 star for me. The process is very straightforward and easy. I find the classes more exciting and enlightening than any physical classes I have attended, and I hope to upgrade to a golden agent by the end of the month.
+                        <p style="text-shadow: rgb(0, 0, 0) 1px 1px;">“It’s a 5/5 star for me. The process is very straightforward and easy. I find the classes more exciting and enlightening than any physical classes I have attended, and I hope to upgrade to a golden agent by the end of the month.
                               ”</p>
                         <div class="yl-testimonial-author">
                            <div class="yl-testimonial-pic float-left">
@@ -277,7 +277,7 @@ $title = 'Centadesk | Teach, Learn and Earn';
                         </div>
                      </div>
                      <div class="yl-testimonial-item-wrap pera-content yl-headline">
-                        <p>“The mentoring approach is good, and the courses are good and very helpful. The instructors are doing an excellent job of communicating, and the arrangement is very awesome”</p>
+                        <p style="text-shadow: rgb(0, 0, 0) 1px 1px;">“The mentoring approach is good, and the courses are good and very helpful. The instructors are doing an excellent job of communicating, and the arrangement is very awesome”</p>
                         <div class="yl-testimonial-author">
                            <div class="yl-testimonial-pic float-left">
                               <img src="{{ asset('front_end/img/Ogechukwu-Nwoye.jpg')}}" alt="Ogechukwu Nwoye">
@@ -297,7 +297,7 @@ $title = 'Centadesk | Teach, Learn and Earn';
                         </div>
                      </div>
                      <div class="yl-testimonial-item-wrap pera-content yl-headline">
-                        <p>“One thing that amazes me about them is how fast they respond to questions. Also i have been making some extra cash Centadesk is bea.”</p>
+                        <p style="text-shadow: rgb(0, 0, 0) 1px 1px;">“One thing that amazes me about them is how fast they respond to questions. Also i have been making some extra cash Centadesk is bea.”</p>
                         <div class="yl-testimonial-author">
                            <div class="yl-testimonial-pic float-left">
                               <img src="{{ asset('front_end/img/Eze-Daniel-Ifeanyi.jpg')}}" alt="Eze Daniel">
@@ -400,7 +400,11 @@ $title = 'Centadesk | Teach, Learn and Earn';
                               <a href="{{route('blog-details', $each_blog->unique_id )}}"><i class="far fa-user"></i> {{ Str::ucfirst($each_blog->users->name) }} {{ Str::ucfirst($each_blog->users->last_name) }}</a>
                            </div>
                            <div class="yl-blog-title">
-                              <h3><a href="{{route('blog-details', $each_blog->unique_id )}}">{{substr(ucfirst($each_blog->blog_title), 0, 40)}} {{ (strlen($each_blog->blog_title) > 40 )?'...':''}}</a></h3>
+                              <h3><a href="{{route('blog-details', $each_blog->unique_id )}}">{{substr(ucfirst($each_blog->blog_title), 0, 40)}} {{ (strlen($each_blog->blog_title) > 40 )?'...':''}}</a>
+                              </h3>
+                              @php $taglessBody = strip_tags($each_blog->blog_message); @endphp
+                              <p>{{substr($taglessBody, 0, 120)}}  {{ (strlen($taglessBody) > 120 )?'...':''}} </p>
+                              <a class="yl-blog-more text-uppercase" href="{{route('blog-details', $each_blog->unique_id )}}"><b>View more</b> <span>+</span></a>
                            </div>
                         </div>
                      </div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\Users\GeneralUserController;
 use App\Http\Controllers\VerifyKYC\KYCVerificationController;
 use App\Http\Controllers\Wallet\TransactionController;
 use App\Http\Controllers\Gallery\GalleryController;
+use App\Http\Controllers\Notification\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +59,10 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('/storeReview', [ReviewController::class, 'storeReview'])->name('storeReview');
     Route::get('/getAllReviews/{course_id}', [ReviewController::class, 'getAllReviews'])->name('getAllReviews');
     Route::get('/getAllCourses/{course_id}', [ReviewController::class, 'getAllCourses'])->name('getAllCourses');
+
+    //notification handler
+    Route::get('/getAllNotification/{user_id}', [NotificationController::class, 'getAllNotification'])->name('getAllNotification');
+    Route::post('/addNotificationRead', [NotificationController::class, 'addNotificationRead'])->name('addNotificationRead');
 
     //update users fcm key
     Route::post('/updateUserFCMKeys/{user_unique_id}', [GeneralUserController::class, 'updateUserFCMKeys'])->name('updateUserFCMKeys');
