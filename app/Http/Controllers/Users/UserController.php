@@ -26,13 +26,13 @@ class UserController extends Controller
     use appFunction, SendMail, Generics, UsersArray;
 
     function __construct(
-        KycVerification $kycVerification, 
-       AppSettings $appSettings, 
-      course_model $course_model, 
-      Subscribe $subscribe, 
+        KycVerification $kycVerification,
+       AppSettings $appSettings,
+      course_model $course_model,
+      Subscribe $subscribe,
       InstructorReviewLike $instructorReviewLike,
-      InsrtuctorReviewReply $instructorReviewReply, 
-      InstructorsReview $instructorsReview, 
+      InsrtuctorReviewReply $instructorReviewReply,
+      InstructorsReview $instructorsReview,
       courseEnrollment $courseEnrollment
     ){
         $this->middleware('auth');
@@ -225,16 +225,16 @@ class UserController extends Controller
                 throw new Exception('This is not a valid request.');
             }
             $validator = Validator::make($request->all(), [
-                'first_name' => 'required|string|max:40',
-                'other_names' => 'required|string',
-                'headline' => 'required|string|max:100',
-                'description' => 'required|min:50',
-                'facebook' => 'string',
-                'twitter' => 'string',
-                'linkedin' => 'string',
-                'youtube' => 'string',
-                'instagram' => 'string',
-                'whatsapp' => 'string',
+                'first_name' => 'string|max:40|nullable',
+                'other_names' => 'string|nullable',
+                'headline' => 'string|max:100|nullable',
+                'description' => 'min:50|nullable',
+                'facebook' => 'string|nullable',
+                'twitter' => 'string|nullable',
+                'linkedin' => 'string|nullable',
+                'youtube' => 'string|nullable',
+                'instagram' => 'string|nullable',
+                'whatsapp' => 'string|nullable',
             ]);
 
             if ($validator->fails()) {
@@ -310,7 +310,7 @@ class UserController extends Controller
                 if ($prev_file_name !== 'avatar.png') {
                     unlink(storage_path('app/public/profile/' . $prev_file_name));
                 }
-                
+
             }
 
             $cover_img = $request->file('profile_img');
