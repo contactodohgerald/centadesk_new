@@ -181,10 +181,10 @@
             </div>
             <div class="yi-header-social float-right ul-li">
                 <ul>
-                    <li><a href="https://facebook.com/{{ $site_logo->facebook_url }}"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="https://twitter.com/{{ $site_logo->twitter_url }}"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="https://instagram.com/{{ $site_logo->instagram_url }}"><i class="fab fa-instagram"></i></a></li>
-                    <li><a href="https://youtube.com/{{ $site_logo->youtube_url }}"><i class="fab fa-youtube"></i></a></li>
+                    <li><a target="_blank" href="{{ $site_logo->facebook_url }}"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a target="_blank" href="{{ $site_logo->twitter_url }}"><i class="fab fa-twitter"></i></a></li>
+                    <li><a target="_blank" href="{{ $site_logo->instagram_url }}"><i class="fab fa-instagram"></i></a></li>
+                    <li><a target="_blank" href="{{ $site_logo->youtube_url }}"><i class="fab fa-youtube"></i></a></li>
                 </ul>
             </div>
             <div class="yl-header-cart-login float-right">

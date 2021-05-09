@@ -81,7 +81,7 @@ $home = 'active';
                                             </div>
                                             <div class="col-xl-8 col-lg-8 col-md-8">
                                                 <div class="value_content">
-                                                    <h3 class="font-poppins">$ 0.00</h3>
+                                                    <h3 class="font-poppins"><b>{{number_format($user->calculateUserBalance(), 2)}} ({{$user->getBalanceForView()['data']['currency']}})</b></h3>
                                                     <p class="font-poppins">Wallet Balance</p>
                                                 </div>
                                             </div>
@@ -106,76 +106,6 @@ $home = 'active';
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="value_props">
-                                        <div class="row">
-                                            <div class="col-xl-4 col-lg-4 col-md-4">
-                                                <div class="value_icon mt-20">
-                                                    <i class='uil uil-history'></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-8 col-lg-8 col-md-8">
-                                                <div class="value_content">
-                                                    <h3 class="font-poppins">$ 0.00</h3>
-                                                    <p class="font-poppins">Total Withdrawals</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-
-                                    <div class="value_props">
-                                        <div class="row">
-                                            <div class="col-xl-4 col-lg-4 col-md-4">
-                                                <div class="value_icon mt-20">
-                                                    <i class='uil uil-history'></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-8 col-lg-8 col-md-8">
-                                                <div class="value_content">
-                                                    <h3 class="font-poppins">$ 0.00</h3>
-                                                    <p class="font-poppins">Wallet Balance</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-xl-6 col-lg-12 col-md-6">
-                                    <div class="value_props">
-                                        <div class="value_icon">
-                                            <i class='uil uil-user-check'></i>
-                                        </div>
-                                        <div class="value_content">
-                                            <h4>Learn from industry experts</h4>
-                                            <p>Select from top instructors around the world</p>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-xl-6 col-lg-12 col-md-6">
-                                    <div class="value_props">
-                                        <div class="value_icon">
-                                            <i class='uil uil-play-circle'></i>
-                                        </div>
-                                        <div class="value_content">
-                                            <h4>Find video courses on almost any topic</h4>
-                                            <p>Build your library for your career and personal growth</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-12 col-md-6">
-                                    <div class="value_props">
-                                        <div class="value_icon">
-                                            <i class='uil uil-presentation-play'></i>
-                                        </div>
-                                        <div class="value_content">
-                                            <h4>100,000 online courses</h4>
-                                            <p>Explore a variety of fresh topics</p>
-                                        </div>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -326,10 +256,10 @@ $home = 'active';
                                                 @endif
                                                 {{($each_instructors->user_type === 'super_admin')?'Super Admin':$each_instructors->user_type}}</span></div>
                                             <ul class="tutor_social_links">
-                                                <li><a href="https://facebook.com/{{ $each_instructors->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="https://twitter.com/{{ $each_instructors->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="https://www.linkedin.com/{{ $each_instructors->linkedin }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
-                                                <li><a href="https://www.youtube.com/{{ $each_instructors->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
+                                                <li><a target="_blank" href="{{ ($each_instructors->facebook === null)?'https://facebook.com':$each_instructors->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
+                                                <li><a target="_blank" href="{{ ($each_instructors->twitter === null)?'https://twitter.com':$each_instructors->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
+                                                <li><a target="_blank" href="{{ ($each_instructors->linkedin  === null)?'https://www.linkedin.com':$each_instructors->linkedin  }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
+                                                <li><a target="_blank" href="{{ ($each_instructors->youtube === null)?'https://www.youtube.com':$each_instructors->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
                                             </ul>
                                             <div class="tut1250">
                                                 <span class="vdt15">{{$each_instructors->enrolled_users}} Students</span>
@@ -366,10 +296,10 @@ $home = 'active';
                                     {{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span></div>
                                     @if($user->user_type != 'student')
                                     <ul class="tutor_social_links">
-                                        <li><a href="https://facebook.com/{{ $user->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="https://twitter.com/{{ $user->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="https://www.linkedin.com/{{ $user->linkedin }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
-                                        <li><a href="https://www.youtube.com/{{ $user->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
+                                        <li><a target="_blank" href="{{ ($user->facebook === null)?'https://facebook.com':$user->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a target="_blank" href="{{ ($user->twitter === null)?'https://twitter.com':$user->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a target="_blank" href="{{ ($user->linkedin  === null)?'https://www.linkedin.com':$user->linkedin  }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
+                                        <li><a target="_blank" href="{{ ($user->youtube === null)?'https://www.youtube.com':$user->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
                                     </ul>
                                     <div class="tut1250">
                                         <span class="vdt15 font-poppins">{{ count($user->enroll_students) }} Students</span>
