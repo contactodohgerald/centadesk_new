@@ -41,13 +41,15 @@ $title = 'Instructors Profile | Make money while learning';
                                <div class="instructor-details-profile float-right">
                                    <span><i class="fas fa-list-ul"></i> {{ count($users->courses) }} Course</span>
                                    <span><i class="fas fa-user"></i> {{ count($users->subscribers) }} Students</span>
-                                   <span><i class="fas fa-star"></i><b>4.9</b> (235 review)</span>
+                                   <span><i class="fas fa-star"></i> {{ count($users->comments_for_instructor) }} review</span>
                                </div>
                            </div>
                            <div class="instructor-details-content-text pera-content">
                                <p>{{ $users->description }}</p>
                                <div class="btn text-center">
-                                   <u><a href="https://centadesk.com/scl/ref={{ $users->user_referral_id }}"> Join {{ ucfirst($users->name) }} {{ ucfirst($users->last_name) }}<i class="fas fa-chevron-right"></i></a></u>
+                                   <u>
+                                        <a href="https://centadesk.com/register?ref={{ ($users->yearly_subscription_status === 'yes')?$users->user_referral_id : '' }}"> Join {{ ucfirst($users->name) }} {{ ucfirst($users->last_name) }}<i class="fas fa-chevron-right"></i></a>
+                                    </u>
                                </div>
                            </div>
                        </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\course_model;
+use App\Model\InstructorsReview;
 use App\Traits\Generics;
 use App\Traits\UsersArray;
 
@@ -13,9 +14,10 @@ class InstructorsControllers extends Controller
 {
     //
     use Generics, UsersArray;
-    function __construct(User $user, course_model $course_model){
+    function __construct(User $user, course_model $course_model, InstructorsReview $instructorsReview){
         $this->user = $user;
         $this->course_model = $course_model;
+        $this->instructorsReview = $instructorsReview;
     }
 
     public function intructorProfilePage($unique_id = null){
@@ -29,6 +31,15 @@ class InstructorsControllers extends Controller
             $users->courses;
 
             $users->subscribers;
+
+            $query = [
+                ['instructor_unique_id', $users->unique_id]
+            ];
+            $instructors_review = $this->instructorsReview->getAllInstructorReview($query);
+            $users->comments_for_instructor = $instructors_review;
+            foreach ($users->comments_for_instructor as $each_instructor_comment){
+                $each_instructor_comment->users;
+            }
 
             $query = [
                 ['user_id', $users->unique_id],

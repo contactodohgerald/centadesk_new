@@ -18,7 +18,7 @@ $title = 'Become a teacher | Choose course categories. Make money while learning
 
    <section id="yl-slider" class="yl-slider-section pt-5 pb-5 mt-3">
        <div class="container">
-       <div class="row">gallery
+       <div class="row">
            <div class="col-lg-8">
                <div class="yl-section-title yl-headline">
                    <h2>{{ env('APP_NAME') }} - Become a tutor </h2>
