@@ -55,10 +55,10 @@
                                                     @if($each_subscribe->users->user_type != 'student')
                                                         <div class="tutor_cate">{{$each_subscribe->users->professonal_heading}}</div>
                                                         <ul class="tutor_social_links">
-                                                            <li><a href="https://facebook.com/{{ $each_subscribe->users->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
-                                                            <li><a href="https://twitter.com/{{ $each_subscribe->users->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
-                                                            <li><a href="https://www.linkedin.com/{{ $each_subscribe->users->linkedin }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
-                                                            <li><a href="https://www.youtube.com/{{ $each_subscribe->users->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
+                                                            <li><a target="_blank" href="{{ ($each_subscribe->facebook === null)?'https://facebook.com':$each_subscribe->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
+                                                            <li><a target="_blank" href="{{ ($each_subscribe->twitter === null)?'https://twitter.com':$each_subscribe->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
+                                                            <li><a target="_blank" href="{{ ($each_subscribe->linkedin  === null)?'https://www.linkedin.com':$each_subscribe->linkedin  }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
+                                                            <li><a target="_blank" href="{{ ($each_subscribe->youtube === null)?'https://www.youtube.com':$each_subscribe->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
                                                         </ul>
                                                         <div class="tut1250">
                                                             <span class="vdt15">100K Students</span>

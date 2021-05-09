@@ -59,10 +59,10 @@
                                             </div>
                                             <div class="tutor_cate font-poppins">{{$each_instructors->professonal_heading}}</div>
                                             <ul class="tutor_social_links">
-                                                <li><a href="https://facebook.com/{{ $each_instructors->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="https://twitter.com/{{ $each_instructors->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="https://www.linkedin.com/{{ $each_instructors->linkedin }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
-                                                <li><a href="https://www.youtube.com/{{ $each_instructors->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
+                                                <li><a target="_blank" href="{{ ($each_instructors->facebook === null)?'https://facebook.com':$each_instructors->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
+                                                <li><a target="_blank" href="{{ ($each_instructors->twitter === null)?'https://twitter.com':$each_instructors->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
+                                                <li><a target="_blank" href="{{ ($each_instructors->linkedin  === null)?'https://www.linkedin.com':$each_instructors->linkedin  }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
+                                                <li><a target="_blank" href="{{ ($each_instructors->youtube === null)?'https://www.youtube.com':$each_instructors->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
                                             </ul>
                                             <div class="tut1250">
                                                 <span class="vdt15">{{$each_instructors->enrolled_users}} Students</span>

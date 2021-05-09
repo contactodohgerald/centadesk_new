@@ -24,10 +24,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="edu_social_links">
-                                <a href="https://facebook.com/{{ $site_logo->facebook_url }}"><i class="fab fa-facebook-f"></i></a>
-                                <a href="https://twitter.com/{{ $site_logo->twitter_url }}"><i class="fab fa-twitter"></i></a>
-                                <a href="https://instagram.com/{{ $site_logo->instagram_url }}"><i class="fab fa-instagram"></i></a>
-                                <a href="https://www.youtube.com/{{ $site_logo->youtube_url }}"><i class="fab fa-youtube"></i></a>
+                                <a target="_blank" href="{{ $site_logo->facebook_url }}"><i class="fab fa-facebook-f"></i></a>
+                                <a target="_blank" href="{{ $site_logo->twitter_url }}"><i class="fab fa-twitter"></i></a>
+                                <a target="_blank" href="{{ $site_logo->instagram_url }}"><i class="fab fa-instagram"></i></a>
+                                <a target="_blank" href="{{ $site_logo->youtube_url }}"><i class="fab fa-youtube"></i></a>
                             </div>
                         </div>
                     </div>

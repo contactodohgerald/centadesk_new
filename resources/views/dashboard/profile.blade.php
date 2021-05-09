@@ -79,12 +79,12 @@ $profile = 'active';
 									</a> --}}
                                     <div class="rgt-145">
                                         <ul class="tutor_social_links">
-                                            <li><a href="https://facebook.com/{{ $user->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li><a href="https://twitter.com/{{ $user->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
-                                            <li><a href="https://www.linkedin.com/{{ $user->linkedin }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
-                                            <li><a href="https://www.youtube.com/{{ $user->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
-                                            <li><a href="https://www.instagram.com/{{ $user->instagram }}" class="ig"><i class="fab fa-instagram"></i></a></li>
-                                            <li><a href="https://www.whatsapp.com/{{ $user->whatsapp }}" class="wapp"><i class="fab fa-whatsapp"></i></a></li>
+                                            <li><a target="_blank" href="{{ $user->facebook }}" class="fb"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a target="_blank" href="{{ $user->twitter }}" class="tw"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a target="_blank" href="{{ $user->linkedin }}" class="ln"><i class="fab fa-linkedin-in"></i></a></li>
+                                            <li><a target="_blank" href="{{ $user->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
+                                            <li><a target="_blank" href="{{ $user->instagram }}" class="ig"><i class="fab fa-instagram"></i></a></li>
+                                            <li><a target="_blank" href="{{ $user->whatsapp }}" class="wapp"><i class="fab fa-whatsapp"></i></a></li>
                                         </ul>
                                     </div>
                                     <!--									<ul class="_bty149">
