@@ -122,8 +122,8 @@ $users = auth()->user();
                                                         <a href="/view_course/{{ $e->unique_id }}" title="View" class="cursor-pointer gray-s"><i class="uil uil-adjust"></i></a>
 														<a href="/edit-course/{{ $e->unique_id }}" title="Edit" class="cursor-pointer gray-s"><i class="uil uil-edit-alt"></i></a>
 
-														<a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s delete_course_modal"><i class="uil uil-trash-alt"></i></a>
-														<a id="{{ $e->unique_id }}" title="Set Bestseller" class="cursor-pointer gray-s set_bestseller_modal"><i class="uil uil-thumbs-up"></i></a>
+														<a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s deleteCourseModal"><i class="uil uil-trash-alt"></i></a>
+														<a id="{{ $e->unique_id }}" title="Set Bestseller" class="cursor-pointer gray-s setBestsellerModal"><i class="uil uil-thumbs-up"></i></a>
 
 													</td>
                                                 </tr>
@@ -144,49 +144,69 @@ $users = auth()->user();
             </div>
             @include('layouts.footer')
         </div>
-        <div class="modal zoomInUp " id="delete_course_modal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content"  style="background-color: #333 !important;">
-                    <div class="modal-header">
-                        <h4>Delete Course?</h4>
-                    </div>
-                    <form class="delete_course_form">
-                        @csrf
-                        <div class="modal-body">
-                            <p class="text-danger">By clicking continue, this course will be deleted permanently. <br> It can't be recovered after this.</p>
-                        </div>
-                    </form>
-                    <div class="modal-footer no-border">
-                        <div class="text-right">
-                            <button class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
-                            <button class="btn btn-primary btn-sm delete_course_btn" data-dismiss="modal">Continue</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="modal zoomInUp " id="set_bestseller_modal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content" >
-                    <div class="modal-header">
-                        <h4>Set Badge?</h4>
-                    </div>
-                    <form class="set_bestseller_form">
-                        @csrf
-                        <div class="modal-body">
-                            <p class="text-danger">By clicking continue, the bestseller status of this course will change! </p>
-                        </div>
-                    </form>
-                    <div class="modal-footer no-border">
-                        <div class="text-right">
-                            <button class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
-                            <button class="btn btn-primary btn-sm set_bestseller_btn" data-dismiss="modal">Continue</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<!-- The Modal -->
+		<div class="modal delete_course_modal" id="delete_course_modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Course</h4>
+						<button type="button" class="close" data-dismiss="modal" onclick="removeModalMains('.delete_course_modal')">&times;</button>
+					</div>
+
+					<form class="delete_course_form">
+						@csrf
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-sm-12">
+									<h4 class="text-dark night-text">By clicking continue, this course will be deleted permanently. <br> It can't be recovered after this.</h4>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-danger" onclick="removeModalMains('.delete_course_modal')">Close</button>
+						<button class="btn btn-primary delete_course_btn">Proceed</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- The Modal -->
+		<div class="modal set_bestseller_modal" id="set_bestseller_modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title text-dark night-text">Set Badge</h4>
+						<button type="button" class="close" data-dismiss="modal" onclick="removeModalMains('.set_bestseller_modal')">&times;</button>
+					</div>
+
+					<form class="set_bestseller_form">
+						@csrf
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-sm-12">
+									<h4 class="text-dark night-text">By clicking continue, the bestseller status of this course will change!</h4>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-danger" onclick="removeModalMains('.set_bestseller_modal')">Close</button>
+						<button class="btn btn-primary set_bestseller_btn">Proceed</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
         <!-- Body End -->
 
         @include('layouts.e_script')
@@ -197,10 +217,10 @@ $users = auth()->user();
                 // set best seller starts
 
 
-            $('.set_bestseller_modal').click(function(e) {
+            $('.setBestsellerModal').click(function(e) {
                 e.preventDefault();
                 append_id('set_bestseller_id', '.set_bestseller_form', '#set_bestseller_modal', this)
-                $('#set_bestseller_modal').modal('toggle');
+				bringOutModalMain('.set_bestseller_modal')
             });
 
 
@@ -218,21 +238,21 @@ $users = auth()->user();
                 // set bestseller ends
 
 
-                $('.delete_course_modal').click(function(e) {
+                $('.deleteCourseModal').click(function(e) {
                     e.preventDefault();
                     append_id('delete_course_id', '.delete_course_form', '#delete_course_modal', this)
-                    $('#delete_course_modal').modal('toggle');
+					bringOutModalMain('.delete_course_modal')
                 });
 
 
-            // $('.delete_course_btn').click(async function(e) {
-            //     e.preventDefault();
-            //     let delete_course_form = $('.delete_course_form').serializeArray();
-            //     let form_data = set_form_data(delete_course_form);
-            //     let returned = await ajaxRequest('/delete-course/'+delete_course_form[1].value, form_data);
-            //     // return;
-            //     validator(returned, '/view-courses');
-            // });
+            $('.delete_course_btn').click(async function(e) {
+                e.preventDefault();
+                let delete_course_form = $('.delete_course_form').serializeArray();
+                let form_data = set_form_data(delete_course_form);
+                let returned = await ajaxRequest('/delete-course/'+delete_course_form[1].value, form_data);
+                // return;
+                validator(returned, '/view-courses');
+            });
 
             });
         </script>

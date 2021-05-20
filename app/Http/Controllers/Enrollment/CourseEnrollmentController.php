@@ -151,12 +151,15 @@ class CourseEnrollmentController extends Controller
                 throw new Exception($this->errorMsgs(14)['msg']);
             }
 
+            $now = Carbon::now()->addMonths(11);
+
             // remove course price from balance and update
             $user_balance = $user_balance - $course_price;
             $user_detail =  User::find($user_id);
             $user_detail->balance = $user_balance;
             $user_detail->yearly_subscription_status = 'yes';
             $user_detail->subscription_date = Carbon::now()->toDateTimeString();
+            $user_detail->subscription_date_counter = $now->toDateTimeString();
             $update_user_balance = $user_detail->save();
 
             if(!$update_user_balance){

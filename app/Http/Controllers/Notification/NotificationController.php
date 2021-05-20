@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Notification;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Model\Notification;
 use App\Model\NotificationRead;
 use App\Traits\Generics;
@@ -14,7 +15,6 @@ class NotificationController extends Controller
     use Generics;
     
     function __construct(Notification $notification, NotificationRead $notificationRead){
-
         $this->notification = $notification;
         $this->notificationRead = $notificationRead;
         
@@ -53,9 +53,40 @@ class NotificationController extends Controller
 
     }
 
-    public function notificationPage(){
+    public function notificationPage($user_unique_id = null){
 
-        return view('dashboard.notifications');
+        if($user_unique_id != null){
+            $notification = $this->notification->getAllNotification([
+                ['deleted_at', null]
+            ]);
+   
+            if(count($notification) > 0){
+                foreach($notification as $each_notification){
+                    $each_notification->users;
+
+                    $each_notification->dates = $each_notification->created_at->diffForHumans();
+
+                    $notificationReads = $this->notificationRead->getAllNotificationRead([
+                        ['Notification_unique_id', $each_notification->unique_id],
+                        ['user_unique_id', $user_unique_id],
+                    ]);
+
+                    if(count($notificationReads) > 0){
+                        $each_notification->read_status = 'read';
+                    }else{
+                        $each_notification->read_status = 'unread';
+                    }
+                }
+            }
+
+            $view = [
+                'notification'=>$notification
+            ];
+
+            return view('dashboard.notifications',  $view);
+
+            
+        }
 
     }
 
@@ -85,6 +116,43 @@ class NotificationController extends Controller
         } catch (Exception $exception) {
             $error = $exception->getMessage();
             return response()->json(['error_code' => 1, 'error_message' => ['general_error' => [$error]]]);
+        }
+    }
+
+    function handleTransferValidations(array $data)
+    {
+
+        $validator = Validator::make($data, [
+            'dataArray' => 'required|string'
+        ]);
+
+        return $validator;
+    }
+
+    public function deletNotification(Request $request): \Illuminate\Http\JsonResponse
+    {
+        try {
+
+            $validation = $this->handleTransferValidations($request->all());
+            if ($validation->fails()) {
+                return response()->json(['error_code' => 1, 'error_message' => $validation->messages()]);
+            }
+
+            $dataArray = explode('|', $request->dataArray);
+
+            foreach ($dataArray as $eachDataArray) {
+
+                $notification = $this->notification->selectSingleNotification($eachDataArray);
+                
+                $notification->delete();
+            }
+            return response()->json(['error_code' => 0, 'success_statement' => 'Selected notification was successfully deleted ']);
+
+        } catch (Exception $exception) {
+
+            $error = $exception->getMessage();
+            return response()->json(['error_code' => 1, 'error_message' => ['general_error' => [$error]]]);
+
         }
     }
 
