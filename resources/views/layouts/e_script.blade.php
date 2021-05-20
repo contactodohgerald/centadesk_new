@@ -44,6 +44,8 @@ $site_logo = $appSettings->getSingleModel();
 
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
+<script src="{{asset('countdown-plugin/jquery.countdown.min.js')}}"></script>
+
 @include('js_files.js_by_page')
 
 <script type="text/javascript">
@@ -54,7 +56,7 @@ $site_logo = $appSettings->getSingleModel();
 
     $(document).ready(function() {
 
-        getAllNotification(userUniqueId);
+       // getAllNotification(userUniqueId);
 
         $('#add-course-tab').steps({
             // onFinish: function() {
@@ -97,7 +99,7 @@ $site_logo = $appSettings->getSingleModel();
                     </div>
                 `;
 
-            }
+            }4
         }else {
             dataHold += `
                 <div class="channel_my item all__noti5">

@@ -29,4 +29,8 @@ class Notification extends Model
         return Notification::where($condition)->first();
 
     }
+
+    function selectSingleNotification($id){
+        return Notification::find($id);
+    }
 }

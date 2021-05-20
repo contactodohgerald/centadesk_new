@@ -5,6 +5,35 @@ $home = 'active';
 @endphp
 @include('layouts.head')
 
+<style>
+    ul.example {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+    text-align: center;
+    }
+
+    ul.example li { display: inline-block; }
+
+    ul.example li span {
+    font-size: 20px;
+    font-weight: 200;
+    line-height: 60px;
+    }
+
+    ul.example li.seperator {
+    font-size: 20px;
+    line-height: 50px;
+    vertical-align: top;
+    }
+
+    ul#example li p {
+    color: #a7abb1;
+    font-size: 18px;
+}
+</style>
+
 <body>
     <!-- Header Start -->
     @include('layouts.header')
@@ -31,45 +60,52 @@ $home = 'active';
                         </div>
                     </div>
                     @endif
-                    {{-- @if(auth()->user()->yearly_subscription_status === 'no' && auth()->user()->user_type === 'student')
-                        <div class="col-xl-7 col-lg-7">
-                            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                                <i class="fa fa-envelope mr-2"></i>
-                                With a subscription, you'll always have the latest features, fixes, and security updates along with ongoing tech support at no extra cost.
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 col-lg-5">
-                            <div class="cmtk_dt">
-                                <ul class="clock block clearfix">
-                                    <li>
-                                        <span class="remaining-days" id="days">00</span>
-                                        <label>Days</label>
-                                    </li>
-                                    <li class="sep">:</li>
-                                    <li>
-                                        <span class="remaining-hours" id="hours">00</span>
-                                        <label>hours</label>
-                                    </li>
-                                    <li class="sep">:</li>
-                                    <li>
-                                        <span class="remaining-minutes" id="minutes">00</span>
-                                        <label>minutes</label>
-                                    </li>
-                                    <li class="sep">:</li>
-                                    <li>
-                                        <span class="remaining-seconds" id="seconds">00</span>
-                                        <label>seconds</label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    @endif--}}
                     <div class="col-xl-12 col-lg-12 mb-30">
 
                         <div class="section3126">
+                            <div class="row">
+                                @if(auth()->user()->yearly_subscription_status === 'no')
+                                <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3" id="account_activation_date_counter" style="display: none">
+                                    <div class="value_props">
+                                        <div class="row">
+                                            <input type="hidden" id="counter_date" class="form-control" value="{{ auth()->user()->account_activation_date_counter}}">
+                                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                                <h4 class="mb-0">Your {{ env('APP_NAME') }} account will be banned in:</h4>
+                                                <ul id="example" class="example">
+                                                    <li><span class="days">00</span><p class="days_text">Days</p></li>
+                                                    <li class="seperator">:</li>
+                                                    <li><span class="hours">00</span><p class="hours_text">Hours</p></li>
+                                                    <li class="seperator">:</li>
+                                                    <li><span class="minutes">00</span><p class="minutes_text">Minutes</p></li>
+                                                    <li class="seperator">:</li>
+                                                    <li><span class="seconds">00</span><p class="seconds_text">Seconds</p></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @else
+                                <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3" id="subscription_date_counter" style="display: none">
+                                    <div class="value_props">
+                                        <div class="row">
+                                            <input type="hidden" id="date_counter" class="form-control" value="{{ auth()->user()->subscription_date_counter}}">
+                                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                                <h4 class="mb-0">Your {{ env('APP_NAME') }} subscription status will expire in:</h4>
+                                                <ul id="example_2" class="example">
+                                                    <li><span class="days">00</span><p class="days_text">Days</p></li>
+                                                    <li class="seperator">:</li>
+                                                    <li><span class="hours">00</span><p class="hours_text">Hours</p></li>
+                                                    <li class="seperator">:</li>
+                                                    <li><span class="minutes">00</span><p class="minutes_text">Minutes</p></li>
+                                                    <li class="seperator">:</li>
+                                                    <li><span class="seconds">00</span><p class="seconds_text">Seconds</p></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="value_props">
@@ -131,53 +167,6 @@ $home = 'active';
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="section3125 mt-50">
-                            <h4 class="item_title">Featured Courses</h4>
-                            <a href="{{route('explore')}}" class="see150">See all</a>
-                        <div class="la5lo1">
-                            @if(count($course) > 0)
-                            <div class="owl-carousel featured_courses owl-theme">
-                                @foreach($course as $key => $each_course)
-                                <div class="item">
-                                    <div class="fcrse_1 mb-20">
-                                        <a href="{{route('view_course', $each_course->unique_id )}}" class="fcrse_img">
-                                            <img src="{{asset($link.'course-img/'.$each_course->cover_image)}}" alt="{{env('APP_NAME')}}">
-                                            <div class="course-overlay">
-                                                <!--                                                            <div class="badge_seller">Bestseller</div>-->
-                                                <div class="crse_reviews">
-                                                    <i class='uil uil-star'></i>{{$each_course->count_review}}
-                                                </div>
-                                                <span class="play_btn1"><i class="uil uil-play"></i></span>
-                                                <div class="crse_timer">
-                                                    25 hours
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <div class="fcrse_content">
-                                            <div class="eps_dots more_dropdown">
-                                                <a href="#"><i class='uil uil-ellipsis-v'></i></a>
-                                                <div class="dropdown-content">
-                                                    <span onclick="saveCourse('{{$each_course->unique_id}}', '{{auth()->user()->unique_id}}') "><i class="uil uil-heart"></i>Save</span>
-                                                </div>
-                                            </div>
-                                            <div class="vdtodt">
-                                                <span class="vdt14">{{$each_course->views}} views</span>
-                                                <span class="vdt14">{{$each_course->created_at->diffForHumans()}}</span>
-                                            </div>
-                                            <a href="{{route('view_course', $each_course->unique_id )}}" class="crse14s">{{$each_course->name}}3</a>
-                                            <a href="javascript:;" class="crse-cate font-poppins">{{$each_course->category->name}}</a>
-                                            <div class="auth1lnkprce">
-                                                <p class="cr1fot">By <a href="{{route('view_profile', $each_course->user->unique_id )}}">{{$each_course->user->name}} {{$each_course->user->last_name}}</a></p>
-                                                <div class="prce142">{{auth()->user()->getAmountForView($each_course->price->amount)['data']['currency'] }} {{number_format(auth()->user()->getAmountForView($each_course->price->amount)['data']['amount'])}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                            @endif
-                        </div>
-                    </div> --}}
                     <div class="section3125 mt-30">
                         <h4 class="item_title font-poppins">Newest Courses</h4>
                         <a href="{{route('explore')}}" class="see150 font-poppins">See all</a>
@@ -324,97 +313,8 @@ $home = 'active';
                             </div>
                         </div>
                         @endif
-                        {{-- <div class="fcrse_3">
-                            <div class="cater_ttle">
-                                <h4>Top Categories</h4>
-                            </div>
-                            <ul class="allcate15">
-                                <li><a href="#" class="ct_item"><i class='uil uil-arrow'></i>Development</a></li>
-                                <li><a href="#" class="ct_item"><i class='uil uil-graph-bar'></i>Business</a></li>
-                                <li><a href="#" class="ct_item"><i class='uil uil-monitor'></i>IT and Software</a></li>
-                                <li><a href="#" class="ct_item"><i class='uil uil-ruler'></i>Design</a></li>
-                                <li><a href="#" class="ct_item"><i class='uil uil-chart-line'></i>Marketing</a></li>
-                                <li><a href="#" class="ct_item"><i class='uil uil-book-open'></i>Personal Development</a></li>
-                                <li><a href="#" class="ct_item"><i class='uil uil-camera'></i>Photography</a></li>
-                                <li><a href="#" class="ct_item"><i class='uil uil-music'></i>Music</a></li>
-                            </ul>
-                        </div> --}}
                     </div>
                 </div>
-                {{-- <div class="col-xl-12 col-lg-12">
-                        <div class="section3125 mt-30">
-                            <h4 class="item_title">What Our Student Have Today</h4>
-                            <div class="la5lo1">
-                                <div class="owl-carousel Student_says owl-theme">
-                                    <div class="item">
-                                        <div class="fcrse_4 mb-20">
-                                            <div class="say_content">
-                                                <p>"Donec ac ex eu arcu euismod feugiat. In venenatis bibendum nisi, in placerat eros ultricies vitae. Praesent pellentesque blandit scelerisque. Suspendisse potenti."</p>
-                                            </div>
-                                            <div class="st_group">
-                                                <div class="stud_img">
-                                                    <img src="images/left-imgs/img-4.jpg" alt="">
-                                                </div>
-                                                <h4>Jassica William</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="fcrse_4 mb-20">
-                                            <div class="say_content">
-                                                <p>"Cras id enim lectus. Fusce at arcu tincidunt, iaculis libero quis, vulputate mauris. Morbi facilisis vitae ligula id aliquam. Nunc consectetur malesuada bibendum."</p>
-                                            </div>
-                                            <div class="st_group">
-                                                <div class="stud_img">
-                                                    <img src="images/left-imgs/img-1.jpg" alt="">
-                                                </div>
-                                                <h4>Rock Smith</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="fcrse_4 mb-20">
-                                            <div class="say_content">
-                                                <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos eros ac, sagittis orci."</p>
-                                            </div>
-                                            <div class="st_group">
-                                                <div class="stud_img">
-                                                    <img src="images/left-imgs/img-7.jpg" alt="">
-                                                </div>
-                                                <h4>Luoci Marchant</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="fcrse_4 mb-20">
-                                            <div class="say_content">
-                                                <p>"Nulla bibendum lectus pharetra, tempus eros ac, sagittis orci. Suspendisse posuere dolor neque, at finibus mauris lobortis in. Pellentesque vitae laoreet tortor."</p>
-                                            </div>
-                                            <div class="st_group">
-                                                <div class="stud_img">
-                                                    <img src="images/left-imgs/img-6.jpg" alt="">
-                                                </div>
-                                                <h4>Poonam Sharma</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="fcrse_4 mb-20">
-                                            <div class="say_content">
-                                                <p>"Curabitur placerat justo ac mauris condimentum ultricies. In magna tellus, eleifend et volutpat id, sagittis vitae est. Pellentesque vitae laoreet tortor."</p>
-                                            </div>
-                                            <div class="st_group">
-                                                <div class="stud_img">
-                                                    <img src="images/left-imgs/img-3.jpg" alt="">
-                                                </div>
-                                                <h4>Davinder Singh</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
             </div>
         </div>
     </div>
@@ -424,3 +324,34 @@ $home = 'active';
     <!-- Body End -->
 
     @include('layouts.e_script')
+
+    @if(auth()->user()->yearly_subscription_status === 'no')
+        <script>
+
+            $("#account_activation_date_counter").show();
+            let counterDate = $("#counter_date").val();
+            $('#example').countdown({
+            date: counterDate
+            }, function () {
+                console.log('Expired!!!');
+                $("#account_activation_date_counter").hide();
+            }); 
+        
+        </script>
+
+    @else
+
+        <script>
+            
+            $("#subscription_date_counter").show();
+            let dateCounter = $("#date_counter").val();
+            $('#example_2').countdown({
+            date: dateCounter
+            }, function () {
+                console.log('Expired!!!');
+                $("#subscription_date_counter").hide();
+            });
+        
+        </script>
+
+    @endif

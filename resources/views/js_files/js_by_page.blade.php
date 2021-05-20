@@ -505,6 +505,13 @@
 @if(in_array($currentPageName, $gallery))
     @include('js_by_page.gallery_js')
 @endif
+
+{{--notification--}}
+@php $notification = ['notification-page'];  @endphp
+@php $currentPageName = Request::segment(1); @endphp
+@if(in_array($currentPageName, $notification))
+    @include('js_by_page.notification_js')
+@endif
 <style>
     label, label > select, label > input, #myTable_info{
         color:white !important

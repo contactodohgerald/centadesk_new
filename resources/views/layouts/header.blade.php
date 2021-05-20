@@ -69,7 +69,7 @@ $site_logo = $appSettings->getSingleModel();
                 <a href="#" class="option_links" title="Notifications"><i class='uil uil-bell'></i><span class="noti_count"></span></a>
                 <div class="menu dropdown_mn" >                       
                     
-                    <a id="notificationHold" class="vbm_btn" href="{{ route('notification-page') }}">View All <i class='uil uil-arrow-right'></i></a>
+                    <a id="notificationHold" class="vbm_btn" href="{{ route('notification-page').'/'.auth()->user()->unique_id}}">View All <i class='uil uil-arrow-right'></i></a>
                 </div>
             </li>
             <li class="ui dropdown">

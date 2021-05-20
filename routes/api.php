@@ -63,6 +63,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     //notification handler
     Route::get('/getAllNotification/{user_id}', [NotificationController::class, 'getAllNotification'])->name('getAllNotification');
     Route::post('/addNotificationRead', [NotificationController::class, 'addNotificationRead'])->name('addNotificationRead');
+    Route::post('/deletNotification', [NotificationController::class, 'deletNotification'])->name('deletNotification');
 
     //update users fcm key
     Route::post('/updateUserFCMKeys/{user_unique_id}', [GeneralUserController::class, 'updateUserFCMKeys'])->name('updateUserFCMKeys');
@@ -78,7 +79,6 @@ Route::group(['middleware' => 'api'], function ($router) {
     //gallery/events
     Route::post('/addNewGallery', [GalleryController::class, 'storeGallery'])->name('addNewGallery');
     Route::post('/deleteGallery', [GalleryController::class, 'deleteGallery'])->name('deleteGallery');
-
 
 
     //instructors comment

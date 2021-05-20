@@ -54,10 +54,12 @@ class BanUserAccount extends Command
 
         foreach ($users as $key => $each_users){
             $get_date_progress = Carbon::parse($each_users->created_at)->diffInDays(Carbon::now());
+            $now = Carbon::now()->addDays(7);
             if ($each_users->yearly_subscription_status === 'no'){
                 if ($get_date_progress >= 7){
                     if ($each_users->user_type === 'student' || $each_users->user_type === 'teacher'){
                         $each_users->status = 'inactive';
+                        $each_users->account_activation_date_counter = $now->toDateTimeString();
                         if ($each_users->save()){
                             $full_name = $each_users->name.' '.$each_users->last_name;
                             $app_name = env('APP_NAME');

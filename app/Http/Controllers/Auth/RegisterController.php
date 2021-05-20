@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Traits\Generics;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -36,9 +37,10 @@ class RegisterController extends Controller
     /**
      * Create a new controller instance.
      */
-    public function __construct()
+    public function __construct(User $user)
     {
         $this->middleware('guest');
+        $this->user = $user;
     }
 
     /**
@@ -67,15 +69,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data): User
     {
-        return User::create([
-            'unique_id' => $this->createUniqueId('users', 'unique_id'),
-            'name' => $data['name'],
-            'last_name' => $data['last_name'],
-            'user_type' => $data['user_type'],
-            'email' => $data['email'],
-            'user_referral_id' => $this->createUniqueIdForReferral(8, 'users', 'user_referral_id'),
-            'referred_id' => $data['referred_id'],
-            'password' => Hash::make($data['password']),
+        $user = $this->user->getAllUsers([
+            ['referred_id', $data['referred_id']]
         ]);
+        $now = Carbon::now()->addDays(14);
+
+        if(count($user) > 0){
+            return User::create([
+                'unique_id' => $this->createUniqueId('users', 'unique_id'),
+                'name' => $data['name'],
+                'last_name' => $data['last_name'],
+                'user_type' => $data['user_type'],
+                'email' => $data['email'],
+                'user_referral_id' => $this->createUniqueIdForReferral(8, 'users', 'user_referral_id'),
+                'referred_id' => $data['referred_id'],
+                'password' => Hash::make($data['password']),
+                'account_activation_date_counter' => $now->toDateTimeString(),
+            ]);
+        }else{
+            return redirect()->back()->with('error', 'Please provide a valid Refrral Id');
+        }
     }
 }

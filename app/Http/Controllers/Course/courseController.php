@@ -133,7 +133,7 @@ class courseController extends Controller
             
             $destinationPath = storage_path('app/public/course-img');
             $img = Image::make($cover_img->getRealPath());
-            $img->resize(382, 382, function ($constraint) {
+            $img->resize(100, 382, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$img_name);
 
