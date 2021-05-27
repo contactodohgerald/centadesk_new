@@ -5,7 +5,11 @@ $Complain = 'active';
 $color = '';
 $likeColor = '';
 $disLikeColor = '';
-print strtotime(date('Y-m-d H:i:s'));die();
+// if($_SESSION['view_time'] >= $_SESSION['view_time'] + 86400){
+//     print 1;
+// }else{
+//     print 0;
+// }
 @endphp
 @include('layouts.head')
 

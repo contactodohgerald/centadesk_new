@@ -266,7 +266,7 @@ class courseController extends Controller
      * Show the form for editing the specified resource.
      *
      */
-    public function showCourses($id = null)
+    public function showCourses($id = null,Request $request)
     {
         //
         $condition = [
@@ -276,17 +276,26 @@ class courseController extends Controller
 
         // increase view count after 24hrs
         $current_time = strtotime(date('Y-m-d H:i:s'));
-        if ($_SESSION['view_time']) {
-            $day_later = $_SESSION['view_time'] + 86400;
-            if ($_SESSION['view_time'] >= $day_later) {
+        // $view_time =  session(['view_time' => $current_time]);
+        // $d = $request->session()->exists('view_time');
+        // $d = $request->session()->all();
+        // print_r($d);die();
+        if($request->session()->exists('view_time')){
+                // print 'yh1';die();
+            $view_time = session('view_time');
+            $day_later = $view_time + 86400;
+            if ($view_time >= $day_later) {
                 $course->views += 1;
                 $course->save();
             }
-        } else {
-            $_SESSION['view_time'] = $current_time;
+
+        }else{
+            // print 'yh2';die();
+            session(['view_time' => $current_time]);
             $course->views += 1;
             $course->save();
         }
+
 
         //function that returns an array of users that likes this course and also the course like count
         $likes_array = $this->returnUserArrayForDislikes($course->unique_id);
