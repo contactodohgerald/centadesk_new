@@ -5,6 +5,7 @@ $Complain = 'active';
 $color = '';
 $likeColor = '';
 $disLikeColor = '';
+print strtotime(date('Y-m-d H:i:s'));die();
 @endphp
 @include('layouts.head')
 
@@ -97,7 +98,7 @@ $disLikeColor = '';
 											Rate This Course:
                                             <div class="rating-box mt-20" id="rate"></div>
                                         </div>
-                                        <ul class="_215b31">									
+                                        <ul class="_215b31">
                                             <li>
                                                 <button class="btn_buy">
                                                     <a href="{{route('checkout', $course->unique_id) }}">Buy Now</a>
