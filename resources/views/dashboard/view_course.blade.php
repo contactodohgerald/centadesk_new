@@ -5,6 +5,11 @@ $Complain = 'active';
 $color = '';
 $likeColor = '';
 $disLikeColor = '';
+// if($_SESSION['view_time'] >= $_SESSION['view_time'] + 86400){
+//     print 1;
+// }else{
+//     print 0;
+// }
 @endphp
 @include('layouts.head')
 
@@ -97,7 +102,7 @@ $disLikeColor = '';
 											Rate This Course:
                                             <div class="rating-box mt-20" id="rate"></div>
                                         </div>
-                                        <ul class="_215b31">									
+                                        <ul class="_215b31">
                                             <li>
                                                 <button class="btn_buy">
                                                     <a href="{{route('checkout', $course->unique_id) }}">Buy Now</a>
@@ -198,19 +203,23 @@ $disLikeColor = '';
                                                     <li><span class="_fgr123"> {{count($course->course_download_links)}} links</span></li>
                                                 </ul>
                                             </div>
-                                            @if(count($course->course_download_links) > 0)
-                                            <div id="accordion" class="ui-accordion ui-widget ui-helper-reset">
-                                                @foreach($course->course_download_links as $each_course_link)
-                                                <a href="{{$each_course_link}}" class="accordion-header" target="_blank">
-                                                    <div class="section-header-left">
-                                                        <span class="section-title-wrapper">
-                                                            <i class='uil uil-presentation-play crse_icon'></i>
-                                                            <span class="section-title-text">{{$each_course_link}}</span>
-                                                        </span>
-                                                    </div>
-                                                </a>
-                                                @endforeach
-                                            </div>
+                                            @if ($user_is_enrolled)
+                                                @if(count($course->course_download_links) > 0)
+                                                <div id="accordion" class="ui-accordion ui-widget ui-helper-reset">
+                                                    @foreach($course->course_download_links as $each_course_link)
+                                                    <a href="{{$each_course_link}}" class="accordion-header" target="_blank">
+                                                        <div class="section-header-left">
+                                                            <span class="section-title-wrapper">
+                                                                <i class='uil uil-presentation-play crse_icon'></i>
+                                                                <span class="section-title-text">{{$each_course_link}}</span>
+                                                            </span>
+                                                        </div>
+                                                    </a>
+                                                    @endforeach
+                                                </div>
+                                                @endif
+                                            @else
+                                            <div class="alert alert-info text-center">Course download url's for this course will be displayed when you enroll.</div>
                                             @endif
                                         </div>
                                     </div>

@@ -38,8 +38,16 @@ class courseController extends Controller
     use UsersArray;
 
     function __construct(
-        Like $like, course_model $course_model, course_category_model $course_category_model, Review $review, live_stream_model $live_stream_model, SavedCourses $savedCourses, User $user, Subscribe $subscribe, courseEnrollment $courseEnrollment
-    ){
+        Like $like,
+        course_model $course_model,
+        course_category_model $course_category_model,
+        Review $review,
+        live_stream_model $live_stream_model,
+        SavedCourses $savedCourses,
+        User $user,
+        Subscribe $subscribe,
+        courseEnrollment $courseEnrollment
+    ) {
         $this->middleware('auth',  ['except' => ['activateCoursesStatus', 'deleteCourses']]);
         $this->like = $like;
         $this->course_model = $course_model;
@@ -130,14 +138,14 @@ class courseController extends Controller
 
             // generate file name
             $img_name = $this->gen_file_name($user, $title, $cover_img);
-            
+
             $destinationPath = storage_path('app/public/course-img');
             $img = Image::make($cover_img->getRealPath());
             $img->resize(100, 382, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$img_name);
+            })->save($destinationPath . '/' . $img_name);
 
-            
+
             // $upload_img = $cover_img->storeAs(
             //     'public/course-img',
             //     $img_name
@@ -166,29 +174,28 @@ class courseController extends Controller
                 ];
                 $users_array = $this->subscribe->getAllSubscribers($condition);
                 $user_array = [];
-                foreach ($users_array as $item => $each_users_array){
+                foreach ($users_array as $item => $each_users_array) {
                     $query = [
                         ['unique_id', $each_users_array->user_unique_id]
                     ];
                     $user_object = $this->user->getSingleUser($query);
                     array_push($user_array, $user_object);
-
                 }
-                
+
                 $notification = new Notification();
                 $uniqueId = $this->createUniqueId('notifications', 'unique_id');
 
                 $notification->unique_id = $uniqueId;
                 $notification->user_unique_id = $user->unique_id;
                 $notification->title = $title;
-                $notification->link = env('APP_URL').'/view_course/'.$unique_id;
+                $notification->link = env('APP_URL') . '/view_course/' . $unique_id;
                 $notification->notification_type = 'Course Upload';
-                $notification->notification_details = 'A New Course titled '.$title.' Was Just Uploaded, by '.$user->name.' '.$user->last_name;
+                $notification->notification_details = 'A New Course titled ' . $title . ' Was Just Uploaded, by ' . $user->name . ' ' . $user->last_name;
 
                 $notification->save();
 
                 $message = 'Course Uploaded';
-                event(new CourseAddedByTeacher($message));  
+                event(new CourseAddedByTeacher($message));
 
                 $error = 'Course Created!';
                 return response()->json(["message" => $error, 'status' => true]);
@@ -203,9 +210,10 @@ class courseController extends Controller
         }
     }
 
-    public function testEvent(){
+    public function testEvent()
+    {
         $message = 'Course Uploaded';
-        event(new CourseAddedByTeacher($message)); 
+        event(new CourseAddedByTeacher($message));
     }
 
     /**
@@ -214,7 +222,8 @@ class courseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show() {
+    public function show()
+    {
         $user = auth()->user();
 
         if ($user->user_type === 'admin' || $user->user_type === 'super_admin') {
@@ -257,15 +266,29 @@ class courseController extends Controller
      * Show the form for editing the specified resource.
      *
      */
-    public function showCourses($id = null){
-        //
+    public function showCourses($id = null, Request $request)
+    {
+        $logged_user = auth()->user();
         $condition = [
             ['unique_id', $id]
         ];
         $course = $this->course_model->getSingleCourse($condition);
 
-        $course->views += 1;
-        $course->save();
+        // increase view count after 24hrs
+        $current_time = strtotime(date('Y-m-d H:i:s'));
+        if ($request->session()->exists('view_time')) {
+            $view_time = session('view_time');
+            $day_later = $view_time + 86400;
+            if ($view_time >= $day_later) {
+                $course->views += 1;
+                $course->save();
+            }
+        } else {
+            session(['view_time' => $current_time]);
+            $course->views += 1;
+            $course->save();
+        }
+
 
         //function that returns an array of users that likes this course and also the course like count
         $likes_array = $this->returnUserArrayForDislikes($course->unique_id);
@@ -286,7 +309,7 @@ class courseController extends Controller
         ];
         $reviews = $this->review->getAllReviews($review_condition);
         $course->reviews = $reviews;
-        foreach ($reviews as $each_review){
+        foreach ($reviews as $each_review) {
             $each_review->users;
         }
 
@@ -300,16 +323,16 @@ class courseController extends Controller
         $course->array_of_subscribers = $array_of_subscribers;
         $course->courseEnrollment;
         $arrays = [];
-        foreach ($course->courseEnrollment as $each_enrollment){
+        foreach ($course->courseEnrollment as $each_enrollment) {
             array_push($arrays, $each_enrollment->user_enrolling);
         }
         $course->array_of_enrolled_users = $arrays;
 
         $conditions = [
-            ['course_id',$course->unique_id],
+            ['course_id', $course->unique_id],
         ];
         $enrolls = $this->courseEnrollment->getAllEnrolls($conditions);
-        foreach($enrolls as $j){
+        foreach ($enrolls as $j) {
             $conditions = [
                 ['user_id', $j->user_enroll->unique_id],
             ];
@@ -321,8 +344,20 @@ class courseController extends Controller
             ]);
             $j->user_enroll->enrolled_users = $enrolled->count();
         };
-        //return $course;
-        return view('dashboard.view_course', ['course'=>$course, 'enrolls'=> $enrolls]);
+
+        // check if user is enrolled
+        $condition = [
+            ['user_enrolling', $logged_user->unique_id],
+        ];
+        $check_user_enrolled = $this->courseEnrollment->getSingleEnrolls($condition);
+        $user_is_enrolled = ($check_user_enrolled) ? true : false;
+        $view = [
+            'course' => $course,
+            'enrolls' => $enrolls,
+            'user_is_enrolled'=> $user_is_enrolled,
+        ];
+
+        return view('dashboard.view_course', $view);
     }
 
     /**
@@ -382,10 +417,10 @@ class courseController extends Controller
                 $img = Image::make($cover_img->getRealPath());
                 $img->resize(382, 382, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($destinationPath.'/'.$img_name);
+                })->save($destinationPath . '/' . $img_name);
 
                 $course->cover_image = $img_name;
-            } 
+            }
 
             $course->name = $title;
             $course->category_id = $category;
@@ -515,7 +550,8 @@ class courseController extends Controller
         }
     }
 
-    public function viewExplore(){
+    public function viewExplore()
+    {
 
         $condition = [
             ['status', 'confirmed']
@@ -523,7 +559,7 @@ class courseController extends Controller
 
         $course = $this->course_model->getAllCourse($condition);
 
-        foreach ($course as $each_course){
+        foreach ($course as $each_course) {
 
             $each_course->user;
 
@@ -532,12 +568,11 @@ class courseController extends Controller
             $each_course->category;
 
             $conditions = [
-                ['course_unique_id', $each_course->unique_id ]
+                ['course_unique_id', $each_course->unique_id]
             ];
             $reviews = $this->review->getAllReviews($conditions);
             $each_course->reviews = $reviews;
             $each_course->count_review = $this->calculateRatings($reviews);
-
         }
 
 
@@ -548,14 +583,15 @@ class courseController extends Controller
         $live_streams = $this->live_stream_model->get_all($condition);
 
         $view = [
-            'course'=>$course,
-            'live_streams'=>$live_streams
+            'course' => $course,
+            'live_streams' => $live_streams
         ];
 
         return view('dashboard.explore', $view);
     }
 
-    public function exploreCategory($unique_id = null){
+    public function exploreCategory($unique_id = null)
+    {
 
         $conditions = [
             ['unique_id', $unique_id]
@@ -568,7 +604,7 @@ class courseController extends Controller
         ];
         $course = $this->course_model->getAllCourse($condition);
 
-        foreach ($course as $each_course){
+        foreach ($course as $each_course) {
 
             $each_course->user;
 
@@ -577,15 +613,14 @@ class courseController extends Controller
             $each_course->category;
 
             $conditions = [
-                ['course_unique_id', $each_course->unique_id ]
+                ['course_unique_id', $each_course->unique_id]
             ];
             $reviews = $this->review->getAllReviews($conditions);
             $each_course->reviews = $reviews;
             $each_course->count_review = $this->calculateRatings($reviews);
-
         }
 
-        return view('dashboard.explore_categories', ['course'=>$course, 'course_category_model'=>$course_category_model]);
+        return view('dashboard.explore_categories', ['course' => $course, 'course_category_model' => $course_category_model]);
     }
 
     public function set_bestseller(string $id)
@@ -598,11 +633,9 @@ class courseController extends Controller
             if ($Course->is_bestseller == 'yes') {
                 $Course->is_bestseller = 'no';
                 $error = 'Course is no longer a Bestseller!';
-
             } elseif ($Course->is_bestseller == 'no') {
                 $Course->is_bestseller = 'yes';
                 $error = 'Course is now a Bestseller!';
-
             }
 
             $updated = $Course->save();
@@ -619,7 +652,5 @@ class courseController extends Controller
             ];
             return response()->json(["errors" => $error, 'status' => false]);
         }
-
     }
-
 }
