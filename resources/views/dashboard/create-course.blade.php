@@ -69,7 +69,7 @@
                                                                 <div class="ui search focus mt-30 lbel25">
                                                                     <label class="text-dark night-text">Title*</label>
                                                                     <div class="ui left icon input swdh19">
-                                                                        <input class="prompt srch_explore" type="text" placeholder="Enter your course title" name="title" value="">
+                                                                        <input class="prompt srch_explore" type="text" placeholder="Enter your course title" maxlength="40" name="title" value="">
                                                                         <div class="badge_num font-poppins">40</div>
                                                                         <div class="err_title error_displayer"></div>
                                                                     </div>
@@ -91,7 +91,7 @@
                                                                 <div class="ui search focus mt-30 lbel25">
                                                                     <label class="text-dark night-text">Very Short Caption*</label>
                                                                     <div class="ui left icon input swdh19">
-                                                                        <input class="prompt srch_explore" type="text" placeholder="Summarize in a sentence" name="caption">
+                                                                        <input class="prompt srch_explore" maxlength="100" type="text" placeholder="Summarize in a sentence" name="caption">
                                                                         <div class="badge_num2 font-poppins">100</div>
                                                                     </div>
                                                                 </div>
