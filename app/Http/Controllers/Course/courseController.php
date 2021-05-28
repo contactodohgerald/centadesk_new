@@ -266,9 +266,9 @@ class courseController extends Controller
      * Show the form for editing the specified resource.
      *
      */
-    public function showCourses($id = null,Request $request)
+    public function showCourses($id = null, Request $request)
     {
-        //
+        $logged_user = auth()->user();
         $condition = [
             ['unique_id', $id]
         ];
@@ -276,21 +276,14 @@ class courseController extends Controller
 
         // increase view count after 24hrs
         $current_time = strtotime(date('Y-m-d H:i:s'));
-        // $view_time =  session(['view_time' => $current_time]);
-        // $d = $request->session()->exists('view_time');
-        // $d = $request->session()->all();
-        // print_r($d);die();
-        if($request->session()->exists('view_time')){
-                // print 'yh1';die();
+        if ($request->session()->exists('view_time')) {
             $view_time = session('view_time');
             $day_later = $view_time + 86400;
             if ($view_time >= $day_later) {
                 $course->views += 1;
                 $course->save();
             }
-
-        }else{
-            // print 'yh2';die();
+        } else {
             session(['view_time' => $current_time]);
             $course->views += 1;
             $course->save();
@@ -351,8 +344,20 @@ class courseController extends Controller
             ]);
             $j->user_enroll->enrolled_users = $enrolled->count();
         };
-        //return $course;
-        return view('dashboard.view_course', ['course' => $course, 'enrolls' => $enrolls]);
+
+        // check if user is enrolled
+        $condition = [
+            ['user_enrolling', $logged_user->unique_id],
+        ];
+        $check_user_enrolled = $this->courseEnrollment->getSingleEnrolls($condition);
+        $user_is_enrolled = ($check_user_enrolled) ? true : false;
+        $view = [
+            'course' => $course,
+            'enrolls' => $enrolls,
+            'user_is_enrolled'=> $user_is_enrolled,
+        ];
+
+        return view('dashboard.view_course', $view);
     }
 
     /**
