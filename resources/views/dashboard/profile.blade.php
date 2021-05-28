@@ -40,8 +40,12 @@ $profile = 'active';
                                                 @endif
                                                 {{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span>
                                             <div class="mt-1">
-                                                <a target="_blank" href="https://centadesk.com/register?ref={{ ($user->yearly_subscription_status === 'yes')?$user->user_referral_id : '' }}">https://centadesk.com/register?ref={{ ($user->yearly_subscription_status == 'yes')?$user->user_referral_id : '' }}
+                                                @if ($user->yearly_subscription_status === 'yes')
+                                                <a target="_blank" href="https://centadesk.com/register?ref={{$user->user_referral_id}}">https://centadesk.com/register?ref={{$user->user_referral_id}}
                                                 </a>
+                                                @else
+                                                <p class="text-warning">Subscribe to activate your referral link.</p>
+                                                @endif
                                             </div>
                                             {{-- <span class="text-capitalize">{{($user->user_type === 'super_admin')?'Super Admin':$user->user_type}}</span> --}}
                                         </div>
