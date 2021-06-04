@@ -2,6 +2,7 @@
     $pageTitle = 'Edit Course';
     $Course = 'active';
     $url = explode('++',$course->course_urls);
+    use App\Traits\Generics;
 // print_r($url);die();
 @endphp
 @include('layouts.head')
@@ -133,6 +134,20 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
+
+                                                            {{-- <div class="col-lg-6 col-md-6 col-sm-6">
+                                                                <div class="mt-30 lbel25">
+                                                                    <label class="text-dark night-text">Select*</label>
+                                                                </div>
+                                                                <select name="pricing" class="ui hj145 dropdown cntry152 prompt srch_explore">
+                                                                    <option value="">-- Select Pricing For Course --</option>
+                                                                    @foreach ($pricing as $e)
+                                                                    <option  @if ($e->unique_id == $course->pricing)
+                                                                        selected="selected"
+                                                                        @else @endif value="{{ $e->unique_id }}">{{number_format($users->getAmountForView($e->amount )['data']['amount'])}} ({{$users->getAmountForView($e->amount)['data']['currency'] }})</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div> --}}
                                                         </div>
                                                     </div>
                                                 </div>

@@ -80,6 +80,7 @@ Route::group(['middleware' => 'verified'], function(){
         Route::get('/edit-course/{id}', [courseController::class, 'update_page']);
         Route::post('/create-course', [courseController::class, 'create']);
         Route::post('/edit-course/{id}', [courseController::class, 'update']);
+        Route::post('/delete-course/{id}', [courseController::class, 'soft_delete']);
     });
 
     Route::group(['middleware' => 'web'], function () {
@@ -90,7 +91,7 @@ Route::group(['middleware' => 'verified'], function(){
         Route::get('/live_stream/edit/{id}', [live_stream_controller::class, 'update_page']);
         Route::get('/explore/live_streams', [live_stream_controller::class, 'explore_live_streams']);
         Route::get('/live_stream/details/{id}', [live_stream_controller::class, 'live_stream_details'])->name('stream_details');
-    
+
         Route::post('/live/create', [live_stream_controller::class, 'create']);
         Route::post('/live/edit', [live_stream_controller::class, 'update']);
         Route::post('/delete-live/{id}', [live_stream_controller::class, 'soft_delete']);
@@ -101,17 +102,17 @@ Route::group(['middleware' => 'verified'], function(){
         Route::get('/ticket/create', [TicketController::class, 'create_ticket']);
         Route::get('/ticket/reply/{id}', [TicketController::class, 'reply_ticket']);
         Route::get('/ticket/all', [TicketController::class, 'view_all']);
-    
+
         Route::post('/ticket/create', [TicketController::class, 'create']);
         Route::post('/ticket/reply/{id}', [TicketController::class, 'reply']);
     });
-    
+
     Route::group(['middleware' => 'web'], function () {
         // Enroll in course
         Route::get('/courses/enrolled', [CourseEnrollmentController::class, 'my_enrolled_courses'])->name('enrolled_course');
         Route::get('/course/checkout/{id}', [CourseEnrollmentController::class, 'enroll_cart'])->name('checkout');
         Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
-    
+
         Route::post('/course/enroll/{id}', [CourseEnrollmentController::class, 'enroll']);
         Route::post('/delete-enroll/{id}', [CourseEnrollmentController::class, 'soft_delete']);
         Route::post('/delete-batch', [CourseEnrollmentController::class, 'batch_soft_Delete']);
@@ -121,14 +122,14 @@ Route::group(['middleware' => 'verified'], function(){
         // crypto currency
         Route::get('/wallet/bitcoin/gateway/{id}', [cryptocurrencyController::class, 'payment_gateway'])->name('btc_gateway');
         Route::get('/blockchain/callback', [cryptocurrencyController::class, 'confirm_payment'])->name('btc_gateway');
-    
-    
+
+
         // Route::get('/prev_address/{xpub}',[PaymentAddressController::class,'get_prev_addresses']);
         // Route::post('/user/wallet/update',[cryptocurrencyController::class,'update_wallet']);
         Route::post('/generate_address', [cryptocurrencyController::class, 'gen_payment_address']);
         Route::post('/top_up_btc', [cryptocurrencyController::class, 'create_transaction'])->name('top_up_with_btc');
     });
-    
+
     Route::group(['middleware' => 'web'], function () {
         // Subscription
         Route::post('/subscribe_to', [SubscriptionController::class, 'subscribe_to']);
@@ -155,12 +156,12 @@ Route::group(['middleware' => 'verified'], function(){
         //update currency
         Route::post('/update_user_currency', [CurrencyRateController::class, 'updateUserPreferredCurrency'])->name('update_user_currency');
     });
-    
+
     Route::group(['middleware' => 'web'], function () {
         //saved courses
         Route::get('/saved-course', [SaveCourseController::class, 'getAllSavedCourse'])->name('saved-course');
     });
-    
+
     Route::group(['middleware' => 'web'], function () {
         //users
         Route::get('/all_students', [AdminController::class, 'showAllStudents'])->name('all_students');
@@ -173,7 +174,7 @@ Route::group(['middleware' => 'verified'], function(){
         Route::post('/store_price', [priceController::class, 'store'])->name('store_price');
         Route::get('/view_price', [priceController::class, 'index'])->name('view_price');
     });
-    
+
     Route::group(['middleware' => 'web'], function () {
         //system settings
         Route::get('/main_settings_page', [AppSettingsController::class, 'mainSettings'])->name('main_settings_page');
@@ -190,7 +191,7 @@ Route::group(['middleware' => 'verified'], function(){
         Route::get('/confirm_top_up', [TransactionController::class, 'confirmUserPayments'])->name('confirm_top_up');
         Route::post('/transactions_by_date', [TransactionController::class, 'showTransactionByDate'])->name('transactions_by_date');
         Route::get('/transaction_history/{unique_id?}', [TransactionController::class, 'showTopUpTransaction'])->name('transaction_history');
-    
+
         //withdrawals
         Route::get('/withdrawals', [WithdrawalController::class, 'myWithdrawals'])->name('withdrawals');
         //request withdrawals
@@ -198,7 +199,7 @@ Route::group(['middleware' => 'verified'], function(){
         //show withdrawals by date
         Route::post('/withdrawals_by_date', [WithdrawalController::class, 'showWithdrawalsByDate'])->name('withdrawals_by_date');
     });
-    
+
     Route::group(['middleware' => 'web'], function () {
         //bank verification
         Route::get('/verifications/bank', [VerifyBankController::class, 'index'])->name('account_validation');
@@ -239,9 +240,9 @@ Route::group(['middleware' => 'verified'], function(){
         Route::post('/update_bank_account', [UserController::class, 'bankAccountUpdate'])->name('update_bank_account');
         Route::post('/update_wallet_address', [UserController::class, 'walletAddressUpdate'])->name('update_wallet_address');
     });
-    
-    
-    
+
+
+
 });
 
 
@@ -343,7 +344,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/edit-course/{id}', [courseController::class, 'update_page'])->name('edit-course');
 
     //front end section
-    Route::get('/', [CoursesHandlerController::class, 'homePage'])->name('/'); 
+    Route::get('/', [CoursesHandlerController::class, 'homePage'])->name('/');
     Route::get('/list-courses', [CoursesHandlerController::class, 'getAllCourses'])->name('list-courses');
     Route::get('/categories', [CoursesHandlerController::class, 'getAllCategories'])->name('categories');
     Route::get('/instructors-list', [CoursesHandlerController::class, 'getAllInstructorsList'])->name('instructors-list');
