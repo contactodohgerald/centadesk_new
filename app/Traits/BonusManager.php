@@ -3,11 +3,13 @@
 
 use App\User;
 use App\Model\Bonus;
+use App\Traits\Generics;
 use App\Http\Controllers\Controller;
 
 
     trait BonusManager{
         //unique_id,type,amount,user_id,referred_id,downline_number,investment_id,status,amount_paid,percentage
+        use Generics;
 
         function saveBonus($amount, $uplineReferralId, $enrollmentUniqueId, $loggedDetails, $userReferralIdColumnName, $referrerIdColumnName, $agentsTypeColumn, $bonusArray, $counter = 0, $type = 'bonus'){
 
@@ -23,42 +25,47 @@ use App\Http\Controllers\Controller;
 
                 $userDetails = User::where($userReferralIdColumnName, $uplineReferralId)->first();
 
-                if($userDetails !== null && $counter < count($bonusArray['normal'])){
 
-                    $yearly_subscription_status = $userDetails->yearly_subscription_status;//check if user has a yearly subscription
+                if($userDetails !== null){
 
-                    //check to make sure the users yearly subscription status is truex
-                    if($yearly_subscription_status === 'yes'){
-                        $controller = new Controller();
+                    $agentTypeId = $userDetails->$agentsTypeColumn;
 
-                        $agentTypeId = $userDetails->$agentsTypeColumn;//ascertain the type of agent being dealt with
-                        $selectedBonusArray = $bonusArray[$agentTypeId];//pick the array of bonus to be adminsterred
+                    if($counter < count($bonusArray[$agentTypeId])){
+                        $yearly_subscription_status = $userDetails->yearly_subscription_status;//check if user has a yearly subscription
 
-                        $bonusAmount = $amount * ($selectedBonusArray[$counter] / 100);
-                        $bonusModel = new Bonus();
-                        $bonusModel->unique_id = $controller->createUniqueId('course_enrollments_tb', 'unique_id');
-                        $bonusModel->type = $type;
-                        $bonusModel->amount = $bonusAmount;
-                        $bonusModel->user_id = $userDetails->unique_id;
-                        $bonusModel->referred_id = $loggedDetails->unique_id;
-                        $bonusModel->downline_number  = ($counter + 1). 'Downline';
-                        $bonusModel->investment_id = $enrollmentUniqueId;
-                        $bonusModel->status = 'done';
-                        $bonusModel->amount_paid = $amount;
-                        $bonusModel->percentage = $selectedBonusArray[$counter];
-                        $bonusModel->agent_type_id = $agentTypeId;
-                        $bonusModel->save();
+                        //check to make sure the users yearly subscription status is truex
+                        if($yearly_subscription_status === 'yes'){
+                            $controller = new Controller();
 
-                        //add the money to the user account
-                        $userDetails->balance = $bonusAmount;
-                        $userDetails->save();
+                            //ascertain the type of agent being dealt with
+                            $selectedBonusArray = $bonusArray[$agentTypeId];//pick the array of bonus to be adminsterred
 
+                            $bonusAmount = $amount * ($selectedBonusArray[$counter] / 100);
+                            $bonusModel = new Bonus();
+                            $bonusModel->unique_id = $this->createUniqueId('course_enrollments_tb', 'unique_id');
+                            $bonusModel->type = $type;
+                            $bonusModel->amount = $bonusAmount;
+                            $bonusModel->user_id = $userDetails->unique_id;
+                            $bonusModel->referred_id = $loggedDetails->unique_id;
+                            $bonusModel->downline_number  = ($counter + 1);
+                            $bonusModel->investment_id = $enrollmentUniqueId;
+                            $bonusModel->status = 'done';
+                            $bonusModel->amount_paid = $amount;
+                            $bonusModel->percentage = $selectedBonusArray[$counter];
+                            $bonusModel->agent_type_id = $agentTypeId;
+                            $bonusModel->save();
+
+                            //add the money to the user account
+                            $userDetails->balance = $bonusAmount + $userDetails->balance;
+                            $userDetails->save();
+
+                        }
+
+                        //call the function again
+                        $counter++;
+                        $uplineReferralId = $userDetails->$referrerIdColumnName;
+                        $this->saveBonus($amount, $uplineReferralId, $enrollmentUniqueId, $loggedDetails, $userReferralIdColumnName, $referrerIdColumnName, $agentsTypeColumn, $bonusArray, $counter, $type);
                     }
-
-                    //call the function again
-                    $counter++;
-                    $uplineReferralId = $userDetails->$referrerIdColumnName;
-                    $this->saveBonus($amount, $uplineReferralId, $enrollmentUniqueId, $loggedDetails, $userReferralIdColumnName, $referrerIdColumnName, $agentsTypeColumn, $bonusArray, $counter, $type);
 
                 }
 
@@ -88,11 +95,54 @@ use App\Http\Controllers\Controller;
                     //session(['array_of_downlines' => $downlinesArray]);
                 }
                 $counter++;
-                $this->selectGuiderDlines($userArray, $downlinesArray, $counter);
+                //$this->selectDownlines($userArray, $downlinesArray, $counter);
+                $this->selectDownlines($referrerIdColumnName, $userReferralIdColumnName, $userArray, $downlinesArray, $counter);
             }
             else{
                 session(['array_of_downlines' => $downlinesArray]);
             }
+
+        }
+
+
+        public function selectEarningFromDownlines($referrerIdColumnName, $userReferralIdColumnName, $mainUserId, $userArray = [], $downlinesArray = [], $counter = 0)
+        {
+            $downlineForAllUser = [];
+            if(count($userArray) > 0){
+                foreach($userArray as $k => $eachUser){//loop through the users
+                    //'user_ref_id', ''
+                    $downlineForOneUser = User::where($referrerIdColumnName, $eachUser->$userReferralIdColumnName)->get();
+                    if(count($downlineForOneUser) > 0){
+
+                        foreach($downlineForOneUser as $l => $eachDownLineForAUser){
+                            //select the amount investments
+                            $bonusModel = new Bonus();
+                            $bonusDetails = $bonusModel::where('user_id', $mainUserId)->where('referred_id', $eachDownLineForAUser->unique_id)->orderBy('id', 'desc')->get();
+                            $eachDownLineForAUser->bonus_details = $bonusDetails;
+                            $downlineForAllUser[] = $eachDownLineForAUser;
+                        }
+
+                    }
+
+                }
+
+
+                if(count($downlineForAllUser) > 0){
+                    $downlinesArray[($counter + 1)] = $downlineForAllUser;
+                }
+                $userArray = $downlineForAllUser;
+
+                if(count($downlineForAllUser) == 0){
+                    session(['array_of_downlines' => $downlinesArray]);
+                    //return $downlinesArray;
+                }
+                $counter++;
+                //$this->selectDownlines($userArray, $downlinesArray, $counter);
+                $this->selectEarningFromDownlines($referrerIdColumnName, $userReferralIdColumnName, $mainUserId, $userArray, $downlinesArray, $counter);
+            }
+            // else{
+            //     session(['array_of_downlines' => $downlinesArray]);
+            // }
 
         }
 

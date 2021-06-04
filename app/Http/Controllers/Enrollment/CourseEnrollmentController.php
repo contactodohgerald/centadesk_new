@@ -96,7 +96,7 @@ class CourseEnrollmentController extends Controller
     {
         $user = $request->user();
         $user_id = $user['unique_id'];
-        try {
+        //try {
             if (!$request->isMethod('POST')) {
                 throw new Exception('This is not a valid request.');
             }
@@ -184,14 +184,14 @@ class CourseEnrollmentController extends Controller
                 $error = 'You\'ve been Enrolled Successfully!';
                 return response()->json(["message" => $error, 'status' => true]);
             }
-        } catch (Exception $e) {
+        // } catch (Exception $e) {
 
-            $error = $e->getMessage();
-            $error = [
-                'errors' => [$error],
-            ];
-            return response()->json(["errors" => $error, 'status' => false]);
-        }
+        //     $error = $e->getMessage();
+        //     $error = [
+        //         'errors' => [$error],
+        //     ];
+        //     return response()->json(["errors" => $error, 'status' => false]);
+        // }
     }
     /**
      * Function to soft delete an enrollment.

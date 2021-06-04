@@ -44,6 +44,7 @@ use App\Http\Controllers\Subscriptions\SubscriptionController;
 use App\Http\Controllers\Cryptocurrency\cryptocurrencyController;
 use App\Http\Controllers\Enrollment\CourseEnrollmentController;
 use App\Http\Controllers\PaymentAddress\PaymentAddressController;
+use App\Http\Controllers\Referrals\ReferralController;
 use App\Http\Controllers\Ticket\TicketController;
 use App\Model\paymentAddress;
 
@@ -406,4 +407,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/complain_list', [ComplainHandleController::class, 'complainListForAdmin'])->name('complain_list');
     Route::post('/activate_account', [ComplainHandleController::class, 'activateUserAccount'])->name('activate_account');
     Route::post('/ignore_request', [ComplainHandleController::class, 'ignoreAccountActivateRequest'])->name('ignore_request');
+});
+
+
+Route::group(['middleware' => 'web'], function () {
+    // Live stream
+    Route::get('/referral_earnings/{userId?}', [ReferralController::class, 'index'])->name('referral_earnings');
+    Route::get('/referral_details/{mainUserId?}/{referredUserId?}', [ReferralController::class, 'referralDetails'])->name('referral_details');
 });
