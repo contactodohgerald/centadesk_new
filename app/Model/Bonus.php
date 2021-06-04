@@ -13,5 +13,17 @@ class Bonus extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    
+    function referred(){
+        return $this->belongsTo('App\User', 'referred_id');
+    }
+
+    function main_user(){
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
+    function enrollment(){
+        return $this->belongsTo('App\Model\courseEnrollment', 'investment_id');
+    }
+
+
 }

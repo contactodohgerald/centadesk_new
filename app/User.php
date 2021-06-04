@@ -74,8 +74,8 @@ class User extends Authenticatable implements MustVerifyEmail{
 
     public function subscribers(){
         return $this->hasMany('App\Model\Subscribe', 'teacher_unique_id');
-    } 
-    
+    }
+
     public function enroll_students(){
         return $this->hasMany('App\Model\courseEnrollment', 'user_enrolling');
     }
@@ -184,6 +184,26 @@ class User extends Authenticatable implements MustVerifyEmail{
 
     function getOneModel($userId){
         return User::find($userId);
+    }
+
+    function returnSurfix($no){
+
+        $lastChar = substr($no, -1);
+
+        $surfixArray = [
+            '1' => 'st',
+            '2' => 'nd',
+            '3' => 'rd',
+            '4' => 'th',
+            '5' => 'th',
+            '6' => 'th',
+            '7' => 'th',
+            '8' => 'th',
+            '9' => 'th',
+            '0' => 'th',
+        ];
+        return $surfixArray[$lastChar];
+
     }
 
 }

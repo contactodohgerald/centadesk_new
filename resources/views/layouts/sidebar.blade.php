@@ -235,6 +235,17 @@ $verifications_count = $verifications->getAllKycVerification($conditions);
                         </a>
                     </li>
                 @endif
+
+
+                <li class="menu--item">
+                    @if(auth()->user()->privilegeChecker('view_referral_for_user'))
+                    <a href="{{route('referral_earnings', [auth()->user()->unique_id])}}" class="menu--link <?php print @$referral;?>" title="Ticket">
+                        <i class='uil uil-comment-alt-exclamation menu--icon'></i>
+                        <span class="menu--label">Referal Earnings</span>
+                    </a>
+                    @endif
+                </li>
+
                 <li class="menu--item  menu--item__has_sub_menu">
                     <label class="menu--link <?php print @$Setting;?> text-dark night-text" title="Setting">
                         <i class='uil uil-cog menu--icon text-dark night-text'></i>
