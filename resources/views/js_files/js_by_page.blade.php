@@ -21,12 +21,12 @@
     channel.bind('course-added-by-teacher', function(data) {
         // this is called when the event notification is received...
         let data_type = JSON.stringify(data);
-        let dataType = JSON. parse(data_type); 
+        let dataType = JSON. parse(data_type);
         let {message} = dataType;
         if(message == 'Course Uploaded'){
             getAllNotificationForUser(userUniqueId)
         }
-       
+
     });
 
     $(document).ready(function() {
@@ -36,14 +36,14 @@
     async function getAllNotificationForUser(user_unique_id){
         let dataHold = '';
         let returnData = await getRequest(baseUrl+'api/getAllNotification/'+user_unique_id);
-      
+
         let {notification_data, error_code} = returnData;
 
         var current = 0;
 
         if (notification_data.length > 0){
             for (let i = 0; i < notification_data.length; i++){
-                
+
                 let {unique_id, title, link, notification_type, notification_details, created_at, users, dates, read_status} = notification_data[i];
 
                 if(read_status == 'read'){
@@ -62,7 +62,7 @@
                         </div>
                     </a>
                 `;
-                
+
                 current++;
 
             }
@@ -85,7 +85,7 @@
 
     async function readNotificationStatus(notifi_id, user_id, link){
         let postData = await postRequest(baseUrl+'api/addNotificationRead', {userId:user_id, notifiId:notifi_id});
-        console.log(postData); 
+        console.log(postData);
         let {error_code} = postData;
         if(error_code == 0){
             window.location.href = `${link}`;
@@ -105,7 +105,7 @@
             showValidatorToaster(error_message, 'warning');
         }
     }
-    
+
 
     function postRequest(url, params){
 
@@ -330,7 +330,7 @@
     }
 
     function bringOutModals(value){
-        $(value).modal('toggle');        
+        $(value).modal('toggle');
     }
 
     function removeModalMains(value) {
@@ -506,11 +506,18 @@
     @include('js_by_page.gallery_js')
 @endif
 
-{{--notification--}}
+{{--notification --}}
 @php $notification = ['notification-page'];  @endphp
 @php $currentPageName = Request::segment(1); @endphp
 @if(in_array($currentPageName, $notification))
     @include('js_by_page.notification_js')
+@endif
+
+
+@php $referal_page_array = ['referral_earnings'];  @endphp
+@php $currentPageName = Request::segment(1); @endphp
+@if(in_array($currentPageName, $referal_page_array))
+    @include('js_by_page.referal_page_js')
 @endif
 <style>
     label, label > select, label > input, #myTable_info{

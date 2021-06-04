@@ -291,7 +291,7 @@ $users = auth()->user();
 		@include('layouts.footer')
 
 	</div>
-   
+
 	<!-- Body End -->
 
 @include('layouts.e_script')

@@ -215,6 +215,7 @@
 														<a href="#" title="View" class="gray-s"><i class="uil uil-adjust"></i></a>
 														<a href="#" title="Delete" class="gray-s"><i class="uil uil-trash-alt"></i></a>
                                                         <a id="{{ $e->unique_id }}" title="Set Verification Badge" class="gray-s cursor-pointer verify_badge_modal"><i class="uil uil-thumbs-up"></i></a>
+                                                        <a href="{{route('referral_earnings', [$e->unique_id])}}" title="View Referrals" class="gray-s">Referrals</a>
 													</td>
 												</tr>
 													@php $count++ @endphp
