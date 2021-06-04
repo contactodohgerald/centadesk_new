@@ -61,7 +61,7 @@
                                                             <li><a target="_blank" href="{{ ($each_subscribe->youtube === null)?'https://www.youtube.com':$each_subscribe->youtube }}" class="yu"><i class="fab fa-youtube"></i></a></li>
                                                         </ul>
                                                         <div class="tut1250">
-                                                            <span class="vdt15">100K Students</span>
+                                                            <span class="vdt15">{{$each_instructors->enrolled_users}} Students</span>
                                                             <span class="vdt15">{{$each_subscribe->count_course}} Courses</span>
                                                         </div>
                                                     @endif

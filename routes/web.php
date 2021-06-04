@@ -81,6 +81,7 @@ Route::group(['middleware' => 'verified'], function(){
         Route::get('/edit-course/{id}', [courseController::class, 'update_page']);
         Route::post('/create-course', [courseController::class, 'create']);
         Route::post('/edit-course/{id}', [courseController::class, 'update']);
+        Route::post('/delete-course/{id}', [courseController::class, 'soft_delete']);
     });
 
     Route::group(['middleware' => 'web'], function () {
@@ -407,8 +408,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/activate_account', [ComplainHandleController::class, 'activateUserAccount'])->name('activate_account');
     Route::post('/ignore_request', [ComplainHandleController::class, 'ignoreAccountActivateRequest'])->name('ignore_request');
 });
-
-
 Route::group(['middleware' => 'web'], function () {
     // Live stream
     Route::get('/referral_earnings/{userId?}', [ReferralController::class, 'index'])->name('referral_earnings');

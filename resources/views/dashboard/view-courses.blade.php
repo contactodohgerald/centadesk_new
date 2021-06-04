@@ -123,7 +123,9 @@ $users = auth()->user();
 														<a href="/edit-course/{{ $e->unique_id }}" title="Edit" class="cursor-pointer gray-s"><i class="uil uil-edit-alt"></i></a>
 
 														<a id="{{ $e->unique_id }}" title="Delete" class="cursor-pointer gray-s deleteCourseModal"><i class="uil uil-trash-alt"></i></a>
+                                                        @if(auth()->user()->privilegeChecker('view_restricted_roles'))
 														<a id="{{ $e->unique_id }}" title="Set Bestseller" class="cursor-pointer gray-s setBestsellerModal"><i class="uil uil-thumbs-up"></i></a>
+                                                        @endif
 
 													</td>
                                                 </tr>

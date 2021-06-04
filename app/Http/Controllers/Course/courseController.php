@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Course;
 // use App\Model\Like;
 use App\User;
 use Exception;
+use Carbon\Carbon;
 use App\Model\Like;
 use App\priceModel;
 use App\course_model;
@@ -14,21 +15,21 @@ use App\Model\Review;
 use App\Model\Subscribe;
 use App\Traits\Generics;
 use App\Traits\UsersArray;
+use App\Model\Notification;
 use App\Model\SavedCourses;
 use App\Traits\appFunction;
 use Illuminate\Http\Request;
 use App\course_category_model;
 use App\Model\courseEnrollment;
 use App\Model\live_stream_model;
-use App\Model\Notification;
 use Illuminate\Support\Facades\DB;
+use App\Events\CourseAddedByTeacher;
 use App\Http\Controllers\Controller;
 use App\Traits\FireBaseNotification;
-use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
-use App\Events\CourseAddedByTeacher;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\View;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Validator;
 
 class courseController extends Controller
 {
@@ -87,13 +88,15 @@ class courseController extends Controller
         $course = course_model::find($id);
         $all_category = course_category_model::all();
         $all_price = priceModel::all();
+        $users = auth()->user();
         $view = [
             'course' => $course,
             'category' => $all_category,
             'pricing' => $all_price,
         ];
         // return $view;
-        return view('dashboard.edit-course', $view);
+        return view('dashboard.edit-course', $view)->withModel($users);
+        // return View::make('dashboard.edit-course', $view)->withModel($users);
     }
 
     /**
