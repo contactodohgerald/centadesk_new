@@ -217,7 +217,7 @@ $title = 'Course Details | Choose course categories. Make money while learning, 
                        <div class="course-details-widget">
                            <div class="course-widget-wrap">
                                <div class="cd-course-table-widget">
-                                   <div class="cd-course-table-list"> 
+                                   <div class="cd-course-table-list">
                                        <div class="course-table-item clearfix">
                                            <span class="cd-table-title float-left"><i class="fas fa-users"></i> Max Students  : </span>
                                            <span class="cd-table-valur float-right">{{ count($course->courseEnrollment) }}</span>
@@ -267,7 +267,7 @@ $title = 'Course Details | Choose course categories. Make money while learning, 
                             <div class="yl-course-img-text">
                                 <div class="yl-course-img position-relative">
                                     <span class="c-price-tag">$ {{number_format($each_course->course_price)}}</span>
-                                    <img src="{{asset('storage/course-img/'.$each_course->cover_image)}}" alt="{{ $each_course->name }}">
+                                    <img src="{{asset('storage/course-img/'.$each_course->cover_image)}}" alt="{{ $each_course->name }}" class="img-size">
                                     <span class="c-hover-icon"><a href="{{ route('course-details', $each_course->unique_id) }}"><i class="fas fa-plus"></i></a></span>
                                 </div>
                                 <div class="yl-course-text">
@@ -320,6 +320,6 @@ $title = 'Course Details | Choose course categories. Make money while learning, 
    </section>
 
    @include('include.footer')
-        
-   
+
+
    @include('include.e_script')

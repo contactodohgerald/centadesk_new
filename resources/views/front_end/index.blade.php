@@ -149,12 +149,12 @@ $title = 'Centadesk | Teach, Learn and Earn';
 
                    @foreach($course_category_model as $each_category)
                      @foreach ($each_category->courses as $hji => $each_courses)
-                        
+
                         <div class="grid-item grid-size-25 {{ $each_category->name }}" data-category="{{ $each_category->name }}">
                            <div class="yl-course-img-text">
                               <div class="yl-course-img position-relative">
                                  <span class="c-price-tag">$ {{number_format($each_courses->course_price)}}</span>
-                                 <img src="{{asset('storage/course-img/'.$each_courses->cover_image)}}" alt="{{ $each_courses->name }}">
+                                 <img src="{{asset('storage/course-img/'.$each_courses->cover_image)}}" alt="{{ $each_courses->name }}" class="img-size">
                                  <span class="c-hover-icon"><a href="{{ route('course-details', $each_courses->unique_id) }}"><i class="fas fa-plus"></i></a></span>
                               </div>
                               <div class="yl-course-text">
@@ -451,6 +451,6 @@ $title = 'Centadesk | Teach, Learn and Earn';
 
 
    @include('include.footer')
-        
-   
+
+
    @include('include.e_script')

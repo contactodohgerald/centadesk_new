@@ -33,7 +33,7 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
                                 <div class="yl-course-img-text">
                                     <div class="yl-course-img position-relative">
                                         <span class="c-price-tag">$ {{number_format($each_course_list->course_price)}}</span>
-                                        <img src="{{asset('storage/course-img/'.$each_course_list->cover_image)}}" alt="{{ $each_course_list->name }}">
+                                        <img src="{{asset('storage/course-img/'.$each_course_list->cover_image)}}" alt="{{ $each_course_list->name }}" class="img-size2">
                                     <span class="c-hover-icon"><a href="{{ route('course-details', $each_course_list->unique_id) }}"><i class="fas fa-plus"></i></a></span>
                                     </div>
                                     <div class="yl-course-text">
@@ -151,6 +151,6 @@ $title = 'Courses | Choose course categories. Make money while learning, teachin
 
 
    @include('include.footer')
-        
-   
+
+
    @include('include.e_script')

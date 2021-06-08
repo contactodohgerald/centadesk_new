@@ -257,3 +257,7 @@ button:disabled {
     text-align: center;
     position: relative;
 }
+.img-size{
+    width:360px;
+    height: 200px;;
+}

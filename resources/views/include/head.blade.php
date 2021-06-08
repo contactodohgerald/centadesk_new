@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('front_end/assets/css/odometer-theme-default.css')}}">
     <link rel="stylesheet" href="{{ asset('front_end/assets/css/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{ asset('front_end/assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('front_end/assets/css/custom-app.css')}}">
     <link rel="icon" href="{{ asset('front_end/img/logo.png')}}" type="image/x-icon">
 
     <meta name="description" content="{{ $description }}"/>

@@ -177,7 +177,7 @@ $home = 'active';
                                 <div class="item">
                                     <div class="fcrse_1 mb-20">
                                         <a href="{{route('view_course', $each_course->unique_id )}}" class="fcrse_img">
-                                            <img src="{{asset($link.'course-img/'.$each_course->cover_image)}}" alt="{{env('APP_NAME')}}">
+                                            <img src="{{asset($link.'course-img/'.$each_course->cover_image)}}" alt="{{env('APP_NAME')}}"" class="img-size">
                                             <div class="course-overlay">
                                                 @if ($each_course->is_bestseller == 'yes')
                                                 <div class="badge_seller">Bestseller</div>
@@ -335,14 +335,14 @@ $home = 'active';
             }, function () {
                 console.log('Expired!!!');
                 $("#account_activation_date_counter").hide();
-            }); 
-        
+            });
+
         </script>
 
     @else
 
         <script>
-            
+
             $("#subscription_date_counter").show();
             let dateCounter = $("#date_counter").val();
             $('#example_2').countdown({
@@ -351,7 +351,7 @@ $home = 'active';
                 console.log('Expired!!!');
                 $("#subscription_date_counter").hide();
             });
-        
+
         </script>
 
     @endif

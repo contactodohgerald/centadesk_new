@@ -81,7 +81,7 @@ $title = 'Instructors Profile | Make money while learning';
                              <div class="yl-course-img-text">
                                  <div class="yl-course-img position-relative">
                                      <span class="c-price-tag">$ {{number_format($each_course->course_price)}}</span>
-                                     <img src="{{asset('storage/course-img/'.$each_course->cover_image)}}" alt="{{ $each_course->name }}">
+                                     <img src="{{asset('storage/course-img/'.$each_course->cover_image)}}" alt="{{ $each_course->name }}" class="img-size">
                                      <span class="c-hover-icon"><a href="{{ route('course-details', $each_course->unique_id) }}"><i class="fas fa-plus"></i></a></span>
                                  </div>
                                  <div class="yl-course-text">
@@ -136,5 +136,5 @@ $title = 'Instructors Profile | Make money while learning';
 
 
    @include('include.footer')
-        
+
    @include('include.e_script')
