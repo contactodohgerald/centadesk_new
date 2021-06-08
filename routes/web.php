@@ -408,8 +408,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/activate_account', [ComplainHandleController::class, 'activateUserAccount'])->name('activate_account');
     Route::post('/ignore_request', [ComplainHandleController::class, 'ignoreAccountActivateRequest'])->name('ignore_request');
 });
-
-
 Route::group(['middleware' => 'web'], function () {
     // Live stream
     Route::get('/referral_earnings/{userId?}', [ReferralController::class, 'index'])->name('referral_earnings');
