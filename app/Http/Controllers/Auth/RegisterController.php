@@ -65,7 +65,6 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
      */
     protected function create(array $data): User
     {
@@ -74,7 +73,7 @@ class RegisterController extends Controller
         ]);
         $now = Carbon::now()->addDays(14);
 
-        if(count($user) > 0){
+        if (count($user) > 0) {
             return User::create([
                 'unique_id' => $this->createUniqueId('users', 'unique_id'),
                 'name' => $data['name'],
@@ -86,7 +85,7 @@ class RegisterController extends Controller
                 'password' => Hash::make($data['password']),
                 'account_activation_date_counter' => $now->toDateTimeString(),
             ]);
-        }else{
+        } else {
             return redirect()->back()->with('error', 'Please provide a valid Refrral Id');
         }
     }

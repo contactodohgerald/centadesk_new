@@ -82,11 +82,12 @@
 												<tr>
 													<td class="text-center">{{$count}}</td>
 													<td class="text-center">{{ $each_priceModel->title }}</td>
-													<td class="text-center">{{number_format($users->getAmountForView($each_priceModel->amount )['data']['amount'])}} ({{$users->getAmountForView($each_priceModel->amount )['data']['currency'] }})</td>
+													<td class="text-center">{{number_format($each_priceModel->amount )}} ({{$users->getAmountForView($each_priceModel->amount )['data']['currency'] }})</td>
 													<td class="text-center">{{ $each_priceModel->created_at }}</td>
 													<td class="text-center">
-														<a href="{{route('edit_category', $each_priceModel->unique_id )}}" title="Edit" class="gray-s"><i class="uil uil-edit-alt"></i></a>
-														<a href="#" title="Delete" class="gray-s"><i class="uil uil-trash-alt"></i></a>
+														<a href="{{route('edit_price', $each_priceModel->unique_id )}}" title="Edit" class="gray-s"><i class="uil uil-edit-alt"></i></a>
+
+														<a id="{{ $each_priceModel->unique_id }}" title="Delete" class="cursor-pointer gray-s deleteCourseModal"><i class="uil uil-trash-alt"></i></a>
 													</td>
                                                 </tr>
 												@php $count++ @endphp
@@ -107,8 +108,62 @@
 			</div>
 		</div>
 
+		<!-- The Modal -->
+		<div class="modal delete_course_modal" id="delete_course_modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Pricing</h4>
+						<button type="button" class="close" data-dismiss="modal" onclick="removeModalMains('.delete_course_modal')">&times;</button>
+					</div>
+
+					<form class="delete_course_form">
+						@csrf
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-sm-12">
+									<h4 class=" night-text text-danger">By clicking continue, this pricing will be deleted permanently. <br> Every course using this pricing will also be deleted.</h4>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-danger" onclick="removeModalMains('.delete_course_modal')">Close</button>
+						<button class="btn btn-primary delete_course_btn">Proceed</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
             @include('layouts.footer')
         </div>
         <!-- Body End -->
 
 @include('layouts.e_script')
+
+<script>
+    $(document).ready(function () {
+
+        $('.deleteCourseModal').click(function(e) {
+            e.preventDefault();
+            append_id('delete_course_id', '.delete_course_form', '#delete_course_modal', this)
+            bringOutModalMain('.delete_course_modal')
+        });
+
+
+    $('.delete_course_btn').click(async function(e) {
+        e.preventDefault();
+        let data = $('.delete_course_form').serializeArray();
+        // console.log(data);return;
+        let form_data = set_form_data(data);
+        let returned = await ajaxRequest('/delete_price/'+data[1].value, form_data);
+        // return;
+        validator(returned, '/view_price');
+    });
+
+    });
+</script>

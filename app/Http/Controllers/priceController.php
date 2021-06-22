@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\course_model;
 use App\priceModel;
 use Exception;
 use Illuminate\Http\Request;
@@ -14,10 +15,11 @@ class priceController extends Controller
     use Generics;
     use appFunction;
 
-    function __construct(priceModel $priceModel)
+    function __construct(priceModel $priceModel, course_model $course_model)
     {
         $this->middleware('auth');
         $this->priceModel = $priceModel;
+        $this->course_model = $course_model;
     }
 
     // function __construct()
@@ -34,7 +36,7 @@ class priceController extends Controller
         //
         $priceModel = $this->priceModel->getAllPricing();
 
-        return view('dashboard.view-prices', ['priceModel'=>$priceModel]);
+        return view('dashboard.view-prices', ['priceModel' => $priceModel]);
     }
 
     /**
@@ -46,7 +48,6 @@ class priceController extends Controller
     {
 
         return view('dashboard.create_price');
-
     }
 
     /**
@@ -74,7 +75,7 @@ class priceController extends Controller
             $unique_id = $this->createUniqueId('price_tb', 'unique_id');
             $pricing->unique_id = $unique_id;
             $pricing->title = $data['title'];
-            $pricing->amount = $this->getAmountForDatabase($data['amount'])['data']['amount'];
+            $pricing->amount = $data['amount'];
 
             if ($pricing->save()) {
                 return redirect('/create_price')->with('success_message', 'Course Price was created Successfully');
@@ -88,15 +89,16 @@ class priceController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show_edit($unique_id)
     {
-        //
+        $condition = [
+            ['unique_id', $unique_id]
+        ];
+
+        $price = $this->priceModel->getSinglePricing($condition);
+
+        // print_r($price);die();
+        return view('dashboard.edit_price', ['price' => $price]);
     }
 
     /**
@@ -105,31 +107,71 @@ class priceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'title' => 'required|string|max:20',
+                'amount' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors(), 'status' => false]);
+            }
+            $data = $request->all();
+
+            $pricing = priceModel::find($id);
+            $pricing->title = $data['title'];
+            $pricing->amount = $data['amount'];
+
+            if ($pricing->save()) {
+                $error = 'Pricing was updated Successfully!';
+                return response()->json(["message" => $error, 'status' => true]);
+            } else {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            }
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function soft_delete(Request $request, $id)
     {
-        //
-    }
+        try {
+            if (!$id) {
+                throw new Exception($this->errorMsgs(15)['msg']);
+            }
+            $delete_price = priceModel::find($id)->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            $condition = [
+                ['pricing',$id],
+            ];
+            $delete_all_course = $this->course_model->getAllCourse($condition);
+
+            foreach ($delete_all_course as $e) {
+
+                $e->delete();
+            }
+
+            if (!$delete_all_course) {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            } else {
+                $error = 'Price Deleted Successfully!';
+                return response()->json(["message" => $error, 'status' => true]);
+            }
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
+        }
     }
 }

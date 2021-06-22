@@ -99,7 +99,7 @@ $explore= 'active';
                                             <a href="javascript:;" class="crse-cate font-poppins">{{$each_course->category->name}}</a>
                                             <div class="auth1lnkprce">
                                                 <p class="cr1fot">By <a href="{{route('view_profile', $each_course->user->unique_id )}}">{{$each_course->user->name}} {{$each_course->user->last_name}}</a></p>
-                                                <div class="prce142">{{auth()->user()->getAmountForView($each_course->price->amount)['data']['currency'] }} {{number_format(auth()->user()->getAmountForView($each_course->price->amount)['data']['amount'])}}</div>
+                                                <div class="prce142">{{auth()->user()->getAmountForView($each_course->price->amount)['data']['currency'] }} {{number_format($each_course->price->amount)}}</div>
                                             </div>
                                         </div>
                                     </div>

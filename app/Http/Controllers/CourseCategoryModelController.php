@@ -3,22 +3,25 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\course_category_model;
+use App\priceModel;
+use App\course_model;
 use App\Traits\Generics;
 use App\Traits\appFunction;
+use Illuminate\Http\Request;
+use App\course_category_model;
+use Illuminate\Support\Facades\Validator;
 
 class CourseCategoryModelController extends Controller
 {
     use Generics;
     use appFunction;
 
-    function __construct(course_category_model $category_model)
+    function __construct(course_category_model $category_model, priceModel $priceModel, course_model $course_model)
     {
         $this->middleware('auth');
+        $this->course_model = $course_model;
         $this->category_model = $category_model;
-
+        $this->priceModel = $priceModel;
     }
 
     /**
@@ -104,17 +107,17 @@ class CourseCategoryModelController extends Controller
      * @param  \App\course_category_model  $course_category_model
      * @return \Illuminate\Http\Response
      */
-    public function show($course_category_model)
+    public function show($unique_id)
     {
         //
 
         $condition = [
-            ['unique_id', $course_category_model]
+            ['unique_id', $unique_id]
         ];
 
         $course_category = $this->category_model->getSingleCategories($condition);
 
-
+        // print_r($course_category);die();
         return view('dashboard.edit_category', ['course_category'=>$course_category]);
     }
 
@@ -160,7 +163,7 @@ class CourseCategoryModelController extends Controller
             $course_category_tb = $this->category_model->getSingleCategories($condition);
 
             //code for remove old file
-        
+
             if ($request->hasFile('category_image')) {
                 if (file_exists(storage_path('app/public/category_image/') . $course_category_tb->category_image)) {
                     $file_old = storage_path('app/public/category_image/') . $course_category_tb->category_image;
@@ -178,7 +181,7 @@ class CourseCategoryModelController extends Controller
 
             $course_category_tb->name  = $data['name'];
             $course_category_tb->category_icon  = $data['category_icon'];
-            
+
             $course_category_tb->description  = $data['description'];
 
             if ($course_category_tb->save()) {
@@ -192,14 +195,36 @@ class CourseCategoryModelController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\course_category_model  $course_category_model
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(course_category_model $course_category_model)
+    public function soft_delete(Request $request, $id)
     {
-        //
+        try {
+            if (!$id) {
+                throw new Exception($this->errorMsgs(15)['msg']);
+            }
+            $delete_category = course_category_model::find($id)->delete();
+
+            $condition = [
+                ['category_id',$id],
+            ];
+            $delete_all_course = $this->course_model->getAllCourse($condition);
+
+            foreach ($delete_all_course as $e) {
+                $e->delete();
+            }
+
+            if (!$delete_all_course) {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            } else {
+                $error = 'Category Deleted Successfully!';
+                return response()->json(["message" => $error, 'status' => true]);
+            }
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
+        }
     }
 }

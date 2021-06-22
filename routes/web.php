@@ -122,7 +122,7 @@ Route::group(['middleware' => 'verified'], function(){
     Route::group(['middleware' => 'web'], function () {
         // crypto currency
         Route::get('/wallet/bitcoin/gateway/{id}', [cryptocurrencyController::class, 'payment_gateway'])->name('btc_gateway');
-        Route::get('/blockchain/callback', [cryptocurrencyController::class, 'confirm_payment'])->name('btc_gateway');
+        Route::get('/blockchain/callback', [cryptocurrencyController::class, 'confirm_payment'])->name('btc_callback');
 
 
         // Route::get('/prev_address/{xpub}',[PaymentAddressController::class,'get_prev_addresses']);
@@ -151,6 +151,7 @@ Route::group(['middleware' => 'verified'], function(){
         Route::post('/add_category', [CourseCategoryModelController::class, 'create'])->name('add_category');
         Route::get('/edit_category/{unique_id}', [CourseCategoryModelController::class, 'show'])->name('edit_category');
         Route::post('/update_category/{unique_id}', [CourseCategoryModelController::class, 'update'])->name('update_category');
+        Route::post('/delete_category/{id}', [CourseCategoryModelController::class, 'soft_delete'])->name('delete_category');
     });
 
     Route::group(['middleware' => 'web'], function () {
@@ -174,6 +175,9 @@ Route::group(['middleware' => 'verified'], function(){
         Route::get('/create_price', [priceController::class, 'create'])->name('create_price');
         Route::post('/store_price', [priceController::class, 'store'])->name('store_price');
         Route::get('/view_price', [priceController::class, 'index'])->name('view_price');
+        Route::get('/edit_price/{id}', [priceController::class, 'show_edit'])->name('edit_price');
+        Route::post('/update_price/{id}', [priceController::class, 'edit'])->name('update_price');
+        Route::post('/delete_price/{id}', [priceController::class, 'soft_delete'])->name('delete_price');
     });
 
     Route::group(['middleware' => 'web'], function () {
