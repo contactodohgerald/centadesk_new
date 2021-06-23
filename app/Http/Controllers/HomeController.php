@@ -20,7 +20,7 @@ class HomeController extends Controller
     public function __construct(
         live_stream_model $live_stream, course_model $course_model, Review $review, User $user, courseEnrollment $courseEnrollment
     ){
-        $this->middleware('auth');
+        $this->middleware('auth',  ['except' => ['clear_cache']]);
         $this->live_stream = $live_stream;
         $this->course_model = $course_model;
         $this->review = $review;
