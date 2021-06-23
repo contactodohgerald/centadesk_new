@@ -244,6 +244,7 @@ Route::group(['middleware' => 'verified'], function(){
         Route::post('/update_cac_file', [UserController::class, 'uploadCACFiles'])->name('update_cac_file');
         Route::post('/update_bank_account', [UserController::class, 'bankAccountUpdate'])->name('update_bank_account');
         Route::post('/update_wallet_address', [UserController::class, 'walletAddressUpdate'])->name('update_wallet_address');
+        Route::post('/delete_user/{id}', [UserController::class, 'soft_delete']);
     });
 
 

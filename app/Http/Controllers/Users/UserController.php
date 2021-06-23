@@ -11,6 +11,7 @@ use App\Model\InstructorsReview;
 use App\Model\KycVerification;
 use App\Model\Subscribe;
 use App\Model\courseEnrollment;
+use App\Model\live_stream_model;
 use App\Traits\Generics;
 use App\Traits\SendMail;
 use App\Traits\UsersArray;
@@ -27,14 +28,15 @@ class UserController extends Controller
 
     function __construct(
         KycVerification $kycVerification,
-       AppSettings $appSettings,
-      course_model $course_model,
-      Subscribe $subscribe,
-      InstructorReviewLike $instructorReviewLike,
-      InsrtuctorReviewReply $instructorReviewReply,
-      InstructorsReview $instructorsReview,
-      courseEnrollment $courseEnrollment
-    ){
+        AppSettings $appSettings,
+        course_model $course_model,
+        Subscribe $subscribe,
+        InstructorReviewLike $instructorReviewLike,
+        InsrtuctorReviewReply $instructorReviewReply,
+        InstructorsReview $instructorsReview,
+        live_stream_model $liveStream,
+        courseEnrollment $courseEnrollment
+    ) {
         $this->middleware('auth');
         $this->kycVerification = $kycVerification;
         $this->appSettings = $appSettings;
@@ -44,6 +46,8 @@ class UserController extends Controller
         $this->instructorsReview = $instructorsReview;
         $this->instructorReviewReply = $instructorReviewReply;
         $this->courseEnrollment = $courseEnrollment;
+        $this->liveStream = $liveStream;
+        // liveStream
     }
 
     /**
@@ -77,7 +81,7 @@ class UserController extends Controller
         $user->subscribe = $subscribe;
 
 
-        foreach ($user->subscribe as $each_subscribe){
+        foreach ($user->subscribe as $each_subscribe) {
 
             $each_subscribe->users;
             $conditions = [
@@ -147,8 +151,7 @@ class UserController extends Controller
         ]);
         $user->enrolled_users = $enrolled->count();
 
-        return view('dashboard.profile', ['user'=>$user]);
-
+        return view('dashboard.profile', ['user' => $user]);
     }
 
     protected function Validator($request)
@@ -305,12 +308,11 @@ class UserController extends Controller
 
 
             //delete existing file
-            if(file_exists(storage_path('app/public/profile/' . $prev_file_name))){
+            if (file_exists(storage_path('app/public/profile/' . $prev_file_name))) {
 
                 if ($prev_file_name !== 'avatar.png') {
                     unlink(storage_path('app/public/profile/' . $prev_file_name));
                 }
-
             }
 
             $cover_img = $request->file('profile_img');
@@ -460,6 +462,47 @@ class UserController extends Controller
 
             $errorsArray = $exception->getMessage();
             return  redirect('/kyc_verification')->with('error_message', $errorsArray);
+        }
+    }
+
+
+    public function soft_delete(Request $request, $id)
+    {
+        try {
+            if (!$id) {
+                throw new Exception($this->errorMsgs(15)['msg']);
+            }
+            $delete_user = User::find($id)->delete();
+            if (!$delete_user) {
+                throw new Exception($this->errorMsgs(14)['msg']);
+            }
+
+            $condition = [
+                ['user_id', $id],
+            ];
+            $delete_all_course = $this->course_model->getAllCourse($condition);
+
+            foreach ($delete_all_course as $e) {
+                $e->delete();
+            }
+            $condition = [
+                ['user_id', $id],
+            ];
+            $delete_live_stream = $this->liveStream->get_all($condition);
+
+            foreach ($delete_live_stream as $e) {
+                $e->delete();
+            }
+
+            $error = 'User Deleted Successfully!';
+            return response()->json(["message" => $error, 'status' => true]);
+        } catch (Exception $e) {
+
+            $error = $e->getMessage();
+            $error = [
+                'errors' => [$error],
+            ];
+            return response()->json(["errors" => $error, 'status' => false]);
         }
     }
 }

@@ -1,5 +1,5 @@
 @php
-	$pageTitle = 'Live Streams';
+	$pageTitle = 'Support Tickets';
 	$Course = 'active';
 @endphp
 @include('layouts.head')
@@ -18,7 +18,7 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h2 class="st_title"><i class="uil uil-book-alt"></i>All Live Streams</h2>
+						<h2 class="st_title"><i class="uil uil-book-alt"></i>Support Tickets</h2>
 					</div>
 				</div>
                 <div class="row" id="errorHold"></div>
@@ -26,7 +26,7 @@
 						<div class="my_courses_tabs">
 							<ul class="nav nav-pills my_crse_nav" id="pills-tab" role="tablist">
 								<li class="nav-item">
-									<a class="nav-link active" id="pills-my-courses-tab" data-toggle="pill" href="#pills-my-courses" role="tab" aria-controls="pills-my-courses" aria-selected="true"><i class="uil uil-book-alt"></i>My Live Streams</a>
+									<a class="nav-link active" id="pills-my-courses-tab" data-toggle="pill" href="#pills-my-courses" role="tab" aria-controls="pills-my-courses" aria-selected="true"><i class="uil uil-book-alt"></i>All Tickets</a>
 								</li>
 							</ul>
 							<div class="tab-content" id="pills-tabContent">
